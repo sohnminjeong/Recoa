@@ -6,10 +6,14 @@
 
 	<typeAliases>
 		<!-- <typeAlias type="com.semi.model.vo.User" alias="User" /> -->
+		<typeAlias type="com.recoa.model.vo.Guest" alias="Guest" />
+		<typeAlias type="com.recoa.model.vo.ReserveGuest" alias="ReserveGuest" />
 	</typeAliases>
 
 	<!-- 쿼리문 -->
 	<mappers>
 		<!-- <mapper resource="mappers/qnaAnswer-mapper.xml"/> -->
+		<mapper resource="mappers/guest-mapper.xml" />
+		<mapper resource="mappers/reserveguest-mapper.xml" />
 	</mappers>
 </configuration>
