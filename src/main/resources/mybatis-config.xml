@@ -5,15 +5,15 @@
 	</settings>
 
 	<typeAliases>
-		<!-- <typeAlias type="com.semi.model.vo.User" alias="User" /> -->
 		<typeAlias type="com.recoa.model.vo.Guest" alias="Guest" />
 		<typeAlias type="com.recoa.model.vo.ReserveGuest" alias="ReserveGuest" />
+		<typeAlias type="com.recoa.model.vo.User" alias="User" />
 	</typeAliases>
 
 	<!-- 쿼리문 -->
 	<mappers>
-		<!-- <mapper resource="mappers/qnaAnswer-mapper.xml"/> -->
 		<mapper resource="mappers/guest-mapper.xml" />
 		<mapper resource="mappers/reserveguest-mapper.xml" />
+		<mapper resource="mappers/user-mapper.xml"/>
 	</mappers>
 </configuration>
