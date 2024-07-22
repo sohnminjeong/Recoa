@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>Recoa 메인 화면 페이지</h1>
+	<h2>회원가입 페이지</h2>
 </body>
 </html>

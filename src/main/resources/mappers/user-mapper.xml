@@ -1,0 +1,27 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="userMapper">
+	<resultMap type="User" id="userMap">
+		<id property="userCode" column="user_code"/>
+		<result property="userId" column="user_id"/>
+		<result property="userPwd" column="user_pwd"/>
+		<result property="userName" column="user_name"/>
+		<result property="userImgUrl" column="user_img_url"/>
+		<result property="userPhone" column="user_phone"/>
+		<result property="userAdr" column="user_adr"/>
+		<result property="userAdrDetail" column="user_adr_detail"/>
+		<result property="userEmail" column="user_email"/>
+		<result property="userAdmin" column="user_admin"/>	
+	</resultMap>
+	
+	<!-- 회원가입 -->
+	<insert id="registerUser" parameterType="User" useGeneratedKeys="true" keyProperty="userCode" keyColumn="user_code">
+		INSERT INTO USER(user_id, user_pwd, user_name, user_img_url, user_phone, user_adr, user_adr_detail, user_email, user_admin)
+		VALUES(#{userId}, #{userPwd}, #{userName}, #{userImgUrl}, #{userPhone}, #{userAdr}, #{userAdrDetail}, #{userEmail}, #{userAdmin})
+	</insert>
+	
+	<!-- 로그인 -->
+	<select id="loginUser" parameterType="String" resultMap="userMap">
+		SELECT * FROM user
+		WHERE user_id=#{userId}
+	</select>
+</mapper>
