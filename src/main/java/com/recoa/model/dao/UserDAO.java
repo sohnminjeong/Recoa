@@ -18,7 +18,7 @@ public class UserDAO {
 	}
 	
 	// 로그인
-	public User loginUser(String userId) {
-		return session.selectOne("userMapper.loginUser", userId);
+	public User loginById(String userId) {
+		return session.selectOne("userMapper.loginById", userId);
 	}
 }

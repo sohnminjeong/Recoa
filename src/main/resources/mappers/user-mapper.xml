@@ -20,7 +20,7 @@
 	</insert>
 	
 	<!-- 로그인 -->
-	<select id="loginUser" parameterType="String" resultMap="userMap">
+	<select id="loginById" parameterType="String" resultMap="userMap">
 		SELECT * FROM user
 		WHERE user_id=#{userId}
 	</select>
