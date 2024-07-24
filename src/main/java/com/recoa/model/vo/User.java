@@ -6,6 +6,7 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,9 @@ public class User implements UserDetails {
 	private String userAdrDetail;
 	private String userEmail;
 	private String userAdmin;  // 권한
+	
+	private boolean delUserImgUrl;
+	private MultipartFile file;
 	
 	
 	// 권한 관리 메서드

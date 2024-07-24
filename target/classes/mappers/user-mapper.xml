@@ -5,6 +5,7 @@
 		<result property="userId" column="user_id"/>
 		<result property="userPwd" column="user_pwd"/>
 		<result property="userName" column="user_name"/>
+		<result property="userNickname" column="user_nickname"/>
 		<result property="userImgUrl" column="user_img_url"/>
 		<result property="userPhone" column="user_phone"/>
 		<result property="userAdr" column="user_adr"/>
@@ -15,8 +16,8 @@
 	
 	<!-- 회원가입 -->
 	<insert id="registerUser" parameterType="User" useGeneratedKeys="true" keyProperty="userCode" keyColumn="user_code">
-		INSERT INTO USER(user_id, user_pwd, user_name, user_img_url, user_phone, user_adr, user_adr_detail, user_email, user_admin)
-		VALUES(#{userId}, #{userPwd}, #{userName}, #{userImgUrl}, #{userPhone}, #{userAdr}, #{userAdrDetail}, #{userEmail}, #{userAdmin})
+		INSERT INTO USER(user_id, user_pwd, user_name, user_nickname, user_img_url, user_phone, user_adr, user_adr_detail, user_email, user_admin)
+		VALUES(#{userId}, #{userPwd}, #{userName}, #{userNickname}, #{userImgUrl}, #{userPhone}, #{userAdr}, #{userAdrDetail}, #{userEmail}, #{userAdmin})
 	</insert>
 	
 	<!-- 로그인 -->

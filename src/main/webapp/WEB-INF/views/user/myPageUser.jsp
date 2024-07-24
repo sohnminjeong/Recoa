@@ -7,8 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>Recoa 메인 화면 페이지</h1>
-	<a href="/registerUser">회원가입</a><br>
-	<a href="/loginUser">로그인</a>
+	<h1>마이페이지</h1>
 </body>
 </html>

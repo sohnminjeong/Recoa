@@ -19,7 +19,7 @@ public class UserService implements UserDetailsService{
 	private BCryptPasswordEncoder bcpe;
 	
 	// dao 연결
-	@Autowired
+	@Autowired(required=false)
 	private UserDAO dao;
 	
 	// 로그인 
@@ -33,7 +33,7 @@ public class UserService implements UserDetailsService{
 	public int registerUser(User user) {
 		// 비밀번호 암호화 처리 후 멤버 정보 다시 담아서 dao에게 전달 
 		// 암호화 처리
-		String encodePw = bcpe.encode(user.getPassword());
+		String encodePw = bcpe.encode(user.getUserPwd());
 		// 암호화 처리 된 비밀번호로 다시 세팅
 		user.setUserPwd(encodePw);
 		return dao.registerUser(user);

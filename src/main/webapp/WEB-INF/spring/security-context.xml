@@ -7,8 +7,9 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-5.2.xsd">
 
-<bean id="userLoginFailHandler"
-		class="com.recoa.util.UserLoginFailHandler" />
+
+<bean id="userLoginSuccessHandler"
+		class="com.recoa.util.UserLoginSuccessHandler" /> 
 
 <bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 
@@ -16,20 +17,22 @@
 
 <bean id="userService" class="com.recoa.service.UserService"/>
 
-<security:http>
+<!-- 경로 관련 -->
 <!-- <security:form-login login-processing-url="/loginUser"
+//authentication-failure-handler-ref : 로그인 실패 시 handler 
 			authentication-failure-handler-ref="userLoginFailHandler" /> -->
+	<security:http>
 		
-		<security:csrf disabled="true" />
 		<security:intercept-url pattern="/loginUser"
 			access="permitAll" />
 		<security:access-denied-handler
 			error-page="/error" />
+		<security:form-login login-page="/user/loginUser" authentication-success-handler-ref="userLoginSuccessHandler"/>
+		<security:csrf disabled="true" />
 		<security:logout logout-url="/logoutUser"
 			invalidate-session="true" delete-cookies="Logout"
 			logout-success-url="/" />
 	</security:http>
-
 
 
 <!-- 인증 매니저 : 다양한 방식의 인증을 처리할 수 있도록 설계 -->

@@ -9,7 +9,7 @@ import com.recoa.model.vo.User;
 @Repository
 public class UserDAO {
 	
-	@Autowired
+	@Autowired(required=false)
 	private SqlSessionTemplate session;
 	
 	// 회원가입
