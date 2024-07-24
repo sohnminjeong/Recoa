@@ -5,7 +5,6 @@
 	</settings>
 
 	<typeAliases>
-		
 		<typeAlias type="com.recoa.model.vo.Guest" alias="Guest" />
 		<typeAlias type="com.recoa.model.vo.ReserveGuest" alias="ReserveGuest" />
 		<typeAlias type="com.recoa.model.vo.User" alias="User" />
@@ -13,7 +12,6 @@
 
 	<!-- 쿼리문 -->
 	<mappers>
-		
 		<mapper resource="mappers/guest-mapper.xml" />
 		<mapper resource="mappers/reserveguest-mapper.xml" />
 		<mapper resource="mappers/user-mapper.xml"/>

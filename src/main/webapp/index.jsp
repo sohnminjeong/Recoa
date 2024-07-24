@@ -8,5 +8,6 @@
 </head>
 <body>
 	<h1>Recoa 메인 화면 페이지</h1>
+	<a href="/reserveGuest">게스트하우스 예약하기</a>
 </body>
 </html>
