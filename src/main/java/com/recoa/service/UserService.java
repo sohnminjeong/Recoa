@@ -22,12 +22,14 @@ public class UserService implements UserDetailsService{
 	@Autowired(required=false)
 	private UserDAO dao;
 	
-	// 로그인 
-		@Override
-		public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
-			User user = dao.loginById(username);
-			return user;
-		}
+	
+	// 로그인시 자동으로 여기로 연결
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		User user = dao.loginById(username);
+		return user;
+	}
+	
 	
 	// 회원가입
 	public int registerUser(User user) {
@@ -38,6 +40,8 @@ public class UserService implements UserDetailsService{
 		user.setUserPwd(encodePw);
 		return dao.registerUser(user);
 	}
+
+	
 	
 	
 }

@@ -24,57 +24,49 @@ public class User implements UserDetails {
 	private String userAdr;
 	private String userAdrDetail;
 	private String userEmail;
-	private String userAdmin;  // 권한
+	private String userAdmin;  // 권한 : user, manager, admin
+	
+	// security 사용 시 권한 필수/enabled는 선택
+	private int enabled;
 	
 	private boolean delUserImgUrl;
 	private MultipartFile file;
 	
 	
 	// 권한 관리 메서드
-	@Override  
-	public Collection<? extends GrantedAuthority> getAuthorities(){
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
 		ArrayList<GrantedAuthority> authList = new ArrayList<>();
 		authList.add(new SimpleGrantedAuthority(userAdmin));
 		return authList;
 	}
-
-
+	
 	@Override
 	public String getPassword() {
-		return null;
+		return userPwd;
 	}
-
-
 	@Override
 	public String getUsername() {
 		return userId;
 	}
-
-
 	@Override
 	public boolean isAccountNonExpired() {
+		
 		return true;
 	}
-
-
 	@Override
-	public boolean isAccountNonLocked() {
+	public boolean isAccountNonLocked() {	
 		return true;
 	}
-
-
 	@Override
 	public boolean isCredentialsNonExpired() {
 		return true;
 	}
-
-
-	// 회원 탈퇴 여부
+	// 탈퇴 여부  
 	@Override
 	public boolean isEnabled() {
 		return true;
 	}
 	
-	
-	
+
 }

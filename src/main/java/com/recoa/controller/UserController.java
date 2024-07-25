@@ -34,10 +34,6 @@ public class UserController {
 	}
 	
 	/* ---------------------------------------- */
-	// 전체 페이지 이동
-	@GetMapping("/allUser")
-	public void all() {}
-	
 	// 회원 페이지 이동
 	@GetMapping("/myPageUser")
 	public String myPageUser() {
@@ -45,8 +41,10 @@ public class UserController {
 	}
 	
 	// 관리자 페이지 이동
-	@GetMapping("/adminUser")
-	public void admin() {}
+	@GetMapping("/adminPage")
+	public String adminPage() {
+		return "user/adminPage";
+	}
 	
 	// 로그인 페이지 이동
 	@GetMapping("/loginUser")
@@ -67,12 +65,11 @@ public class UserController {
 //			String url = fileUpload(user.getFile());
 //			user.setUserImgUrl(url);
 //		}
-		System.out.println("sdffsidjfisd");
-		System.out.println(user.getFile());
+		System.out.println("user.getFile : " + user.getFile());
+		String url = fileUpload(user.getFile());
+		user.setUserImgUrl(url);
+		System.out.println("user.img : " + user.getUserImgUrl());
 		
-//		String url = fileUpload(user.getFile());
-//		System.out.println("url : " + url);
-//		user.setUserImgUrl(url);
 		service.registerUser(user);
 		return "user/loginUser";
 	}
