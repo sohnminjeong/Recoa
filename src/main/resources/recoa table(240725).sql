@@ -1,22 +1,23 @@
-drop table user;
-drop table board_notice;
-drop table board_notice_img;
-drop table board_free;
-drop table board_free_img;
-drop table board_free_comment;
-drop table free_like;
-drop table notice_bookmark;
-drop table library;
-drop table reserve_library;
-drop table guest;
-drop table reserve_guest;
-drop table util_bill;
-drop table note;
-drop table note_file;
-drop table chat_room;
-drop table chat;
-drop table chat_file;
 drop table alarm;
+drop table chat_file;
+drop table chat;
+drop table chat_room;
+drop table note_file;
+drop table note;
+drop table util_bill;
+drop table reserve_guest;
+drop table guest;
+drop table reserve_library;
+drop table library;
+drop table notice_bookmark;
+drop table free_like;
+drop table board_free_comment;
+drop table board_free_img;
+drop table board_free;
+drop table board_notice_img;
+drop table board_notice;
+drop table user;
+
 
 create table user(
 	user_code INT PRIMARY KEY AUTO_INCREMENT,
@@ -29,7 +30,7 @@ create table user(
     user_adr VARCHAR(10),
     user_adr_detail VARCHAR(10),
     user_email VARCHAR(100),
-    user_admin VARCHAR(10)
+    user_admin VARCHAR(10) DEFAULT 'user'
 );
 
 create table board_notice(
@@ -101,12 +102,6 @@ create table reserve_library(
     start_time DATETIME,
     end_time DATETIME,
     regi_date DATETIME DEFAULT CURRENT_TIMESTAMP,
-    status boolean DEFAULT false
-);
-
-create table guest(
-	room_type INT PRIMARY KEY,
-    room_code INT,
     status boolean DEFAULT false
 );
 
@@ -208,9 +203,6 @@ alter table free_like add constraint foreign key(free_code) references board_fre
 -- library랑 연결
 alter table reserve_library add constraint foreign key(library_code) references library (library_code) ON DELETE CASCADE;
 
--- guest랑 연결
-alter table reserve_guest add constraint foreign key(room_type) references guest (room_type) ON DELETE CASCADE;
-
 -- note랑 연결
 alter table note_file add constraint foreign key(note_code) references note (note_code) ON DELETE CASCADE;
 
@@ -219,3 +211,12 @@ alter table chat add constraint foreign key(chat_room_code) references chat_room
 
 -- chat이랑 연결
 alter table chat_file add constraint foreign key(chat_code) references chat (chat_code) ON DELETE CASCADE;
+
+
+/*
+테이블 변경 사항
+
+[240725]
+1. user 테이블의 user_admin 컬럼에 default 'user' 속성 추가
+2. guest 테이블 삭제 및 연결되는 foreign key 삭제
+*/

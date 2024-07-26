@@ -13,7 +13,57 @@
 <body>
 	<h1>게스트하우스 예약</h1>
 	
-	<input type="text" name="daterange" id="daterange"/>
+	<form action="reserveGuest" method="post" id="reserveGuest" name="reserveGuest">
+	<div>
+		<p>기간 선택</p>
+		<input type="text" name="daterange" id="daterange"/>
+		<input type="hidden" name="startTime" id="startTime"/>
+		<input type="hidden" name="endTime" id="endTime"/>
+	</div>
+		<div>
+		<p>유저 코드</p>
+		<input type="text" name="userCode"/>
+		
+		<p>객실 타입</p>
+		<select name="roomType">
+			<option value="1">원룸</option>
+			<option value="2">투룸</option>
+		</select>
+		
+		<p>객실 번호</p>
+		<select name="roomCode">
+			<option value="1">1호실</option>
+			<option value="2">2호실</option>
+			<option value="3">3호실</option>
+			<option value="4">4호실</option>
+			<option value="5">5호실</option>
+			<option value="6">6호실</option>
+			<option value="7">7호실</option>
+		<!-- 
+		<c:forEach var="i" begin="1" end="7">
+                    <c:set var="isReserved" value="false"/>
+                    <c:forEach var="room" items="${reservedRooms}">
+                        <c:if test="${room.room_code == i && room.status}">
+                            <c:set var="isReserved" value="true"/>
+                        </c:if>
+                    </c:forEach>
+                    <c:choose>
+                        <c:when test="${isReserved}">
+                            <option value="${i}" disabled>${i}호실 (예약됨)</option>
+                        </c:when>
+                        <c:otherwise>
+                            <option value="${i}">${i}호실</option>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+                 -->
+		</select>
+		
+		</div>
+		<hr/>
+		<input type="submit" value="게스트하우스 예약" id="submit">
+	</form>
+
 	
 	
 	
@@ -23,25 +73,37 @@
 	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 	
 	<script>
-	$(document).ready(function() {
-		today = new Date();
-		
-		console.log(today.toISOString().slice(0, 10));
-		
-		year = today.toISOString().slice(0, 4);
-		month = today.toISOString().slice(5, 7);
-		date = today.toISOString().slice(8, 10);
-		date1 = Number(date) + 1;
-		date2 = Number(date) + 2;
-		
-		startdate = month + "/" + date1 + "/" + year;
-		enddate = month + "/" + date2 + "/" + year;
-        
-        $('#daterange').val(startdate + ' - ' + enddate);
-       
-        
-    });
+		$(document).ready(function() {
+            let today = new Date();
+            let startDate = moment(today).format('YYYY/MM/DD');
+            let endDate = moment(today).add(2, 'days').format('YYYY/MM/DD');
 
+            $('#daterange').daterangepicker({
+                opens: 'left',
+                startDate: startDate,
+                endDate: endDate,
+                minDate: startDate,  // 오늘 날짜 이전은 선택 불가
+                maxSpan: {
+                    "days": 2  // 최대 2박 3일 설정
+                },
+                locale: {
+                    format: 'YYYY/MM/DD'
+                }
+            }, function(start, end, label) {
+                console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+                $('#startTime').val(start.format('YYYY-MM-DDTHH:mm:ss'));
+                $('#endTime').val(end.format('YYYY-MM-DDTHH:mm:ss'));
+            });
+
+            $('#reserveGuest').submit(function() {
+                let daterange = $('#daterange').val();
+                let dates = daterange.split(' - ');
+                $('#startTime').val(moment(dates[0], 'YYYY/MM/DD').format('YYYY-MM-DDTHH:mm:ss'));
+                $('#endTime').val(moment(dates[1], 'YYYY/MM/DD').format('YYYY-MM-DDTHH:mm:ss'));
+            });
+        });
+   
+/*
 	$(function() {
 		  $('input[name="daterange"]').daterangepicker({
 		    opens: 'left',
@@ -50,13 +112,16 @@
             minDate: startdate,  
             maxSpan: {
                 "days": 2  // 최대 2박 3일 설정
-            }
+            },
+            locale: {
+                format: 'YYYY/MM/DD'
+            },
 		  },
-
 		  function(start, end, label) {
 		    console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
 		  });
 		});
+	*/
 	</script>
 </body>
 
