@@ -1,6 +1,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="reserveguestMapper">
+<mapper namespace="ReserveGuest">
 	<resultMap type="ReserveGuest" id="ReserveGuestMap">
 		<id property="reserveGuestCode" column="reserve_guest_code"/>
 		<result property="userCode" column="user_code"/>
@@ -16,8 +16,8 @@
 	
 	<!-- 게스트하우스 예약 등록 -->
 	<insert id="registerGuestReserve" parameterType="ReserveGuest" useGeneratedKeys="true" keyProperty="reserveGuestCode" keyColumn="reserveGuestCode">
-		INSERT INTO reserve_guest(user_code, room_type, room_code, start_time, end_time, regi_date) 
-		VALUES(#{userCode}, #{roomType}, #{roomCode}, #{startTime}, #{endTime}, #{regiDate})
+		INSERT INTO reserve_guest(user_code, room_type, room_code, start_time, end_time) 
+		VALUES(#{userCode}, #{roomType}, #{roomCode}, #{startTime}, #{endTime})
 	</insert>
 	
 </mapper>

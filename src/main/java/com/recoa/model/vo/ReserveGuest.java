@@ -1,7 +1,8 @@
 package com.recoa.model.vo;
 
-import java.sql.Date;
+
 import java.time.LocalDateTime;
+import java.util.Date;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

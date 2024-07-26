@@ -23,5 +23,6 @@
 		</c:otherwise>
 	</c:choose>
 
+	<a href="/reserveGuest">게스트하우스 예약하기</a>
 </body>
 </html>
