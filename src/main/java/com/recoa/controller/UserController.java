@@ -61,15 +61,10 @@ public class UserController {
 	// 회원가입 로직
 	@PostMapping("/registerUser")
 	public String registerUser(User user) throws IllegalStateException, IOException {
-//		if(!user.getFile().isEmpty()) {
-//			String url = fileUpload(user.getFile());
-//			user.setUserImgUrl(url);
-//		}
-		System.out.println("user.getFile : " + user.getFile());
-		String url = fileUpload(user.getFile());
-		user.setUserImgUrl(url);
-		System.out.println("user.img : " + user.getUserImgUrl());
-		
+		if(!user.getFile().isEmpty()) {
+			String url = fileUpload(user.getFile());
+			user.setUserImgUrl(url);
+		}		
 		service.registerUser(user);
 		return "user/loginUser";
 	}

@@ -11,17 +11,14 @@
 <body>
 	<h1>Recoa 메인 화면 페이지</h1>
 	<sec:authentication property="principal" var="user" />
+	<span>로그인 유저 확인용 : </span> 
 	${user}
 	<br>
 	<c:choose>
 		<c:when test="${user=='anonymousUser'}">
-			<a href="/loginUser">로그인</a><br>
-			<a href="/registerUser">회원가입</a><br>
+			<a href="/loginUser">로그인 및 회원가입</a><br>
 		</c:when>
 		<c:otherwise>
-		<!-- <sec:authorize access="hasRole('ROLE_ADMIN') and isAuthenticated()">
-				<a href="/admin">관리자 페이지</a><br>
-			</sec:authorize> -->
 			<a href="/logout">로그아웃</a>	
 		</c:otherwise>
 	</c:choose>
