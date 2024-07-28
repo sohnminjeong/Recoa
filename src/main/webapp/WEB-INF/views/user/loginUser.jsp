@@ -61,15 +61,17 @@
 	            </div>
 	           -->
 	            <button>
-	              Sign up
+	              회원가입
 	            </button>
             </form>
             <p>
               <span>
-                Already have an account?
+                회원일 경우 > 
+                <!-- Already have an account? -->
               </span>
               <b onclick="toggle()" class="pointer">
-                Sign in here
+                <!-- Sign in here -->
+                로그인
               </b>
             </p>
           </div>
@@ -91,7 +93,7 @@
 	              <input type="password" placeholder="비밀번호" name="password" id="userPwd">
 	            </div>
 	            <button>
-	              Sign in
+	              로그인
 	            </button>
 	            </form>
 	            <p>
@@ -101,10 +103,12 @@
 	            </p>
 	            <p>
 	              <span>
-	                Don't have an account?
+	                <!-- Don't have an account? -->
+	                비회원일 경우 > 
 	              </span>
 	              <b onclick="toggle()" class="pointer">
-	                Sign up here
+	                <!-- Sign up here -->
+	                회원가입
 	              </b>
 	            </p>
 	          </div>
@@ -147,14 +151,6 @@
     </div>
   </div>
 
-<!-- 
-<h1>로그인 페이지</h1>
-	<form action="login" method="post">
-		아이디 : <input type="text" name="username" id="userId"><br>
-		비밀번호 : <input type="password" name="password" id="userPwd"><br>
-		<input type="submit">
-	</form>
- -->
 	<script src="../../../resources/js/user/loginUser.js"></script>
 </body>
 </html>
