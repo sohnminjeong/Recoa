@@ -17,7 +17,7 @@ public class User implements UserDetails {
 	private int userCode;
 	private String userId;
 	private String userPwd;
-	private String userName;
+	private String userRealName;
 	private String userNickname;
 	private String userImgUrl;
 	private String userPhone;

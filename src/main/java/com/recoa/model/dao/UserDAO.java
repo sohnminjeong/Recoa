@@ -21,4 +21,9 @@ public class UserDAO {
 	public User loginById(String id) {
 		return session.selectOne("userMapper.loginById", id);
 	}
+	
+	// 회원 개인 정보 확인
+	public User selectUser(String id) {
+		return session.selectOne("userMapper.selectUSer", id);
+	}
 }

@@ -19,6 +19,7 @@
 			<a href="/loginUser">로그인 및 회원가입</a><br>
 		</c:when>
 		<c:otherwise>
+			<a href="/myPageUser">마이 페이지</a><br>
 			<a href="/logout">로그아웃</a>	<br>
 		</c:otherwise>
 	</c:choose>

@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,7 +35,7 @@ public class UserController {
 	}
 	
 	/* ---------------------------------------- */
-	// 회원 페이지 이동
+	// 회원 마이 페이지 이동
 	@GetMapping("/myPageUser")
 	public String myPageUser() {
 		return "user/myPageUser";
@@ -69,4 +70,11 @@ public class UserController {
 		return "user/loginUser";
 	}
 	
+	// 회원 개인 정보 확인
+	@GetMapping("/selectUser")
+	public String selectUser(Model model, String id) {
+		User user = service.selectUser(id);
+		model.addAttribute("user", user);
+		return "user/myPageUser";
+	}
 }

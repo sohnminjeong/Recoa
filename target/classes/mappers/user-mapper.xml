@@ -4,7 +4,7 @@
 		<id property="userCode" column="user_code"/>
 		<result property="userId" column="user_id"/>
 		<result property="userPwd" column="user_pwd"/>
-		<result property="userName" column="user_name"/>
+		<result property="userRealName" column="user_name"/>
 		<result property="userNickname" column="user_nickname"/>
 		<result property="userImgUrl" column="user_img_url"/>
 		<result property="userPhone" column="user_phone"/>
@@ -17,12 +17,18 @@
 	<!-- 회원가입 -->
 	<insert id="registerUser" parameterType="User" useGeneratedKeys="true" keyProperty="userCode" keyColumn="user_code">
 		INSERT INTO USER(user_id, user_pwd, user_name, user_nickname, user_img_url, user_phone, user_adr, user_adr_detail, user_email)
-		VALUES(#{userId}, #{userPwd}, #{userName}, #{userNickname}, #{userImgUrl}, #{userPhone}, #{userAdr}, #{userAdrDetail}, #{userEmail})
+		VALUES(#{userId}, #{userPwd}, #{userRealName}, #{userNickname}, #{userImgUrl}, #{userPhone}, #{userAdr}, #{userAdrDetail}, #{userEmail})
 	</insert>
 	
 	<!-- 로그인 -->
 	<select id="loginById" parameterType="String" resultMap="userMap">
 		SELECT * FROM user
 		WHERE user_id=#{userId} 
+	</select>
+	
+	<!-- 회원 개인 정보 확인 -->
+	<select id="selectUser" parameterType="String" resultMap="userMap">
+		SELECT * FROM user
+		WHERE user_id=#{userId}
 	</select>
 </mapper>

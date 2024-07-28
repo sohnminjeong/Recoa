@@ -41,7 +41,10 @@ public class UserService implements UserDetailsService{
 		return dao.registerUser(user);
 	}
 
-	
+	// 회원 개인 정보 확인
+	public User selectUser(String id) {
+		return dao.selectUser(id);
+	}
 	
 	
 }
