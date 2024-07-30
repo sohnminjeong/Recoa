@@ -31,4 +31,12 @@
 		SELECT * FROM user
 		WHERE user_id=#{userId}
 	</select>
+	
+	<!-- 회원 정보 수정 -->
+	<update id="updateUser" parameterType="User">
+	UPDATE user
+	SET
+	user_name=#{userRealName}
+	WHERE user_id=#{userId}
+	</update>
 </mapper>

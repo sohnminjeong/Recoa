@@ -24,6 +24,11 @@ public class UserDAO {
 	
 	// 회원 개인 정보 확인
 	public User selectUser(String id) {
-		return session.selectOne("userMapper.selectUSer", id);
+		return session.selectOne("userMapper.selectUser", id);
+	}
+	
+	// 회원 정보 수정
+	public int updateUser(User user) {
+		return session.update("userMapper.updateUser", user);
 	}
 }

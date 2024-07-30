@@ -77,4 +77,20 @@ public class UserController {
 		model.addAttribute("user", user);
 		return "user/myPageUser";
 	}
+	
+	// 회원정보 수정 페이지 이동
+	@GetMapping("/updateUser")
+	public String updateUser(Model model, String id) {
+		User user = service.selectUser(id);
+		model.addAttribute("user", user);
+		return "user/updateUser";
+	}
+	
+	@PostMapping("/updateUser")
+	public String updateUser(User user) throws IllegalStateException, IOException {
+		String url = fileUpload(user.getFile());
+		user.setUserImgUrl(url);
+		service.updateUser(user);
+		return "user/myPageUser";
+	}
 }

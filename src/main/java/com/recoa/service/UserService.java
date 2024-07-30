@@ -46,5 +46,8 @@ public class UserService implements UserDetailsService{
 		return dao.selectUser(id);
 	}
 	
-	
+	// 회원 정보 수정
+	public int updateUser(User user) {
+		return dao.updateUser(user);
+	}
 }

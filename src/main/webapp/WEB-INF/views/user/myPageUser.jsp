@@ -10,6 +10,7 @@
 <body>
 	<h1>마이페이지</h1>
 	<!-- <sec:authentication property="principal" var="user" /> -->
+	<a href="/updateUser">정보 수정하기</a>
 	<div>
 		<h2>프로필 이미지</h2>
 		<img src="/recoaImg/user/${user.userImgUrl}" />
@@ -43,6 +44,6 @@
 		<h2>이메일</h2>
 		<p>${user.userEmail}</p>
 	</div>
-		
+			
 </body>
 </html>
