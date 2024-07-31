@@ -40,7 +40,24 @@ public class UserService implements UserDetailsService{
 		user.setUserPwd(encodePw);
 		return dao.registerUser(user);
 	}
-
+	// 회원가입_아이디 중복 확인
+	public User idCheck(String userId) {
+		return dao.idCheck(userId);
+	}
+	// 회원가입_핸드폰번호 중복 확인
+	public User phoneCheck(String userPhone) {
+		return dao.phoneCheck(userPhone);
+	}
+	// 회원가입_이메일 중복 확인
+	public User emailCheck(String userEmail) {
+		return dao.emailCheck(userEmail);
+	}
+	// 회원가입_닉네임 중복 확인
+	public User nickNameCheck(String userNickname) {
+		return dao.nickNameCheck(userNickname);
+	}
+		
+	
 	// 회원 개인 정보 확인
 	public User selectUser(String id) {
 		return dao.selectUser(id);

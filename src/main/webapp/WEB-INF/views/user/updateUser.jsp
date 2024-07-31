@@ -11,6 +11,7 @@
 	<h2>회원 정보 수정</h2>
 	<form action="/updateUser" method="post"  enctype="multipart/form-data">
 	<sec:authentication property="principal" var="user" />
+	${user}
 		아이디 : <input type="text" name="userId" placeholder="${user.userId}" readonly value="${user.userId}"><br>
 		이름 : <input type="text" name="userRealName" placeholder="${user.userRealName}"><br>
 		닉네임 : <input type="text" name="userNickname" placeholder="${user.userNickname}"><br>

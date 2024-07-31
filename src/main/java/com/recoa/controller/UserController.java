@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.recoa.model.vo.User;
@@ -36,10 +37,11 @@ public class UserController {
 	
 	/* ---------------------------------------- */
 	// 회원 마이 페이지 이동
-	@GetMapping("/myPageUser")
+	/*@GetMapping("/myPageUser")
 	public String myPageUser() {
 		return "user/myPageUser";
-	}
+	}*/
+	
 	
 	// 관리자 페이지 이동
 	@GetMapping("/adminPage")
@@ -65,10 +67,51 @@ public class UserController {
 		if(!user.getFile().isEmpty()) {
 			String url = fileUpload(user.getFile());
 			user.setUserImgUrl(url);
-		}		
+		} 
 		service.registerUser(user);
 		return "user/loginUser";
 	}
+	// 회원가입_아이디 중복 확인
+	@ResponseBody
+	@PostMapping("/idCheck")
+	public boolean idCheck(String userId) {
+		User user = service.idCheck(userId);
+		if(user==null) {
+			return false;
+		}
+		return true;
+	}
+	// 회원가입_핸드폰번호 중복 확인
+	@ResponseBody
+	@PostMapping("/phoneCheck")
+	public boolean phoneCheck(String userPhone) {
+		User user = service.phoneCheck(userPhone);
+		if(user==null) {
+			return false;
+		}
+		return true;
+	}
+	// 회원가입_이메일 중복 확인
+	@ResponseBody
+	@PostMapping("/emailCheck")
+	public boolean emailCheck(String userEmail) {
+		User user = service.emailCheck(userEmail);
+		if(user==null) {
+			return false;
+		}
+		return true;
+	}
+	// 회원가입_닉네임 중복 확인
+	@ResponseBody
+	@PostMapping("/nickNameCheck")
+	public boolean nickNameCheck(String userNickname) {
+		User user = service.nickNameCheck(userNickname);
+		if(user==null) {
+			return false;
+		}
+		return true;
+	}
+	
 	
 	// 회원 개인 정보 확인
 	@GetMapping("/selectUser")
@@ -91,6 +134,6 @@ public class UserController {
 		String url = fileUpload(user.getFile());
 		user.setUserImgUrl(url);
 		service.updateUser(user);
-		return "user/myPageUser";
+		return "user/updateUser";
 	}
 }

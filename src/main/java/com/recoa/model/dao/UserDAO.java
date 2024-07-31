@@ -16,6 +16,23 @@ public class UserDAO {
 	public int registerUser(User user) {
 		return session.insert("userMapper.registerUser", user);
 	}
+	// 회원가입_아이디 중복 확인
+	public User idCheck(String userId) {
+		return session.selectOne("userMapper.idCheck", userId);
+	}
+	// 회원가입_핸드폰번호 중복 확인
+	public User phoneCheck(String userPhone) {
+		return session.selectOne("userMapper.phoneCheck", userPhone);
+	}
+	// 회원가입_이메일 중복 확인
+	public User emailCheck(String userEmail) {
+		return session.selectOne("userMapper.emailCheck", userEmail);
+	}
+	// 회원가입_닉네임 중복 확인
+	public User nickNameCheck(String userNickname) {
+		return session.selectOne("userMapper.nickNameCheck", userNickname);
+	}
+	
 	
 	// 로그인
 	public User loginById(String id) {

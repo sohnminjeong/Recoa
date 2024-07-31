@@ -28,7 +28,7 @@
 	            </div>
 	            <div class="input-group">
 	              <i class='bx bxs-lock-alt'></i>
-	              <input type="text" placeholder="이름" name="userName">
+	              <input type="text" placeholder="이름" name="userRealName">
 	            </div>
 	            <div class="input-group">
 	              <i class='bx bxs-lock-alt'></i>
@@ -36,6 +36,9 @@
 	            </div>
 	            <div class="input-group">
 	              <i class='bx bxs-lock-alt'></i>
+	              <!--  <img src="resources/images/user/default_profile.png"/> -->
+	             
+	              
 	              <input type="file" name="file" id="userImgUrl">
 	            </div>
 	            <div class="input-group">
