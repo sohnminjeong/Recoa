@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,12 +9,19 @@
 <title>Insert title here</title>
 </head>
 <body>
+<sec:authentication property="principal" var="user" />
 	<h1>마이페이지</h1>
-	<!-- <sec:authentication property="principal" var="user" /> -->
 	<a href="/updateUser">정보 수정하기</a>
 	<div>
 		<h2>프로필 이미지</h2>
-		<img src="/recoaImg/user/${user.userImgUrl}" />
+		<c:choose>
+			<c:when test="${user.userImgUrl==null}">
+				<img src="resources/images/user/default_profile.png"/>
+			</c:when>
+			<c:otherwise>
+				<img src="/recoaImg/user/${user.userImgUrl}" />
+			</c:otherwise>
+		</c:choose>
 	</div>
 	<div>
 		<h2>아이디</h2>

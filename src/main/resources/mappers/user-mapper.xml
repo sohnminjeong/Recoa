@@ -16,8 +16,8 @@
 	
 	<!-- 회원가입 -->
 	<insert id="registerUser" parameterType="User" useGeneratedKeys="true" keyProperty="userCode" keyColumn="user_code">
-		INSERT INTO USER(user_id, user_pwd, user_name, user_nickname, user_img_url, user_phone, user_adr, user_adr_detail, user_email)
-		VALUES(#{userId}, #{userPwd}, #{userRealName}, #{userNickname}, #{userImgUrl}, #{userPhone}, #{userAdr}, #{userAdrDetail}, #{userEmail})
+		INSERT INTO USER(user_id, user_pwd, user_name, user_nickname, user_phone, user_adr, user_adr_detail, user_email)
+		VALUES(#{userId}, #{userPwd}, #{userRealName}, #{userNickname}, #{userPhone}, #{userAdr}, #{userAdrDetail}, #{userEmail})
 	</insert>
 	
 	<!-- 회원가입 아이디 중복 확인 -->

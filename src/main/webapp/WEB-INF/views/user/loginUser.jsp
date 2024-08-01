@@ -34,13 +34,7 @@
 	              <i class='bx bxs-lock-alt'></i>
 	              <input type="text" placeholder="닉네임" name="userNickname">
 	            </div>
-	            <div class="input-group">
-	              <i class='bx bxs-lock-alt'></i>
-	              <!--  <img src="resources/images/user/default_profile.png"/> -->
-	             
-	              
-	              <input type="file" name="file" id="userImgUrl">
-	            </div>
+	        
 	            <div class="input-group">
 	              <i class='bx bxs-lock-alt'></i>
 	              <input type="text" placeholder="핸드폰번호" name="userPhone">
@@ -70,10 +64,8 @@
             <p>
               <span>
                 회원일 경우 > 
-                <!-- Already have an account? -->
               </span>
               <b onclick="toggle()" class="pointer">
-                <!-- Sign in here -->
                 로그인
               </b>
             </p>
@@ -106,11 +98,9 @@
 	            </p>
 	            <p>
 	              <span>
-	                <!-- Don't have an account? -->
 	                비회원일 경우 > 
 	              </span>
 	              <b onclick="toggle()" class="pointer">
-	                <!-- Sign up here -->
 	                회원가입
 	              </b>
 	            </p>

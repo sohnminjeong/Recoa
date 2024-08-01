@@ -64,10 +64,11 @@ public class UserController {
 	// 회원가입 로직
 	@PostMapping("/registerUser")
 	public String registerUser(User user) throws IllegalStateException, IOException {
-		if(!user.getFile().isEmpty()) {
+		/*if(!user.getFile().isEmpty()) {
 			String url = fileUpload(user.getFile());
 			user.setUserImgUrl(url);
-		} 
+		} */
+		
 		service.registerUser(user);
 		return "user/loginUser";
 	}
@@ -113,7 +114,7 @@ public class UserController {
 	}
 	
 	
-	// 회원 개인 정보 확인
+	// 회원 마이 페이지
 	@GetMapping("/selectUser")
 	public String selectUser(Model model, String id) {
 		User user = service.selectUser(id);
@@ -129,11 +130,12 @@ public class UserController {
 		return "user/updateUser";
 	}
 	
+	@ResponseBody
 	@PostMapping("/updateUser")
 	public String updateUser(User user) throws IllegalStateException, IOException {
 		String url = fileUpload(user.getFile());
 		user.setUserImgUrl(url);
 		service.updateUser(user);
-		return "user/updateUser";
+		return "user/myPageUser";
 	}
 }
