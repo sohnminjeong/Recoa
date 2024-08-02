@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="../../../resources/css/user/loginUser.css" />
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
 <body>
 <div id="container" class="container">
@@ -20,11 +21,13 @@
           	<form action="/registerUser" method="post"enctype="multipart/form-data">
 	            <div class="input-group">
 	              <i class='bx bxs-user'></i>
-	              <input type="text" placeholder="아이디" name="userId">
+	              <input type="text" placeholder="아이디" name="userId" id="userId">
+	              <span id="idCheck"></span>
 	            </div>
 	            <div class="input-group">
 	              <i class='bx bxs-lock-alt'></i>
-	              <input type="password" placeholder="비밀번호" name="userPwd">
+	              <input type="password" placeholder="비밀번호" name="userPwd" id="userPwd">
+	              <span id="pwdCheck"></span>
 	            </div>
 	            <div class="input-group">
 	              <i class='bx bxs-lock-alt'></i>
@@ -32,12 +35,14 @@
 	            </div>
 	            <div class="input-group">
 	              <i class='bx bxs-lock-alt'></i>
-	              <input type="text" placeholder="닉네임" name="userNickname">
+	              <input type="text" placeholder="닉네임" name="userNickname" id="userNickname">
+	              <span id="nickNameCheck"></span>
 	            </div>
 	        
 	            <div class="input-group">
 	              <i class='bx bxs-lock-alt'></i>
-	              <input type="text" placeholder="핸드폰번호" name="userPhone">
+	              <input type="text" placeholder="핸드폰번호" name="userPhone" id="userPhone">
+	               <span id="userPhoneCheck"></span>
 	            </div>
 	            <div class="input-group">
 	              <i class='bx bxs-lock-alt'></i>
@@ -49,14 +54,9 @@
 	            </div>
 	            <div class="input-group">
 	              <i class='bx bx-mail-send'></i>
-	              <input type="email" placeholder="이메일" name="userEmail">
-	            </div>     
-	           <!--  
-	           <div class="input-group">
-	              <i class='bx bxs-lock-alt'></i>
-	              <input type="password" placeholder="Confirm password">
+	              <input type="email" placeholder="이메일" name="userEmail" id="userEmail">
+	              <span id="emailCheck"></span>
 	            </div>
-	           -->
 	            <button>
 	              회원가입
 	            </button>
@@ -145,5 +145,6 @@
   </div>
 
 	<script src="../../../resources/js/user/loginUser.js"></script>
+	<script src="../../../resources/js/user/registerUser.js"></script>
 </body>
 </html>
