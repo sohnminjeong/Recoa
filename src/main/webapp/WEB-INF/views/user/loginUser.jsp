@@ -18,7 +18,7 @@
       <div class="col align-items-center flex-col sign-up">
         <div class="form-wrapper align-items-center">
           <div class="form sign-up">
-          	<form action="/registerUser" method="post"enctype="multipart/form-data">
+          	<form action="/registerUser" method="post" id="registerUser" onsubmit="return validate()">
 	            <div class="input-group">
 	              <i class='bx bxs-user'></i>
 	              <input type="text" placeholder="아이디" name="userId" id="userId">
@@ -57,7 +57,7 @@
 	              <input type="email" placeholder="이메일" name="userEmail" id="userEmail">
 	              <span id="emailCheck"></span>
 	            </div>
-	            <button>
+	            <button type="submit">
 	              회원가입
 	            </button>
             </form>
@@ -81,11 +81,11 @@
 		     <form action="login" method="post">
 	            <div class="input-group">
 	              <i class='bx bxs-user'></i>
-	              <input type="text" placeholder="아이디" name="username" id="userId">
+	              <input type="text" placeholder="아이디" name="username" >
 	            </div>
 	            <div class="input-group">
 	              <i class='bx bxs-lock-alt'></i>
-	              <input type="password" placeholder="비밀번호" name="password" id="userPwd">
+	              <input type="password" placeholder="비밀번호" name="password" >
 	            </div>
 	            <button>
 	              로그인
