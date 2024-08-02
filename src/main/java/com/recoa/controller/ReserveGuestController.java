@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
@@ -15,8 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
 import com.recoa.model.vo.ReserveGuest;
 import com.recoa.service.ReserveGuestService;
@@ -32,6 +29,9 @@ public class ReserveGuestController {
 	public String reserveGuest() {
 		return "guest/reserveGuest";
 	}
+	
+
+	
 	
 	@InitBinder
     public void initBinder(WebDataBinder binder) {

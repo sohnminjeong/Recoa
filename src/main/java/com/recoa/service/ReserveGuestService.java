@@ -12,6 +12,8 @@ public class ReserveGuestService {
 	@Autowired
 	private ReserveGuestDAO dao;
 	
+	
+	
 	public int registeGuest(ReserveGuest reserveguest) {
 		return dao.registerGuest(reserveguest);
 	}

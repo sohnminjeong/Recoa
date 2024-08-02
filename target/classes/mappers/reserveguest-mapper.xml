@@ -6,18 +6,19 @@
 		<result property="userCode" column="user_code"/>
 		<result property="roomType" column="room_type"/>
 		<result property="roomCode" column="room_code"/>
-		<result property="startTime" column="startTime"/>
-		<result property="endTIme" column="endTime"/>
+		<result property="startTime" column="start_time"/>
+		<result property="endTIme" column="end_time"/>
 		<result property="regiDate" column="regi_date"/>
 		<result property="status" column="status"/>
 	</resultMap>
 	
 	<!-- 게스트하우스 예약 테이블 -->
-	
+
+
 	<!-- 게스트하우스 예약 등록 -->
 	<insert id="registerGuestReserve" parameterType="ReserveGuest" useGeneratedKeys="true" keyProperty="reserveGuestCode" keyColumn="reserveGuestCode">
 		INSERT INTO reserve_guest(user_code, room_type, room_code, start_time, end_time) 
 		VALUES(#{userCode}, #{roomType}, #{roomCode}, #{startTime}, #{endTime})
 	</insert>
-	
+
 </mapper>

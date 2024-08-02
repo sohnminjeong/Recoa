@@ -12,6 +12,7 @@ public class ReserveGuestDAO {
 	@Autowired
 	private SqlSessionTemplate session;
 	
+	
 	// 게스트하우스 예약 등록
 	public int registerGuest(ReserveGuest reserveguest) {
 		return session.insert("ReserveGuest.registerGuestReserve", reserveguest);
