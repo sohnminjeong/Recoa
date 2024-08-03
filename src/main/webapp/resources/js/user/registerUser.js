@@ -1,11 +1,15 @@
 let idCheck = false;
 let idDupCheck = false;
 let pwdCheck = false;
+let nameCheck = false;
 let userNicknameCheck = false;
 let userPhoneCheck = false;
 let userPhoneDupCheck=false;
+let adrCheck = false;
+let adrDetailCheck = false;
 let emailDupCheck = false;
 let emailCheck = false;
+
 
 // 아이디 정규표현식
 $('#userId').keyup((e) =>{
@@ -52,6 +56,22 @@ $('#userPwd').keyup((e) =>{
 		pwdCheck = true;
 	}
 });
+
+// 이름 정규표현식
+$('#userRealName').keyup((e) => {
+	let userRealName = $('#userRealName').val();
+	
+	const regExp = /^[가-힣]{2,}$/;
+	
+	if(regExp.test(userRealName) || userRealName === ""){
+		$('#realNameCheck').text("").css("color", "gray");
+		nameCheck = false;
+	} else {
+		$('#realNameCheck').text("한글로만 이루어진 2글자 이상의 이름을 입력하세요.").css("color", "gray");
+		nameCheck = true;
+	}
+});
+
 
 // 닉네임 중복확인
 $('#userNickname').keyup(() => {
@@ -106,6 +126,33 @@ $('#userPhone').keyup(() => {
 	})
 })
 
+// 거주 동 정규표현식
+$('#userAdr').keyup((e) =>{
+	let userAdr=$(e.target).val(); 
+	const regExp = /^(10[1-9]|110|20[1-9]|210|30[1-9]|310)$/;
+	if(regExp.test(userAdr)){
+		$('#userAdrCheck').text("").css("color", "gray");
+		adrCheck = false;
+	} else {
+		$('#userAdrCheck').text("거주하고 있는 동의 숫자만 작성해주세요.").css("color", "gray");
+		adrCheck = true;
+	}
+});
+
+
+// 거주 호수 정규표현식
+$('#userAdrDetail').keyup((e) =>{
+	let userAdrDetail=$(e.target).val(); 
+	const regExp = /^(0?[1-9]|1[0-9]|2[0-5])0[1-4]$/;
+	if(regExp.test(userAdrDetail)){
+		$('#userAdrDetailCheck').text("").css("color", "gray");
+		adrDetailCheck = false;
+	} else {
+		$('#userAdrDetailCheck').text("거주하고 있는 호수의 숫자만 작성해주세요.").css("color", "gray");
+		adrDetailCheck = true;
+	}
+});
+
 // 이메일 정규표현식
 $('#userEmail').keyup((e) =>{
 	let userEmail=$(e.target).val(); 
@@ -139,4 +186,67 @@ $('#userEmail').keyup(() => {
 	})
 })
 
+function validate(){
+
+	if(idCheck){
+		userId.focus();
+		return false;
+	} else if(userId.value==''){
+		userId.focus();
+		return false;
+	}else if(idDupCheck){
+		userId.focus();
+		return false;
+	}else if(pwdCheck){
+		userPwd.focus();
+		return false;
+	}else if(userPwd.value==''){
+		userPwd.focus();
+		return false;
+	}else if(nameCheck){
+		userRealName.focus();
+		return false;
+	}else if(userRealName.value==''){
+		userRealName.focus();
+		return false;
+	}else if(userNickname.value==''){
+		userNickname.focus();
+		return false;
+	}else if(userNicknameCheck){
+		userNickname.focus();
+		return false;
+	}else if(userPhone.value==''){
+		userPhone.focus();
+		return false;
+	}else if(userPhoneCheck){
+		userPhone.focus();
+		return false;
+	}else if(userPhoneDupCheck){
+		userPhone.focus();
+		return false;
+	}else if(userAdr.value==''){
+		userAdr.focus();
+		return false;
+	}else if(adrCheck){
+		userAdr.focus();
+		return false;
+	}else if(userAdrDetail.value==''){
+		userAdrDetail.focus();
+		return false;
+	}else if(adrDetailCheck){
+		userAdrDetail.focus();
+		return false;
+	}else if(emailCheck){
+		userEmail.focus();
+		return false;
+	}else if(emailDupCheck){
+		userEmail.focus();
+		return false;
+	}else if(userEmail.value==''){
+		userEmail.focus();
+		return false;
+	}
+	 alert("회원가입 완료하였습니다. 로그인 부탁드립니다.");
+	 return true; 
+}
 

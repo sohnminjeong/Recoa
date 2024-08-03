@@ -26,31 +26,34 @@
 	            </div>
 	            <div class="input-group">
 	              <i class='bx bxs-lock-alt'></i>
-	              <input type="password" placeholder="비밀번호" name="userPwd" id="userPwd">
+	              <input type="password" placeholder="비밀번호" name="userPwd" id="userPwd" >
 	              <span id="pwdCheck"></span>
 	            </div>
 	            <div class="input-group">
 	              <i class='bx bxs-lock-alt'></i>
-	              <input type="text" placeholder="이름" name="userRealName">
+	              <input type="text" placeholder="이름" name="userRealName" id="userRealName" >
+	              <span id="realNameCheck"></span>
 	            </div>
 	            <div class="input-group">
 	              <i class='bx bxs-lock-alt'></i>
-	              <input type="text" placeholder="닉네임" name="userNickname" id="userNickname">
+	              <input type="text" placeholder="닉네임" name="userNickname" id="userNickname" >
 	              <span id="nickNameCheck"></span>
 	            </div>
 	        
 	            <div class="input-group">
 	              <i class='bx bxs-lock-alt'></i>
-	              <input type="text" placeholder="핸드폰번호" name="userPhone" id="userPhone">
-	               <span id="userPhoneCheck"></span>
+	              <input type="text" placeholder="핸드폰번호" name="userPhone" id="userPhone" >
+	              <span id="userPhoneCheck"></span>
 	            </div>
 	            <div class="input-group">
 	              <i class='bx bxs-lock-alt'></i>
-	              <input type="text" placeholder="거주 동" name="userAdr">
+	              <input type="text" placeholder="거주 동" name="userAdr" id="userAdr" >
+	              <span id="userAdrCheck"></span>
 	            </div>
 	            <div class="input-group">
 	              <i class='bx bxs-lock-alt'></i>
-	              <input type="text" placeholder="거주 호수" name="userAdrDetail">
+	              <input type="text" placeholder="거주 호수" name="userAdrDetail" id="userAdrDetail">
+	              <span id="userAdrDetailCheck"></span>
 	            </div>
 	            <div class="input-group">
 	              <i class='bx bx-mail-send'></i>
