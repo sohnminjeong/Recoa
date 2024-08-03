@@ -19,7 +19,7 @@ $('#userId').keyup((e) =>{
 		$('#idCheck').text("").css("color", "gray");
 		idCheck = false;
 	} else {
-		$('#idCheck').text("영문자, 숫자 포함하여 총 4~12자로 입력하세요.").css("color", "gray");
+		$('#idCheck').text("영문자, 숫자 포함하여 총 4~12자로 입력하세요.(반드시 첫문자는 영문자로 시작)").css("color", "gray");
 		idCheck = true;
 	}
 });
@@ -101,7 +101,7 @@ $('#userPhone').keyup((e) =>{
 		$('#userPhoneCheck').text("").css("color", "gray");
 		userPhoneCheck = false;
 	} else {
-		$('#userPhoneCheck').text("-포함하여 작성해주세요").css("color", "gray");
+		$('#userPhoneCheck').text("하이픈(-) 포함하여 작성해주세요").css("color", "gray");
 		userPhoneCheck = true;
 	}
 });

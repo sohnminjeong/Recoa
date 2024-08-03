@@ -11,7 +11,8 @@
 <body>
 <sec:authentication property="principal" var="user" />
 	<h1>마이페이지</h1>
-	<a href="/updateUser">정보 수정하기</a>
+	<a href="/updateUser">내정보 설정</a><br>
+	<a href="/updateUserPwd">비밀번호 변경</a>
 	<div>
 		<h2>프로필 이미지</h2>
 		<c:choose>

@@ -57,12 +57,21 @@ public class UserService implements UserDetailsService{
 		return dao.nickNameCheck(userNickname);
 	}
 		
-	
 	// 회원 개인 정보 확인
 	public User selectUser(String id) {
 		return dao.selectUser(id);
 	}
 	
+	// 비밀번호 변경위한 현재 비밀번호 확인
+	public User selectUserPwd(User user) {
+		return dao.selectUserPwd(user);
+	}
+	
+	// 비밀번호 변경 
+	public int updateUserPwd(User user) {
+		return dao.updateUserPwd(user);
+	}
+
 	// 회원 정보 수정
 	public int updateUser(User user) {
 		return dao.updateUser(user);

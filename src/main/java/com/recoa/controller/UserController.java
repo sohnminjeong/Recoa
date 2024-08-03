@@ -113,12 +113,34 @@ public class UserController {
 		return true;
 	}
 	
-	
 	// 회원 마이 페이지
 	@GetMapping("/selectUser")
 	public String selectUser(Model model, String id) {
 		User user = service.selectUser(id);
 		model.addAttribute("user", user);
+		return "user/myPageUser";
+	}
+	
+	
+	// 비밀번호 변경
+	@GetMapping("/updateUserPwd")
+	public String updateUserPwd() {
+		return "user/updateUserPwd";
+	}
+	
+	@ResponseBody
+	@PostMapping("/selectUserPwd")
+	public boolean selectUserPwd(User user) {
+		User userCheck = service.selectUserPwd(user);
+		if(userCheck==null) {
+			return false;
+		}
+		return true;
+	}
+	
+	@PostMapping("/updateUserPwd")
+	public String updateUserPwd(User user) {
+		service.updateUserPwd(user);
 		return "user/myPageUser";
 	}
 	
@@ -129,6 +151,7 @@ public class UserController {
 		model.addAttribute("user", user);
 		return "user/updateUser";
 	}
+	
 	
 	@ResponseBody
 	@PostMapping("/updateUser")
