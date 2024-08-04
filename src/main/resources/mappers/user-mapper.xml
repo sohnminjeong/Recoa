@@ -71,7 +71,7 @@
 		UPDATE user
 		SET
 		user_pwd=#{userPwd}
-		WHERE user_code=#{userCode}
+		WHERE user_id=#{userId}
 	</update>
 	
 	<!-- 회원 정보 수정 -->

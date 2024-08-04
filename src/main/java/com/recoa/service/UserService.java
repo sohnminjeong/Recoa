@@ -69,9 +69,11 @@ public class UserService implements UserDetailsService{
 	
 	// 비밀번호 변경 
 	public int updateUserPwd(User user) {
+		String encodePw = bcpe.encode(user.getUserPwd());
+		user.setUserPwd(encodePw);
 		return dao.updateUserPwd(user);
 	}
-
+	
 	// 회원 정보 수정
 	public int updateUser(User user) {
 		return dao.updateUser(user);

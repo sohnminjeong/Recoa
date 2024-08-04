@@ -41,14 +41,7 @@ public class UserController {
 		return filename;
 	}
 	
-	/* ---------------------------------------- */
-	// 회원 마이 페이지 이동
-	/*@GetMapping("/myPageUser")
-	public String myPageUser() {
-		return "user/myPageUser";
-	}*/
-	
-	
+	/* ---------------------------------------- */	
 	// 관리자 페이지 이동
 	@GetMapping("/adminPage")
 	public String adminPage() {
@@ -61,6 +54,7 @@ public class UserController {
 		return "user/loginUser";
 	}
 
+	/*------------------------ 회원가입 관련 ---------------------------*/
 	// 회원가입 페이지 이동
 	@GetMapping("/registerUser")
 	public String registerUser() {
@@ -69,15 +63,11 @@ public class UserController {
 	
 	// 회원가입 로직
 	@PostMapping("/registerUser")
-	public String registerUser(User user) throws IllegalStateException, IOException {
-		/*if(!user.getFile().isEmpty()) {
-			String url = fileUpload(user.getFile());
-			user.setUserImgUrl(url);
-		} */
-		
+	public String registerUser(User user) throws IllegalStateException, IOException {		
 		service.registerUser(user);
 		return "user/loginUser";
 	}
+	
 	// 회원가입_아이디 중복 확인
 	@ResponseBody
 	@PostMapping("/idCheck")
@@ -119,6 +109,7 @@ public class UserController {
 		return true;
 	}
 	
+	
 	// 회원 마이 페이지
 	@GetMapping("/selectUser")
 	public String selectUser(Model model, String id) {
@@ -127,8 +118,8 @@ public class UserController {
 		return "user/myPageUser";
 	}
 	
-	
-	// 비밀번호 변경
+	/*-------------------------회원 정보 수정-----------------------------*/
+	// 비밀번호 변경 페이지 이동
 	@GetMapping("/updateUserPwd")
 	public String updateUserPwd(Model model, String id) {
 		User user = service.selectUser(id);
@@ -136,6 +127,7 @@ public class UserController {
 		return "user/updateUserPwd";
 	}
 	
+	// 비밀번호 변경 시_현재 비밀번호 일치여부 확인
 	@ResponseBody
 	@PostMapping("/selectUserPwd")
 	public boolean selectUserPwd(@RequestParam Map<String, Object> map) {
@@ -151,13 +143,15 @@ public class UserController {
 		return true;
 	}
 	
+	// 비밀번호 변경
 	@PostMapping("/updateUserPwd")
 	public String updateUserPwd(User user) {
+		System.out.println("user : "+user);
 		service.updateUserPwd(user);
 		return "user/myPageUser";
 	}
 	
-	// 회원정보 수정 페이지 이동
+	// 내정보 설정 페이지 이동
 	@GetMapping("/updateUser")
 	public String updateUser(Model model, String id) {
 		User user = service.selectUser(id);
@@ -165,7 +159,7 @@ public class UserController {
 		return "user/updateUser";
 	}
 	
-	
+	// 수리중
 	@ResponseBody
 	@PostMapping("/updateUser")
 	public String updateUser(User user) throws IllegalStateException, IOException {
