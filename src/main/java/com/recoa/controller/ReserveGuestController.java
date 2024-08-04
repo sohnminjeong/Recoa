@@ -12,8 +12,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import com.recoa.model.vo.ReserveGuest;
 import com.recoa.service.ReserveGuestService;
@@ -23,6 +27,26 @@ public class ReserveGuestController {
 
 	@Autowired
 	private ReserveGuestService service;
+	
+	// 객실 예약 가능 여부 확인하기
+    @GetMapping("/availableRooms")
+    @ResponseBody
+    public List<Map<String, Object>> getAvailableRooms(
+            @RequestParam("startTime") String startTime,
+            @RequestParam("endTime") String endTime,
+            @RequestParam(value="roomType", defaultValue = "1") int roomType) {
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("startTime", startTime);
+        params.put("endTime", endTime);
+        params.put("roomType", roomType);
+
+        System.out.println("Available rooms: " + service.getAvailableRooms(params)); // 로그 추가
+        System.out.println("controller : " + service.getAvailableRooms(params));
+        System.out.println("roomType : " + roomType);
+        return service.getAvailableRooms(params); // JSP 페이지 이름
+    }
+	
 	
 	// 예약하기 페이지 불러오기
 	@GetMapping("/reserveGuest")

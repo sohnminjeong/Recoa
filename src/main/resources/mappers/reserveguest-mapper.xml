@@ -14,6 +14,26 @@
 	
 	<!-- 게스트하우스 예약 테이블 -->
 
+    <!-- 예약 가능 여부 조회 -->
+    <select id="checkRoom" parameterType="map" resultType="map">
+         <![CDATA[
+        SELECT room_code, room_type
+        FROM reserve_guest
+        WHERE room_type = #{roomType}
+        AND room_code IN (
+            SELECT room_code 
+            FROM reserve_guest 
+            WHERE room_type = #{roomType} 
+            AND (
+            (#{startTime} < start_time AND #{endTime} > start_time) OR
+            (#{startTime} = start_time AND #{endTime} < end_time) OR
+            (#{startTime} = start_time AND #{endTime} = end_time) OR
+            (#{startTime} > start_time AND #{startTime} < end_time AND #{endTime} = end_time)
+            )
+        )
+        ]]>
+    </select>
+
 
 	<!-- 게스트하우스 예약 등록 -->
 	<insert id="registerGuestReserve" parameterType="ReserveGuest" useGeneratedKeys="true" keyProperty="reserveGuestCode" keyColumn="reserveGuestCode">

@@ -9,6 +9,10 @@
 <meta charset="UTF-8">
 
 <title>Insert title here</title>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 </head>
 
 <body>
@@ -27,30 +31,22 @@
 		<input type="text" name="userCode" value="${user.userCode}" readonly/>
 		
 		<p>객실 타입</p>
-		<select name="roomType">
+		<select name="roomType" id="roomType">
 			<option value="1">원룸</option>
 			<option value="2">투룸</option>
 		</select>
 		
 		<p>객실 번호</p>
-			<select name="roomCode">
-                <option value="1">1호실</option>
-                <option value="2">2호실</option>
-                <option value="3">3호실</option>
-                <option value="4">4호실</option>
-                <option value="5">5호실</option>
-                <option value="6">6호실</option>
-                <option value="7">7호실</option>
+
+            <select name="roomCode" id="roomCode">
+            <!-- AJAX -->
             </select>
 		</div>
 		<hr/>
 		<input type="submit" value="게스트하우스 예약" id="submit">
 	</form>
 
-	<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+	
 	
 	<script>
 		$(document).ready(function() {
@@ -58,6 +54,43 @@
             let today = moment().startOf('day'); // 오늘 날짜의 시작
             let tomorrow = moment(today).add(1, 'days'); // 내일 날짜
 
+         // ajax를 통해 동적으로 예약 가능한 객실 정보를 가져옴
+            function fetchAvailableRooms(startTime, endTime, roomType) {
+                $.ajax({
+                    url: '/availableRooms',
+                    type: 'GET',
+                    data: {
+                        startTime: startTime,
+                        endTime: endTime,
+                        roomType: roomType
+                    },
+                    success: function(data) {
+                    	console.log(data);
+                        updateRoomOptions(data);
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.error("AJAX Error: " + textStatus + ": " + errorThrown);
+                    }
+                });
+            }
+            
+            // 가져온 정보들을 바탕으로 select option를 출력
+            function updateRoomOptions(rooms) {
+			    let roomSelect = $('#roomCode');
+			    roomSelect.empty(); // 기존 옵션을 제거합니다.
+			    for (let i = 1; i <= 7; i++) { // 예시로 1호실부터 7호실까지
+			    	let isReserved = rooms.some(room => room.room_code == i);
+			        let optionText = i + "호실";
+		            if (isReserved) {
+		                optionText += " (예약 마감)";
+		                roomSelect.append('<option value="' + i + '" disabled>' + optionText + '</option>');
+		            } else {
+		                roomSelect.append('<option value="' + i + '">' + optionText + '</option>');
+		            }
+			    }
+			}
+            
+            // daterangepicker
             $('#daterange').daterangepicker({
                 opens: 'left',
                 startDate: tomorrow,
@@ -72,9 +105,16 @@
             }, function(start, end, label) {
                 $('#startTime').val(start.format('YYYY-MM-DDTHH:mm:ss'));
                 $('#endTime').val(end.format('YYYY-MM-DDTHH:mm:ss'));
-               
+                fetchAvailableRooms(start.format('YYYY-MM-DDTHH:mm:ss'), end.format('YYYY-MM-DDTHH:mm:ss'));
             });
 
+            $('#roomType').change(function() {
+                let start = $('#daterange').data('daterangepicker').startDate;
+                let end = $('#daterange').data('daterangepicker').endDate;
+                fetchAvailableRooms(start.format('YYYY-MM-DDTHH:mm:ss'), end.format('YYYY-MM-DDTHH:mm:ss'), $(this).val());
+            });
+            
+            
             $('#reserveGuest').submit(function() {
                 let daterange = $('#daterange').val();
                 let dates = daterange.split(' - ');
@@ -82,7 +122,6 @@
                 $('#endTime').val(moment(dates[1], 'YYYY/MM/DD').format('YYYY-MM-DDTHH:mm:ss'));
             });
             
-
         });
    
 
