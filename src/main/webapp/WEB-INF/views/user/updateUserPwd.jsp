@@ -13,13 +13,15 @@
 <sec:authentication property="principal" var="user" />
 	<h3>비밀번호 변경</h3>
 	<form action="/updateUserPwd" method="post">
-	<input type="text" name="userId" id="userId" value="${user.userId}">
+	<input type="text" name="userId" id="userId" value="${user.userId}" hidden>
 		<input type="text" placeholder="현재 비밀번호" name="userPwd" id="userPwd"><br>
-		<span id="userPwdCheck"></span>
+		<span id="userPwdCheck"></span><br>
 		<input type="text" placeholder="변경할 비밀번호" name="newUserPwd" id="newUserPwd"><br>
-		<span id="newUserPwdCheck"></span>
+		<span id="newUserPwdCheck"></span><br>
 		<input type="text" placeholder="변경할 비밀번호 재입력" name="checkNewUserPwd"><br>
+		<span id="newUserPwdDoubleCheck"></span><br>
 		<button type="submit">비밀번호 변경</button>
+		
 	</form>
 	<script src="../../../resources/js/user/updateUserPwd.js"></script>
 </body>

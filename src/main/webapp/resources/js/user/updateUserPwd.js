@@ -35,3 +35,17 @@ $('#newUserPwd').keyup((e) =>{
 		newPwdCheck = true;
 	}
 });
+
+// 변경할 비밀번호 재입력 일치 확인
+$('#checkNewUserPwd').keyup((e) =>{
+	let checkNewUserPwd=$(e.target).val(); 
+	let newUserPwd = $('#newUserPwd').val();
+	
+	if(checkNewUserPwd==newUserPwd){
+		$('#newUserPwdDoubleCheck').text("??????").css("color", "gray");
+		newPwdCheck = false;
+	} else {
+		$('#newUserPwdDoubleCheck').text("변경할 비밀번호와 일치하지 않습니다.").css("color", "gray");
+		newPwdCheck = true;
+	}
+});
