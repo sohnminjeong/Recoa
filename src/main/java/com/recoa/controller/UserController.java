@@ -2,13 +2,16 @@ package com.recoa.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,6 +23,9 @@ public class UserController {
 
 	@Autowired
 	private UserService service;
+	
+	@Autowired
+	private BCryptPasswordEncoder bcpe;
 	
 	
 	private String path = "C:\\recoaImg\\user\\";
@@ -124,15 +130,22 @@ public class UserController {
 	
 	// 비밀번호 변경
 	@GetMapping("/updateUserPwd")
-	public String updateUserPwd() {
+	public String updateUserPwd(Model model, String id) {
+		User user = service.selectUser(id);
+		model.addAttribute("user", user);
 		return "user/updateUserPwd";
 	}
 	
 	@ResponseBody
 	@PostMapping("/selectUserPwd")
-	public boolean selectUserPwd(User user) {
-		User userCheck = service.selectUserPwd(user);
-		if(userCheck==null) {
+	public boolean selectUserPwd(@RequestParam Map<String, Object> map) {
+		
+		String userId = (String) map.get("userId");
+		String userPwd = (String)map.get("userPwd");
+
+		User userCheck = service.selectUser(userId);
+	
+		if(bcpe.matches(userPwd, userCheck.getPassword())) {
 			return false;
 		}
 		return true;
