@@ -24,6 +24,14 @@
 		</c:otherwise>
 	</c:choose>
 
-	<a href="/reserveGuest">게스트하우스 예약하기</a>
+	<c:choose>
+		<c:when test="${user=='anonymousUser'}">
+			<a href="/loginUser">게스트하우스 예약하기</a><br>
+		</c:when>
+		<c:otherwise>
+			<a href="/reserveGuest">게스트하우스 예약하기</a>
+		</c:otherwise>
+	</c:choose>
+	
 </body>
 </html>
