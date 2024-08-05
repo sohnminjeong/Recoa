@@ -7,8 +7,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://kit.fontawesome.com/cbb1359000.js" crossorigin="anonymous"></script>
 </head>
 <body>
+<%@ include file="WEB-INF/views/main/header.jsp" %>
 	<h1>Recoa 메인 화면 페이지</h1>
 	<sec:authentication property="principal" var="user" />
 	<span>로그인 유저 확인용 : </span> 
