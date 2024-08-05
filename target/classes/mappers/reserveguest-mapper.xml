@@ -23,13 +23,14 @@
         AND room_code IN (
             SELECT room_code 
             FROM reserve_guest 
-            WHERE room_type = #{roomType} 
-            AND (
-            (#{startTime} < start_time AND #{endTime} > start_time) OR
-            (#{startTime} = start_time AND #{endTime} < end_time) OR
-            (#{startTime} = start_time AND #{endTime} = end_time) OR
-            (#{startTime} > start_time AND #{startTime} < end_time AND #{endTime} = end_time)
+            WHERE room_type = #{roomType}
+                        AND (
+                (DATE(#{startTime}) < DATE(start_time) AND DATE(#{endTime}) > DATE(start_time)) OR
+                (DATE(#{startTime}) = DATE(start_time) AND DATE(end_time) > DATE(#{endTime})) OR
+                (DATE(#{startTime}) = DATE(start_time) AND DATE(#{endTime}) = DATE(end_time)) OR
+                (DATE(#{startTime}) > DATE(start_time) AND DATE(#{startTime}) < DATE(end_time) AND DATE(#{endTime}) = DATE(end_time))
             )
+
         )
         ]]>
     </select>
