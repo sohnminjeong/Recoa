@@ -13,7 +13,7 @@
 </head>
 <body>
 <sec:authentication property="principal" var="user" />
-<header>
+<header id="header">
 	<nav id="nav1"><a href="/">Recoa</a></nav>
 	
 	<nav id="nav2">
