@@ -32,6 +32,7 @@
 			<a href="/reserveGuest">게스트하우스 예약하기</a>
 		</c:otherwise>
 	</c:choose>
+	<%@ include file="WEB-INF/views/main/section1.jsp" %>
 	
 </body>
 </html>

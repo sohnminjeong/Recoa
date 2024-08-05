@@ -1,0 +1,34 @@
+.wrap{
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
+.section-content {
+  width: 100vw;
+  height: 90vh;
+  position: fixed;
+
+  background-image: url(/resources/images/main/section1-1.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  
+  animation-name: after;
+  animation-duration: 10s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes after{
+	33%{
+	background-image: url(/resources/images/main/section1-2.jpg);
+	}
+	66%{
+	background-image: url(/resources/images/main/section1-3.png);
+	}
+}
+.section-blackbox {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(365, 365, 365, 0.2);
+}
