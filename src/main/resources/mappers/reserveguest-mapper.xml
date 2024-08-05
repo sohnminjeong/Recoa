@@ -16,7 +16,7 @@
 
     <!-- 예약 가능 여부 조회 -->
     <select id="checkRoom" parameterType="map" resultType="map">
-         <![CDATA[
+        <![CDATA[
         SELECT room_code, room_type
         FROM reserve_guest
         WHERE room_type = #{roomType}
@@ -24,13 +24,13 @@
             SELECT room_code 
             FROM reserve_guest 
             WHERE room_type = #{roomType}
-                        AND (
+            AND (
                 (DATE(#{startTime}) < DATE(start_time) AND DATE(#{endTime}) > DATE(start_time)) OR
                 (DATE(#{startTime}) = DATE(start_time) AND DATE(end_time) > DATE(#{endTime})) OR
                 (DATE(#{startTime}) = DATE(start_time) AND DATE(#{endTime}) = DATE(end_time)) OR
-                (DATE(#{startTime}) > DATE(start_time) AND DATE(#{startTime}) < DATE(end_time) AND DATE(#{endTime}) = DATE(end_time))
+                (DATE(#{startTime}) > DATE(start_time) AND DATE(#{startTime}) < DATE(end_time) AND DATE(#{endTime}) = DATE(end_time)) OR
+                (DATE(#{startTime}) > DATE(start_time) AND DATE(#{startTime}) < DATE(end_time) AND DATE(#{endTime}) > DATE(end_time))
             )
-
         )
         ]]>
     </select>
