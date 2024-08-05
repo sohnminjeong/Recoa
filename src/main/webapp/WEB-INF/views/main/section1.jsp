@@ -13,12 +13,15 @@
 	<div class="section-content">
 	<div class="card fade">
 		<img src="../../resources/images/main/section1-1.png"/>
+		<span class="cardtext">section 1에 관한 설명 어쩌구 저쩌구</span>
 	</div>
 	<div class="card fade">
 		<img src="../../resources/images/main/section1-2.jpg"/>
+		<span class="cardtext">section 2에 관한 설명 어쩌구 저쩌구</span>
 	</div>
 	<div class="card fade">
 		<img src="../../resources/images/main/section1-3.png"/>
+		<span class="cardtext">section 3에 관한 설명 어쩌구 저쩌구</span>
 	</div>
 	<div class="section-blackbox"></div>
 	</div>
