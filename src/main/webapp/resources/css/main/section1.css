@@ -1,34 +1,49 @@
-.wrap{
+.section-content{
+	marin: 0;
+	padding: 0;
+}
+
+.section-content img{
 	width: 100%;
 	height: 100%;
 	overflow: hidden;
 }
 
-.section-content {
-  width: 100vw;
-  height: 90vh;
-  position: fixed;
-
-  background-image: url(/resources/images/main/section1-1.png);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  
-  animation-name: after;
-  animation-duration: 10s;
-  animation-iteration-count: infinite;
+.card{
+	width: 100vw;
+	height: 90vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
-@keyframes after{
-	33%{
-	background-image: url(/resources/images/main/section1-2.jpg);
-	}
-	66%{
-	background-image: url(/resources/images/main/section1-3.png);
-	}
+.wrap{
+	display: flex;
+	justify-content: center;
+    position: relative;
+    margin: auto;
 }
+
+.fade{
+	animation-name: fade;
+	animation-duration: 1.5s;
+}
+
+@keyframes fade {
+    from {
+        opacity: .4
+    }
+    to {
+        opacity: 1
+    }
+}
+
 .section-blackbox {
-  width: 100%;
-  height: 100%;
-  background-color: rgba(365, 365, 365, 0.2);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(365, 365, 365, 0.2); /* 불투명한 검은색 막 */
+    z-index: 1;
 }

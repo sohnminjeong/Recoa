@@ -10,9 +10,20 @@
 </head>
 <body>
 <div class="wrap">
-	<div class="section-content" id="backimg">
-		<div class="section-blackbox"></div>
+	<div class="section-content">
+	<div class="card fade">
+		<img src="../../resources/images/main/section1-1.png"/>
 	</div>
+	<div class="card fade">
+		<img src="../../resources/images/main/section1-2.jpg"/>
+	</div>
+	<div class="card fade">
+		<img src="../../resources/images/main/section1-3.png"/>
+	</div>
+	<div class="section-blackbox"></div>
+	</div>
+	
 </div>
+<script type="text/javascript" src="../../resources/js/main/section1.js"></script>
 </body>
 </html>
