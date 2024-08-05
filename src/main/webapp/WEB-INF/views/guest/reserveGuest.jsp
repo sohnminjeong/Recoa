@@ -27,8 +27,7 @@
 		<input type="hidden" name="endTime" id="endTime"/>
 	</div>
 		<div>
-		<p>유저 코드</p>
-		<input type="text" name="userCode" value="${user.userCode}" readonly/>
+		<input type="hidden" name="userCode" value="${user.userCode}" readonly/>
 		
 		<p>객실 타입</p>
 		<select name="roomType" id="roomType">
