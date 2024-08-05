@@ -25,32 +25,24 @@ $('#userPwd').keyup(() => {
 	})
 })
 
-// 비밀번호 정규표현식 
+// 비밀번호 정규표현식 && 변경할 비밀번호와 현재 비밀번호 다르도록 조건 
 $('#newUserPwd').keyup((e) =>{
 	let newUserPwd=$(e.target).val(); 
 	const regExp = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/;
-	if(regExp.test(newUserPwd)){
+	const userPwd = $('#userPwd').val();
+	if(regExp.test(newUserPwd)&&newUserPwd!=userPwd){
 		$('#newUserPwdCheck').text("").css("color", "gray");
 		newPwdCheck = false;
-	} else {
+		nowAndNewCheck = false;
+	} else if(!regExp.test(newUserPwd)) {
 		$('#newUserPwdCheck').text("영문자, 숫자, 특수문자 포함하여 총 8~15자로 입력하세요.").css("color", "gray");
 		newPwdCheck = true;
+	} else if(newUserPwd==userPwd){
+		$('#newUserPwdCheck').text("현재 비밀번호와 일치합니다. 다시 작성해주세요").css("color", "gray");
+		nowAndNewCheck = true;
 	}
 });
 
-// 변경할 비밀번호와 현재 비밀번호 다르도록 조건 
-$('#newUserPwd').keyup((e) =>{
-	let newUserPwd=$(e.target).val(); 
-	const userPwd = $('#userPwd').val();
-	
-	if(newUserPwd==userPwd){
-		$('#newUserPwdCheck').text("현재 비밀번호와 일치합니다. 다시 작성해주세요").css("color", "gray");
-		nowAndNewCheck = true;
-	} else {
-		$('#newUserPwdCheck').text("").css("color", "gray");
-		nowAndNewCheck = false;
-	}
-});
 
 // 변경할 비밀번호 재입력 일치 확인
 $('#checkNewUserPwd').keyup((e) =>{

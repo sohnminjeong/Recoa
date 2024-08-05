@@ -13,7 +13,6 @@
 <sec:authentication property="principal" var="user" />
 	<h3>비밀번호 변경</h3>
 	<form action="/updateUserPwd" method="post" onsubmit="return validate()">
-	${user}
 		<input type="text" name="userId" id="userId" value="${user.userId}" hidden>	
 		<input type="password" placeholder="현재 비밀번호" name="newUserPwd" id="userPwd"><br>
 		<span id="userPwdCheck"></span><br>
