@@ -7,10 +7,24 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="../../../resources/css/reset.css" />
 <link rel="stylesheet" href="../../../resources/css/user/loginUser.css" />
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<style>
+	#header{
+		position:absolute;
+		z-index:1;
+	}
+	#container{
+		position:relative;
+		z-index:0;
+	}
+</style>
 </head>
 <body>
+<div id="header">
+	<%@ include file="../main/header.jsp" %>
+</div> 
 <div id="container" class="container">
     <!-- FORM SECTION -->
     <div class="row">

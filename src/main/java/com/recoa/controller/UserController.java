@@ -148,7 +148,7 @@ public class UserController {
 	public String updateUserPwd(User user) {
 		System.out.println("user : "+user);
 		service.updateUserPwd(user);
-		return "user/myPageUser";
+		return "redirect:/logout";
 	}
 	
 	// 내정보 설정 페이지 이동
