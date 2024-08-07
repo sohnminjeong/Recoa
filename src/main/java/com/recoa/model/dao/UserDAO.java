@@ -33,7 +33,6 @@ public class UserDAO {
 		return session.selectOne("userMapper.nickNameCheck", userNickname);
 	}
 	
-	
 	// 로그인
 	public User loginById(String id) {
 		return session.selectOne("userMapper.loginById", id);
@@ -44,16 +43,16 @@ public class UserDAO {
 		return session.selectOne("userMapper.selectUser", id);
 	}
 	
-	// 비밀번호 변경위한 현재 비밀번호 확인
-	public User selectUserPwd(User user) {
-		return session.selectOne("userMapper.selectUserPwd", user);
-	}
-	
 	// 비밀번호 변경 
 	public int updateUserPwd(User user) {
 		return session.update("userMapper.updateUserPwd", user);
 	}
 
+	// 프로필 설정
+	public int updateProfile(User user) {
+		return session.update("userMapper.updateProfile", user);
+	}
+	
 	// 회원 정보 수정
 	public int updateUser(User user) {
 		return session.update("userMapper.updateUser", user);

@@ -111,7 +111,7 @@ public class UserController {
 	
 	
 	// 회원 마이 페이지
-	@GetMapping("/selectUser")
+	@GetMapping("/myPageUser")
 	public String selectUser(Model model, String id) {
 		User user = service.selectUser(id);
 		model.addAttribute("user", user);
@@ -146,9 +146,27 @@ public class UserController {
 	// 비밀번호 변경
 	@PostMapping("/updateUserPwd")
 	public String updateUserPwd(User user) {
-		System.out.println("user : "+user);
 		service.updateUserPwd(user);
 		return "redirect:/logout";
+	}
+	
+	// 프로필 설정 페이지 이동
+	@GetMapping("/updateProfile")
+	public String updateProfile(Model model, String id) {
+		User user = service.selectUser(id);
+		model.addAttribute("user", user);
+		return "user/updateProfile";
+	}
+	
+	// 프로필 설정 
+	@PostMapping("/updateProfile")
+	public String updateProfile(User user) throws IllegalStateException, IOException {
+
+		String url = fileUpload(user.getFile());
+		user.setUserImgUrl(url);
+		System.out.println("user.getUserImgUrl : "+user.getUserImgUrl());
+		service.updateProfile(user);
+		return "user/myPageUser";
 	}
 	
 	// 내정보 설정 페이지 이동

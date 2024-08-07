@@ -56,7 +56,7 @@
 			<c:otherwise>
 					<a href="/"><i class="fa-solid fa-clipboard-user"></i></a>
 					<ul class="submenu" id="submenu4">
-						<li><a href="/selectUser">마이페이지</a></li>
+						<li><a href="/myPageUser">마이페이지</a></li>
 						<li><a href="/logout">로그아웃</a></li>
 					</ul>
 					

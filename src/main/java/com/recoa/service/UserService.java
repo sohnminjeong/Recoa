@@ -62,16 +62,16 @@ public class UserService implements UserDetailsService{
 		return dao.selectUser(id);
 	}
 	
-	// 비밀번호 변경위한 현재 비밀번호 확인
-	public User selectUserPwd(User user) {
-		return dao.selectUserPwd(user);
-	}
-	
 	// 비밀번호 변경 
 	public int updateUserPwd(User user) {
 		String encodePw = bcpe.encode(user.getUserPwd());
 		user.setUserPwd(encodePw);
 		return dao.updateUserPwd(user);
+	}
+	
+	// 프로필 설정
+	public int updateProfile(User user) {
+		return dao.updateProfile(user);
 	}
 	
 	// 회원 정보 수정

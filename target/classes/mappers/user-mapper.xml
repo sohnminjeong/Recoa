@@ -60,17 +60,20 @@
 		WHERE user_id=#{userId}
 	</select>
 	
-	<!-- 비밀번호 변경위한 현재 비밀번호 확인 -->
-	<select id="selectUserPwd" parameterType="User" resultMap="userMap">
-		SELECT * FROM user
-		WHERE user_pwd=#{userPwd} AND user_code=#{userCode}
-	</select>
-	
 	<!-- 비밀번호 변경 -->
 	<update id="updateUserPwd" parameterType="User">
 		UPDATE user
 		SET
 		user_pwd=#{userPwd}
+		WHERE user_id=#{userId}
+	</update>
+	
+	<!-- 프로필 수정 -->
+	<update id="updateProfile" parameterType="User">
+		UPDATE user
+		SET
+		user_nickname=#{userNickname}, 
+		user_img_url=#{userImgUrl}
 		WHERE user_id=#{userId}
 	</update>
 	
