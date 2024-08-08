@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="../../../resources/css/reset.css" />
+<link rel="stylesheet" href="/resources/css/reset.css" />
 <link rel="stylesheet" href="../../../resources/css/user/loginUser.css" />
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <style>
@@ -28,49 +28,49 @@
 <div id="container" class="container">
     <!-- FORM SECTION -->
     <div class="row">
-      <!-- SIGN UP -->
-      <div class="col align-items-center flex-col sign-up">
-        <div class="form-wrapper align-items-center">
-          <div class="form sign-up">
+      <!-- 회원가입 -->
+      <div class="col align-items-center flex-col sign-up" id="sign-up-head">
+        <div class="form-wrapper align-items-center" id="sign-up-me">
+          <div class="form sign-up" id="sign-up">
           	<form action="/registerUser" method="post" id="registerUser" onsubmit="return validate()">
 	            <div class="input-group">
-	              <i class='bx bxs-user'></i>
+
 	              <input type="text" placeholder="아이디" name="userId" id="userId">
 	              <span id="idCheck"></span>
 	            </div>
 	            <div class="input-group">
-	              <i class='bx bxs-lock-alt'></i>
+	             
 	              <input type="password" placeholder="비밀번호" name="userPwd" id="userPwd" >
 	              <span id="pwdCheck"></span>
 	            </div>
 	            <div class="input-group">
-	              <i class='bx bxs-lock-alt'></i>
+	             
 	              <input type="text" placeholder="이름" name="userRealName" id="userRealName" >
 	              <span id="realNameCheck"></span>
 	            </div>
 	            <div class="input-group">
-	              <i class='bx bxs-lock-alt'></i>
+	              
 	              <input type="text" placeholder="닉네임" name="userNickname" id="userNickname" >
 	              <span id="nickNameCheck"></span>
 	            </div>
 	        
 	            <div class="input-group">
-	              <i class='bx bxs-lock-alt'></i>
+	              
 	              <input type="text" placeholder="핸드폰번호" name="userPhone" id="userPhone" >
 	              <span id="userPhoneCheck"></span>
 	            </div>
 	            <div class="input-group">
-	              <i class='bx bxs-lock-alt'></i>
+	             
 	              <input type="text" placeholder="거주 동" name="userAdr" id="userAdr" >
 	              <span id="userAdrCheck"></span>
 	            </div>
 	            <div class="input-group">
-	              <i class='bx bxs-lock-alt'></i>
+	              
 	              <input type="text" placeholder="거주 호수" name="userAdrDetail" id="userAdrDetail">
 	              <span id="userAdrDetailCheck"></span>
 	            </div>
 	            <div class="input-group">
-	              <i class='bx bx-mail-send'></i>
+	              
 	              <input type="email" placeholder="이메일" name="userEmail" id="userEmail">
 	              <span id="emailCheck"></span>
 	            </div>
@@ -88,20 +88,20 @@
             </p>
           </div>
         </div>
-      
       </div>
-      <!-- END SIGN UP -->
-      <!-- SIGN IN -->
-      <div class="col align-items-center flex-col sign-in">
-        <div class="form-wrapper align-items-center">
-	      <div class="form sign-in">
+      
+
+      <!-- 로그인 -->
+      <div class="col align-items-center flex-col sign-in" id="sign-in-head">
+        <div class="form-wrapper align-items-center" >
+	      <div class="form sign-in" id="sign-in">
 		     <form action="login" method="post">
 	            <div class="input-group">
-	              <i class='bx bxs-user'></i>
+	              
 	              <input type="text" placeholder="아이디" name="username" >
 	            </div>
 	            <div class="input-group">
-	              <i class='bx bxs-lock-alt'></i>
+	              
 	              <input type="password" placeholder="비밀번호" name="password" >
 	            </div>
 	            <button>
@@ -130,10 +130,11 @@
       </div>
       <!-- END SIGN IN -->
     </div>
+    
     <!-- END FORM SECTION -->
     <!-- CONTENT SECTION -->
     <div class="row content-row">
-      <!-- SIGN IN CONTENT -->
+      <!-- 로그인 시 글자 -->
       <div class="col align-items-center flex-col">
         <div class="text sign-in">
           <h2>
@@ -146,7 +147,7 @@
         </div>
       </div>
       <!-- END SIGN IN CONTENT -->
-      <!-- SIGN UP CONTENT -->
+      <!-- 회원가입 시 글자-->
       <div class="col align-items-center flex-col">
         <div class="img sign-up">
         
