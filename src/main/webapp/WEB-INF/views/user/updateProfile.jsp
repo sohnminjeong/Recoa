@@ -23,14 +23,14 @@
 	#content{
 		position:relative;
 		z-index:0;
-		height:90vh;
+		height:100vh;
 		padding-top:10vh;
 		display:flex;
 		align-items:center;
 		margin:0 50px;
 	}
 	#content>#userSideBar{
-		height:70%;
+		height:80%;
 		width:15%;
 		margin-left : 10%;
 		margin-right:5%;
@@ -38,7 +38,7 @@
 	}
 	#content>#container{
 		width: 75%;
-		height:70%;
+		height:80%;
 	    display: flex;
 	    flex-direction: column;
 	    margin-right: 10%;
@@ -50,33 +50,30 @@
 		font-family: 'GangwonEdu_OTFBoldA';
 	}
 	#container>form{
-		width:100%;
+		width:90%;
 		border : 2px solid black;
 		border-radius : 30px;
 		height:100%;
-		display:flex;
+		display: grid;
+    	grid-template-columns: 2fr 3fr;
 	}
 	form>#img{
 	    display: flex;
 	    padding: 50px;
 	    align-items: center;
 	    flex-direction:column;
-	    justify-content: space-around;
+	    justify-content: space-evenly;
 	}
 	#img>img{
 		border-radius: 50%;
 	    width: 200px;
 	    height: 200px;
 	    cursor:pointer;
+	    border:1px solid black;
 	}
-	#img .image_container>img{
-		border-radius: 50%;
-	    width: 200px;
-	    height: 200px;
-	    cursor:pointer;
-	}
+	
 	#img>img:hover{
-		border : 1px solid black;
+		border : 1px dashed black;
 	}
 	form>#userInfo{
 		width:100%;
@@ -90,12 +87,12 @@
 		font-family: 'GangwonEdu_OTFBoldA';
 	}
 	#userInfo>input{
-		width:60%;
+		width:300px;
 		margin-top:10px;
 	}
 	#userInfo>#btn{
 		margin-top:25px;
-		width:60%;
+		width:300px;
 		display:flex;
 		justify-content:space-evenly;
 	}
@@ -137,11 +134,13 @@
 					</c:otherwise>
 				</c:choose>
 					<input type="file" name="file" id="userImgUrl" style="display: none;" accept="image/*" onchange="imgShow(event)">	
-			<button onclick="delImg()">이미지 삭제</button>
+			<button type="button" id="delImg">이미지 삭제</button>
+			<input type="hidden" value="${user.delUserImgUrl}" name="delUserImgUrl" id="delUserImgUrl" />
+			
 			</div>
  			<div id="userInfo">
 				<p>닉네임</p> 
-				<input type="text" name="userNickname" placeholder="${user.userNickname}" id="userNickname" ><br>
+				<input type="text" name="userNickname" value="${user.userNickname}" placeholder="${user.userNickname}" id="userNickname" ><br>
 				<span id="nickNameCheck" style="font-family: 'GangwonEdu_OTFBoldA'"></span>
 				<div id="btn">
 					<button type="submit">변경 완료</button>
@@ -199,6 +198,16 @@
     	alert("변경이 완료되었습니다.");
    	 return true; 
  }
+    
+    // 이미지 삭제 
+    const delImg = document.querySelector("#delImg");
+    delImg.addEventListener('click', function(){
+    	
+    	userImg.src="resources/images/user/default_profile.png";
+    	delUserImgUrl.value=true;
+    })
+    
+   
   </script>
 </div>
 </html>

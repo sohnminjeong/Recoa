@@ -23,14 +23,14 @@
 	#content{
 		position:relative;
 		z-index:0;
-		height:90vh;
+		height:100vh;
 		padding-top:10vh;
 		display:flex;
 		align-items:center;
 		margin:0 50px;
 	}
 	#content>#userSideBar{
-		height:70%;
+		height:80%;
 		width:15%;
 		margin-left : 10%;
 		margin-right:5%;
@@ -38,7 +38,7 @@
 	}
 	#content>#container{
 		width: 75%;
-		height:70%;
+		height:80%;
 	    display: flex;
 	    flex-direction: column;
 	    margin-right: 10%;
@@ -50,21 +50,24 @@
 		font-family: 'GangwonEdu_OTFBoldA';
 	}
 	#container>#containerContent{
-		width:80%;
+		width:90%;
 		border : 2px solid black;
 		border-radius : 30px;
 		height:100%;
-		display:flex;
+		display: grid;
+    	grid-template-columns: 2fr 3fr;
 	}
 	#containerContent>#img{
 	    display: flex;
+	    justify-content:center;
 	    padding: 50px;
 	    align-items: center;
 	}
 	#containerContent>#img>img{
 		border-radius: 50%;
-	    width: 250px;
-	    height: 250px;
+	    width: 200px;
+	    height: 200px;
+	    border:1px solid black;
 	}
 	#containerContent>#userInfo{
 		width:100%;
@@ -80,7 +83,8 @@
 </style>
 </head>
 <body>
-<sec:authentication property="principal" var="user" />
+ <sec:authentication property="principal" var="user" />
+
 	<div id="header">
 		<%@ include file="../main/header.jsp" %>
 	</div>

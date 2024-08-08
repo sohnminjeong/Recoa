@@ -6,6 +6,9 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -112,9 +115,7 @@ public class UserController {
 	
 	// 회원 마이 페이지
 	@GetMapping("/myPageUser")
-	public String selectUser(Model model, String id) {
-		User user = service.selectUser(id);
-		model.addAttribute("user", user);
+	public String selectUser() {
 		return "user/myPageUser";
 	}
 	
@@ -158,15 +159,22 @@ public class UserController {
 		return "user/updateProfile";
 	}
 	
+	
 	// 프로필 설정 
 	@PostMapping("/updateProfile")
 	public String updateProfile(User user) throws IllegalStateException, IOException {
-
-		String url = fileUpload(user.getFile());
-		user.setUserImgUrl(url);
-		System.out.println("user.getUserImgUrl : "+user.getUserImgUrl());
+		if(!user.getFile().getOriginalFilename().equals("")) {
+			String url = fileUpload(user.getFile());
+			user.setUserImgUrl(url);
+		} else if(user.isDelUserImgUrl()) {
+			File file = new File(path+user.getUserImgUrl());
+			file.delete();
+			user.setUserImgUrl(null);
+		}
 		service.updateProfile(user);
-		return "user/myPageUser";
+
+		//return "redirect:/myPageUser";
+		return "redirect:/logout";
 	}
 	
 	// 내정보 설정 페이지 이동

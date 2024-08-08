@@ -270,7 +270,7 @@
 }
 #sign-up>#registerUser{
 	height:100%;
-	overflow : scroll;
+	overflow-y : scroll;
 	
 }
 #sign-up-head{
