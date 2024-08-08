@@ -50,7 +50,7 @@
 		font-family: 'GangwonEdu_OTFBoldA';
 	}
 	#container>form{
-		width:80%;
+		width:100%;
 		border : 2px solid black;
 		border-radius : 30px;
 		height:100%;
@@ -65,8 +65,14 @@
 	}
 	#img>img{
 		border-radius: 50%;
-	    width: 250px;
-	    height: 250px;
+	    width: 200px;
+	    height: 200px;
+	    cursor:pointer;
+	}
+	#img .image_container>img{
+		border-radius: 50%;
+	    width: 200px;
+	    height: 200px;
 	    cursor:pointer;
 	}
 	#img>img:hover{
@@ -130,12 +136,12 @@
 						<img src="/recoaImg/user/${user.userImgUrl}" class="userImg"/>
 					</c:otherwise>
 				</c:choose>
-					<input type="file" name="file" id="userImgUrl" style="display: none;" accept="image/*">	
+					<input type="file" name="file" id="userImgUrl" style="display: none;" accept="image/*" onchange="imgShow(event)">	
 			<button onclick="delImg()">이미지 삭제</button>
 			</div>
  			<div id="userInfo">
 				<p>닉네임</p> 
-				<input type="text" name="userNickname" placeholder="${user.userNickname}" id="userNickname"><br>
+				<input type="text" name="userNickname" placeholder="${user.userNickname}" id="userNickname" ><br>
 				<span id="nickNameCheck" style="font-family: 'GangwonEdu_OTFBoldA'"></span>
 				<div id="btn">
 					<button type="submit">변경 완료</button>
@@ -145,12 +151,14 @@
 		</form>
 	</div>
 	<script>
+	// 이미지 클릭 시 file upload
     const userImgUrl = document.querySelector('#userImgUrl');
     const userImg = document.querySelector('.userImg');
     userImg.addEventListener('click', () => userImgUrl.click());
    
-    let userNicknameCheck = false;
- /// 닉네임 중복확인
+    
+	 /// 닉네임 중복확인
+	 let userNicknameCheck = false;
     $('#userNickname').keyup(() => {
     	const userNickname = $('#userNickname').val();
     	$.ajax({
@@ -169,6 +177,16 @@
     		}
     	})
     })
+    
+    // 선택 이미지 미리보기
+    function imgShow(event){
+		var reader = new FileReader();
+		
+		reader.onload = function(event){
+			userImg.setAttribute("src", event.target.result);
+		};
+		reader.readAsDataURL(event.target.files[0]);
+	}
     
     function validate(){
     	if(userNickname.value==''){
