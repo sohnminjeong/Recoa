@@ -2,13 +2,16 @@ package com.recoa.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +32,14 @@ public class UserController {
 	
 	@Autowired
 	private BCryptPasswordEncoder bcpe;
+	
+	// 새로운 인증 생성 
+	protected Authentication createNewAuthentication(Authentication currentAuth, String username) {
+	    UserDetails newPrincipal = service.loadUserByUsername(username);
+	    UsernamePasswordAuthenticationToken newAuth = new UsernamePasswordAuthenticationToken(newPrincipal, currentAuth.getCredentials(), newPrincipal.getAuthorities());
+	    newAuth.setDetails(currentAuth.getDetails());
+	    return newAuth;	    
+	}
 	
 	
 	private String path = "C:\\recoaImg\\user\\";
@@ -115,7 +126,10 @@ public class UserController {
 	
 	// 회원 마이 페이지
 	@GetMapping("/myPageUser")
-	public String selectUser() {
+	public String selectUser(Principal principal, Model model) {
+		String userId = principal.getName();
+		User user = service.selectUser(userId);
+		model.addAttribute("user", user);
 		return "user/myPageUser";
 	}
 	
@@ -163,6 +177,7 @@ public class UserController {
 	// 프로필 설정 
 	@PostMapping("/updateProfile")
 	public String updateProfile(User user) throws IllegalStateException, IOException {
+		
 		if(!user.getFile().getOriginalFilename().equals("")) {
 			String url = fileUpload(user.getFile());
 			user.setUserImgUrl(url);
@@ -172,9 +187,16 @@ public class UserController {
 			user.setUserImgUrl(null);
 		}
 		service.updateProfile(user);
-
-		//return "redirect:/myPageUser";
-		return "redirect:/logout";
+		// 현재 Authenticaion에 저장된 값 변경
+		// 1. 현재 Authentication 정보 호출
+	   Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	   Object principal = authentication.getPrincipal();
+	   UserDetails userDetails = (UserDetails)principal; 
+	   
+	   // 2. 현재 Authentication로 사용자 인증 후 새 Authentication 정보를 SecurityContextHolder에 세팅
+	   SecurityContextHolder.getContext().setAuthentication(createNewAuthentication(authentication,userDetails.getUsername()));
+	   
+		return "redirect:/myPageUser";
 	}
 	
 	// 내정보 설정 페이지 이동
@@ -185,13 +207,27 @@ public class UserController {
 		return "user/updateUser";
 	}
 	
-	// 수리중
-	@ResponseBody
+	// 내정보 설정 
 	@PostMapping("/updateUser")
-	public String updateUser(User user) throws IllegalStateException, IOException {
-		String url = fileUpload(user.getFile());
-		user.setUserImgUrl(url);
+	public String updateUser(User user){
 		service.updateUser(user);
-		return "user/myPageUser";
+		// 현재 Authenticaion에 저장된 값 변경
+		// 1. 현재 Authentication 정보 호출
+	   Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	   Object principal = authentication.getPrincipal();
+	   UserDetails userDetails = (UserDetails)principal; 
+			   
+	   // 2. 현재 Authentication로 사용자 인증 후 새 Authentication 정보를 SecurityContextHolder에 세팅
+	   SecurityContextHolder.getContext().setAuthentication(createNewAuthentication(authentication,userDetails.getUsername()));
+		
+	   return "redirect:/myPageUser";
+	}
+	
+	// 탈퇴 페이지 이동
+	@GetMapping("/leaveUser")
+	public String leaveUser(Model model, String id) {
+		User user = service.selectUser(id);
+		model.addAttribute("user", user);
+		return "user/leaveUser";
 	}
 }

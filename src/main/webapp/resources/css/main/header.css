@@ -21,6 +21,7 @@
 .menu a{
 	font-size:23px;
 	font-family: 'GangwonEdu_OTFBoldA';
+	text-decoration:none;
 }
 .menu>li:hover{
 	transition-duration:0.5s;

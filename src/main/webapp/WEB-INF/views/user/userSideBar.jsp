@@ -65,7 +65,7 @@
 					<li><a href="/updateProfile" class="subInfo">프로필 설정</a></li>
 					<li><a href="/updateUser" class="subInfo">내정보 설정</a></li>
 					<li><a href="/updateUserPwd" class="subInfo">비밀번호 변경</a></li>
-					<li><a href="/" class="subInfo">회원 탈퇴</a></li>
+					<li><a href="/leaveUser" class="subInfo">회원 탈퇴</a></li>
 				</ul>
 			</li>
 			<li><i class="fa-solid fa-clipboard-check"></i>

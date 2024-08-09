@@ -77,11 +77,15 @@
 		WHERE user_id=#{userId}
 	</update>
 	
-	<!-- 회원 정보 수정 -->
+	<!-- 내 정보 설정 -->
 	<update id="updateUser" parameterType="User">
 	UPDATE user
 	SET
-	user_name=#{userRealName}
+	user_name=#{userRealName},
+	user_phone=#{userPhone},
+	user_email=#{userEmail},
+	user_adr=#{userAdr},
+	user_adr_detail=#{userAdrDetail}
 	WHERE user_id=#{userId}
 	</update>
 </mapper>

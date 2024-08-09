@@ -29,8 +29,7 @@ public class UserService implements UserDetailsService{
 		User user = dao.loginById(username);
 		return user;
 	}
-	
-	
+
 	// 회원가입
 	public int registerUser(User user) {
 		// 비밀번호 암호화 처리 후 멤버 정보 다시 담아서 dao에게 전달 

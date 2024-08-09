@@ -83,7 +83,8 @@
 </style>
 </head>
 <body>
- <sec:authentication property="principal" var="user" />
+<!--  <sec:authentication property="principal" var="user" /> -->
+
 
 	<div id="header">
 		<%@ include file="../main/header.jsp" %>

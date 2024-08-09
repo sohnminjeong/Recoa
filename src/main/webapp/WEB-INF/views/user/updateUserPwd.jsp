@@ -56,16 +56,16 @@
 	    height: 100%;
 	    display: flex;
 	    align-items: center;
-	    padding: 60px 0px;
+	    padding: 40px 0px;
 	    justify-content: space-evenly;
 	    flex-direction: column;
 	}
 	form div{
 		width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+	    display: flex;
+	    justify-content: center;
+	    align-items: center;
+	    flex-direction: column;
 	}
 	form input{
 		width : 300px;
