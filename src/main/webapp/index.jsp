@@ -6,12 +6,40 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="/resources/css/reset.css" />
 <title>Insert title here</title>
 <script src="https://kit.fontawesome.com/cbb1359000.js" crossorigin="anonymous"></script>
+<style>
+#header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+#section1, #section2, #section3 {
+    position: relative;
+    z-index: 0;
+    height: 100vh;
+}
+
+</style>
 </head>
 <body>
+<div id="header">
 <%@ include file="WEB-INF/views/main/header.jsp" %>
- 
+</div>
+<div id="section1">
+<%@ include file="WEB-INF/views/main/section1.jsp" %>
+</div>
+<div id="section2">
+<%@ include file="WEB-INF/views/main/section2.jsp" %>
+</div>
+<div id="section3">
+<%@ include file="WEB-INF/views/main/section3.jsp" %>
+</div>
+ <!-- 
 	<sec:authentication property="principal" var="user" />
 	<c:choose>
 		<c:when test="${user=='anonymousUser'}">
@@ -21,8 +49,8 @@
 			<a href="/reserveGuest">게스트하우스 예약하기</a>
 		</c:otherwise>
 	</c:choose>
+	 -->
 	
-	<%@ include file="WEB-INF/views/main/section1.jsp" %>
 	
 </body>
 </html>

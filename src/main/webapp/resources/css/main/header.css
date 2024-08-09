@@ -1,40 +1,57 @@
-#header{
-	width:100%;
-	height:10vh;
-	display:flex;
-	justify-content : space-between;
-	align-items:center;
-	background-color : yellow;	
+@font-face {
+    font-family: 'GangwonEdu_OTFBoldA';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFBoldA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+.menu{
+   width:100vw;
+   overflow:hidden;
 }
 
-#header #nav1{
-	width:50%;
-	margin-left:30px;
+.menu>li{
+   list-style:none;
+   width:20%;
+   float:left;
+   text-align:center;
+   line-height:10vh;
+   background-color : white;
 }
-#header #nav1>a{
-	font-size:1.7rem;
-	font-weight:bold;
+.menu a{
+   font-size:23px;
+   font-family: 'GangwonEdu_OTFBoldA';
+}
+.menu>li:hover{
+   transition-duration:0.5s;
+   background-color : gray;
+}
+.menu>li:hover>a{
+   color:white;
+}
+.menu>li:hover .submenu{
+   transition-duration:1s;
+}
+.menu>li:hover #submenu1{
+   height:180px;
+}
+.menu>li:hover #submenu2,.menu>li:hover #submenu3, .menu>li:hover #submenu4{
+   height:120px;
 }
 
-#header #nav2{
-	display:grid;
-	grid-template-columns: 1fr 1fr 1fr 1fr;
-	align-items:center;
-	height:100%;
-	width:50%;	
+.menu>li>#recoa{
+   font-weight:bold;
 }
-#nav2>.menu{
-	height:100%;
+.submenu>li{
+   line-height:60px;
+   background-color : white;
 }
-#nav2>.menu>p{
-	height:100%;
-	padding-top:20px;
+.submenu>li:hover{
+   background-color : #ABABAB;
 }
-
-.active{
-	display:flex;
-	flex-direction:column;
+.submenu>li:hover>a{
+   color : white;
 }
-.hide{
-	display:none;
+.submenu{
+   height:0;
+   overflow:hidden;
 }

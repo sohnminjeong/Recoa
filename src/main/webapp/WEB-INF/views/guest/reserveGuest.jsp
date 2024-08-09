@@ -7,44 +7,73 @@
 <html>
 <head>
 <meta charset="UTF-8">
-
+<link rel="stylesheet" href="../../resources/css/reset.css" />
 <title>Insert title here</title>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link href="../../resources/css/guest/reserve.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-</head>
+<style>
 
+#header {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+}
+
+#page{
+	position: relative;
+	z-index: 0;
+	height: 100vh;
+	padding-top: 10vh;
+}
+
+form select option p{
+	color: green;
+}
+
+</style>
+</head>
 <body>
 	<sec:authentication property="principal" var="user" />
-	<h1>게스트하우스 예약</h1>
+<div id="header">
+<%@ include file="../main/header.jsp" %>
+</div>
+	<div id="page">
+		<h1>게스트하우스 예약</h1>
+		<div class="roompicture">
+			<img src="../../resources/images/guest/oneroom.jpg"/>
+		</div>
 	
-	<form action="reserveGuest" method="post" id="reserveGuest" name="reserveGuest">
-	<div>
-		<p>기간 선택</p>
-		<input type="text" name="daterange" id="daterange"/>
-		<input type="hidden" name="startTime" id="startTime"/>
-		<input type="hidden" name="endTime" id="endTime"/>
-	</div>
+		<form action="reserveGuest" method="post" id="reserveGuest" name="reserveGuest">
 		<div>
-		<input type="hidden" name="userCode" value="${user.userCode}" readonly/>
+			<p>기간 선택</p>
+			<input type="text" name="daterange" id="daterange"/>
+			<input type="hidden" name="startTime" id="startTime"/>
+			<input type="hidden" name="endTime" id="endTime"/>
+		</div>
+		<div>
+			<input type="hidden" name="userCode" value="${user.userCode}" readonly/>
 		
-		<p>객실 타입</p>
-		<select name="roomType" id="roomType">
-			<option value="1">원룸</option>
-			<option value="2">투룸</option>
-		</select>
+			<p>객실 타입</p>
+			<select name="roomType" id="roomType">
+				<option value="1">원룸</option>
+				<option value="2">투룸</option>
+			</select>
 		
-		<p>객실 번호</p>
-
+			<p>객실 번호</p>
             <select name="roomCode" id="roomCode">
             <!-- AJAX -->
             </select>
 		</div>
 		<hr/>
+		
+		
 		<input type="submit" value="게스트하우스 예약" id="submit">
 	</form>
-
+</div>
 	
 	
 	<script>

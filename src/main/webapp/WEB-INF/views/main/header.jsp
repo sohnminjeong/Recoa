@@ -7,54 +7,62 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="../../../resources/css/reset.css" />
 <link rel="stylesheet" href="../../../resources/css/main/header.css" />
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://kit.fontawesome.com/cbb1359000.js" crossorigin="anonymous"></script>
 </head>
 <body>
 <sec:authentication property="principal" var="user" />
-<header id="header">
-	<nav id="nav1"><a href="/">Recoa</a></nav>
-	
-	<nav id="nav2">
-		<div class="menu">
-			<p id="menu1">아파트 소개</p>
-			<div id="underBar1" class="hide">
-				<a href="/">인사말</a>
-				<a href="/">내부시설</a>
-				<a href="/">커뮤니티 시설</a>
-			</div>
-		</div>
-		<div class="menu">
-			<p id="menu2">커뮤니티 예약</p>
-			<div id="underBar2" class="hide">
-				<a href="/">독서실</a>
-				<a href="/">게스트하우스</a>
-			</div>
-		</div>	
-		<div class="menu">	
-			<p id="menu3">게시판</p>
-			<div id="underBar3" class="hide">
-				<a href="/">자유게시판</a>
-				<a href="/">공지게시판</a>
-			</div>
-		</div>
-		<div class="menu">
-			<c:choose>
-				<c:when test="${user=='anonymousUser'}">
-					<a href="/loginUser"><i class="fa-solid fa-user"></i></a>
-				</c:when>
-				<c:otherwise>
-					<div id="userMenu">
-						<a href="/selectUser"><i class="fa-solid fa-clipboard-user"></i></a>
-						<a href="/logout"><i class="fa-solid fa-circle-xmark"></i></a>
-					</div>
-				</c:otherwise>
-			</c:choose>
-		</div>
-	</nav>
-</header>
-	
-<script src="../../resources/js/main/header.js"></script>
+<ul class="menu">
+   <li>
+      <a href="/" id="recoa">Recoa</a>
+   </li>
+   <li>
+      <a href="/">아파트 소개</a>
+      <ul class="submenu" id="submenu1">
+         <li><a href="/">인사말</a></li>
+         <li><a href="/">내부시설</a></li>
+         <li><a href="/">커뮤니티 시설</a></li>
+      </ul>
+   </li>
+   <li>
+      <a href="/">커뮤니티 예약</a>
+      <ul class="submenu" id="submenu2">
+         <li><a href="/">독서실 예약</a></li>
+         <li>
+            <c:choose>
+               <c:when test="${user=='anonymousUser'}">
+                  <a href="/loginUser">게스트하우스 예약</a><br>
+               </c:when>
+               <c:otherwise>
+                  <a href="/reserveGuest">게스트하우스 예약</a>
+               </c:otherwise>
+            </c:choose>
+         </li>
+      </ul>
+   </li>
+   <li>
+      <a href="/">게시판</a>
+      <ul class="submenu" id="submenu3">
+         <li><a href="/">공지 게시판</a></li>
+         <li><a href="/">자유 게시판</a></li>
+      </ul>
+   </li>
+   <li>
+      <c:choose>
+         <c:when test="${user=='anonymousUser'}">
+            <a href="/loginUser"><i class="fa-solid fa-user"></i></a>
+         </c:when>
+         <c:otherwise>
+               <a href="/"><i class="fa-solid fa-clipboard-user"></i></a>
+               <ul class="submenu" id="submenu4">
+                  <li><a href="/myPageUser">마이페이지</a></li>
+                  <li><a href="/logout">로그아웃</a></li>
+               </ul>
+               
+         </c:otherwise>
+      </c:choose>
+   </li>
+</ul>
+
 </body>
 </html>
