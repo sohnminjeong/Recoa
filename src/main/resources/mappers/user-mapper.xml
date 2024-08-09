@@ -88,4 +88,10 @@
 	user_adr_detail=#{userAdrDetail}
 	WHERE user_id=#{userId}
 	</update>
+	
+	<!-- 회원 탈퇴 -->
+	<delete id="deleteUser" parameterType="String">
+	DELETE FROM user
+	WHERE user_id=#{userId} 
+	</delete>
 </mapper>

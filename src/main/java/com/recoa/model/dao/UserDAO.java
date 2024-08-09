@@ -2,6 +2,7 @@ package com.recoa.model.dao;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
 import com.recoa.model.vo.User;
@@ -56,5 +57,10 @@ public class UserDAO {
 	// 회원 정보 수정
 	public int updateUser(User user) {
 		return session.update("userMapper.updateUser", user);
+	}
+	
+	// 회원 탈퇴
+	public int deleteUser(String userId) {
+		return session.delete("userMapper.deleteUser", userId);
 	}
 }

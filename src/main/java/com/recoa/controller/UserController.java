@@ -230,4 +230,19 @@ public class UserController {
 		model.addAttribute("user", user);
 		return "user/leaveUser";
 	}
+	
+	// 회원 탈퇴
+	@PostMapping("/leaveUser")
+	public String leaveUser(User user) {	
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		UserDetails userDetails = (UserDetails) principal;
+		if (bcpe.matches(user.getUserPwd(), userDetails.getPassword())) {
+			service.deleteUser(userDetails.getUsername());
+			SecurityContextHolder.clearContext();
+			return "redirect:/";
+		} else {
+			return "user/leaveUser";
+		}
+
+	}
 }

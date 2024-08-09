@@ -77,4 +77,9 @@ public class UserService implements UserDetailsService{
 	public int updateUser(User user) {
 		return dao.updateUser(user);
 	}
+	
+	// 회원 탈퇴
+	public int deleteUser(String userId) {
+		return dao.deleteUser(userId);
+	}
 }

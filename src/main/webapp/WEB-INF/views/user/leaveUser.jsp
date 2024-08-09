@@ -88,11 +88,9 @@
 		font-size : 1.1rem;
 	}
 	div#btn{
-		margin-top:25px;
 		width:300px;
-		display:flex;
-		flex-direction:row;
-		justify-content:space-evenly;
+		display: flex;
+    	justify-content: space-around;
 	}
 	button{
 		font-size : 1rem;
@@ -114,11 +112,14 @@
 		justify-content : space-evenly;
 		height:70%;
 	}
-	#afterPwdCheck{
-		display:none;
-		height:100%;
-		width:100%;
+	#pwdCheck #leave{
+		font-size:1.4rem;
 	}
+	#pwdCheck div span{
+		margin-right:20px;
+	}
+	
+	
 </style>
 </head>
 <body>
@@ -131,53 +132,58 @@
 		<%@ include file="../user/userSideBar.jsp" %>
 	</div>
 	<div id="container">
-		<h3>내 정보 설정</h3>
-		<form action="/updateUser" method="post"  enctype="multipart/form-data" onsubmit="return validate()">
+		<h3>회원 탈퇴</h3>
+		<form action="/leaveUser" method="post" onsubmit="return validate()">
 			<div id="pwdCheck">
-				<span>[정보 수정 위한 비밀번호 확인]</span>
+				<span id="leave">[회원 탈퇴 위한 비밀번호 확인]</span>
 				<input type="hidden" name="userId" id="userId" value="${user.userId}">
-				<input type="password" name="userPwd" id="userPwd" placeholder="비밀번호 입력">
-				<button type="button" id="pwdCheckBtn">비밀번호 확인</button>
-			</div>
-			<div id="afterPwdCheck">
-				<div id="left">
-					<div>
-						<span>이름</span> 
-						<input type="text" name="userRealName" id="userRealName" value="${user.userRealName}">	
-						<span id="realNameCheck"></span>
-					</div>
-					<div>
-						<span>핸드폰번호</span> 
-						<input type="text" name="userPhone" id="userPhone" value="${user.userPhone}">
-						<span id="userPhoneCheck"></span>
-					</div>
-					
-					<div>
-						<span>이메일</span> 
-						<input type="text" name="userEmail" id="userEmail" value="${user.userEmail}">
-						<span id="emailCheck"></span>
-					</div>
+				<div>
+					<span>현재 비밀번호</span>
+					<input type="password" name="userPwd" id="userPwd" >
 				</div>
-				<div id="right">
-					<div>
-						<span>거주동</span>  
-						<input type="text" name="userAdr" id="userAdr" value="${user.userAdr}">
-						<span id="userAdrCheck"></span>
-					</div>
-		
-					<div>
-						<span>거주호수</span>  
-						<input type="text" name="userAdrDetail" id="userAdrDetail" value="${user.userAdrDetail}">
-						 <span id="userAdrDetailCheck"></span>
-					</div>
-					<div id="btn">
-						<button type="submit">정보 변경 완료</button>
-						<button type="button" onclick="location.href='/myPageUser';">정보 변경 취소</button>
-					</div>
-				</div>	
+				<div>
+					<span>비밀번호 확인</span>
+					<input type="password" name="userPwdCheck" id="userPwdCheck">
+				</div>
+				<span id="userPwdDoubleCheck"></span>
+				<div id="btn">
+					<button type="submit" id="pwdCheckBtn">회원 탈퇴</button>
+					<button type="button" onclick="location.href='/myPageUser';">회원 탈퇴 취소</button>
+				</div>
+				
 			</div>
 		</form>
 	</div>
 </div>
+<script>
+let pwdDoubleCheck = false;
+//변경할 비밀번호 재입력 일치 확인
+$('#userPwdCheck').keyup((e) =>{
+	let userPwdCheck=$(e.target).val(); 
+	let userPwd = $('#userPwd').val();
+	
+	if(userPwdCheck==userPwd){
+		pwdDoubleCheck = false;
+	} else {
+		pwdDoubleCheck = true;
+	}
+});
+
+function validate(){
+	if(userPwd.value==''){
+		userPwd.focus();
+		return false;
+	} else if(userPwdCheck.value==''){
+		userPwdCheck.focus();
+		return false;
+	} else if(pwdDoubleCheck){
+		$('#userPwdDoubleCheck').text("현재 비밀번호와 일치하지 않습니다.").css("color", "gray");
+		userPwdCheck.focus();
+		return false;
+	}
+		return true;
+	
+}
+</script>
 </body>
 </html>
