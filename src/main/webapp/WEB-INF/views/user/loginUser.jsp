@@ -19,6 +19,19 @@
 		position:relative;
 		z-index:0;
 	}
+	p a{
+		margin : 0 10px;
+		font-size: 0.8rem;
+	}
+	p span, b{
+	font-size: 0.8rem;
+	}
+	p a:hover{
+		color : gray;
+	}
+	p b:hover{
+		color : gray;
+	}
 </style>
 </head>
 <body>
@@ -26,13 +39,13 @@
 	<%@ include file="../main/header.jsp" %>
 </div> 
 <div id="container" class="container">
-    <!-- FORM SECTION -->
     <div class="row">
       <!-- 회원가입 -->
       <div class="col align-items-center flex-col sign-up" id="sign-up-head">
         <div class="form-wrapper align-items-center" id="sign-up-me">
           <div class="form sign-up" id="sign-up">
           	<form action="/registerUser" method="post" id="registerUser" onsubmit="return validate()">
+	            
 	            <div class="input-group">
 
 	              <input type="text" placeholder="아이디" name="userId" id="userId">
@@ -60,17 +73,14 @@
 	              <span id="userPhoneCheck"></span>
 	            </div>
 	            <div class="input-group">
-	             
 	              <input type="text" placeholder="거주 동" name="userAdr" id="userAdr" >
 	              <span id="userAdrCheck"></span>
 	            </div>
 	            <div class="input-group">
-	              
 	              <input type="text" placeholder="거주 호수" name="userAdrDetail" id="userAdrDetail">
 	              <span id="userAdrDetailCheck"></span>
 	            </div>
-	            <div class="input-group">
-	              
+	            <div class="input-group"> 
 	              <input type="email" placeholder="이메일" name="userEmail" id="userEmail">
 	              <span id="emailCheck"></span>
 	            </div>
@@ -94,26 +104,22 @@
       <!-- 로그인 -->
       <div class="col align-items-center flex-col sign-in" id="sign-in-head">
         <div class="form-wrapper align-items-center" >
+        <!-- 로그인 폼 -->
 	      <div class="form sign-in" id="sign-in">
 		     <form action="login" method="post">
 	            <div class="input-group">
-	              
 	              <input type="text" placeholder="아이디" name="username" >
 	            </div>
 	            <div class="input-group">
-	              
 	              <input type="password" placeholder="비밀번호" name="password" >
 	            </div>
-	            <button>
-	              로그인
-	            </button>
-	            </form>
-	            <p>
-	              <b>
-	                Forgot password?
-	              </b>
-	            </p>
-	            <p>
+	            <button>로그인</button>
+	          </form>
+	          <p>
+	            <a href="/findId">아이디 찾기</a>
+	             <a href="/">비밀번호 찾기</a>
+	           </p>
+	           <p>
 	              <span>
 	                비회원일 경우 > 
 	              </span>
@@ -121,18 +127,12 @@
 	                회원가입
 	              </b>
 	            </p>
-	          </div>
-          
-        </div>
-        <div class="form-wrapper">
-    
-        </div>
+	        </div>       
+        </div> 
       </div>
-      <!-- END SIGN IN -->
     </div>
     
-    <!-- END FORM SECTION -->
-    <!-- CONTENT SECTION -->
+
     <div class="row content-row">
       <!-- 로그인 시 글자 -->
       <div class="col align-items-center flex-col">
@@ -140,23 +140,21 @@
           <h2>
             Welcome
           </h2>
-  
         </div>
         <div class="img sign-in">
-    
         </div>
+        
       </div>
-      <!-- END SIGN IN CONTENT -->
+      
       <!-- 회원가입 시 글자-->
       <div class="col align-items-center flex-col">
-        <div class="img sign-up">
-        
+        <div class="img sign-up"> 
         </div>
+        
         <div class="text sign-up">
           <h2>
             Join with us
           </h2>
-  
         </div>
       </div>
     </div>
@@ -164,5 +162,6 @@
 
 	<script src="../../../resources/js/user/loginUser.js"></script>
 	<script src="../../../resources/js/user/registerUser.js"></script>
+	
 </body>
 </html>

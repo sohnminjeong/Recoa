@@ -63,4 +63,9 @@ public class UserDAO {
 	public int deleteUser(String userId) {
 		return session.delete("userMapper.deleteUser", userId);
 	}
+	
+	// 아이디 찾기
+	public User findId(User user) {
+		return session.selectOne("userMapper.findId", user);
+	}
 }

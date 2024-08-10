@@ -3,6 +3,7 @@ package com.recoa.controller;
 import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -243,6 +244,28 @@ public class UserController {
 		} else {
 			return "user/leaveUser";
 		}
-
 	}
+	
+	// 아이디 찾기 페이지
+	@GetMapping("/findId")
+	public String findId() {
+		return "user/findId";
+	}
+	
+	// 아이디 찾기 
+	@ResponseBody
+	@PostMapping("/findId")
+	public HashMap<String, String> findId(User user) {
+		HashMap<String, String> msg = new HashMap<>();
+		
+		User userCheck = service.findId(user);
+		if(userCheck!=null) {
+			msg.put("message", userCheck.getUserId());
+		}else {
+			msg.put("message", "");
+		}
+		return msg;
+	}
+	
+	
 }

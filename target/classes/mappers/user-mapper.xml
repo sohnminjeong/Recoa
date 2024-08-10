@@ -94,4 +94,11 @@
 	DELETE FROM user
 	WHERE user_id=#{userId} 
 	</delete>
+	
+	<!-- 아이디 찾기 -->
+	<select id="findId" parameterType="User" resultMap="userMap">
+	SELECT * FROM user
+	WHERE user_name=#{userRealName}
+	AND user_email=#{userEmail}
+	</select>
 </mapper>

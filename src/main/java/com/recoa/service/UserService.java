@@ -82,4 +82,9 @@ public class UserService implements UserDetailsService{
 	public int deleteUser(String userId) {
 		return dao.deleteUser(userId);
 	}
+	
+	// 아이디 찾기
+	public User findId(User user) {
+		return dao.findId(user);
+	}
 }
