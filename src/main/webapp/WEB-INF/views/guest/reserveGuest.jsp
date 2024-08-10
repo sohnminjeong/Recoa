@@ -48,30 +48,32 @@ form select option p{
 		</div>
 	
 		<form action="reserveGuest" method="post" id="reserveGuest" name="reserveGuest">
-		<div>
+		<div id="select">
 			<p>기간 선택</p>
 			<input type="text" name="daterange" id="daterange"/>
 			<input type="hidden" name="startTime" id="startTime"/>
 			<input type="hidden" name="endTime" id="endTime"/>
-		</div>
-		<div>
 			<input type="hidden" name="userCode" value="${user.userCode}" readonly/>
-		
-			<p>객실 타입</p>
-			<select name="roomType" id="roomType">
-				<option value="1">원룸</option>
-				<option value="2">투룸</option>
-			</select>
-		
-			<p>객실 번호</p>
-            <select name="roomCode" id="roomCode">
-            <!-- AJAX -->
-            </select>
+			
+				<p>객실 타입</p>
+				<select name="roomType" id="roomType" disabled>
+					<option value="1">원룸</option>
+					<option value="2">투룸</option>
+				</select>
+			
+				<p>객실 번호</p>
+		        <select name="roomCode" id="roomCode" disabled>
+		            <option value="1" selected>1호실</option> <!-- 기본 선택 옵션으로 1호실 -->
+		        </select>
+	            
 		</div>
-		<hr/>
+		  <div id="agree">
+            <input type="checkbox" id="agreement" name="agreement">
+            <label for="agreement">위의 내용에 동의합니다.</label>
+        </div>
 		
 		
-		<input type="submit" value="게스트하우스 예약" id="submit">
+		<input type="submit" value="게스트하우스 예약" id="submit" disabled>
 	</form>
 </div>
 	
@@ -82,6 +84,51 @@ form select option p{
             let today = moment().startOf('day'); // 오늘 날짜의 시작
             let tomorrow = moment(today).add(1, 'days'); // 내일 날짜
 
+         	
+            
+            // daterangepicker 초기화
+            $('#daterange').daterangepicker({
+                opens: 'left',
+                startDate: tomorrow,
+                endDate: moment(tomorrow).add(2, 'days'),
+                minDate: tomorrow,  // 오늘 날짜 이전은 선택 불가
+                maxSpan: {
+                    "days": 2  // 최대 2박 3일 설정
+                },
+                locale: {
+                    format: 'YYYY/MM/DD'
+                }
+            }, function(start, end, label) {
+                $('#startTime').val(start.format('YYYY-MM-DDTHH:mm:ss'));
+                $('#endTime').val(end.format('YYYY-MM-DDTHH:mm:ss'));
+                
+                $('#roomType').prop('disabled', false);
+                $('#roomCode').prop('disabled', false);
+                fetchAvailableRooms(start.format('YYYY-MM-DDTHH:mm:ss'), end.format('YYYY-MM-DDTHH:mm:ss'));
+            });
+
+            $('#roomType').change(function() {
+                let start = $('#daterange').data('daterangepicker').startDate;
+                let end = $('#daterange').data('daterangepicker').endDate;
+                fetchAvailableRooms(start.format('YYYY-MM-DDTHH:mm:ss'), end.format('YYYY-MM-DDTHH:mm:ss'), $(this).val());
+            });
+            
+            // 체크박스 상태에 따라 제출 버튼 활성화/비활성화
+            $('#agreement').change(function() {
+                if ($(this).is(':checked')) {
+                    $('#submit').prop('disabled', false);
+                } else {
+                    $('#submit').prop('disabled', true);
+                }
+            });
+            
+            $('#reserveGuest').submit(function() {
+                let daterange = $('#daterange').val();
+                let dates = daterange.split(' - ');
+                $('#startTime').val(moment(dates[0], 'YYYY/MM/DD').format('YYYY-MM-DDTHH:mm:ss'));
+                $('#endTime').val(moment(dates[1], 'YYYY/MM/DD').format('YYYY-MM-DDTHH:mm:ss'));
+            });
+            
          // ajax를 통해 동적으로 예약 가능한 객실 정보를 가져옴
             function fetchAvailableRooms(startTime, endTime, roomType) {
                 $.ajax({
@@ -104,51 +151,19 @@ form select option p{
             
             // 가져온 정보들을 바탕으로 select option를 출력
             function updateRoomOptions(rooms) {
-			    let roomSelect = $('#roomCode');
-			    roomSelect.empty(); // 기존 옵션을 제거합니다.
-			    for (let i = 1; i <= 7; i++) { // 예시로 1호실부터 7호실까지
-			    	let isReserved = rooms.some(room => room.room_code == i);
-			        let optionText = i + "호실";
-		            if (isReserved) {
-		                optionText += " (예약 마감)";
-		                roomSelect.append('<option value="' + i + '" disabled>' + optionText + '</option>');
-		            } else {
-		                roomSelect.append('<option value="' + i + '">' + optionText + '</option>');
-		            }
-			    }
-			}
-            
-            // daterangepicker
-            $('#daterange').daterangepicker({
-                opens: 'left',
-                startDate: tomorrow,
-                endDate: moment(tomorrow).add(2, 'days'),
-                minDate: tomorrow,  // 오늘 날짜 이전은 선택 불가
-                maxSpan: {
-                    "days": 2  // 최대 2박 3일 설정
-                },
-                locale: {
-                    format: 'YYYY/MM/DD'
+                let roomSelect = $('#roomCode');
+                roomSelect.empty(); // 기존 옵션을 제거합니다.
+                for (let i = 1; i <= 7; i++) { // 예시로 1호실부터 7호실까지
+                    let isReserved = rooms.some(room => room.room_code == i);
+                    let optionText = i + "호실";
+                    if (isReserved) {
+                        optionText += " (예약 마감)";
+                        roomSelect.append('<option value="' + i + '" disabled>' + optionText + '</option>');
+                    } else {
+                        roomSelect.append('<option value="' + i + '">' + optionText + '</option>');
+                    }
                 }
-            }, function(start, end, label) {
-                $('#startTime').val(start.format('YYYY-MM-DDTHH:mm:ss'));
-                $('#endTime').val(end.format('YYYY-MM-DDTHH:mm:ss'));
-                fetchAvailableRooms(start.format('YYYY-MM-DDTHH:mm:ss'), end.format('YYYY-MM-DDTHH:mm:ss'));
-            });
-
-            $('#roomType').change(function() {
-                let start = $('#daterange').data('daterangepicker').startDate;
-                let end = $('#daterange').data('daterangepicker').endDate;
-                fetchAvailableRooms(start.format('YYYY-MM-DDTHH:mm:ss'), end.format('YYYY-MM-DDTHH:mm:ss'), $(this).val());
-            });
-            
-            
-            $('#reserveGuest').submit(function() {
-                let daterange = $('#daterange').val();
-                let dates = daterange.split(' - ');
-                $('#startTime').val(moment(dates[0], 'YYYY/MM/DD').format('YYYY-MM-DDTHH:mm:ss'));
-                $('#endTime').val(moment(dates[1], 'YYYY/MM/DD').format('YYYY-MM-DDTHH:mm:ss'));
-            });
+            }
             
         });
    

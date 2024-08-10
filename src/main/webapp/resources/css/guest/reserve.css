@@ -35,6 +35,21 @@ h1{
 	padding: 30px;
 }
 
+#reserveGuest{
+	width: 50%;
+	margin: 20px auto;
+}
+
+form{
+	margin: 0 auto;
+	background-color: red;
+	
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
 form input {
 	font-family: 'GangwonEdu_OTFBoldA';
 	margin: 10px;
@@ -49,4 +64,22 @@ form select {
 
 form select option{
 	font-size: 15px;
+}
+
+#select{
+	margin: 0 auto;
+	display : flex;
+	justify-content: space-evenly;
+	width: 100%;
+}
+
+#select p{
+	margin-top: 20px;
+	color: white;
+}
+
+#agree{
+	background-color: purple;
+	display: flex;
+	justify-content: space-evenly;
 }
