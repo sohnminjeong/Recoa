@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -267,5 +268,26 @@ public class UserController {
 		return msg;
 	}
 	
+	// 비밀번호 찾기 페이지
+	@GetMapping("/findPwd")
+	public String findPwd() {
+		return "user/findPwd";
+	}
 	
+	// 비밀번호 찾기
+	@ResponseBody
+	@PostMapping("/findPwd")
+	public HashMap<String, String> findPwd(User user){
+		HashMap<String, String> msg = new HashMap<>();
+		User userCheck = service.findPwd(user);
+		if(userCheck!=null) {
+			String randomPwd = RandomStringUtils.randomAlphanumeric(10);
+			userCheck.setUserPwd(randomPwd);
+			service.updateUserPwd(userCheck);
+			msg.put("message", randomPwd);
+		}else {
+			msg.put("message", "");
+		}
+		return msg;
+	}
 }

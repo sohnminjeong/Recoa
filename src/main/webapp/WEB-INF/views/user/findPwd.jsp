@@ -38,6 +38,15 @@
 	}
 	#resultBox{
 		margin: 20px 0;
+		display:flex;
+		flex-direction:column;
+	}
+	#resultBox div{
+		margin-top : 20px;
+	}
+	#px{
+		font-size:0.8rem;
+		color:red;
 	}
 </style>
 </head>
@@ -53,22 +62,31 @@
 	     <div class="col align-items-center flex-col sign-in" id="sign-in-head">
 	       <div class="form-wrapper align-items-center" >
 		        <div class="form sign-in" id="findId">
-					<form action="findId" method="post" id="findIdCheck" name="findIdCheck">
+					<form action="findPwd" method="post" id="findPwdCheck" name="findPwdCheck">
+						<div class="input-group">
+							<input type="text" placeholder="아이디" name="userId" id="userId">
+						</div>
 						<div class="input-group">
 							<input type="text" placeholder="이름" name="userRealName" id="userRealName">
 						</div>
 						<div class="input-group">
 							<input type="email" placeholder="이메일" name="userEmail" id="userEmail">
 						</div>
-						<button type="button" id="findIdBtn">아이디 찾기</button>
+						<button type="button" id="findPwdBtn">비밀번호 찾기</button>
 					</form>
 					<!-- 아이디 찾기 결과 박스 -->
 			        <div id="resultBox" style="display:none">
-			        <span id="resultId"></span>
+			        <span>[임시 비밀번호]</span>
+			        <div>
+			        	<span id="resultPwd"></span><br>
+			        	<span id="px">*계정 보안을 위해 로그인하여 비밀번호를 변경해주세요.</span>
+			        </div>
+			        
+			        
 					</div>
 					 <p>
 					     <a href="/loginUser">로그인</a>
-					     <a href="/findPwd">비밀번호 찾기</a>
+					     <a href="/findId">아이디 찾기</a>
 				  	</p>
 				</div>   
   
@@ -90,26 +108,24 @@
 </div>
 <script src="../../../resources/js/user/loginUser.js"></script>
 <script>
-const userRealName = document.getElementById('userRealName');
-const userEmail = document.getElementById('userEmail');
 const resultBox = document.getElementById('resultBox');
-const findIdCheck = document.getElementById('findIdCheck');
+const findPwdCheck = document.getElementById('findPwdCheck');
 
 
-$("#findIdBtn").click(() => {
+$("#findPwdBtn").click(() => {
 	
 	$.ajax({
 		type: "post",
-		url: "/findId",
-		data: $("#findIdCheck").serialize(),
+		url: "/findPwd",
+		data: $("#findPwdCheck").serialize(),
 
 		success: function (result) {
-			findIdCheck.style.display="none";
+			findPwdCheck.style.display="none";
 			resultBox.style.display="block";
 			if(result.message==""){
-				$("#resultId").text("조회결과가 없습니다.").css("color", "black");
+				$("#resultPwd").text("조회결과가 없습니다.").css("color", "black");
 			} else{
-				$("#resultId").text(result.message);
+				$("#resultPwd").text(result.message);
 			}
 				
 		},

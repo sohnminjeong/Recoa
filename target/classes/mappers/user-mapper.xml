@@ -101,4 +101,12 @@
 	WHERE user_name=#{userRealName}
 	AND user_email=#{userEmail}
 	</select>
+	
+	<!-- 비밀번호 찾기 -->
+	<select id="findPwd" parameterType="User" resultMap="userMap">
+	SELECT * FROM user
+	WHERE user_id=#{userId}
+	AND user_name=#{userRealName}
+	AND user_email=#{userEmail}
+	</select>
 </mapper>

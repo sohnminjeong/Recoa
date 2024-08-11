@@ -68,4 +68,9 @@ public class UserDAO {
 	public User findId(User user) {
 		return session.selectOne("userMapper.findId", user);
 	}
+	
+	// 비밀번호 찾기
+	public User findPwd(User user) {
+		return session.selectOne("userMapper.findPwd", user);
+	}
 }
