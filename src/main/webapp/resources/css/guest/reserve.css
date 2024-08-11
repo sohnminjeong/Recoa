@@ -12,23 +12,35 @@
     font-style: normal;
 }
 
+h1{
+	margin-top: 10vh;
+	font-size: 2rem;
+}
+
+h2{
+	font-weight: bold;
+}
+
 #page{
 	font-family: 'GangwonEdu_OTFBoldA';
-	background-color: pink;
 	width: 100%;
 	overflow: hidden;
+	display: flex;
+	flex-direction: row;
 }
 
 .roompicture {
-	background-color: skyblue;
-	width: 100vw;
+	margin-left: 150px;
+	background-color: pink;
+	width: 500px;
 	display: flex;
 	flex-direction: center;
 	justify-content: center;
 }
 
 .roompicture img{
-	height: 300px;
+	overflow: hidden;
+    object-fit: contain;
 }
 
 h1{
@@ -42,8 +54,7 @@ h1{
 
 form{
 	margin: 0 auto;
-	background-color: red;
-	
+	background-color: rgba(365, 365, 365, 0.2);	
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -75,11 +86,45 @@ form select option{
 
 #select p{
 	margin-top: 20px;
-	color: white;
 }
 
 #agree{
-	background-color: purple;
 	display: flex;
+	flex-direction: column;
 	justify-content: space-evenly;
+}
+
+#agreetext{
+	margin-top: 10px;
+}
+
+#agree input{
+	height: 15px;
+}
+#selection-summary{
+	margin: 10px;
+	margin-top: 30px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	background-color: rgba(0, 0, 0, 0.1);
+	border-radius: 10px;
+}
+
+#room{
+	display: flex;
+
+}
+#checkbox{
+	display: flex;
+	flex-direction: row;
+	margin-top: 20px;
+}
+
+#checkbox label {
+    display: block; /* 레이블을 블록 요소로 설정하여 전체 줄을 차지하도록 */
+    margin-top: 10px; /* 레이블 위에 여백 추가 */
 }
