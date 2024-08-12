@@ -82,13 +82,21 @@ public class ReserveGuestController {
         vo.setUserCode(userCode);
         vo.setRoomType(roomType);
         vo.setRoomCode(roomCode);
-       
         
         // 모델에 추가
         model.addAttribute("vo", vo);
 
+        // 예약 등록
         service.registeGuest(vo);
 
+        // 고지서 관리
+        // 1. 고지서 조회
+        if(service.checkBill(vo.getUserCode()) == null) {
+        	System.out.println("등록!");
+        } else {
+        	System.out.println("업데이트!");
+        }
+        
         return "guest/reserveSuccess"; // 예약 성공 페이지로 이동
        
 	}

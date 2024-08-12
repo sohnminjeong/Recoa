@@ -15,7 +15,6 @@
 <link href="../../resources/css/guest/reserve.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <style>
-
 #header {
     position: absolute;
     z-index: 1;
@@ -26,7 +25,6 @@
 #page{
 	position: relative;
 	z-index: 0;
-	padding-top: 10vh;
 }
 
 form select option p{
@@ -34,6 +32,9 @@ form select option p{
 }
 
 </style>
+
+
+
 </head>
 <body>
 	<sec:authentication property="principal" var="user" />
@@ -44,26 +45,25 @@ form select option p{
 	<div id="page">
 		
 		<div class="roompicture">
-			<img src="../../resources/images/guest/oneroom.jpg"/>
+			<img id="roomImg" src="../../resources/images/guest/oneroom.jpg"/>
 		</div>
 	
 		<form action="reserveGuest" method="post" id="reserveGuest" name="reserveGuest">
 		<div id="select">
-			<p>기간 선택</p>
+			<p class="selection">기간 선택</p>
 			<input type="text" name="daterange" id="daterange"/>
 			<input type="hidden" name="startTime" id="startTime"/>
 			<input type="hidden" name="endTime" id="endTime"/>
 			<input type="hidden" name="userCode" value="${user.userCode}" readonly/>
 			
-				<p>객실 타입</p>
+				<p class="selection">객실 타입</p>
 				<select name="roomType" id="roomType" disabled>
 					<option value="1">원룸</option>
 					<option value="2">투룸</option>
 				</select>
 			
-				<p>객실 번호</p>
+				<p class="selection">객실 번호</p>
 		        <select name="roomCode" id="roomCode" disabled>
-		            <option value="1" selected>1호실</option> <!-- 기본 선택 옵션으로 1호실 -->
 		        </select>
 	            
 		</div>
@@ -122,10 +122,15 @@ form select option p{
                 
              // 날짜 선택 시 화면에 표시
                 $('#selected-dates').text(start.format('YYYY/MM/DD') + ' - ' + end.format('YYYY/MM/DD'));
-             
+             	
                 $('#roomType').prop('disabled', false);
                 $('#roomCode').prop('disabled', false);
                 fetchAvailableRooms(start.format('YYYY-MM-DDTHH:mm:ss'), end.format('YYYY-MM-DDTHH:mm:ss'));
+                
+                
+                $('#selected-roomType').text("");
+                $('#selected-roomCode').text("");
+                updateCheckboxState();
             });
 
             $('#roomType').change(function() {
@@ -135,26 +140,39 @@ form select option p{
                 // 객실 타입 선택 시 화면에 표시
                 let roomTypeText = $(this).find("option:selected").text();
                 $('#selected-roomType').text(roomTypeText);
+                $('#selected-roomCode').text("");
+                
                 fetchAvailableRooms(start.format('YYYY-MM-DDTHH:mm:ss'), end.format('YYYY-MM-DDTHH:mm:ss'), $(this).val());
+                
+                if($('#roomType').val() === '1'){
+                	document.querySelector("#roomImg").src = "../../resources/images/guest/oneroom.jpg";
+                } else if($('#roomType').val() === '2') {
+                	document.querySelector("#roomImg").src = "../../resources/images/guest/tworoom.png";
+                }
+                
             });
             
             $('#roomCode').change(function(){
                 // 객실 번호 선택 시 화면에 표시
+                
+                let roomTypeText = $('#roomType').find("option:selected").text();
+                $('#selected-roomType').text(roomTypeText);
+                
                 let roomCodeText = $(this).find("option:selected").text();
                 $('#selected-roomCode').text(roomCodeText);
                 updateCheckboxState();
             })
             
             // 예약 정보 확인 후 체크박스 상태 업데이트 함수
-		    function updateCheckboxState() {
-		        const roomCode = $('#roomCode').val();
-		
-		        if (roomCode) {
-		            $('#agreement').prop('disabled', false); // 모든 필드가 입력되면 체크박스 활성화
-		        } else {
-		            $('#agreement').prop('disabled', true); // 하나라도 비어있으면 체크박스 비활성화
-		        }
-		    }
+	        function updateCheckboxState() {
+	            const roomCodeText = $('#selected-roomCode').text().trim();
+	            
+	            if (roomCodeText) {
+	                $('#agreement').prop('disabled', false); // 모든 필드가 입력되면 체크박스 활성화
+	            } else {
+	                $('#agreement').prop('disabled', true); // 하나라도 비어있으면 체크박스 비활성화
+	            }
+	        }
             
             // 체크박스 상태에 따라 제출 버튼 활성화/비활성화
             $('#agreement').change(function() {
