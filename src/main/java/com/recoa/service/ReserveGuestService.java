@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.recoa.model.dao.ReserveGuestDAO;
 import com.recoa.model.vo.ReserveGuest;
+import com.recoa.model.vo.Utillbill;
 
 @Service
 public class ReserveGuestService {
@@ -22,5 +23,19 @@ public class ReserveGuestService {
 	
 	public int registeGuest(ReserveGuest reserveguest) {
 		return dao.registerGuest(reserveguest);
+	}
+	
+	// 고지서 조회
+	public Utillbill checkBill(int userCode) {
+		Utillbill vo = dao.checkBill(userCode);
+		if(vo == null) {
+			return null;
+		} else {
+			return vo;
+		}
+	}
+	
+	public int registBill(Utillbill vo) {
+		return 0;
 	}
 }

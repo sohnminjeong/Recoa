@@ -1,59 +1,61 @@
-
 @font-face {
-    font-family: 'GangwonEdu_OTFBoldA';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFBoldA.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+  font-family: "GangwonEdu_OTFBoldA";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFBoldA.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
 }
-.menu{
-	width:100vw;
-	overflow:hidden;
-}
-
-.menu>li{
-	list-style:none;
-	width:20%;
-	float:left;
-	text-align:center;
-	line-height:10vh;
-	background-color : white;
-}
-.menu a{
-	font-size:23px;
-	font-family: 'GangwonEdu_OTFBoldA';
-	text-decoration:none;
-}
-.menu>li:hover{
-	transition-duration:0.5s;
-	background-color : gray;
-}
-.menu>li:hover>a{
-	color:white;
-}
-.menu>li:hover .submenu{
-	transition-duration:1s;
-}
-.menu>li:hover #submenu1{
-	height:180px;
-}
-.menu>li:hover #submenu2,.menu>li:hover #submenu3, .menu>li:hover #submenu4{
-	height:120px;
+.menu {
+  width: 100vw;
+  overflow: hidden;
 }
 
-.menu>li>#recoa{
-	font-weight:bold;
+.menu > li {
+  list-style: none;
+  width: 20%;
+  float: left;
+  text-align: center;
+  line-height: 10vh;
+  background-color: white;
 }
-.submenu>li{
-	line-height:60px;
-	background-color : white;
+.menu a {
+  font-size: 23px;
+  font-family: "GangwonEdu_OTFBoldA";
+  text-decoration: none;
 }
-.submenu>li:hover{
-	background-color : #ABABAB;
+.menu > li:hover {
+  transition-duration: 0.5s;
+  background-color: gray;
 }
-.submenu>li:hover>a{
-	color : white;
+.menu > li:hover > a {
+  color: white;
 }
-.submenu{
-	height:0;
-	overflow:hidden;
+.menu > li:hover .submenu {
+  transition-duration: 1s;
+}
+.menu > li:hover #submenu1 {
+  height: 180px;
+}
+.menu > li:hover #submenu2,
+.menu > li:hover #submenu3,
+.menu > li:hover #submenu4 {
+  height: 120px;
+}
+
+.menu > li > #recoa {
+  font-weight: bold;
+}
+.submenu > li {
+  line-height: 60px;
+  background-color: white;
+}
+.submenu > li:hover {
+  background-color: #ababab;
+}
+.submenu > li:hover > a {
+  color: white;
+}
+.submenu {
+  height: 0;
+  overflow: hidden;
 }

@@ -1,0 +1,9 @@
+#content{
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+    position: relative;
+    margin: auto;
+    overflow: hidden;
+    background-color: pink;
+}
