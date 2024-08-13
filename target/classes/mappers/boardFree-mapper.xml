@@ -1,0 +1,13 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="boardFreeMapper">
+	<resultMap type="BoardFree" id="boardFreeMap">
+		<id property="freeCode" column="free_code"/>
+		<result property="userCode" column="user_code"/>	
+		<result property="freeTitle" column="free_title"/>	
+		<result property="freeContent" column="free_content"/>
+		<result property="freeWritedate" column="free_writedate"/>
+		<result property="freeMainImgUrl" column="free_mainImg_url"/>
+		<result property="freeView" column="free_view"/>
+		<result property="freeLike" column="free_like"/>
+	</resultMap>
+</mapper>

@@ -8,6 +8,7 @@
 		<typeAlias type="com.recoa.model.vo.Guest" alias="Guest" />
 		<typeAlias type="com.recoa.model.vo.ReserveGuest" alias="ReserveGuest" />
 		<typeAlias type="com.recoa.model.vo.User" alias="User" />
+		<typeAlias type="com.recoa.model.vo.BoardFree" alias="BoardFree" />
 	</typeAliases>
 
 	<!-- 쿼리문 -->
@@ -15,5 +16,6 @@
 		<mapper resource="mappers/guest-mapper.xml" />
 		<mapper resource="mappers/reserveguest-mapper.xml" />
 		<mapper resource="mappers/user-mapper.xml"/>
+		<mapper resource="mappers/boardFree-mapper.xml"/>
 	</mappers>
 </configuration>
