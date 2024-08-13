@@ -1,0 +1,14 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="boardFreeImgMapper">
+	<resultMap type="BoardFreeImg" id="boardFreeImgMap">
+		<id property="freeImgCode" column="free_img_code"/>
+		<result property="freeCode" column="free_code"/>
+		<result property="freeImgUrl" column="free_img_url"/>	
+	</resultMap>
+	
+	<!-- 게시물 작성 시 이미지 첨부 -->
+	<insert id="registerBoardFreeImg" parameterType="BoardFreeImg" useGeneratedKeys="true" keyColumn="free_img_code" keyProperty="freeImgCode">
+		INSERT INTO board_free_img(free_code, free_img_url)
+		VALUES (#{freeCode}, #{freeImgUrl})
+	</insert>
+</mapper>

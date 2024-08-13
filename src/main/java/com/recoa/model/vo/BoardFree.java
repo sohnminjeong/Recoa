@@ -1,6 +1,9 @@
 package com.recoa.model.vo;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,5 +19,6 @@ public class BoardFree {
 	private String freeMainImgUrl;
 	private int freeView;
 	private int freeLike;
-								
+				
+	private List<MultipartFile> file;
 }
