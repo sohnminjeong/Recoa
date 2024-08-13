@@ -19,6 +19,7 @@
 	#header{
 		position:absolute;
 		z-index:1;
+		width:100%;
 	}
 	#content{
 		position:relative;
