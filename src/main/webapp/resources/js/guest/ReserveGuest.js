@@ -37,7 +37,7 @@ $(document).ready(function() {
                 updateCheckboxState();
             });
 
-            $('#roomType').change(function() {
+            $('#roomType').click(function() {
                 let start = $('#daterange').data('daterangepicker').startDate;
                 let end = $('#daterange').data('daterangepicker').endDate;
              	

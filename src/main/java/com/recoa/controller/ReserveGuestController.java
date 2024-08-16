@@ -2,6 +2,7 @@ package com.recoa.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -20,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.recoa.model.vo.ReserveGuest;
+import com.recoa.model.vo.Utillbill;
 import com.recoa.service.ReserveGuestService;
 
 @Controller
@@ -54,16 +56,12 @@ public class ReserveGuestController {
 		return "guest/reserveGuest";
 	}
 	
-
-	
-	
 	@InitBinder
     public void initBinder(WebDataBinder binder) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         dateFormat.setLenient(false);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
-
 	
 	@PostMapping("/reserveGuest")
 	public String reserveGuest( @RequestParam("startTime") Date startTime,
@@ -93,12 +91,51 @@ public class ReserveGuestController {
         // 1. 고지서 조회
         if(service.checkBill(vo.getUserCode()) == null) {
         	System.out.println("등록!");
+        	// 2. 첫 고지서 등록
+        	
+        	LocalDate today = LocalDate.now();
+            int year = today.getYear();
+            int month = today.getMonthValue(); 
+        	
+        	Utillbill bill = new Utillbill();
+        	bill.setUserCode(vo.getUserCode());
+        	bill.setBillYear(year);
+        	bill.setBillMonth(month);
+        	bill.setLibUsePeriod(0);
+        	bill.setLibTotalPrice(0);
+        	
+        	// 두 날짜 사이의 차이를 밀리초로 계산
+            long diffInMillis = endTime.getTime() - startTime.getTime();
+
+            // 밀리초를 일(day) 단위로 변환
+            int diffInDays = (int) (diffInMillis / (1000 * 60 * 60 * 24));
+
+        	if(vo.getRoomType() == '1') {
+        		bill.setGuest1UsePeriod(diffInDays);
+        		bill.setGuest2UsePeriod(0);
+        		bill.setRoomTotalPrice(diffInDays * 40000);
+        		bill.setTotalPrice(diffInDays * 40000);
+        	} else {
+        		bill.setGuest2UsePeriod(diffInDays);
+        		bill.setGuest1UsePeriod(0);
+        		bill.setRoomTotalPrice(diffInDays * 50000);
+        		bill.setTotalPrice(diffInDays * 50000);
+        	}
+        	
+        	System.out.println(bill);
+//        	service.registBill(bill);
         } else {
         	System.out.println("업데이트!");
         }
         
         return "guest/reserveSuccess"; // 예약 성공 페이지로 이동
        
+	}
+
+
+	private int ParseInt(int year) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 

@@ -36,6 +36,6 @@ public class ReserveGuestService {
 	}
 	
 	public int registBill(Utillbill vo) {
-		return 0;
+		return dao.regiBill(vo);
 	}
 }

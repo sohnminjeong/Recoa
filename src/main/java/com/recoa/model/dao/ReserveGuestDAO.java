@@ -31,4 +31,9 @@ public class ReserveGuestDAO {
 		return session.selectOne("UtillBill.checkBill", userCode);
 	}
 	
+	// 고지서 등록
+	public int regiBill(Utillbill vo) {
+		return session.insert("UtillBill.Regibill", vo);
+	}
+	
 }
