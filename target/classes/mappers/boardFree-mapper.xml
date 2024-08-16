@@ -13,7 +13,10 @@
 	
 	<!-- 게시물 작성 -->
 	<insert id="registerBoardFree" parameterType="BoardFree" useGeneratedKeys="true" keyColumn="free_code" keyProperty="freeCode">
-	INSERT INTO board_free(user_code, free_title, free_content, free_mainImg_url)
-	VALUES(#{userCode}, #{freeTitle}, #{freeContent}, #{freeMainImgUrl})
+	INSERT INTO board_free(user_code, free_title, free_content)
+	VALUES(#{userCode}, #{freeTitle}, #{freeContent})
 	</insert>
+	
+	<!-- 게시물 전체보기 -->
+	<select id="listBoardFree" ></select>
 </mapper>

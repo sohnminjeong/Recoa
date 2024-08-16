@@ -49,22 +49,14 @@ public class BoardFreeController {
 	// 게시물 작성
 	@PostMapping("/registerBoardFree")
 	public String registerBoardFree(BoardFree vo) throws IllegalStateException, IOException {
-		if(vo.getFile()!=null) {
-			String url = fileUpload(vo.getFile().get(0));
-			vo.setFreeMainImgUrl(url);
-		}
 		service.registerBoardFree(vo);
-
 		BoardFreeImg img=new BoardFreeImg();
-		
-		if(vo.getFile()!=null) {
+		if(vo.getFile()!=null&&vo.getFile().get(0).getOriginalFilename()!="") {
 			for(int i=0; i<vo.getFile().size();i++) {
-
 				String url = fileUpload(vo.getFile().get(i));
 				img.setFreeImgUrl(url);
 				img.setFreeCode(vo.getFreeCode());
 				service.registerBoarddFreeImg(img);
-
 			}
 		}
 		

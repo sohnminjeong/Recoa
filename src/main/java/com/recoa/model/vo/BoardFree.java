@@ -16,7 +16,6 @@ public class BoardFree {
 	private String freeTitle;
 	private String freeContent;
 	private LocalDateTime freeWritedate;
-	private String freeMainImgUrl;
 	private int freeView;
 	private int freeLike;
 				
