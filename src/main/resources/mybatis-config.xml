@@ -10,6 +10,7 @@
 		<typeAlias type="com.recoa.model.vo.User" alias="User" />
 		<typeAlias type="com.recoa.model.vo.BoardFree" alias="BoardFree" />
 		<typeAlias type="com.recoa.model.vo.BoardFreeImg" alias="BoardFreeImg"/>
+		<typeAlias type="com.recoa.model.vo.BoardFreePaging" alias="BoardFreePaging"/>
 		<typeAlias type="com.recoa.model.vo.Utillbill" alias="Utillbill"/>
 	</typeAliases>
 

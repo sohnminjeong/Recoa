@@ -11,4 +11,5 @@
 		INSERT INTO board_free_img(free_code, free_img_url)
 		VALUES (#{freeCode}, #{freeImgUrl})
 	</insert>
+	
 </mapper>

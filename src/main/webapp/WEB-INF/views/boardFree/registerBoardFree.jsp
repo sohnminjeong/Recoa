@@ -100,16 +100,20 @@ height: 20%;
 }
 #addImg button{
 	 font-family: 'GangwonEdu_OTFBoldA';
+	 padding-top:5px;
+	 border-radius:7px;
 }
 .btn button{	
 	margin : 0 10px;
 	  font-family: 'GangwonEdu_OTFBoldA';
-
+	padding-top:5px;
+	border-radius:7px;
 }
 img{
 	width:100px;
 	height:100px;
 	margin : 10px;
+	
 }
 </style>
 </head>

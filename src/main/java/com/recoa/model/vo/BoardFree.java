@@ -1,6 +1,6 @@
 package com.recoa.model.vo;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -15,7 +15,7 @@ public class BoardFree {
 	private int userCode;
 	private String freeTitle;
 	private String freeContent;
-	private LocalDateTime freeWritedate;
+	private Date freeWritedate;
 	private int freeView;
 	private int freeLike;
 				

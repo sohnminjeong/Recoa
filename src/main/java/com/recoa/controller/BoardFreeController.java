@@ -2,16 +2,20 @@ package com.recoa.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.recoa.model.vo.BoardFree;
 import com.recoa.model.vo.BoardFreeImg;
+import com.recoa.model.vo.BoardFreePaging;
 import com.recoa.service.BoardFreeService;
 
 @Controller
@@ -36,7 +40,16 @@ public class BoardFreeController {
 	 
 	// 게시판 전체보기 페이지 이동
 	@GetMapping("/boardFreeViewAll")
-	public String boardFreeViewAll() {
+	public String boardFreeViewAll(Model model, @RequestParam(value="page", defaultValue="1")int page, String select, String keyword) {
+		int total = service.countBoardFree();
+		BoardFreePaging paging = new BoardFreePaging(page, total);
+		paging.setKeyword(keyword);
+		paging.setSelect(select);
+		
+		List<BoardFree> list = service.listBoardFree(paging);
+		System.out.println("list :" +service.listBoardFree(paging));
+		model.addAttribute("list", list);
+		model.addAttribute("paging", paging);
 		return "boardFree/boardFreeViewAll";
 	}
 	
