@@ -75,4 +75,11 @@ public class BoardFreeController {
 		return "redirect:/viewAllBoardFree";
 	}
 	
+	// 게시물 하나 보기 페이지 이동
+	@GetMapping("/viewOneBoardFree")
+	public String viewOneBoardFree(int freeCode, Model model) {
+		BoardFree vo = service.oneBoardFree(freeCode);
+		model.addAttribute("vo", vo);
+		return "boardFree/viewOneBoardFree";
+	}
 }

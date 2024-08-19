@@ -84,6 +84,11 @@ table{
         grid-template-columns: 0.5fr 2fr 1fr 1fr 0.5fr;
         width: 100%;
         text-align: center;
+        
+       	a:hover{
+       		color : gray;
+       	}
+        
 	}
 	tbody{
 		height: 100%;
@@ -163,7 +168,7 @@ table{
 				<c:forEach items="${list}" var="item" varStatus="status">
 					<tr>
 						<td>${paging.total - (paging.page - 1) * 10 - status.index}</td>
-						<td>${item.freeTitle}</td>
+						<td><a href="/viewOneBoardFree?freeCode=${item.freeCode}">${item.freeTitle}</a></td>
 						<td>${item.user.userNickname}</td>
 						<td>
 							<fmt:formatDate value="${item.freeWritedate}" pattern="yy-MM-dd HH:mm" />
@@ -180,14 +185,14 @@ table{
 						<c:when
 							test="${(paging.startPage == 1)&&(paging.select != null) && (paging.keyword != null)}">
 							<a class="page-link"
-								href="/boardFreeViewAll?select=${paging.select}&keyword=${paging.keyword}&page=${paging.startPage=1}"><i class="fa-solid fa-chevron-left"></i></a>
+								href="/viewAllBoardFree?select=${paging.select}&keyword=${paging.keyword}&page=${paging.startPage=1}"><i class="fa-solid fa-chevron-left"></i></a>
 						</c:when>
 						<c:when
 							test="${(paging.startPage == 1)&&(paging.select == null) && (paging.keyword == null)}">
-							<a class="page-link" href="/boardFreeViewAll?page=${paging.startPage=1}"><i class="fa-solid fa-chevron-left"></i></a>
+							<a class="page-link" href="/viewAllBoardFree?page=${paging.startPage=1}"><i class="fa-solid fa-chevron-left"></i></a>
 						</c:when>
 						<c:otherwise>
-							<a class="page-link" href="/boardFreeViewAll?page=${paging.startPage-1}"><i class="fa-solid fa-chevron-left"></i></a>
+							<a class="page-link" href="/viewAllBoardFree?page=${paging.startPage-1}"><i class="fa-solid fa-chevron-left"></i></a>
 						</c:otherwise>
 					</c:choose>
 				</li>
@@ -197,14 +202,14 @@ table{
 						<c:choose>
 							<c:when test="${(paging.select != null) && (paging.keyword != null)}">
 								<a class="page-link ${paging.page== page ? 'active' : ''}"
-									href="/boardFreeViewAll?select=${paging.select}&keyword=${paging.keyword}&page=${page}"
+									href="/viewAllBoardFree?select=${paging.select}&keyword=${paging.keyword}&page=${page}"
 									id="page_num">
 									${page}
 								</a>
 							</c:when>
 							<c:otherwise>
 								<a class="page-link ${paging.page== page ? 'active' : ''}"
-									href="/boardFreeViewAll?page=${page}" id="page_num">
+									href="/viewAllBoardFree?page=${page}" id="page_num">
 									${page}
 								</a>
 							</c:otherwise>
@@ -217,15 +222,15 @@ table{
 						<c:when
 							test="${(paging.endPage < 10)&&(paging.select != null) && (paging.keyword != null)}">
 							<a class="page-link"
-								href="/boardFreeViewAll?select=${paging.select}&keyword=${paging.keyword}&page=${paging.endPage=paging.endPage}"><i class="fa-solid fa-chevron-right"></i></a>
+								href="/viewAllBoardFree?select=${paging.select}&keyword=${paging.keyword}&page=${paging.endPage=paging.endPage}"><i class="fa-solid fa-chevron-right"></i></a>
 						</c:when>
 						<c:when
 							test="${(paging.endPage < 10)&&(paging.select == null) && (paging.keyword == null)}">
 							<a class="page-link"
-								href="/boardFreeViewAll?page=${paging.endPage=paging.endPage}"><i class="fa-solid fa-chevron-right"></i></a>
+								href="/viewAllBoardFree?page=${paging.endPage=paging.endPage}"><i class="fa-solid fa-chevron-right"></i></a>
 						</c:when>
 						<c:otherwise>
-							<a class="page-link" href="/boardFreeViewAll?page=${paging.endPage + 1}"><i class="fa-solid fa-chevron-right"></i></a>
+							<a class="page-link" href="/viewAllBoardFree?page=${paging.endPage + 1}"><i class="fa-solid fa-chevron-right"></i></a>
 						</c:otherwise>
 					</c:choose>
 				</li>

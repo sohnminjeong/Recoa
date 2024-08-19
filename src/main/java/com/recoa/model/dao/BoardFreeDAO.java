@@ -34,4 +34,9 @@ public class BoardFreeDAO {
 	public int total() {
 		return session.selectOne("boardFreeMapper.countBoardFree");
 	}
+	
+	// 게시물 한개 보기
+	public BoardFree oneBoardFree(int freeCode) {
+		return session.selectOne("boardFreeMapper.oneBoardFree", freeCode);
+	}
 }

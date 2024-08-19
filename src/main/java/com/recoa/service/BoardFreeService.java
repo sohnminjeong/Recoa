@@ -35,4 +35,9 @@ public class BoardFreeService {
 	public int total() {
 		return dao.total();
 	}
+	
+	// 게시물 한개 보기
+	public BoardFree oneBoardFree(int freeCode) {
+		return dao.oneBoardFree(freeCode);
+	}
 }

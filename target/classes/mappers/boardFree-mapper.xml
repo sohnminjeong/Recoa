@@ -63,4 +63,10 @@
 		</choose>
 	</where>
 	</select>
+	
+	<!-- 게시물 하나보기 -->
+	<select id="oneBoardFree" parameterType="int" resultMap="boardFreeMap">
+	SELECT * FROM board_free
+	WHERE free_code=#{freeCode}
+	</select>
 </mapper>
