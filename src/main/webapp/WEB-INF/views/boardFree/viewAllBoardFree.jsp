@@ -133,7 +133,7 @@ table{
 		<div id="containerHead">
 			<h3>자유 게시판</h3>
 			<div id="searchBoardFree">
-				<form action="boardFreeViewAll" method="get">
+				<form action="viewAllBoardFree" method="get">
 					<select name="select">
 						<option value="allFind">전체</option>
 						<option value="titleFind">제목</option>

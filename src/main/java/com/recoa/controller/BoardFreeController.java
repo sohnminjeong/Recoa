@@ -39,8 +39,8 @@ public class BoardFreeController {
 	 /* ---------------------------------------------------- */	
 	 
 	// 게시판 전체보기 페이지 이동
-	@GetMapping("/boardFreeViewAll")
-	public String boardFreeViewAll(Model model, @RequestParam(value="page", defaultValue="1")int page, String select, String keyword) {
+	@GetMapping("/viewAllBoardFree")
+	public String viewAllBoardFree(Model model, @RequestParam(value="page", defaultValue="1")int page, String select, String keyword) {
 		int total = service.total();
 		BoardFreePaging paging = new BoardFreePaging(page, total);
 		paging.setKeyword(keyword);
@@ -49,7 +49,7 @@ public class BoardFreeController {
 		List<BoardFree> list = service.listBoardFree(paging);
 		model.addAttribute("list", list);
 		model.addAttribute("paging", paging);
-		return "boardFree/boardFreeViewAll";
+		return "boardFree/viewAllBoardFree";
 	}
 	
 	// 게시물 작성 페이지 이동
@@ -72,7 +72,7 @@ public class BoardFreeController {
 			}
 		}
 		
-		return "redirect:/boardFreeViewAll";
+		return "redirect:/viewAllBoardFree";
 	}
 	
 }
