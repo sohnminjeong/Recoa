@@ -27,11 +27,11 @@ public class BoardFreeDAO {
 	}
 	
 	// 게시물 전체 보기(페이징+검색)
-	public List<BoardFree> listBoardFree(BoardFreePaging vo) {
-		return session.selectList("boardFreeMapper.listBoardFree", vo);
+	public List<BoardFree> listBoardFree(BoardFreePaging paging) {
+		return session.selectList("boardFreeMapper.listBoardFree", paging);
 	}
 	// 페이징 관련 total 수 
-	public int countBoardFree() {
+	public int total() {
 		return session.selectOne("boardFreeMapper.countBoardFree");
 	}
 }

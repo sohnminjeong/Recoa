@@ -42,30 +42,39 @@
 <div id="content">
 	<div id="container">
 		<h3>자유 게시판</h3>
-		<c:choose>
-			<c:when test="${user=='anonymousUser'}">
-				<span>비회원</span>
-			</c:when>
-			<c:otherwise>
+		<div id="registerBtn">
+			<c:if test="${user!='anonymousUser'}">
 				<button type="button" onclick="location.href='/registerBoardFree';">게시물 작성</button>
-			</c:otherwise>
-		</c:choose>
-	</div>
+			</c:if>
+		</div>
+		<div id="searchBoardFree">
+			<form action="boardFreeViewAll" method="get">
+				<select name="select">
+					<option value="allFind">전체</option>
+					<option value="titleFind">제목</option>
+					<option value="contentFind">내용</option>
+				</select>
+				<input type="text" name="keyword">
+				<input type="submit" value="조회" id="searchOk">
+			</form>
+		</div>
+		
+		
 	<table>
 		<thead>
-		</thead>
 			<tr>
 				<td>제목</td>
 				<td>내용</td>
 				<td>닉네임</td>
 				<td>작성일</td>
 			</tr>
+		</thead>
 		<tbody>
 			<c:forEach items="${list}" var="item" varStatus="status">
 				<tr>
 					<td>${item.freeTitle}</td>
 					<td>${item.freeContent}</td>
-					<td>${item.userCode}</td>
+					<td>${item.user.userNickname}</td>
 					<td>
 						<fmt:formatDate value="${item.freeWritedate}" pattern="yy-MM-dd HH:mm" />
 					</td>
@@ -73,11 +82,67 @@
 			</c:forEach>
 		</tbody>
 	</table>
+	</div>
 	
-	
-	
-	
+	<nav id="paging">
+		<ul class="pagination">
+			<li class="page-item ${paging.prev ? '':'disabled'}">
+				<c:choose>
+					<c:when
+						test="${(paging.startPage == 1)&&(paging.select != null) && (paging.keyword != null)}">
+						<a class="page-link"
+							href="/boardFreeViewAll?select=${paging.select}&keyword=${paging.keyword}&page=${paging.startPage=1}">Previous</a>
+					</c:when>
+					<c:when
+						test="${(paging.startPage == 1)&&(paging.select == null) && (paging.keyword == null)}">
+						<a class="page-link" href="/boardFreeViewAll?page=${paging.startPage=1}">Previous</a>
+					</c:when>
+					<c:otherwise>
+						<a class="page-link" href="/boardFreeViewAll?page=${paging.startPage-1}">Previous</a>
+					</c:otherwise>
+				</c:choose>
+			</li>
+			
+			<c:forEach begin="${paging.startPage}" end="${paging.endPage}" var="page">
+				<li class="page-item">
+					<c:choose>
+						<c:when test="${(paging.select != null) && (paging.keyword != null)}">
+							<a class="page-link ${paging.page== page ? 'active' : ''}"
+								href="/boardFreeViewAll?select=${paging.select}&keyword=${paging.keyword}&page=${page}"
+								id="page_num">
+								${page}
+							</a>
+						</c:when>
+						<c:otherwise>
+							<a class="page-link ${paging.page== page ? 'active' : ''}"
+								href="/boardFreeViewAll?page=${page}" id="page_num">
+								${page}
+							</a>
+						</c:otherwise>
+					</c:choose>
+				</li>
+			</c:forEach>
 
+			<li class="page-item ${paging.next ? '' : 'disabled'}">
+				<c:choose>
+					<c:when
+						test="${(paging.endPage < 10)&&(paging.select != null) && (paging.keyword != null)}">
+						<a class="page-link"
+							href="/boardFreeViewAll?select=${paging.select}&keyword=${paging.keyword}&page=${paging.endPage=paging.endPage}">Next</a>
+					</c:when>
+					<c:when
+						test="${(paging.endPage < 10)&&(paging.select == null) && (paging.keyword == null)}">
+						<a class="page-link"
+							href="/boardFreeViewAll?page=${paging.endPage=paging.endPage}">Next</a>
+					</c:when>
+					<c:otherwise>
+						<a class="page-link" href="/boardFreeViewAll?page=${paging.endPage + 1}">Next</a>
+					</c:otherwise>
+				</c:choose>
+			</li>
+
+		</ul>
+	</nav>
 </div>
 </body>
 </html>

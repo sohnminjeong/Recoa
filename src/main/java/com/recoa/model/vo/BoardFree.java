@@ -20,4 +20,5 @@ public class BoardFree {
 	private int freeLike;
 				
 	private List<MultipartFile> file;
+	private User user;
 }

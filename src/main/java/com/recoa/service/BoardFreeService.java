@@ -27,11 +27,12 @@ public class BoardFreeService {
 	}
 	
 	// 게시물 전체 보기(페이징+검색)
-	public List<BoardFree> listBoardFree(BoardFreePaging vo) {
-		return dao.listBoardFree(vo);
+	public List<BoardFree> listBoardFree(BoardFreePaging paging) {
+		paging.setOffset(paging.getLimit()*(paging.getPage()-1));
+		return dao.listBoardFree(paging);
 	}
 	// 페이징 관련 total 수 
-	public int countBoardFree() {
-		return dao.countBoardFree();
+	public int total() {
+		return dao.total();
 	}
 }

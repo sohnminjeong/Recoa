@@ -6,9 +6,14 @@
 		<result property="freeTitle" column="free_title"/>	
 		<result property="freeContent" column="free_content"/>
 		<result property="freeWritedate" column="free_writedate"/>
-		<result property="freeMainImgUrl" column="free_mainImg_url"/>
 		<result property="freeView" column="free_view"/>
 		<result property="freeLike" column="free_like"/>
+		<collection property="user" resultMap="userMap"/>
+	</resultMap>
+	
+	<resultMap type="User" id="userMap">
+		<id property="userCode" column="user_code"/>
+		<result property="userNickname" column="user_nickname"/>	
 	</resultMap>
 	
 	<!-- 게시물 작성 -->
@@ -19,7 +24,7 @@
 	
 	<!-- 게시물 전체보기 -->
 	<select id="listBoardFree" parameterType="BoardFreePaging" resultMap="boardFreeMap">
-	SELECT A.user_code, A.free_title, A.free_content, B.user_id, A.free_writedate 
+	SELECT A.user_code, A.free_title, A.free_content, B.user_nickname, A.free_writedate 
 	FROM board_free as A 
 	JOIN user as B 
 	USING(user_code)
@@ -37,6 +42,7 @@
 			</when>
 		</choose>
 	</where>
+	ORDER BY A.free_writedate DESC
 	LIMIT #{offset}, #{limit}
 	</select>
 	
