@@ -191,7 +191,7 @@ function validate(){
 		freeTitle.focus();
 		return false;
 	} 
-	alert("작성 완료");
+	alert("작성 완료되었습니다.");
 	return true;
 }
 </script>

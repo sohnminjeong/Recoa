@@ -28,6 +28,7 @@
 	position:absolute;
 	z-index:1;
 	width:100%;
+	border-bottom:1px solid black;
 }
 #content{
 	position:relative;
@@ -68,6 +69,29 @@
 		 font-size:1rem;
 	}
 }
+table{
+	width:70%;
+	height:60%;
+	font-family: 'GangwonEdu_OTFBoldA';
+	font-size : 1.2rem;
+	thead{
+		height: 8%;
+   		border-bottom: 1px solid black;
+   		color : gray;
+	}
+	tr{
+		display: grid;
+        grid-template-columns: 0.5fr 2fr 1fr 1fr 0.5fr;
+        width: 100%;
+        text-align: center;
+	}
+	tbody{
+		height: 100%;
+        display: grid;
+        grid-template-rows: repeat(10, 1fr);
+        margin-top: 15px;
+	}
+}
 #registerBtn{
 	margin:15px 0;
 	width:70%;
@@ -88,10 +112,15 @@
 
 #paging{
 	margin-top : 20px;
+	width:40%;
+	
+	.pagination{
+		width: 100%;
+	    display: flex;
+	    justify-content: space-evenly;
+	}
 }
-.pagination{
-	display:flex;
-}
+
 </style>
 </head>
 <body>
@@ -151,14 +180,14 @@
 						<c:when
 							test="${(paging.startPage == 1)&&(paging.select != null) && (paging.keyword != null)}">
 							<a class="page-link"
-								href="/boardFreeViewAll?select=${paging.select}&keyword=${paging.keyword}&page=${paging.startPage=1}">Previous</a>
+								href="/boardFreeViewAll?select=${paging.select}&keyword=${paging.keyword}&page=${paging.startPage=1}"><i class="fa-solid fa-chevron-left"></i></a>
 						</c:when>
 						<c:when
 							test="${(paging.startPage == 1)&&(paging.select == null) && (paging.keyword == null)}">
-							<a class="page-link" href="/boardFreeViewAll?page=${paging.startPage=1}">Previous</a>
+							<a class="page-link" href="/boardFreeViewAll?page=${paging.startPage=1}"><i class="fa-solid fa-chevron-left"></i></a>
 						</c:when>
 						<c:otherwise>
-							<a class="page-link" href="/boardFreeViewAll?page=${paging.startPage-1}">Previous</a>
+							<a class="page-link" href="/boardFreeViewAll?page=${paging.startPage-1}"><i class="fa-solid fa-chevron-left"></i></a>
 						</c:otherwise>
 					</c:choose>
 				</li>
@@ -188,15 +217,15 @@
 						<c:when
 							test="${(paging.endPage < 10)&&(paging.select != null) && (paging.keyword != null)}">
 							<a class="page-link"
-								href="/boardFreeViewAll?select=${paging.select}&keyword=${paging.keyword}&page=${paging.endPage=paging.endPage}">Next</a>
+								href="/boardFreeViewAll?select=${paging.select}&keyword=${paging.keyword}&page=${paging.endPage=paging.endPage}"><i class="fa-solid fa-chevron-right"></i></a>
 						</c:when>
 						<c:when
 							test="${(paging.endPage < 10)&&(paging.select == null) && (paging.keyword == null)}">
 							<a class="page-link"
-								href="/boardFreeViewAll?page=${paging.endPage=paging.endPage}">Next</a>
+								href="/boardFreeViewAll?page=${paging.endPage=paging.endPage}"><i class="fa-solid fa-chevron-right"></i></a>
 						</c:when>
 						<c:otherwise>
-							<a class="page-link" href="/boardFreeViewAll?page=${paging.endPage + 1}">Next</a>
+							<a class="page-link" href="/boardFreeViewAll?page=${paging.endPage + 1}"><i class="fa-solid fa-chevron-right"></i></a>
 						</c:otherwise>
 					</c:choose>
 				</li>
