@@ -125,7 +125,7 @@ img{
 <div id="content">
 	<div id="container">
 		<h3>게시물 작성</h3>
-		<form action="/registerBoardFree" method="post" enctype="multipart/form-data">
+		<form action="/registerBoardFree" method="post" enctype="multipart/form-data" onsubmit="return validate()">
 		<input type="hidden" value="${user.userCode}" name="userCode">
 			<div id="data">
 				<input type="text" placeholder="제목" name="freeTitle" id="freeTitle">
@@ -138,7 +138,7 @@ img{
 				<div id="createImg"></div>
 			</div>
 			<div class="btn">
-				<button>작성 완료</button>
+				<button type="submit">작성 완료</button>
 				<button type="button" onclick="location.href='/boardFreeViewAll';">작성 취소</button>
 			</div>
 		</form>
@@ -184,6 +184,16 @@ delImg.addEventListener('click', function(){
 	delImg.style.display="none";
 	
 })
+
+function validate(){
+	
+	if(freeTitle.value==''){
+		freeTitle.focus();
+		return false;
+	} 
+	alert("작성 완료");
+	return true;
+}
 </script>
 </body>
 </html>

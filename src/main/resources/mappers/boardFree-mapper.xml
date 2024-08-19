@@ -24,7 +24,7 @@
 	
 	<!-- 게시물 전체보기 -->
 	<select id="listBoardFree" parameterType="BoardFreePaging" resultMap="boardFreeMap">
-	SELECT A.user_code, A.free_title, A.free_content, B.user_nickname, A.free_writedate 
+	SELECT A.*, B.user_nickname 
 	FROM board_free as A 
 	JOIN user as B 
 	USING(user_code)
