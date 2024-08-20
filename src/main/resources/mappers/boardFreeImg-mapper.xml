@@ -12,4 +12,16 @@
 		VALUES (#{freeCode}, #{freeImgUrl})
 	</insert>
 	
+	<!-- 게시물 이미지 불러오기 -->
+	<select id='oneBoardFreeImg' parameterType="int" resultMap="boardFreeImgMap">
+		SELECT * 
+		FROM board_free_img
+		WHERE free_code=#{freeCode}
+	</select>
+	
+	<!-- 게시물 이미지 삭제 -->
+	<delete id="deleteBoardFreeImg" parameterType="int">
+		DELETE FROM board_free_img
+		WHERE free_code=#{freeCode}
+	</delete>
 </mapper>

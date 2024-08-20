@@ -13,7 +13,15 @@
 	
 	<resultMap type="User" id="userMap">
 		<id property="userCode" column="user_code"/>
+		<result property="userId" column="user_id"/>
+		<result property="userRealName" column="user_name"/>
 		<result property="userNickname" column="user_nickname"/>	
+		<result property="userImgUrl" column="user_img_url"/>
+		<result property="userPhone" column="user_phone"/>
+		<result property="userAdr" column="user_adr"/>
+		<result property="userAdrDetail" column="user_adr_detail"/>
+		<result property="userEmail" column="user_email"/>
+		<result property="userAdmin" column="user_admin"/>	
 	</resultMap>
 	
 	<!-- 게시물 작성 -->
@@ -66,7 +74,16 @@
 	
 	<!-- 게시물 하나보기 -->
 	<select id="oneBoardFree" parameterType="int" resultMap="boardFreeMap">
-	SELECT * FROM board_free
-	WHERE free_code=#{freeCode}
+		SELECT A.*, B.*
+		FROM board_free as A
+		JOIN user as B
+		USING (user_code)
+		WHERE free_code=#{freeCode}
 	</select>
+	
+	<!-- 게시물 삭제 -->
+	<delete id="deleteBoardFree" parameterType="int">
+	 DELETE FROM board_free
+	 WHERE free_code=#{freeCode}
+	</delete>
 </mapper>

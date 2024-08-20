@@ -40,4 +40,17 @@ public class BoardFreeService {
 	public BoardFree oneBoardFree(int freeCode) {
 		return dao.oneBoardFree(freeCode);
 	}
+	// 게시물 한개 보기 > 이미지
+	public List<BoardFreeImg> oneBoardFreeImg(int freeCode) {
+		return dao.oneBoardFreeImg(freeCode);
+	}
+	
+	// 게시물 삭제 
+	public int deleteBoardFree(int freeCode) {
+		return dao.deleteBoardFree(freeCode);
+	}
+	// 게시물 삭제 > 이미지
+	public int deleteBoardFreeImg(int freeCode) {
+		return dao.deleteBoardFreeImg(freeCode);
+	}
 }

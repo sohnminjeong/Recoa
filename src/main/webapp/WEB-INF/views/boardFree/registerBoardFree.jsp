@@ -139,7 +139,7 @@ img{
 			</div>
 			<div class="btn">
 				<button type="submit">작성 완료</button>
-				<button type="button" onclick="location.href='/boardFreeViewAll';">작성 취소</button>
+				<button type="button" onclick="location.href='/viewAllBoardFree';">작성 취소</button>
 			</div>
 		</form>
 	</div>

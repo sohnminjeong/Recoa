@@ -39,4 +39,17 @@ public class BoardFreeDAO {
 	public BoardFree oneBoardFree(int freeCode) {
 		return session.selectOne("boardFreeMapper.oneBoardFree", freeCode);
 	}
+	// 게시물 한개 보기 > 이미지
+	public List<BoardFreeImg> oneBoardFreeImg(int freeCode) {
+		return session.selectList("boardFreeImgMapper.oneBoardFreeImg", freeCode);
+	}
+	
+	// 게시물 삭제 
+	public int deleteBoardFree(int freeCode) {
+		return session.delete("boardFreeMapper.deleteBoardFree", freeCode);
+	}
+	// 게시물 삭제 > 이미지
+	public int deleteBoardFreeImg(int freeCode) {
+		return session.delete("boardFreeImgMapper.deleteBoardFreeImg", freeCode);
+	}
 }

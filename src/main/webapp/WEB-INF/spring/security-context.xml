@@ -16,7 +16,7 @@
 	
 	<context:component-scan base-package="com.recoa" />
 	
-	<!-- <security:intercept-url pattern="/user" access="permitAll"/> -->
+	<!-- <security:intercept-url pattern="/registerBoardFree" access="hasRole('ROLE_ADMIN')"/> -->
 	<!-- security:form-login이 제일 기본 -->
 	<security:http>
 		<security:form-login login-page="/loginUser" authentication-success-handler-ref="userLoginSuccess"/> 

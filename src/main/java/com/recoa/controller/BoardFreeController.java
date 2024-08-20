@@ -8,6 +8,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -79,7 +80,39 @@ public class BoardFreeController {
 	@GetMapping("/viewOneBoardFree")
 	public String viewOneBoardFree(int freeCode, Model model) {
 		BoardFree vo = service.oneBoardFree(freeCode);
+		List<BoardFreeImg> imgList = service.oneBoardFreeImg(freeCode);
 		model.addAttribute("vo", vo);
+		model.addAttribute("imgList", imgList);
 		return "boardFree/viewOneBoardFree";
+	}
+	
+	// 게시물 삭제 
+	@GetMapping("/deleteBoardFree")
+	public String deleteBoardFree(int freeCode) {
+		List<BoardFreeImg> listImg = service.oneBoardFreeImg(freeCode);
+		if(listImg!=null) {
+			
+			for(BoardFreeImg img : listImg) {
+				File file = new File(path+img.getFreeImgUrl());
+				file.delete();
+			}
+		}
+		service.deleteBoardFree(freeCode);
+		service.deleteBoardFreeImg(freeCode);
+		return "redirect:/viewAllBoardFree";
+	}
+	
+	// 게시물 수정 페이지 이동
+	@GetMapping("/updateBoardFree")
+	public String updateBoardFree(int freeCode, Model model) {
+		BoardFree vo = service.oneBoardFree(freeCode);
+		List<BoardFreeImg> imgList = service.oneBoardFreeImg(freeCode);
+		
+		if(imgList.size()!=0) {
+			model.addAttribute("imgList", imgList);
+		}
+		model.addAttribute("vo", vo);
+		
+		return "boardFree/updateBoardFree";
 	}
 }
