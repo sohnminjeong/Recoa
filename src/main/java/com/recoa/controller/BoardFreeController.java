@@ -81,7 +81,8 @@ public class BoardFreeController {
 	// 게시물 하나 보기 페이지 이동
 	@GetMapping("/viewOneBoardFree")
 	public String viewOneBoardFree(int freeCode, Model model, HttpServletRequest request) {
-		System.out.println("request : "+request);
+		// 조회수 중복 방지 수정 필요 
+		System.out.println("request.adddr : "+request.getLocalAddr());
 		System.out.println("request.getCookies :"+request.getCookies());
 		service.updateFreeView(freeCode);
 		BoardFree vo = service.oneBoardFree(freeCode);
