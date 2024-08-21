@@ -45,7 +45,7 @@
 	display:flex;
 	flex-direction:column;
 	align-items:center;
-	height:80%;
+	height:90%;
 	width:60%;
 	padding : 20px;
 }
@@ -66,7 +66,7 @@ form div#data{
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 80%;
+    height: 85%;
     margin-top: 25px;
     
 }
@@ -79,7 +79,7 @@ form div #freeTitle{
 }
 form div #freeContent{
 	width:75%;
-	height:70%;
+	height:55%;
 	margin: 18px 0;
 	 font-family: 'SDMiSaeng';
 	 font-size:1.5rem;
@@ -95,34 +95,35 @@ form div.btn{
     justify-content: center;
     align-items: center;
 }
-#addImg{
-height: 20%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    img{
-		width:100px;
-		height:100px;
-		margin : 10px;
+#imgBtn {
+	display:flex;
+	button{
+		 font-family: 'GangwonEdu_OTFBoldA';
+		 padding-top:5px;
+		 border-radius:7px;
+		 margin : 0 10px;
+		 border:none;
 	}
 }
-#addImg button{
-	 font-family: 'GangwonEdu_OTFBoldA';
-	 padding-top:5px;
-	 border-radius:7px;
-	 margin : 0 10px;
-}
+
+#imgBtn button:hover{
+ 	background-color : black;
+ 	color : white;
+ }
 .btn button{	
 	margin : 0 10px;
 	font-family: 'GangwonEdu_OTFBoldA';
 	padding-top:5px;
 	border-radius:7px;
+	border: 1px dashed black;
+}
+.btn button:hover{
+	border: none;
 }
 img{
 	width:100px;
 	height:100px;
 	margin : 10px;
-	
 }
 
 </style>
@@ -138,26 +139,23 @@ img{
 		<form action="/updateBoardFree" method="post" enctype="multipart/form-data" onsubmit="return validate()">
 		<input type="hidden" value="${vo.freeCode}" name="freeCode">
 			<div id="data">
-				<input type="text" placeholder="${vo.freeTitle}" name="freeTitle" id="freeTitle">
-				<textarea placeholder="${vo.freeContent}" name="freeContent" id="freeContent"></textarea>
-				
-				
+				<input type="text" value="${vo.freeTitle}" name="freeTitle" id="freeTitle">
+				<textarea name="freeContent" id="freeContent">${vo.freeContent}</textarea>
 				<input type="file" name="file" multiple="multiple" id="file" style="display: none;" onchange="imgShow(event)">
 				
 				<div id="addImg">
-					<c:choose>
-						<c:when test="${imgList!=null}">
-							<c:forEach items="${imgList}" var="img" varStatus="status">
-								<img src="/recoaImg/boardFree/${img.freeImgUrl}" class="hasImg"/>
-							</c:forEach>
-							<button type="button" id="delImg">이미지 삭제</button>
-						</c:when>
-						<c:otherwise>
-							<button type="button" id="selectImg" style="display:block">이미지 첨부</button>
-							<button type="button" id="delImg">이미지 삭제</button>
-						</c:otherwise>
-					</c:choose>		
+					<c:if test="${imgList!=null}">
+						<c:forEach items="${imgList}" var="img" varStatus="status">
+							<img src="/recoaImg/boardFree/${img.freeImgUrl}" class="clickImg"/>
+						</c:forEach>						
+					</c:if>				
 				</div>
+				<div id="imgBtn">
+					<button type="button" id="selectImg">이미지 첨부</button>
+					<button type="button" id="delImg">이미지 삭제</button>
+					<input type="hidden" id="delImgBtn" value="${vo.delImgBtn}" name="delImgBtn"/>
+				</div>
+				
 				<div id="createImg"></div>
 			</div>
 			<div class="btn">
@@ -172,10 +170,11 @@ const selectImg = document.querySelector('#selectImg');
 const file = document.querySelector('#file');
 const delImg = document.querySelector("#delImg");
 const createImg = document.querySelector("#createImg");
-const hasImg = document.querySelector(".hasImg");
+const addImg = document.querySelector("#addImg");
+const delImgBtn=document.querySelector("#delImgBtn");
 
+addImg.addEventListener('click', ()=>file.click());
 selectImg.addEventListener('click', ()=>file.click());
-hasImg.addEventListener('click', ()=>file.click());
 
 function imgShow(event){
 	if(event.target.files.length>=4){
@@ -192,31 +191,33 @@ function imgShow(event){
 		};
 		reader.readAsDataURL(event.target.files[i]);
 	}
-	selectImg.style.display="none";
+	
 	createImg.style.display="block";
 	delImg.style.display="block";
+	addImg.style.display="none";
 }
 
 
 delImg.addEventListener('click', function(){
 	file.value="";
+	delImgBtn.value=true;
 	while ( createImg.hasChildNodes() )
 	{
 		createImg.removeChild( createImg.firstChild );       
 	}  
 	createImg.style.display="none";
-	selectImg.style.display="block";
+	
 	delImg.style.display="none";
+	addImg.style.display="none";
 	
 })
 
 function validate(){
-	
 	if(freeTitle.value==''){
 		freeTitle.focus();
 		return false;
 	} 
-	alert("작성 완료되었습니다.");
+	alert("수정 완료되었습니다.");
 	return true;
 }
 </script>

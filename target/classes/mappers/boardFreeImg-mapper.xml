@@ -24,4 +24,11 @@
 		DELETE FROM board_free_img
 		WHERE free_code=#{freeCode}
 	</delete>
+	
+	<!-- 게시물 이미지 수정 -->
+	<update id="updateBoardFreeImg" parameterType="BoardFreeImg">
+		UPDATE board_free_img
+		SET free_img_url=#{freeImgUrl}
+		WHERE free_code=#{freeCode}
+	</update>
 </mapper>

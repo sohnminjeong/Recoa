@@ -95,6 +95,10 @@
     		flex-direction:column;
     	}
     }
+    #writerRight i{
+    	font-size:0.7rem;
+    	font-wieght:light;
+    }
 }
 #bottomContents{
 	#text{
@@ -103,10 +107,12 @@
 	
 	#img{
 		margin-top:30px;
+		height:200px;
 		
 		img{
 			width:200px;
 			height:200px;
+			margin:0 10px;
 		}
 	}
 	
@@ -152,7 +158,11 @@
 						<span id="writerNickname">${vo.user.userNickname}</span>
 					</div>
 				</div>	
-				<fmt:formatDate value="${vo.freeWritedate}" pattern="yy-MM-dd HH:mm"/>
+				<div id="writerRight">
+					<fmt:formatDate value="${vo.freeWritedate}" pattern="yy-MM-dd HH:mm"/>&nbsp;
+					<i class="fa-solid fa-eye">${vo.freeView}</i>
+				</div>
+				
 			</div>
 			<div id="bottomContents">
 				<span id="text">${vo.freeContent}</span>

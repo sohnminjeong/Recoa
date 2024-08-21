@@ -81,9 +81,25 @@
 		WHERE free_code=#{freeCode}
 	</select>
 	
+	<!-- 조회수 -->
+	<update id="updateFreeView" parameterType="int">
+		UPDATE board_free
+		SET free_view=free_view+1
+		WHERE free_code=#{freeCode}
+	</update>
+	
 	<!-- 게시물 삭제 -->
 	<delete id="deleteBoardFree" parameterType="int">
 	 DELETE FROM board_free
 	 WHERE free_code=#{freeCode}
 	</delete>
+	
+	<!-- 게시물 수정 -->
+	<update id="updateBoardFree" parameterType="BoardFree">
+	UPDATE board_free 
+	SET free_title=#{freeTitle},
+		free_content=#{freeContent}
+	WHERE free_code=#{freeCode}
+	</update>
+
 </mapper>

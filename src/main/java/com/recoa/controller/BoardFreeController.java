@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -78,7 +80,10 @@ public class BoardFreeController {
 	
 	// 게시물 하나 보기 페이지 이동
 	@GetMapping("/viewOneBoardFree")
-	public String viewOneBoardFree(int freeCode, Model model) {
+	public String viewOneBoardFree(int freeCode, Model model, HttpServletRequest request) {
+		System.out.println("request : "+request);
+		System.out.println("request.getCookies :"+request.getCookies());
+		service.updateFreeView(freeCode);
 		BoardFree vo = service.oneBoardFree(freeCode);
 		List<BoardFreeImg> imgList = service.oneBoardFreeImg(freeCode);
 		model.addAttribute("vo", vo);
@@ -114,5 +119,54 @@ public class BoardFreeController {
 		model.addAttribute("vo", vo);
 		
 		return "boardFree/updateBoardFree";
+	}
+	
+	// 게시물 수정
+	@PostMapping("/updateBoardFree")
+	public String updateBoardFree(BoardFree vo) throws IllegalStateException, IOException {
+
+		// 게시글 수정 
+		service.updateBordFree(vo);
+		
+		List<BoardFreeImg> listImg = service.oneBoardFreeImg(vo.getFreeCode());
+		BoardFreeImg img=new BoardFreeImg();
+		
+		// 이미지 추가, 수정, 삭제 
+		if(vo.getFile().get(0).getOriginalFilename()!=""&&vo.isDelImgBtn()==false) {
+		// 새로운 이미지 있는 경우
+			if(listImg.size()!=0) {
+				// 기존 이미지 있는 경우 -> 기존 이미지 파일 삭제+db update
+				for(BoardFreeImg photo : listImg) {
+					File file = new File(path+photo.getFreeImgUrl());
+					file.delete();
+				} 
+				service.deleteBoardFreeImg(vo.getFreeCode());
+				for(int i=0; i<vo.getFile().size();i++) {
+					String url = fileUpload(vo.getFile().get(i));
+					img.setFreeImgUrl(url);
+					img.setFreeCode(vo.getFreeCode());
+					service.registerBoarddFreeImg(img);
+				}
+			} else {
+				// 기존 이미지 없는 경우 -> db register
+				for(int i=0; i<vo.getFile().size();i++) {
+					String url = fileUpload(vo.getFile().get(i));
+					img.setFreeImgUrl(url);
+					img.setFreeCode(vo.getFreeCode());
+					service.registerBoarddFreeImg(img);
+				}
+			}
+		} else {
+		// 새로운 이미지 없는 경우 
+			if(listImg.size()!=0&&vo.isDelImgBtn()==true) {
+			// 기존 이미지 있음, 삭제 원하는 경우
+				for(BoardFreeImg photo : listImg) {
+					File file = new File(path+photo.getFreeImgUrl());
+					file.delete();
+				} 
+				service.deleteBoardFreeImg(vo.getFreeCode());
+			}
+		}
+		return "redirect:/viewOneBoardFree?freeCode="+vo.getFreeCode();
 	}
 }

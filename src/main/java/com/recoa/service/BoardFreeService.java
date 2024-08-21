@@ -44,6 +44,10 @@ public class BoardFreeService {
 	public List<BoardFreeImg> oneBoardFreeImg(int freeCode) {
 		return dao.oneBoardFreeImg(freeCode);
 	}
+	// 게시물 조회수 증가
+	public int updateFreeView(int freeCode) {
+		return dao.updateFreeView(freeCode);
+	}
 	
 	// 게시물 삭제 
 	public int deleteBoardFree(int freeCode) {
@@ -52,5 +56,14 @@ public class BoardFreeService {
 	// 게시물 삭제 > 이미지
 	public int deleteBoardFreeImg(int freeCode) {
 		return dao.deleteBoardFreeImg(freeCode);
+	}
+	
+	// 게시물 수정
+	public int updateBordFree(BoardFree vo) {
+		return dao.updateBordFree(vo);
+	}
+	// 게시물 수정 > 이미지
+	public int updateBoardFreeImg(BoardFreeImg img) {
+		return dao.updateBoardFreeImg(img);
 	}
 }
