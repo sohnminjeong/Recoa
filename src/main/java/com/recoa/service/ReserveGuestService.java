@@ -16,13 +16,25 @@ public class ReserveGuestService {
 	@Autowired
 	private ReserveGuestDAO dao;
 	
+	// 사용 가능한 방 조회
 	public List<Map<String, Object>> getAvailableRooms(Map<String, Object> params) {
         System.out.println("service : " + params);
         return dao.checkRoom(params);
     }
 	
+	// 방 예약
 	public int registeGuest(ReserveGuest reserveguest) {
 		return dao.registerGuest(reserveguest);
+	}
+	
+	// 내 게스트룸 예약 내역 조회
+	public List<ReserveGuest> myGuest(String userId){
+		return dao.myGuest(userId);
+	}
+	
+	// 게스트룸 예약 취소
+	public int cancelGuest(Integer reserveGuestCode) {
+		return dao.cancelGuest(reserveGuestCode);
 	}
 	
 	// 고지서 조회
@@ -39,4 +51,5 @@ public class ReserveGuestService {
 	public int updateBill(Utillbill vo) {
 		return dao.updateBill(vo);
 	}
+
 }

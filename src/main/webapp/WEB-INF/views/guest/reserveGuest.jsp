@@ -39,9 +39,9 @@ form select option p{
 </head>
 <body>
 	<sec:authentication property="principal" var="user" />
-<div id="header">
-<%@ include file="../main/header.jsp" %>
-</div>
+	<div id="header">
+	<%@ include file="../main/header.jsp" %>
+	</div>
 <h1>게스트하우스 예약</h1>
 	<div id="page">
 		

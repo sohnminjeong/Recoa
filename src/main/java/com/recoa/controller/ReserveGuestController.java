@@ -1,5 +1,6 @@
 package com.recoa.controller;
 
+import java.security.Principal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -156,11 +157,30 @@ public class ReserveGuestController {
         	//service.updateBill(bill);
         }
         return "guest/reserveSuccess"; // 예약 성공 페이지로 이동
-       
 	}
 
-
-
+	// 마이페이지 (내 게스트룸 예약 내역)
+	@GetMapping("/myGuest")
+	public String myGuest(Principal principal, Model model) {
+		String userId = principal.getName();
+		List<ReserveGuest> list = service.myGuest(userId);
+		model.addAttribute("list", list);
+		
+		System.out.println(userId);
+		System.out.println("list : " + list);
+		return "guest/myGuest";
+	} 
+	
+	@PostMapping("/cancelGuest")
+	public String cancelGuest(Principal principal, @RequestParam("reserveGuestCode") Integer reserveGuestCode, Model model) {
+		String userId = principal.getName();
+		List<ReserveGuest> list = service.myGuest(userId);
+		System.out.println("reserveGuestCode : " + reserveGuestCode);
+		service.cancelGuest(reserveGuestCode);
+		model.addAttribute("list", list);
+		
+		return "redirect:/myGuest";
+	}
 	
 	
 }

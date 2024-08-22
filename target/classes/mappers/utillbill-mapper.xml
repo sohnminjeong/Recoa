@@ -23,7 +23,6 @@
 		WHERE user_code=#{userCode} AND bill_month=#{billMonth} AND bill_year=#{billYear}
     </select>
 
-
 	<!-- 고지서 등록(INSERT) -->
 	<insert id="Regibill" parameterType="UtillBill" useGeneratedKeys="true" keyProperty="billCode" keyColumn="billCode">
 		INSERT INTO utill_bill(user_code, bill_year, bill_month, lib_use_period, lib_total_price, 
@@ -47,6 +46,5 @@
 	    </set>
 	    WHERE user_code = #{userCode}
 	</update>
-
 
 </mapper>

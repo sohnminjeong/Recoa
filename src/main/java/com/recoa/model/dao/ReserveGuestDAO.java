@@ -26,6 +26,16 @@ public class ReserveGuestDAO {
 		return session.insert("ReserveGuest.registerGuestReserve", reserveguest);
 	}
 	
+	// 내 게스트룸 예약 내역 조회
+	public List<ReserveGuest> myGuest(String userId){
+		return session.selectList("ReserveGuest.myGuest", userId);
+	}
+	
+	// 게스트룸 예약 취소
+	public int cancelGuest(Integer reserveGuestCode) {
+		return session.update("ReserveGuest.cancelGuest", reserveGuestCode);
+	}
+	
 	// 고지서 조회
 	public List<Utillbill> checkBill(Utillbill vo) {
 		return session.selectList("UtillBill.checkBill", vo);
@@ -40,5 +50,8 @@ public class ReserveGuestDAO {
 	public int updateBill(Utillbill vo) {
 		return session.update("UtillBill.updatebill", vo);
 	}
+
+
+
 	
 }

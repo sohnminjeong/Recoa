@@ -35,11 +35,27 @@
         ]]>
     </select>
 
-
 	<!-- 게스트하우스 예약 등록 -->
 	<insert id="registerGuestReserve" parameterType="ReserveGuest" useGeneratedKeys="true" keyProperty="reserveGuestCode" keyColumn="reserveGuestCode">
 		INSERT INTO reserve_guest(user_code, room_type, room_code, start_time, end_time) 
 		VALUES(#{userCode}, #{roomType}, #{roomCode}, #{startTime}, #{endTime})
 	</insert>
+	
+	<!-- 내 게스트룸 예약 내역 조회 -->
+	<select id="myGuest" parameterType="String" resultType="map" >
+		 SELECT * 
+		    FROM reserve_guest
+		    WHERE user_code = (
+		        SELECT user_code 
+		        FROM user 
+		        WHERE user_id = #{userId}
+    		) AND status=1
+	</select>
 
+	<!-- 게스트룸 예약 취소 -->
+	<update id = "cancelGuest" parameterType="Integer">
+		UPDATE reserve_guest
+		SET status = 0
+		WHERE reserve_guest_code = #{reserveGuestCode}
+	</update>
 </mapper>
