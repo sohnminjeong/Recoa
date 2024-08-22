@@ -47,6 +47,7 @@
 	height:100%;
 }
 #containerHead{
+
 	display:flex;
 	justify-content:space-between;
 	width:70%;
@@ -72,7 +73,10 @@
 
 #containerContents{
 	width:70%;
+	height:50%;
 	font-family: 'GangwonEdu_OTFBoldA';
+	border-bottom : 1px dashed black;
+	padding-bottom:20px;
 }
 #topContents{
 	width:100%;
@@ -108,25 +112,71 @@
 	#text{
 		font-size:1.3rem;
 	}
-	
 	#img{
 		margin-top:30px;
 		height:200px;
-		
 		img{
 			width:200px;
 			height:200px;
 			margin:0 10px;
 		}
 	}
-	
-	
+
 }
 .click{
 	color:red;
 }
 .clickNon{
 	color : gray;
+}
+#containerComments{
+	border:1px solid black;
+	width:50%;
+	height:30%;
+	margin-top:20px;
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+	
+	#writeComment{
+		border:1px solid gray;
+		border-radius : 10px;
+		width: 75%;
+		height : 30%;
+		padding: 5px 10px;
+		display: flex;
+    	flex-direction: column;
+		
+		span{
+			font-family: 'GangwonEdu_OTFBoldA';
+			height: 35%;
+			align-content: center;
+		}
+		
+		form{
+			display: flex;
+   			height: 65%;
+   			
+			#freeCommentContent{
+				border:none;
+				width:100%;
+				 font-family: 'SDMiSaeng';
+				 font-size:1.2rem;
+			}
+			
+			button{
+				font-family: 'SDMiSaeng';
+				 font-size:1rem;
+				 width: 5%;
+			}
+		}
+	}
+	#viewComments{
+		background-color : pink;
+		width:75%;
+		height:70%;
+	}
+	
 }
 </style>
 </head>
@@ -184,7 +234,20 @@
 					
 				</div>
 			</div>
-			
+		</div>
+		<div id="containerComments">
+			<div id="writeComment">
+				<span>${vo.user.userNickname}</span>	
+				<form action="/registerBoardFreeComment" method="post">
+					<input type="hidden" name="freeCode" value="${vo.freeCode}"/>
+					<input type="hidden" name="userCode" value="${user.userCode}"/>
+					<input type="text" placeholder="댓글을 남겨보세요" name="freeCommentContent" id="freeCommentContent">
+					<button>등록</button>
+				</form>
+			</div>
+			<div id="viewComments">
+				<span>보여지는 곳</span>
+			</div>
 		</div>
 	</div>
 </div>

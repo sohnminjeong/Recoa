@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.recoa.model.vo.BoardFree;
+import com.recoa.model.vo.BoardFreeComment;
 import com.recoa.model.vo.BoardFreeImg;
 import com.recoa.model.vo.BoardFreePaging;
 import com.recoa.model.vo.FreeLike;
@@ -188,5 +189,10 @@ public class BoardFreeController {
 	}
 	
 	/*---------------------- 댓글 ----------------------------*/
-	
+	@PostMapping("/registerBoardFreeComment")
+	public String registerBoardFreeComment(BoardFreeComment vo) {
+		System.out.println("vo : "+vo);
+		commentService.registerBoardFreeComment(vo);
+		return "redirect:/viewOneBoardFree?freeCode="+vo.getFreeCode();
+	}
 }

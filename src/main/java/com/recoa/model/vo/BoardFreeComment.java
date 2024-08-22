@@ -8,11 +8,11 @@ import lombok.NoArgsConstructor;
 @Data @NoArgsConstructor
 public class BoardFreeComment {
 	
-	private int freecommentCode;
+	private int freeCommentCode;
 	private int freeCode;
 	private int userCode;
 	private String freeCommentContent;
 	private Date freeCommentWritedate;
-	private int commentParentCode;
+	private Integer commentParentCode;
 	
 }
