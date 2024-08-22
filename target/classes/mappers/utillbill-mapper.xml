@@ -17,9 +17,10 @@
 	<!-- 고지서 테이블 -->
 
     <!-- 유저 코드로 고지서 조회 -->
-    <select id="checkBill" parameterType="int" resultType="Utillbill">
-		SELECT * FROM utill_bill
-		WHERE user_code = #{userCode}
+    <select id="checkBill" parameterType="Utillbill" resultMap="UtillbillMap">
+		SELECT *
+		FROM utill_bill
+		WHERE user_code=#{userCode} AND bill_month=#{billMonth} AND bill_year=#{billYear}
     </select>
 
 
@@ -31,8 +32,21 @@
 			 #{guest1UsePeriod}, #{guest2UsePeriod}, #{roomTotalPrice}, #{totalPrice})
 	</insert>
 	
-	<!-- 고지서 수정(UPDATE) -->
-	
+	<update id="updatebill" parameterType="UtillBill">
+	    UPDATE utill_bill
+	    <set>
+	        <if test="guest1UsePeriod == 1">
+	            guest1_use_period = guest1_use_period + 1,
+	        </if>
+	        
+	        <if test="guest2UsePeriod == 2">
+	            guest2_use_period = guest2_use_period + 2,
+	        </if>
+	        
+	        room_total_price = room_total_price + #{roomTotalPrice}
+	    </set>
+	    WHERE user_code = #{userCode}
+	</update>
 
 
 </mapper>

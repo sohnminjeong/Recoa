@@ -26,16 +26,17 @@ public class ReserveGuestService {
 	}
 	
 	// 고지서 조회
-	public Utillbill checkBill(int userCode) {
-		Utillbill vo = dao.checkBill(userCode);
-		if(vo == null) {
-			return null;
-		} else {
-			return vo;
-		}
+	public List<Utillbill> checkBill(Utillbill vo) {
+		List<Utillbill> bill = dao.checkBill(vo);
+		System.out.println("서비스 : " + bill.size());
+		return dao.checkBill(vo);
 	}
 	
 	public int registBill(Utillbill vo) {
 		return dao.regiBill(vo);
+	}
+	
+	public int updateBill(Utillbill vo) {
+		return dao.updateBill(vo);
 	}
 }

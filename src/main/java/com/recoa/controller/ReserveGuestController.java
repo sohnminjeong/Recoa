@@ -89,13 +89,28 @@ public class ReserveGuestController {
 
         // 고지서 관리
         // 1. 고지서 조회
-        if(service.checkBill(vo.getUserCode()) == null) {
-        	System.out.println("등록!");
+        LocalDate today = LocalDate.now();
+        int year = today.getYear();
+        int month = today.getMonthValue(); 
+        
+        // 두 날짜 사이의 차이를 밀리초로 계산
+        long diffInMillis = endTime.getTime() - startTime.getTime();
+
+        // 밀리초를 일(day) 단위로 변환
+        int diffInDays = (int) (diffInMillis / (1000 * 60 * 60 * 24));
+
+        
+        Utillbill checkbill = new Utillbill();
+        checkbill.setUserCode(userCode);
+        checkbill.setBillYear(year);
+        checkbill.setBillMonth(month);
+        
+        // 해당 유저의 고지서 존재 여부 확인
+        List<Utillbill> check = service.checkBill(checkbill);
+        
+        if(check.size() == 0) {
+        	System.out.println("유저의 고지서가 비어있구나 등록!");
         	// 2. 첫 고지서 등록
-        	
-        	LocalDate today = LocalDate.now();
-            int year = today.getYear();
-            int month = today.getMonthValue(); 
         	
         	Utillbill bill = new Utillbill();
         	bill.setUserCode(vo.getUserCode());
@@ -104,12 +119,7 @@ public class ReserveGuestController {
         	bill.setLibUsePeriod(0);
         	bill.setLibTotalPrice(0);
         	
-        	// 두 날짜 사이의 차이를 밀리초로 계산
-            long diffInMillis = endTime.getTime() - startTime.getTime();
-
-            // 밀리초를 일(day) 단위로 변환
-            int diffInDays = (int) (diffInMillis / (1000 * 60 * 60 * 24));
-
+        	
         	if(vo.getRoomType() == '1') {
         		bill.setGuest1UsePeriod(diffInDays);
         		bill.setGuest2UsePeriod(0);
@@ -122,22 +132,34 @@ public class ReserveGuestController {
         		bill.setTotalPrice(diffInDays * 50000);
         	}
         	
-        	System.out.println(bill);
-//        	service.registBill(bill);
+        	System.out.println("등록 : " + bill);
+        	service.registBill(bill);
         } else {
+        	// 고지서 업데이트 쿼리
+        	
+        	Utillbill bill = new Utillbill();
+        	
+        	bill.setUserCode(userCode);
+        	
+        	if(vo.getRoomType() == '1') {
+        		bill.setGuest1UsePeriod(diffInDays);
+        		bill.setGuest2UsePeriod(0);
+        		bill.setRoomTotalPrice(diffInDays * 40000);
+        		bill.setTotalPrice(diffInDays * 40000);
+        	} else {
+        		bill.setGuest2UsePeriod(diffInDays);
+        		bill.setGuest1UsePeriod(0);
+        		bill.setRoomTotalPrice(diffInDays * 50000);
+        		bill.setTotalPrice(diffInDays * 50000);
+        	}
         	System.out.println("업데이트!");
+        	//service.updateBill(bill);
         }
-        
         return "guest/reserveSuccess"; // 예약 성공 페이지로 이동
        
 	}
 
 
-	private int ParseInt(int year) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	
 
 	
 	

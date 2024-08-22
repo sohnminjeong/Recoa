@@ -27,13 +27,18 @@ public class ReserveGuestDAO {
 	}
 	
 	// 고지서 조회
-	public Utillbill checkBill(int userCode) {
-		return session.selectOne("UtillBill.checkBill", userCode);
+	public List<Utillbill> checkBill(Utillbill vo) {
+		return session.selectList("UtillBill.checkBill", vo);
 	}
 	
 	// 고지서 등록
 	public int regiBill(Utillbill vo) {
 		return session.insert("UtillBill.Regibill", vo);
+	}
+	
+	// 고지서 수정
+	public int updateBill(Utillbill vo) {
+		return session.update("UtillBill.updatebill", vo);
 	}
 	
 }
