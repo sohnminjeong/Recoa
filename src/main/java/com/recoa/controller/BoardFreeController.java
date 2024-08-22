@@ -2,18 +2,23 @@ package com.recoa.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.recoa.model.vo.BoardFree;
@@ -21,8 +26,10 @@ import com.recoa.model.vo.BoardFreeComment;
 import com.recoa.model.vo.BoardFreeImg;
 import com.recoa.model.vo.BoardFreePaging;
 import com.recoa.model.vo.FreeLike;
+import com.recoa.model.vo.User;
 import com.recoa.service.BoardFreeCommentService;
 import com.recoa.service.BoardFreeService;
+import com.recoa.service.UserService;
 
 @Controller
 public class BoardFreeController {
@@ -31,6 +38,8 @@ public class BoardFreeController {
 	 private BoardFreeService service;
 	 @Autowired
 	 private BoardFreeCommentService commentService;
+	 @Autowired
+	 private UserService userService;
 	
 	 // 이미지 저장
 	 private String path = "C:\\recoaImg\\boardFree\\";
@@ -89,25 +98,56 @@ public class BoardFreeController {
 		// 조회수 중복 방지 수정 필요 
 		System.out.println("request.adddr : "+request.getLocalAddr());
 		System.out.println("request.getCookies :"+request.getCookies());
+		
 		service.updateFreeView(freeCode);
 		BoardFree vo = service.oneBoardFree(freeCode);
 		List<BoardFreeImg> imgList = service.oneBoardFreeImg(freeCode);
 		model.addAttribute("vo", vo);
 		model.addAttribute("imgList", imgList);
+		model.addAttribute("countLike", service.countFreeLike(freeCode));
+		
+		// 이미 좋아요 누른 user일 경우
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		UserDetails userDetails = (UserDetails) principal;
+		String userId = userDetails.getUsername();
+		User user = userService.selectUser(userId);
+		FreeLike like = new FreeLike();
+		like.setFreeCode(freeCode);
+		like.setUserCode(user.getUserCode());
+		if(service.checkUserFreeLike(like)==1) {
+			// 이미 좋아요 한 경우
+			model.addAttribute("like", true);
+		}else{
+			// 좋아요 안 한 경우
+			model.addAttribute("like",false);
+		};
+		
 		return "boardFree/viewOneBoardFree";
 	}
 	
 	// 게시물 좋아요 
-//	@PostMapping("/updateFreeLike")
-//	public void updateFreeLike(FreeLike vo) {
-//		
-//		service.insertFreeLike(vo);
-//		service.updatePlusFreeLike(vo.getFreeCode());
-//		
-//		service.updateMinusFreeLike(vo.getFreeCode());
-//		service.deleteFreeLike(vo);
-//		
-//	}
+	@ResponseBody
+	@PostMapping("/updateFreeLike")
+	public Integer updateFreeLike(@RequestParam Map<Object, String> map) {
+
+		FreeLike vo = new FreeLike();
+		
+		int freeCode = Integer.parseInt(map.get("freeCode"));
+		int userCode = Integer.parseInt(map.get("userCode"));
+		int likeCheck = Integer.parseInt(map.get("likeCheck"));
+	
+		vo.setFreeCode(freeCode);	
+		vo.setUserCode(userCode);
+		
+		if(likeCheck==1) {
+			// 좋아요 누른 경우
+			service.insertFreeLike(vo);
+		} else {
+			// 좋아요 취소한 경우
+			service.deleteFreeLike(vo);
+		}
+		return service.countFreeLike(freeCode);
+	}
 	
 	// 게시물 삭제 
 	@GetMapping("/deleteBoardFree")

@@ -221,7 +221,16 @@
 				<div id="writerRight">
 					<fmt:formatDate value="${vo.freeWritedate}" pattern="yy-MM-dd HH:mm"/>&nbsp;
 					<i class="fa-solid fa-eye">${vo.freeView}</i>&nbsp;
-					<i class="fa-solid fa-heart" id="freeLike"></i>${vo.freeLike}
+					<c:choose>
+						<c:when test="${like==true}">
+							<i class="fa-solid fa-heart click" id="freeLike"></i>
+						</c:when>
+						<c:otherwise>
+							<i class="fa-solid fa-heart" id="freeLike"></i>
+						</c:otherwise>
+					</c:choose>
+					<span id="sss">${countLike}</span>
+					<input type="hidden" value="${vo.likeCheck}" id="likeCheck" name="likeCheck"/>
 				</div>
 				
 			</div>
@@ -239,8 +248,8 @@
 			<div id="writeComment">
 				<span>${vo.user.userNickname}</span>	
 				<form action="/registerBoardFreeComment" method="post">
-					<input type="hidden" name="freeCode" value="${vo.freeCode}"/>
-					<input type="hidden" name="userCode" value="${user.userCode}"/>
+					<input type="hidden" name="freeCode" value="${vo.freeCode}" id="freeCode"/>
+					<input type="hidden" name="userCode" value="${user.userCode}" id="userCode"/>
 					<input type="text" placeholder="댓글을 남겨보세요" name="freeCommentContent" id="freeCommentContent">
 					<button>등록</button>
 				</form>
@@ -257,31 +266,31 @@ $('#freeLike').click(function() {
     if ( $(this).hasClass('click') ) {
         $(this).removeClass('click')
         $(this).addClass('clickNon')
+        $('#likeCheck').val("0")
     } else {
         $(this).addClass('click')
         $(this).removeClass('clickNon')  
+        $('#likeCheck').val("1")
     }
 });
-/*
+
+
 $('#freeLike').click(function(){
+	var userCode = $('#userCode').val();
+	var freeCode = $('#freeCode').val();
+	var likeCheck = $('#likeCheck').val();
 	$.ajax({
 		type:"post",
 		url:"/updateFreeLike",
-		data:{"userCode":userCode, "freeCode":freeCode, "likeCheck":true},
+		data:{"userCode":userCode, "freeCode":freeCode, "likeCheck":likeCheck},
 		
 		success: function (result) {
-			if (result) {
-				$('#userPwdCheck').text("기존 비밀번호와 일치하지 않습니다").css("color", "gray");
-				pwdCheck = true;
-			} else {
-				$('#userPwdCheck').text("").css("color", "gray");
-				pwdCheck = false;
-			}
+				$("#sss").text(result);
 		}
-	}))
+	})
 	
 })
-*/
+
 </script>
 </body>
 </html>

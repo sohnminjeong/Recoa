@@ -17,10 +17,8 @@ public class BoardFree {
 	private String freeContent;
 	private Date freeWritedate;
 	private int freeView;
-	private int freeLike;
 	
-	private boolean likeCheck;
-				
+	private int likeCheck; // 좋아요 여부 확인용 0:좋아요x, 1:좋아요O	
 	private List<MultipartFile> file;
 	private boolean delImgBtn;
 	private User user;

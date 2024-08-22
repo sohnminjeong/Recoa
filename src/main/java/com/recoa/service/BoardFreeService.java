@@ -49,14 +49,6 @@ public class BoardFreeService {
 	public int updateFreeView(int freeCode) {
 		return dao.updateFreeView(freeCode);
 	}
-	// 게시물 좋아요 +1
-	public int updatePlusFreeLike(int freeCode) {
-		return dao.updatePlusFreeLike(freeCode);
-	}
-	// 게시물 좋아요 -1
-	public int updateMinusFreeLike(int freeCode) {
-		return dao.updateMinusFreeLike(freeCode);
-	}
 	// 좋아요 추가
 	public int insertFreeLike(FreeLike vo) {
 		return dao.insertFreeLike(vo);
@@ -64,6 +56,14 @@ public class BoardFreeService {
 	// 좋아요 삭제 
 	public int deleteFreeLike(FreeLike vo) {
 		return dao.deleteFreeLike(vo);
+	}
+	// 게시물 별 좋아요 갯수
+	public int countFreeLike(int freeCode) {
+		return dao.countFreeLike(freeCode);
+	}
+	// 유저1명 좋아요1개 확인 여부
+	public int checkUserFreeLike(FreeLike vo) {
+		return dao.checkUserFreeLike(vo);
 	}
 	
 	

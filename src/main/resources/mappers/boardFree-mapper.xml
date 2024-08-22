@@ -7,7 +7,6 @@
 		<result property="freeContent" column="free_content"/>
 		<result property="freeWritedate" column="free_writedate"/>
 		<result property="freeView" column="free_view"/>
-		<result property="freeLike" column="free_like"/>
 		<collection property="user" resultMap="userMap"/>
 	</resultMap>
 	
@@ -85,19 +84,6 @@
 	<update id="updateFreeView" parameterType="int">
 		UPDATE board_free
 		SET free_view=free_view+1
-		WHERE free_code=#{freeCode}
-	</update>
-	
-	<!-- 게시물 좋아요 +1-->
-	<update id="updatePlustFreeLike" parameterType="int">
-		UPDATE board_free
-		SET free_like = free_like+1
-		WHERE free_code=#{freeCode}
-	</update>
-	<!-- 게시물 좋아요 -1 -->
-	<update id="updateMinusFreeLike" parameterType="int">
-		UPDATE board_free
-		SET free_like = free_like-1
 		WHERE free_code=#{freeCode}
 	</update>
 	

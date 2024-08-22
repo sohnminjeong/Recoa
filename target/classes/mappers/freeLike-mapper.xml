@@ -6,7 +6,7 @@
 		<result property="freeCode" column="free_code"/>
 	</resultMap>
 	
-	<!--게시물별 좋아요 -->
+	<!--게시물 좋아요 -->
 	<insert id="insertFreeLike" parameterType="FreeLike" useGeneratedKeys="true" keyColumn="like_code" keyProperty="likeCode">
 	INSERT INTO free_like(user_code, free_code)
 	VALUES (#{userCode}, #{freeCode})
@@ -17,4 +17,18 @@
 	DELETE FROM free_like
 	WHERE user_code=#{userCode} AND free_code=#{freeCode}
 	</delete>
+	
+	<!-- 게시물 별 좋아요 갯수 -->
+	<select id="countFreeLike" parameterType="int" resultType="int">
+	SELECT count(*)
+	FROM free_like
+	WHERE free_code=#{freeCode}
+	</select>
+	
+	<!-- 유저1명 좋아요1개 확인 여부 -->
+	<select id="checkUserFreeLike" parameterType="FreeLike" resultType="int">
+	SELECT count(*)
+	FROM free_like
+	WHERE free_code=#{freeCode} AND user_code=#{userCode}
+	</select>
 </mapper>
