@@ -99,6 +99,10 @@
     	font-size:0.7rem;
     	font-wieght:light;
     }
+    #writerRight #freeLike:hover{
+    	cursor:pointer;
+    	color : red;
+    }
 }
 #bottomContents{
 	#text{
@@ -117,6 +121,12 @@
 	}
 	
 	
+}
+.click{
+	color:red;
+}
+.clickNon{
+	color : gray;
 }
 </style>
 </head>
@@ -160,7 +170,8 @@
 				</div>	
 				<div id="writerRight">
 					<fmt:formatDate value="${vo.freeWritedate}" pattern="yy-MM-dd HH:mm"/>&nbsp;
-					<i class="fa-solid fa-eye">${vo.freeView}</i>
+					<i class="fa-solid fa-eye">${vo.freeView}</i>&nbsp;
+					<i class="fa-solid fa-heart" id="freeLike"></i>${vo.freeLike}
 				</div>
 				
 			</div>
@@ -177,5 +188,37 @@
 		</div>
 	</div>
 </div>
+<script>
+
+$('#freeLike').click(function() {
+    if ( $(this).hasClass('click') ) {
+        $(this).removeClass('click')
+        $(this).addClass('clickNon')
+    } else {
+        $(this).addClass('click')
+        $(this).removeClass('clickNon')  
+    }
+});
+/*
+$('#freeLike').click(function(){
+	$.ajax({
+		type:"post",
+		url:"/updateFreeLike",
+		data:{"userCode":userCode, "freeCode":freeCode, "likeCheck":true},
+		
+		success: function (result) {
+			if (result) {
+				$('#userPwdCheck').text("기존 비밀번호와 일치하지 않습니다").css("color", "gray");
+				pwdCheck = true;
+			} else {
+				$('#userPwdCheck').text("").css("color", "gray");
+				pwdCheck = false;
+			}
+		}
+	}))
+	
+})
+*/
+</script>
 </body>
 </html>

@@ -19,6 +19,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.recoa.model.vo.BoardFree;
 import com.recoa.model.vo.BoardFreeImg;
 import com.recoa.model.vo.BoardFreePaging;
+import com.recoa.model.vo.FreeLike;
+import com.recoa.service.BoardFreeCommentService;
 import com.recoa.service.BoardFreeService;
 
 @Controller
@@ -26,6 +28,8 @@ public class BoardFreeController {
 
 	 @Autowired
 	 private BoardFreeService service;
+	 @Autowired
+	 private BoardFreeCommentService commentService;
 	
 	 // 이미지 저장
 	 private String path = "C:\\recoaImg\\boardFree\\";
@@ -91,6 +95,18 @@ public class BoardFreeController {
 		model.addAttribute("imgList", imgList);
 		return "boardFree/viewOneBoardFree";
 	}
+	
+	// 게시물 좋아요 
+//	@PostMapping("/updateFreeLike")
+//	public void updateFreeLike(FreeLike vo) {
+//		
+//		service.insertFreeLike(vo);
+//		service.updatePlusFreeLike(vo.getFreeCode());
+//		
+//		service.updateMinusFreeLike(vo.getFreeCode());
+//		service.deleteFreeLike(vo);
+//		
+//	}
 	
 	// 게시물 삭제 
 	@GetMapping("/deleteBoardFree")
@@ -170,4 +186,7 @@ public class BoardFreeController {
 		}
 		return "redirect:/viewOneBoardFree?freeCode="+vo.getFreeCode();
 	}
+	
+	/*---------------------- 댓글 ----------------------------*/
+	
 }

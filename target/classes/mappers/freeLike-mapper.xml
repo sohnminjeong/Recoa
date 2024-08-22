@@ -1,0 +1,20 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="freeLikeMapper">
+	<resultMap type="FreeLike" id="freeLikeMap">
+		<id property="likeCode" column="like_code"/>
+		<result property="userCode" column="user_code"/>
+		<result property="freeCode" column="free_code"/>
+	</resultMap>
+	
+	<!--게시물별 좋아요 -->
+	<insert id="insertFreeLike" parameterType="FreeLike" useGeneratedKeys="true" keyColumn="like_code" keyProperty="likeCode">
+	INSERT INTO free_like(user_code, free_code)
+	VALUES (#{userCode}, #{freeCode})
+	</insert>
+	
+	<!-- 게시물 좋아요 취소 -->
+	<delete id="deleteFreeLike" parameterType="FreeLike">
+	DELETE FROM free_like
+	WHERE user_code=#{userCode} AND free_code=#{freeCode}
+	</delete>
+</mapper>

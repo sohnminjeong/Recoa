@@ -18,6 +18,8 @@ public class BoardFree {
 	private Date freeWritedate;
 	private int freeView;
 	private int freeLike;
+	
+	private boolean likeCheck;
 				
 	private List<MultipartFile> file;
 	private boolean delImgBtn;

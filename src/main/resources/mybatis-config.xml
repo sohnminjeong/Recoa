@@ -11,6 +11,8 @@
 		<typeAlias type="com.recoa.model.vo.BoardFree" alias="BoardFree" />
 		<typeAlias type="com.recoa.model.vo.BoardFreeImg" alias="BoardFreeImg"/>
 		<typeAlias type="com.recoa.model.vo.BoardFreePaging" alias="BoardFreePaging"/>
+		<typeAlias type="com.recoa.model.vo.BoardFreeComment" alias="BoardFreeComment"/>
+		<typeAlias type="com.recoa.model.vo.FreeLike" alias="FreeLike"/>
 		<typeAlias type="com.recoa.model.vo.Utillbill" alias="Utillbill"/>
 	</typeAliases>
 
@@ -21,6 +23,8 @@
 		<mapper resource="mappers/user-mapper.xml"/>
 		<mapper resource="mappers/boardFree-mapper.xml"/>
 		<mapper resource="mappers/boardFreeImg-mapper.xml"/>
+		<mapper resource="mappers/boardFreeComment-mapper.xml"/>
+		<mapper resource="mappers/freeLike-mapper.xml"/>
 		<mapper resource="mappers/utillbill-mapper.xml"/>
 	</mappers>
 </configuration>

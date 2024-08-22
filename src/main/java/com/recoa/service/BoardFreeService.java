@@ -9,6 +9,7 @@ import com.recoa.model.dao.BoardFreeDAO;
 import com.recoa.model.vo.BoardFree;
 import com.recoa.model.vo.BoardFreeImg;
 import com.recoa.model.vo.BoardFreePaging;
+import com.recoa.model.vo.FreeLike;
 
 @Service
 public class BoardFreeService {
@@ -48,6 +49,23 @@ public class BoardFreeService {
 	public int updateFreeView(int freeCode) {
 		return dao.updateFreeView(freeCode);
 	}
+	// 게시물 좋아요 +1
+	public int updatePlusFreeLike(int freeCode) {
+		return dao.updatePlusFreeLike(freeCode);
+	}
+	// 게시물 좋아요 -1
+	public int updateMinusFreeLike(int freeCode) {
+		return dao.updateMinusFreeLike(freeCode);
+	}
+	// 좋아요 추가
+	public int insertFreeLike(FreeLike vo) {
+		return dao.insertFreeLike(vo);
+	}
+	// 좋아요 삭제 
+	public int deleteFreeLike(FreeLike vo) {
+		return dao.deleteFreeLike(vo);
+	}
+	
 	
 	// 게시물 삭제 
 	public int deleteBoardFree(int freeCode) {

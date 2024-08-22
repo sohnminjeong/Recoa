@@ -88,6 +88,19 @@
 		WHERE free_code=#{freeCode}
 	</update>
 	
+	<!-- 게시물 좋아요 +1-->
+	<update id="updatePlustFreeLike" parameterType="int">
+		UPDATE board_free
+		SET free_like = free_like+1
+		WHERE free_code=#{freeCode}
+	</update>
+	<!-- 게시물 좋아요 -1 -->
+	<update id="updateMinusFreeLike" parameterType="int">
+		UPDATE board_free
+		SET free_like = free_like-1
+		WHERE free_code=#{freeCode}
+	</update>
+	
 	<!-- 게시물 삭제 -->
 	<delete id="deleteBoardFree" parameterType="int">
 	 DELETE FROM board_free

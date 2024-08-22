@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.recoa.model.vo.BoardFree;
 import com.recoa.model.vo.BoardFreeImg;
 import com.recoa.model.vo.BoardFreePaging;
+import com.recoa.model.vo.FreeLike;
 
 @Repository
 public class BoardFreeDAO {
@@ -46,6 +47,23 @@ public class BoardFreeDAO {
 	// 게시물 조회수 증가
 	public int updateFreeView(int freeCode) {
 		return session.update("boardFreeMapper.updateFreeView", freeCode);
+	}
+	// 게시물 좋아요 +1
+	public int updatePlusFreeLike(int freeCode) {
+		return session.update("boardFreeMapper.updatePlusFreeLike", freeCode);
+	}
+	// 게시물 좋아요 -1
+	public int updateMinusFreeLike(int freeCode) {
+		return session.update("boardFreeMapper.updateMinusFreeLike", freeCode);
+	}
+	
+	// 좋아요 추가
+	public int insertFreeLike(FreeLike vo) {
+		return session.insert("freeLikeMapper.insertFreeLike", vo);
+	}
+	// 좋아요 삭제 
+	public int deleteFreeLike(FreeLike vo) {
+		return session.delete("freeLikeMapper.deleteFreeLike", vo);
 	}
 	
 	// 게시물 삭제 

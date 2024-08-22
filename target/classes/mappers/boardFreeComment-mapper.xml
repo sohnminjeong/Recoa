@@ -1,0 +1,17 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="boardFreeCommentMapper">
+	<resultMap type="BoardFreeComment" id="boardFreeCommentMap">
+		<id column="free_comment_code" property="freeCommentCode"/>
+		<result column="free_code" property="freeCode"/>
+		<result column="user_code" property="userCode"/>
+		<result column="free_comment_content" property="freeCommentContent"/>
+		<result column="free_comment_writedate" property="freeCommentWritedate"/>
+		<result column="comment_parent_code" property="commentParentCode"/>
+	</resultMap>
+	
+	<!-- 댓글 작성 -->
+	<insert id="registerBoardFreeComment" parameterType="BoardFreeComment" useGeneratedKeys="true" keyColumn="free_comment_code" keyProperty="freeCommentCode">
+	INSERT INTO board_free_comment(free_code, user_code, free_comment_content, comment_parent_code)
+	VALUES(#{freeCode}, #{userCode}, #{freeCommentContent}, #{commentParentCode})
+	</insert>
+</mapper>
