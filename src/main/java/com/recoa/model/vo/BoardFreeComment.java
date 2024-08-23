@@ -15,4 +15,5 @@ public class BoardFreeComment {
 	private Date freeCommentWritedate;
 	private Integer commentParentCode;
 	
+	private User user;
 }

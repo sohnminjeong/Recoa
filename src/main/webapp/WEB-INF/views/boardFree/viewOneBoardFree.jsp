@@ -129,6 +129,7 @@
 .clickNon{
 	color : gray;
 }
+/*------------------------- 댓글 ----------------------------*/
 #containerComments{
 	border:1px solid black;
 	width:50%;
@@ -166,17 +167,80 @@
 			
 			button{
 				font-family: 'SDMiSaeng';
-				 font-size:1rem;
-				 width: 5%;
+                font-size: 1rem;
+                width: 8%;
+                border: none;
+                border-radius: 5px;
 			}
 		}
 	}
+	#viewCommentsBtn{
+		width: 75%;
+	    margin-top: 5px;
+	    display: flex;
+	    justify-content: right;
+		
+		span{
+			font-family: 'SDMiSaeng';
+            font-size: 1.2rem;
+		}
+	}
+	
 	#viewComments{
 		background-color : pink;
 		width:75%;
-		height:70%;
+	/*height:70%;*/
+		margin-top:10px;
+		
+		#commented{
+			border-bottom: 0.5px dashed gray;
+			padding-bottom:10px;
+			margin-top:10px;
+			
+			#commentedTop{
+				display:flex;
+				justify-content: space-between;
+				
+				#commentDate{
+					font-family: 'GangwonEdu_OTFBoldA';
+    				font-size: 0.8rem;
+				}
+			}
+			
+			#commentedWriter{
+				display:flex;
+				font-family: 'GangwonEdu_OTFBoldA';
+				font-size:0.8rem;
+				margin-bottom: 5px;
+				img{
+					border-radius:50%;
+		    		width:23px;
+		    		height:23px;
+		    		margin-right:5px;
+				}
+				#commentedWriterDetail{
+					display:flex;
+					flex-direction:column;
+				}
+			}
+		
+		}
+		#commented>span{
+			font-size:0.9rem;
+			font-family: 'GangwonEdu_OTFBoldA';
+			margin-left: 10px;
+			
+		}
+
 	}
 	
+	
+}
+.fa-sort-down:hover{
+	cursor:pointer;
+}
+.fa-sort-up:hover{
+	cursor:pointer;
 }
 </style>
 </head>
@@ -222,6 +286,9 @@
 					<fmt:formatDate value="${vo.freeWritedate}" pattern="yy-MM-dd HH:mm"/>&nbsp;
 					<i class="fa-solid fa-eye">${vo.freeView}</i>&nbsp;
 					<c:choose>
+						<c:when test="${user=='anonymousUser'}">
+							<i class="fa-solid fa-heart"></i>
+						</c:when>
 						<c:when test="${like==true}">
 							<i class="fa-solid fa-heart click" id="freeLike"></i>
 						</c:when>
@@ -229,7 +296,7 @@
 							<i class="fa-solid fa-heart" id="freeLike"></i>
 						</c:otherwise>
 					</c:choose>
-					<span id="sss">${countLike}</span>
+					<span id="countLike">${countLike}</span>
 					<input type="hidden" value="${vo.likeCheck}" id="likeCheck" name="likeCheck"/>
 				</div>
 				
@@ -246,16 +313,54 @@
 		</div>
 		<div id="containerComments">
 			<div id="writeComment">
-				<span>${vo.user.userNickname}</span>	
-				<form action="/registerBoardFreeComment" method="post">
-					<input type="hidden" name="freeCode" value="${vo.freeCode}" id="freeCode"/>
-					<input type="hidden" name="userCode" value="${user.userCode}" id="userCode"/>
-					<input type="text" placeholder="댓글을 남겨보세요" name="freeCommentContent" id="freeCommentContent">
-					<button>등록</button>
-				</form>
+				<c:choose>
+					<c:when test="${user=='anonymousUser'}">
+						<span>비회원의 경우, 로그인 후 댓글 입력 부탁드립니다.</span>
+					</c:when>
+					<c:otherwise>
+						<span>${vo.user.userNickname}</span>	
+						<form action="/registerBoardFreeComment" method="post">
+							<input type="hidden" name="freeCode" value="${vo.freeCode}" id="freeCode"/>
+							<input type="hidden" name="userCode" value="${user.userCode}" id="userCode"/>
+							<input type="text" placeholder="댓글을 남겨보세요" name="freeCommentContent" id="freeCommentContent">
+							<button>등록</button>
+						</form>
+					</c:otherwise>
+				</c:choose>
 			</div>
-			<div id="viewComments">
-				<span>보여지는 곳</span>
+			<div id="viewCommentsBtn">
+				<span>댓글 보기</span>
+				<i class="fa-solid fa-sort-down"></i>
+				<i class="fa-solid fa-sort-up" style="display:none"></i>
+			</div>
+
+			<div id="viewComments" style="display:none">
+				<c:forEach items="${commentList}" var="comment" varStatus="status">
+					<c:if test="${comment.commentParentCode==null}">
+						<div id="commented">
+							<div id="commentedTop">
+								<div id="commentedWriter">
+									<c:choose>
+										<c:when test="${comment.user.userImgUrl==null}">
+											<img src="resources/images/user/default_profile.png" class="userImg"/>
+										</c:when>
+										<c:otherwise>
+											<img src="/recoaImg/user/${comment.user.userImgUrl}" class="userImg"/>
+										</c:otherwise>
+									</c:choose>
+									<div id="commentedWriterDetail">
+										<span>${comment.user.userAdr}동</span>
+										<span>${comment.user.userNickname}</span>
+									</div>
+								</div>
+								<div id="commentDate">
+									<fmt:formatDate value="${comment.freeCommentWritedate}" pattern="yy-MM-dd HH:mm"/>
+								</div>
+							</div>
+							<span>${comment.freeCommentContent}</span>
+						</div>
+					</c:if>
+				</c:forEach>
 			</div>
 		</div>
 	</div>
@@ -285,10 +390,21 @@ $('#freeLike').click(function(){
 		data:{"userCode":userCode, "freeCode":freeCode, "likeCheck":likeCheck},
 		
 		success: function (result) {
-				$("#sss").text(result);
+				$("#countLike").text(result);
 		}
 	})
 	
+})
+
+$('.fa-sort-down').click(function(){
+	$('#viewComments').css({"display":"block"});
+	$(this).css({"display":"none"});
+	$('.fa-sort-up').css({"display":"block"});
+})
+$('.fa-sort-up').click(function(){
+	$('#viewComments').css({"display":"none"});	
+	$(this).css({"display":"none"});
+	$('.fa-sort-down').css({"display":"block"});
 })
 
 </script>

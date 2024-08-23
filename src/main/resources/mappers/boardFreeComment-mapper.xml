@@ -7,6 +7,21 @@
 		<result column="free_comment_content" property="freeCommentContent"/>
 		<result column="free_comment_writedate" property="freeCommentWritedate"/>
 		<result column="comment_parent_code" property="commentParentCode"/>
+		<collection property="user" resultMap="userMap"/>
+	</resultMap>
+	
+	<resultMap type="User" id="userMap">
+		<id property="userCode" column="user_code"/>
+		<result property="userId" column="user_id"/>
+		<result property="userRealName" column="user_name"/>
+		<result property="userNickname" column="user_nickname"/>	
+		<result property="userImgUrl" column="user_img_url"/>
+		<result property="userPhone" column="user_phone"/>
+		<result property="userAdr" column="user_adr"/>
+		<result property="userAdrDetail" column="user_adr_detail"/>
+		<result property="userEmail" column="user_email"/>
+		<result property="userAdmin" column="user_admin"/>	
+		
 	</resultMap>
 	
 	<!-- 댓글 작성 -->
@@ -14,4 +29,13 @@
 	INSERT INTO board_free_comment(free_code, user_code, free_comment_content, comment_parent_code)
 	VALUES(#{freeCode}, #{userCode}, #{freeCommentContent}, #{commentParentCode})
 	</insert>
+	
+	<!-- 게시물 별 댓글 전체 보기 -->
+	<select id="viewAllBoardFreeComment" parameterType="int" resultMap="boardFreeCommentMap">
+	select A.*, B.*
+	FROM board_free_comment as A
+	JOIN user as B
+	USING (user_code)
+	where free_code=#{freeCode};
+	</select>
 </mapper>

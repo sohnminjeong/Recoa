@@ -1,5 +1,7 @@
 package com.recoa.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,5 +17,9 @@ public class BoardFreeCommentService {
 	// 댓글 작성
 	public int registerBoardFreeComment(BoardFreeComment vo) {
 		return dao.registerBoardFreeComment(vo);
+	}
+	// 게시물 별 댓글 전체 보기
+	public List<BoardFreeComment> viewAllBoardFreeComment(int freeCode) {
+		return dao.viewAllBoardFreeComment(freeCode);
 	}
 }

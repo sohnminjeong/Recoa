@@ -94,11 +94,7 @@ public class BoardFreeController {
 	
 	// 게시물 하나 보기 페이지 이동
 	@GetMapping("/viewOneBoardFree")
-	public String viewOneBoardFree(int freeCode, Model model, HttpServletRequest request) {
-		// 조회수 중복 방지 수정 필요 
-		System.out.println("request.adddr : "+request.getLocalAddr());
-		System.out.println("request.getCookies :"+request.getCookies());
-		
+	public String viewOneBoardFree(int freeCode, Model model) {
 		service.updateFreeView(freeCode);
 		BoardFree vo = service.oneBoardFree(freeCode);
 		List<BoardFreeImg> imgList = service.oneBoardFreeImg(freeCode);
@@ -108,19 +104,27 @@ public class BoardFreeController {
 		
 		// 이미 좋아요 누른 user일 경우
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		UserDetails userDetails = (UserDetails) principal;
-		String userId = userDetails.getUsername();
-		User user = userService.selectUser(userId);
-		FreeLike like = new FreeLike();
-		like.setFreeCode(freeCode);
-		like.setUserCode(user.getUserCode());
-		if(service.checkUserFreeLike(like)==1) {
-			// 이미 좋아요 한 경우
-			model.addAttribute("like", true);
-		}else{
-			// 좋아요 안 한 경우
-			model.addAttribute("like",false);
-		};
+		if(principal!="anonymousUser") {
+			// 비회원일 경우에만 진행
+			UserDetails userDetails = (UserDetails) principal;
+			String userId = userDetails.getUsername();
+			User user = userService.selectUser(userId);
+			FreeLike like = new FreeLike();
+			like.setFreeCode(freeCode);
+			like.setUserCode(user.getUserCode());
+			if(service.checkUserFreeLike(like)==1) {
+				// 이미 좋아요 한 경우
+				model.addAttribute("like", true);
+			}else{
+				// 좋아요 안 한 경우
+				model.addAttribute("like",false);
+			};	
+		}
+		
+		
+		// 댓글 전체 보기
+		List<BoardFreeComment> commentList = commentService.viewAllBoardFreeComment(freeCode);
+		model.addAttribute("commentList", commentList);
 		
 		return "boardFree/viewOneBoardFree";
 	}
@@ -229,10 +233,12 @@ public class BoardFreeController {
 	}
 	
 	/*---------------------- 댓글 ----------------------------*/
+	// 댓글 작성
 	@PostMapping("/registerBoardFreeComment")
 	public String registerBoardFreeComment(BoardFreeComment vo) {
-		System.out.println("vo : "+vo);
 		commentService.registerBoardFreeComment(vo);
 		return "redirect:/viewOneBoardFree?freeCode="+vo.getFreeCode();
 	}
+	
+	// 댓글 전체 보기 -> 게시물 보기에 작성 
 }
