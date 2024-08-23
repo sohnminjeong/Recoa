@@ -196,7 +196,6 @@ table{
 						</c:otherwise>
 					</c:choose>
 				</li>
-				
 				<c:forEach begin="${paging.startPage}" end="${paging.endPage}" var="page">
 					<li class="page-item">
 						<c:choose>

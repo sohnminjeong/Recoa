@@ -189,7 +189,6 @@
 	#viewComments{
 		background-color : pink;
 		width:75%;
-	/*height:70%;*/
 		margin-top:10px;
 		
 		#commented{
@@ -241,6 +240,9 @@
 }
 .fa-sort-up:hover{
 	cursor:pointer;
+}
+.pagination{
+	display:flex;
 }
 </style>
 </head>
@@ -361,7 +363,51 @@
 						</div>
 					</c:if>
 				</c:forEach>
+				<nav id="commentPaging">
+					<ul class="pagination">
+						<li class="page-item ${commentPaging.prev ? '' : 'disabled'}">
+							<c:choose>
+								<c:when test="${commentPaging.startPage==1}">
+									<a class="page-link" href="/viewOneBoardFree?page=${commentPaging.startPage=1}&freeCode=${vo.freeCode}">
+										<i class="fa-solid fa-chevron-left"></i>
+									</a>
+								</c:when>
+								<c:otherwise>
+									<a class="page-link" href="/viewOneBoardFree?page=${commentPaging.startPage - 1}&freeCode=${vo.freeCode}">
+										<i class="fa-solid fa-chevron-left"></i>
+									</a>
+								</c:otherwise>
+							</c:choose>
+						</li>
+						
+						<c:forEach begin="${commentPaging.startPage}" end="${commentPaging.endPage}" var="page">
+							<li class="page-item">
+							
+								<a class="page-link ${commentPaging.page== page ? 'active' : ''} " href="/viewOneBoardFree?page=${page}&freeCode=${vo.freeCode}">
+								${page}
+								</a>
+							</li>		
+						</c:forEach>
+					
+						<li class="page-item ${commentPaging.next ? '' : 'disabled'}">
+							<c:choose>
+								<c:when test="${commentPaging.endPage<100}">
+									<a class="page-link" href="/viewOneBoardFree?page=${commentPaging.endPage}&freeCode=${vo.freeCode}">
+										<i class="fa-solid fa-chevron-right"></i>
+									</a>
+								</c:when>
+								<c:otherwise>
+									<a class="page-link" href="/viewOneBoardFree?page=${commentPaging.endPage + 1}&freeCode=${vo.freeCode}">
+										<i class="fa-solid fa-chevron-right"></i>
+									</a>
+								</c:otherwise>
+							</c:choose>
+						</li>
+					</ul>
+				</nav>
 			</div>
+			
+
 		</div>
 	</div>
 </div>

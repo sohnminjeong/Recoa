@@ -30,12 +30,20 @@
 	VALUES(#{freeCode}, #{userCode}, #{freeCommentContent}, #{commentParentCode})
 	</insert>
 	
-	<!-- 게시물 별 댓글 전체 보기 -->
-	<select id="viewAllBoardFreeComment" parameterType="int" resultMap="boardFreeCommentMap">
+	<!-- 게시물 별 댓글 전체 보기 + 페이징-->
+	<select id="viewAllBoardFreeComment" parameterType="BoardFreePaging" resultMap="boardFreeCommentMap">
 	select A.*, B.*
 	FROM board_free_comment as A
 	JOIN user as B
 	USING (user_code)
-	where free_code=#{freeCode};
+	WHERE free_code=#{freeCode}
+	ORDER BY A.free_comment_writedate DESC
+	LIMIT #{offset}, #{limit}
+	</select>
+	
+	<!-- 페이징 관련 전체 갯수  -->
+	<select id="countBoardFreeComment" parameterType="int" resultType="int">
+	SELECT count(*) FROM board_free_comment
+	WHERE free_code=#{freeCode}
 	</select>
 </mapper>

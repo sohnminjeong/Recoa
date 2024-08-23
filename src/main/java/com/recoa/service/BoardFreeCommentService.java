@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.recoa.model.dao.BoardFreeCommentDAO;
 import com.recoa.model.vo.BoardFreeComment;
+import com.recoa.model.vo.BoardFreePaging;
 
 @Service
 public class BoardFreeCommentService {
@@ -17,9 +18,14 @@ public class BoardFreeCommentService {
 	// 댓글 작성
 	public int registerBoardFreeComment(BoardFreeComment vo) {
 		return dao.registerBoardFreeComment(vo);
+	}	
+	// 게시물 별 댓글 전체 보기 + 페이징
+	public List<BoardFreeComment> viewAllBoardFreeComment(BoardFreePaging paging) {
+		paging.setOffset(paging.getCommentLimit()*(paging.getPage()-1));
+		return dao.viewAllBoardFreeComment(paging);
 	}
-	// 게시물 별 댓글 전체 보기
-	public List<BoardFreeComment> viewAllBoardFreeComment(int freeCode) {
-		return dao.viewAllBoardFreeComment(freeCode);
+	// 페이징 관련 total 수
+	public int commentTotal(int freeCode) {
+		return dao.commentTotal(freeCode);
 	}
 }
