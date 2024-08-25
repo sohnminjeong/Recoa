@@ -95,7 +95,6 @@ public class BoardFreeController {
 	// 게시물 하나 보기 페이지 이동
 	@GetMapping("/viewOneBoardFree")
 	public String viewOneBoardFree(int freeCode, Model model, @RequestParam(value="page", defaultValue="1")int page) {
-		System.out.println("freeCode?? : "+freeCode);
 		service.updateFreeView(freeCode);
 		BoardFree vo = service.oneBoardFree(freeCode);
 		List<BoardFreeImg> imgList = service.oneBoardFreeImg(freeCode);
@@ -129,8 +128,6 @@ public class BoardFreeController {
 		List<BoardFreeComment> commentList = commentService.viewAllBoardFreeComment(commentPaging);
 		model.addAttribute("commentList", commentList);	
 		model.addAttribute("commentPaging", commentPaging);
-		System.out.println("commentList : "+commentList);
-		System.out.println("commentPaging : " +commentPaging);
 		return "boardFree/viewOneBoardFree";
 	}
 	
@@ -246,4 +243,11 @@ public class BoardFreeController {
 	}
 	
 	// 댓글 전체 보기 -> 게시물 보기에 작성 
+	
+	// 댓글 삭제 
+	@GetMapping("/deleteBoardFreeComment")
+	public String deleteBoardFreeComment(int freeCommentCode, int freeCode) {
+		commentService.deleteBoardFreeComment(freeCommentCode);
+		return "redirect:/viewOneBoardFree?freeCode="+freeCode;
+	}
 }

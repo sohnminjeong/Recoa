@@ -41,16 +41,17 @@
 #content #container{
 	display:flex;
 	flex-direction:column;
-	justify-content:center;
 	align-items:center;
 	width:100%;
 	height:100%;
+	padding-top:5%;
 }
 #containerHead{
 
 	display:flex;
 	justify-content:space-between;
 	width:70%;
+	height:5%;
 	border-bottom : 1px dashed black;
 	padding-bottom:15px;
 	
@@ -73,7 +74,7 @@
 
 #containerContents{
 	width:70%;
-	height:50%;
+	height:75%;
 	font-family: 'GangwonEdu_OTFBoldA';
 	border-bottom : 1px dashed black;
 	padding-bottom:20px;
@@ -131,9 +132,8 @@
 }
 /*------------------------- 댓글 ----------------------------*/
 #containerComments{
-	border:1px solid black;
 	width:50%;
-	height:30%;
+	height:20%;
 	margin-top:20px;
 	display: flex;
     flex-direction: column;
@@ -143,7 +143,7 @@
 		border:1px solid gray;
 		border-radius : 10px;
 		width: 75%;
-		height : 30%;
+		height : 50%;
 		padding: 5px 10px;
 		display: flex;
     	flex-direction: column;
@@ -176,18 +176,19 @@
 	}
 	#viewCommentsBtn{
 		width: 75%;
-	    margin-top: 5px;
+	    margin-top: 10px;
 	    display: flex;
 	    justify-content: right;
 		
 		span{
 			font-family: 'SDMiSaeng';
             font-size: 1.2rem;
+            margin-right:5px;
 		}
 	}
 	
 	#viewComments{
-		background-color : pink;
+		
 		width:75%;
 		margin-top:10px;
 		
@@ -205,6 +206,30 @@
     				font-size: 0.8rem;
 				}
 			}
+			#commentedBottom{
+				display:flex;
+				justify-content: space-between;
+				
+				span{
+					font-size:0.9rem;
+					font-family: 'GangwonEdu_OTFBoldA';
+					margin-left: 10px;	
+				}
+				#bottomBtn{
+					display:flex;
+					
+					button{
+						font-family: 'SDMiSaeng';
+		                font-size: 1rem;
+		               	margin: 0 3px;
+		                border: none;
+		                border-radius: 5px;
+					}
+					button:hover{
+						border:0.3px dashed black;
+					}
+				}
+			}
 			
 			#commentedWriter{
 				display:flex;
@@ -216,6 +241,7 @@
 		    		width:23px;
 		    		height:23px;
 		    		margin-right:5px;
+		    		border : 0.3px solid black;
 				}
 				#commentedWriterDetail{
 					display:flex;
@@ -224,13 +250,6 @@
 			}
 		
 		}
-		#commented>span{
-			font-size:0.9rem;
-			font-family: 'GangwonEdu_OTFBoldA';
-			margin-left: 10px;
-			
-		}
-
 	}
 	
 	
@@ -241,9 +260,16 @@
 .fa-sort-up:hover{
 	cursor:pointer;
 }
-.pagination{
-	display:flex;
+
+#commentPaging{
+	margin-bottom : 20px;
+	
+	.pagination{
+		display:flex;
+		justify-content:center;
+	}	
 }
+
 </style>
 </head>
 <body>
@@ -359,7 +385,19 @@
 									<fmt:formatDate value="${comment.freeCommentWritedate}" pattern="yy-MM-dd HH:mm"/>
 								</div>
 							</div>
-							<span>${comment.freeCommentContent}</span>
+							<div id="commentedBottom">
+								<span>${comment.freeCommentContent}</span>
+								<div id="bottomBtn">
+									<c:choose>
+										<c:when test="${user=='anonymousUser'||comment.user.userId!=user.userId}">
+										</c:when>
+										<c:otherwise>
+											<button type="button">수정</button>
+											<button type="button" onclick="location.href='/deleteBoardFreeComment?freeCommentCode=${comment.freeCommentCode}&freeCode=${comment.freeCode}'">삭제</button>
+										</c:otherwise>
+									</c:choose>			
+								</div>				
+							</div>
 						</div>
 					</c:if>
 				</c:forEach>

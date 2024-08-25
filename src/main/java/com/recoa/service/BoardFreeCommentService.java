@@ -28,4 +28,8 @@ public class BoardFreeCommentService {
 	public int commentTotal(int freeCode) {
 		return dao.commentTotal(freeCode);
 	}
+	// 댓글 삭제 
+	public int deleteBoardFreeComment(int freeCommentCode) {
+		return dao.deleteBoardFreeComment(freeCommentCode);
+	}
 }

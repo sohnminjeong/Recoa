@@ -27,5 +27,8 @@ public class BoardFreeCommentDAO {
 	public int commentTotal(int freeCode) {
 		return session.selectOne("boardFreeCommentMapper.countBoardFreeComment", freeCode);
 	}
-	
+	// 댓글 삭제 
+	public int deleteBoardFreeComment(int freeCommentCode) {
+		return session.delete("boardFreeCommentMapper.deleteBoardFreeComment", freeCommentCode);
+	}
 }

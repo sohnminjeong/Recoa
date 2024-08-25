@@ -38,7 +38,7 @@
 	USING (user_code)
 	WHERE free_code=#{freeCode}
 	ORDER BY A.free_comment_writedate DESC
-	LIMIT #{offset}, #{limit}
+	LIMIT #{offset}, #{commentLimit}
 	</select>
 	
 	<!-- 페이징 관련 전체 갯수  -->
@@ -46,4 +46,10 @@
 	SELECT count(*) FROM board_free_comment
 	WHERE free_code=#{freeCode}
 	</select>
+	
+	<!-- 댓글 삭제 -->
+	<delete id="deleteBoardFreeComment" parameterType="int">
+	DELETE FROM board_free_comment
+	WHERE free_comment_code=#{freeCommentCode}
+	</delete>
 </mapper>
