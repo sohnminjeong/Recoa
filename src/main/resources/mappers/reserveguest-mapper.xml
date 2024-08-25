@@ -42,20 +42,57 @@
 	</insert>
 	
 	<!-- 내 게스트룸 예약 내역 조회 -->
-	<select id="myGuest" parameterType="String" resultType="map" >
+	<select id="myGuest" parameterType="ReservePaging" resultType="map" >
 		 SELECT * 
 		    FROM reserve_guest
 		    WHERE user_code = (
 		        SELECT user_code 
 		        FROM user 
-		        WHERE user_id = #{userId}
+		        WHERE user_id = #{id}
     		) AND status=1
+    		ORDER BY 1 DESC
+			LIMIT #{offset}, #{limit}
 	</select>
 
+	<!-- 예약 내역 total -->
+	<select id="guestTotal" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+			FROM reserve_guest
+			WHERE user_code = (
+		        SELECT user_code 
+		        FROM user 
+		        WHERE user_id = #{userId}
+    		) AND status=1 
+	</select>
+	
 	<!-- 게스트룸 예약 취소 -->
 	<update id = "cancelGuest" parameterType="Integer">
 		UPDATE reserve_guest
 		SET status = 0
 		WHERE reserve_guest_code = #{reserveGuestCode}
 	</update>
+	
+	<!-- 예약 취소 내역 조회 -->
+		<select id="myGuestCancel" parameterType="ReservePaging" resultType="map" >
+		 SELECT * 
+		    FROM reserve_guest
+		    WHERE user_code = (
+		        SELECT user_code 
+		        FROM user 
+		        WHERE user_id = #{id}
+    		) AND status=0
+    		ORDER BY 1 DESC
+			LIMIT #{offset}, #{limit}
+	</select>
+	
+		<!-- 예약 취소 내역 total -->
+	<select id="CancelGuesttotal" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+			FROM reserve_guest
+			WHERE user_code = (
+		        SELECT user_code 
+		        FROM user 
+		        WHERE user_id = #{userId}
+    		) AND status=0
+	</select>
 </mapper>

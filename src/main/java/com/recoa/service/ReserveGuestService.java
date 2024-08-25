@@ -4,10 +4,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.recoa.model.dao.ReserveGuestDAO;
 import com.recoa.model.vo.ReserveGuest;
+import com.recoa.model.vo.ReservePaging;
 import com.recoa.model.vo.Utillbill;
 
 @Service
@@ -28,8 +31,41 @@ public class ReserveGuestService {
 	}
 	
 	// 내 게스트룸 예약 내역 조회
-	public List<ReserveGuest> myGuest(String userId){
-		return dao.myGuest(userId);
+	public List<ReserveGuest> myGuest(ReservePaging paging){
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		UserDetails userDetails = (UserDetails) principal;
+
+		paging.setOffset(paging.getLimit() * (paging.getPage() - 1));
+
+		paging.setId(userDetails.getUsername());
+		return dao.myGuest(paging);
+	}
+	
+	// 예약 내역 total
+	public int Guesttotal() {
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		UserDetails userDetails = (UserDetails) principal;
+		return dao.Guesttotal(userDetails.getUsername());
+	}
+	
+	// 예약 취소 내역 조회
+	public List<ReserveGuest> myGuestCancel(ReservePaging paging){
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		UserDetails userDetails = (UserDetails) principal;
+
+		paging.setOffset(paging.getLimit() * (paging.getPage() - 1));
+
+		paging.setId(userDetails.getUsername());
+		
+		return dao.myGuestCancel(paging);
+	}
+	
+	// 취소 내역 total
+	public int CancelGuesttotal() {
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		UserDetails userDetails = (UserDetails) principal;
+		System.out.println("취소내역.. 조회는 되고있어 ");
+		return dao.CancelGuesttotal(userDetails.getUsername());
 	}
 	
 	// 게스트룸 예약 취소

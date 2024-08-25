@@ -19,7 +19,6 @@
     top: 0;
     left: 0;
 }
-
 #content{
 	position:relative;
 	z-index:0;
@@ -64,7 +63,7 @@
 		<%@ include file="../user/userSideBar.jsp" %>
 		</div>
 	<div id="container">
-	<h3>게스트룸 예약 내역</h3>	
+<h3>예약 취소 내역</h3>	
 
 	<table class="table">
 		<thead>
@@ -86,17 +85,12 @@
 					<td><fmt:formatDate value="${item.end_time}" pattern="yy-MM-dd" /></td>
 					<td>${item.room_type}</td>
 					<td>${item.room_code}</td>
-					<td>${item.status}</td>
-					
-					<td><form action="cancelGuest" method="post">
-		                <input type="hidden" name="reserveGuestCode" value="${item.reserve_guest_code}" />
-		                <button type="submit">예약 취소</button>
-		            </form></td>
+					<td>예약 취소됨</td>
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
-	<nav id="paging">
+		<nav id="paging">
 							<ul class="pagination">
 								<li class="page-item ${paging.prev ? '' : 'disabled'}">
 
@@ -104,14 +98,14 @@
 										<c:when
 											test="${(paging.startPage == 1)&&(paging.select != null) && (paging.keyword != null)}">
 											<a class="page-link"
-												href="/myGuest?select=${paging.select}&keyword=${paging.keyword}&page=${paging.startPage=1}">Previous</a>
+												href="/myGuestCancel?select=${paging.select}&keyword=${paging.keyword}&page=${paging.startPage=1}">Previous</a>
 										</c:when>
 										<c:when
 											test="${(paging.startPage == 1)&&(paging.select == null) && (paging.keyword == null)}">
-											<a class="page-link" href="/myGuest?page=${paging.startPage=1}">Previous</a>
+											<a class="page-link" href="/myGuestCancel?page=${paging.startPage=1}">Previous</a>
 										</c:when>
 										<c:otherwise>
-											<a class="page-link" href="/myGuest?page=${paging.startPage-1}">Previous</a>
+											<a class="page-link" href="/myGuestCancel?page=${paging.startPage-1}">Previous</a>
 										</c:otherwise>
 									</c:choose>
 
@@ -122,14 +116,14 @@
 										<c:choose>
 											<c:when test="${(paging.select != null) && (paging.keyword != null)}">
 												<a class="page-link ${paging.page== page ? 'active' : ''}"
-													href="/myGuest?select=${paging.select}&keyword=${paging.keyword}&page=${page}"
+													href="/myGuestCancel?select=${paging.select}&keyword=${paging.keyword}&page=${page}"
 													id="page_num">
 													${page}
 												</a>
 											</c:when>
 											<c:otherwise>
 												<a class="page-link ${paging.page== page ? 'active' : ''}"
-													href="/myGuest?page=${page}" id="page_num">
+													href="/myGuestCancel?page=${page}" id="page_num">
 													${page}
 												</a>
 											</c:otherwise>
@@ -142,22 +136,21 @@
 										<c:when
 											test="${(paging.endPage < 10)&&(paging.select != null) && (paging.keyword != null)}">
 											<a class="page-link"
-												href="/myGuest?select=${paging.select}&keyword=${paging.keyword}&page=${paging.endPage=paging.endPage}">Next</a>
+												href="/myGuestCancel?select=${paging.select}&keyword=${paging.keyword}&page=${paging.endPage=paging.endPage}">Next</a>
 										</c:when>
 										<c:when
 											test="${(paging.endPage < 10)&&(paging.select == null) && (paging.keyword == null)}">
 											<a class="page-link"
-												href="/myGuest?page=${paging.endPage=paging.endPage}">Next</a>
+												href="/myGuestCancel?page=${paging.endPage=paging.endPage}">Next</a>
 										</c:when>
 										<c:otherwise>
-											<a class="page-link" href="/myGuest?page=${paging.endPage + 1}">Next</a>
+											<a class="page-link" href="/myGuestCancel?page=${paging.endPage + 1}">Next</a>
 										</c:otherwise>
 									</c:choose>
 								</li>
 							</ul>
 						</nav>
 	</div>
-	</div>
-
+</div>
 </body>
 </html>

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.recoa.model.vo.ReserveGuest;
+import com.recoa.model.vo.ReservePaging;
 import com.recoa.model.vo.Utillbill;
 
 @Repository
@@ -27,9 +28,23 @@ public class ReserveGuestDAO {
 	}
 	
 	// 내 게스트룸 예약 내역 조회
-	public List<ReserveGuest> myGuest(String userId){
-		return session.selectList("ReserveGuest.myGuest", userId);
+	public List<ReserveGuest> myGuest(ReservePaging paging){
+		return session.selectList("ReserveGuest.myGuest", paging);
 	}
+	
+	public int Guesttotal(String userId) {
+		return session.selectOne("ReserveGuest.guestTotal", userId);
+	}
+	
+	// 예약 취소 내역 조회
+	public List<ReserveGuest> myGuestCancel(ReservePaging paging){
+		return session.selectList("ReserveGuest.myGuestCancel", paging);
+	}
+	
+	public int CancelGuesttotal(String userId) {
+		return session.selectOne("ReserveGuest.CancelGuesttotal", userId);
+	}
+	
 	
 	// 게스트룸 예약 취소
 	public int cancelGuest(Integer reserveGuestCode) {
@@ -50,6 +65,8 @@ public class ReserveGuestDAO {
 	public int updateBill(Utillbill vo) {
 		return session.update("UtillBill.updatebill", vo);
 	}
+
+
 
 
 

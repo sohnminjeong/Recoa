@@ -71,7 +71,8 @@
 			<li><i class="fa-solid fa-clipboard-check"></i>
 				<ul>
 					<li>-------------------</li>
-					<li><a href="/" class="subInfo">내 게스트룸 예약</a></li>
+					<li><a href="/myGuest" class="subInfo">내 게스트룸 예약</a></li>
+					<li><a href="/myGuestCancel" class="subInfo">게스트룸 취소 내역</a></li>
 					<li><a href="/" class="subInfo">내 독서실 예약</a></li>
 				</ul>
 			</li>

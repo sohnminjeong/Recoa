@@ -1,0 +1,55 @@
+@font-face {
+    font-family: 'GangwonEdu_OTFBoldA';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFBoldA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Ownglyph_jiwoosonang';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408@1.0/Ownglyph_jiwoosonang.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+table {
+    width: 100%;
+    border-radius: 8px;
+    min-height: 420px;
+    margin-bottom: 10px;
+    
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+   
+}
+
+th {
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-bottom: 2px solid black; 
+}
+
+table th {
+    border-bottom: 2px solid black;
+    height: 30px;
+    vertical-align: middle;
+     font-family: 'GangwonEdu_OTFBoldA';
+}
+
+table td {
+    font-size: 0.9rem;
+    padding-top: 10px;
+     font-family: 'GangwonEdu_OTFBoldA';
+}
+
+.pagination {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	margin-top: 20px;
+}

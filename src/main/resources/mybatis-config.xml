@@ -7,6 +7,7 @@
 	<typeAliases>
 		<typeAlias type="com.recoa.model.vo.Guest" alias="Guest" />
 		<typeAlias type="com.recoa.model.vo.ReserveGuest" alias="ReserveGuest" />
+		<typeAlias type="com.recoa.model.vo.ReservePaging" alias="ReservePaging"/>
 		<typeAlias type="com.recoa.model.vo.User" alias="User" />
 		<typeAlias type="com.recoa.model.vo.BoardFree" alias="BoardFree" />
 		<typeAlias type="com.recoa.model.vo.Utillbill" alias="Utillbill"/>

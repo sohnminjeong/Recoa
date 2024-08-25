@@ -22,8 +22,10 @@ import java.util.List;
 import java.util.Map;
 
 import com.recoa.model.vo.ReserveGuest;
+import com.recoa.model.vo.ReservePaging;
 import com.recoa.model.vo.Utillbill;
 import com.recoa.service.ReserveGuestService;
+
 
 @Controller
 public class ReserveGuestController {
@@ -161,23 +163,49 @@ public class ReserveGuestController {
 
 	// 마이페이지 (내 게스트룸 예약 내역)
 	@GetMapping("/myGuest")
-	public String myGuest(Principal principal, Model model) {
-		String userId = principal.getName();
-		List<ReserveGuest> list = service.myGuest(userId);
-		model.addAttribute("list", list);
+	public String myGuest(Principal principal, @RequestParam(value = "page", defaultValue = "1") int page, Model model) {
 		
-		System.out.println(userId);
-		System.out.println("list : " + list);
+		// 페이징처리
+		int total = service.Guesttotal();
+					
+		ReservePaging paging = new ReservePaging(page, total);
+		List<ReserveGuest> list = service.myGuest(paging);
+		model.addAttribute("list", list);
+		model.addAttribute("paging", paging);
+		
+		System.out.println("page : " + page);
+		System.out.println("offset : " + paging.getOffset());
+		System.out.println("limit : " + paging.getLimit());
+//		paging.setKeyword(keyword);
+//		paging.setSelect(select);
+					
 		return "guest/myGuest";
 	} 
 	
+	// 마이페이지 (내 게스트룸 예약 취소 내역)
+	@GetMapping("/myGuestCancel")
+	public String myGuestCancel(Principal principal, @RequestParam(value = "page", defaultValue = "1") int page, Model model) {
+		int total = service.CancelGuesttotal();
+		
+		ReservePaging paging = new ReservePaging(page, total);
+		List<ReserveGuest> list = service.myGuestCancel(paging);
+		model.addAttribute("list", list);
+		model.addAttribute("paging", paging);
+		
+		return "guest/myGuestCancel";
+	}
+	
 	@PostMapping("/cancelGuest")
-	public String cancelGuest(Principal principal, @RequestParam("reserveGuestCode") Integer reserveGuestCode, Model model) {
-		String userId = principal.getName();
-		List<ReserveGuest> list = service.myGuest(userId);
+	public String cancelGuest(Principal principal,  @RequestParam(value = "page", defaultValue = "1") int page, @RequestParam("reserveGuestCode") Integer reserveGuestCode, Model model) {
+		int total = service.Guesttotal();
+		
+		ReservePaging paging = new ReservePaging(page, total);
+		List<ReserveGuest> list = service.myGuestCancel(paging);
+		
 		System.out.println("reserveGuestCode : " + reserveGuestCode);
 		service.cancelGuest(reserveGuestCode);
 		model.addAttribute("list", list);
+		model.addAttribute("paging", paging);
 		
 		return "redirect:/myGuest";
 	}
