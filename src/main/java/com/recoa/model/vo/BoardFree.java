@@ -1,6 +1,6 @@
 package com.recoa.model.vo;
 
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -15,7 +15,7 @@ public class BoardFree {
 	private int userCode;
 	private String freeTitle;
 	private String freeContent;
-	private Date freeWritedate;
+	private Timestamp freeWritedate;
 	private int freeView;
 	
 	private int likeCheck; // 좋아요 여부 확인용 0:좋아요x, 1:좋아요O	

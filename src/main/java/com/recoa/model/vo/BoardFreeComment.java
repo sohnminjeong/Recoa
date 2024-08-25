@@ -1,6 +1,6 @@
 package com.recoa.model.vo;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,7 @@ public class BoardFreeComment {
 	private int freeCode;
 	private int userCode;
 	private String freeCommentContent;
-	private Date freeCommentWritedate;
+	private Timestamp freeCommentWritedate;
 	private Integer commentParentCode;
 	
 	private User user;

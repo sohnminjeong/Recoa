@@ -37,7 +37,7 @@
 	JOIN user as B
 	USING (user_code)
 	WHERE free_code=#{freeCode}
-	ORDER BY A.free_comment_writedate DESC
+	ORDER BY A.free_comment_code DESC
 	LIMIT #{offset}, #{commentLimit}
 	</select>
 	
@@ -52,4 +52,18 @@
 	DELETE FROM board_free_comment
 	WHERE free_comment_code=#{freeCommentCode}
 	</delete>
+	
+	<!-- 댓글 수정 -->
+	<update id="updateBoardFreeComment" parameterType="BoardFreeComment">
+	UPDATE board_free_comment
+	SET free_comment_content=#{freeCommentContent}
+	WHERE free_comment_code=#{freeCommentCode}
+	</update>
+	
+	<!-- 댓글 code로 게시물 code 찾기 -->
+	<select id="findFreeCodeByCommentCode" parameterType="int" resultType="int">
+	SELECT free_code
+	FROM board_free_comment
+	WHERE free_comment_code=#{freeCommentCode}
+	</select>
 </mapper>

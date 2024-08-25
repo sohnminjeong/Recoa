@@ -31,4 +31,12 @@ public class BoardFreeCommentDAO {
 	public int deleteBoardFreeComment(int freeCommentCode) {
 		return session.delete("boardFreeCommentMapper.deleteBoardFreeComment", freeCommentCode);
 	}
+	// 댓글 수정
+	public int updateBoardFreeComment(BoardFreeComment vo) {
+		return session.update("boardFreeCommentMapper.updateBoardFreeComment", vo);
+	}
+	// 댓글 code로 게시물 code 찾기
+	public int findFreeCodeByCommentCode(int freeCommentCode) {
+		return session.selectOne("boardFreeCommentMapper.findFreeCodeByCommentCode", freeCommentCode);
+	}
 }

@@ -238,6 +238,7 @@ public class BoardFreeController {
 	// 댓글 작성
 	@PostMapping("/registerBoardFreeComment")
 	public String registerBoardFreeComment(BoardFreeComment vo) {
+		System.out.println("registerVo : "+vo);
 		commentService.registerBoardFreeComment(vo);
 		return "redirect:/viewOneBoardFree?freeCode="+vo.getFreeCode();
 	}
@@ -248,6 +249,15 @@ public class BoardFreeController {
 	@GetMapping("/deleteBoardFreeComment")
 	public String deleteBoardFreeComment(int freeCommentCode, int freeCode) {
 		commentService.deleteBoardFreeComment(freeCommentCode);
+		return "redirect:/viewOneBoardFree?freeCode="+freeCode;
+	}
+	
+	// 댓글 수정
+	@PostMapping("/updateBoardFreeComment")
+	public String updateBoardFreeComment(BoardFreeComment vo) {
+		System.out.println("updateVo : " +vo);
+		commentService.updateBoardFreeComment(vo);
+		int freeCode = commentService.findFreeCodeByCommentCode(vo.getFreeCommentCode());
 		return "redirect:/viewOneBoardFree?freeCode="+freeCode;
 	}
 }

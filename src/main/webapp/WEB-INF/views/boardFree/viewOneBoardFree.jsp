@@ -210,6 +210,15 @@
 				display:flex;
 				justify-content: space-between;
 				
+				#bottomInfo{
+					width:80%;
+					input{
+						width: 75%;
+					    margin-left: 10px;
+					    border-radius: 3px;
+					}
+				}
+				
 				span{
 					font-size:0.9rem;
 					font-family: 'GangwonEdu_OTFBoldA';
@@ -217,6 +226,22 @@
 				}
 				#bottomBtn{
 					display:flex;
+					
+					button{
+						font-family: 'SDMiSaeng';
+		                font-size: 1rem;
+		               	margin: 0 3px;
+		                border: none;
+		                border-radius: 5px;
+					}
+					button:hover{
+						border:0.3px dashed black;
+					}
+				}
+				#updateComment{
+					input{
+						font-family: 'SDMiSaeng';
+					}
 					
 					button{
 						font-family: 'SDMiSaeng';
@@ -346,7 +371,7 @@
 						<span>비회원의 경우, 로그인 후 댓글 입력 부탁드립니다.</span>
 					</c:when>
 					<c:otherwise>
-						<span>${vo.user.userNickname}</span>	
+						<span>${user.userNickname}</span>	
 						<form action="/registerBoardFreeComment" method="post">
 							<input type="hidden" name="freeCode" value="${vo.freeCode}" id="freeCode"/>
 							<input type="hidden" name="userCode" value="${user.userCode}" id="userCode"/>
@@ -386,16 +411,33 @@
 								</div>
 							</div>
 							<div id="commentedBottom">
-								<span>${comment.freeCommentContent}</span>
+								<c:choose>
+									<c:when test="${user!='anonymousUser'&&comment.user.userNickname==user.userNickname}">
+										<div id="bottomInfo">
+											<!-- 기존 댓글 보기 -->
+											<span id="existingComment">${comment.freeCommentContent}</span>	
+											<!-- 댓글 수정 폼-->
+											<div id="updateComment" style="display:none">
+												<form action="/updateBoardFreeComment" method="post" onsubmit="return validate()">
+													<input type="hidden" name="freeCommentCode" value="${comment.freeCommentCode}"/>
+													<input type="text" value="${comment.freeCommentContent}" name="freeCommentContent" id="updateCommentContent">
+													<button type="submit">수정 완료</button>
+													<button type="button" onclick="location.href='/viewOneBoardFree?freeCode=${comment.freeCode}'">수정 취소</button>
+												</form>
+											</div>
+										</div>
+									</c:when>
+									<c:otherwise>
+										<span>${comment.freeCommentContent}</span>		
+									</c:otherwise>
+								</c:choose>
+
+								<!-- 회원이자 댓글쓴이일경우 : 댓글 수정, 삭제 버튼 -->
 								<div id="bottomBtn">
-									<c:choose>
-										<c:when test="${user=='anonymousUser'||comment.user.userId!=user.userId}">
-										</c:when>
-										<c:otherwise>
-											<button type="button">수정</button>
-											<button type="button" onclick="location.href='/deleteBoardFreeComment?freeCommentCode=${comment.freeCommentCode}&freeCode=${comment.freeCode}'">삭제</button>
-										</c:otherwise>
-									</c:choose>			
+									<c:if test="${user!='anonymousUser'&& comment.user.userId==user.userId}">
+										<button type="button" id="updateCommentBtn">수정</button>
+										<button type="button" id="deleteCommentBtn" onclick="location.href='/deleteBoardFreeComment?freeCommentCode=${comment.freeCommentCode}&freeCode=${comment.freeCode}'">삭제</button>
+									</c:if>
 								</div>				
 							</div>
 						</div>
@@ -491,6 +533,24 @@ $('.fa-sort-up').click(function(){
 	$('.fa-sort-down').css({"display":"block"});
 })
 
+$('#updateCommentBtn').click(function(){
+	$('#updateComment').css({"display":"block"});
+	$('#existingComment').css({"display":"none"});
+	$('#updateCommentBtn').css({"display":"none"});
+	$('#deleteCommentBtn').css({"display":"none"});
+	
+
+})
+
+function validate(){
+	if(updateCommentContent.value==''){
+		updateCommentContent.focus();
+		return false;
+	}
+	alert("댓글 수정 완료");
+	return true;
+	
+}
 </script>
 </body>
 </html>

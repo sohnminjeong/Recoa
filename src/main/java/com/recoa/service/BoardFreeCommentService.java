@@ -32,4 +32,12 @@ public class BoardFreeCommentService {
 	public int deleteBoardFreeComment(int freeCommentCode) {
 		return dao.deleteBoardFreeComment(freeCommentCode);
 	}
+	// 댓글 수정
+	public int updateBoardFreeComment(BoardFreeComment vo) {
+		return dao.updateBoardFreeComment(vo);
+	}
+	// 댓글 code로 게시물 code 찾기
+	public int findFreeCodeByCommentCode(int freeCommentCode) {
+		return dao.findFreeCodeByCommentCode(freeCommentCode);
+	}
 }

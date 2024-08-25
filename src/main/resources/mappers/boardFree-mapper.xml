@@ -49,7 +49,7 @@
 			</when>
 		</choose>
 	</where>
-	ORDER BY A.free_writedate DESC
+	ORDER BY A.free_code DESC
 	LIMIT #{offset}, #{limit}
 	</select>
 	
