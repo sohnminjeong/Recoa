@@ -195,7 +195,7 @@ public class BoardFreeController {
 		List<BoardFreeImg> listImg = service.oneBoardFreeImg(vo.getFreeCode());
 		BoardFreeImg img=new BoardFreeImg();
 		
-		// 이미지 추가, 수정, 삭제 
+		// 이미지 
 		if(vo.getFile().get(0).getOriginalFilename()!=""&&vo.isDelImgBtn()==false) {
 		// 새로운 이미지 있는 경우
 			if(listImg.size()!=0) {
@@ -222,13 +222,25 @@ public class BoardFreeController {
 			}
 		} else {
 		// 새로운 이미지 없는 경우 
-			if(listImg.size()!=0&&vo.isDelImgBtn()==true) {
+			if(listImg.size()!=0&&vo.getFile().size()==0&&vo.isDelImgBtn()==true) {
 			// 기존 이미지 있음, 삭제 원하는 경우
 				for(BoardFreeImg photo : listImg) {
 					File file = new File(path+photo.getFreeImgUrl());
 					file.delete();
 				} 
 				service.deleteBoardFreeImg(vo.getFreeCode());
+			} else if(vo.getFile().size()!=0&&vo.isDelImgBtn()==true) {
+				for(BoardFreeImg photo : listImg) {
+					File file = new File(path+photo.getFreeImgUrl());
+					file.delete();
+				} 
+				service.deleteBoardFreeImg(vo.getFreeCode());
+				for(int i=0; i<vo.getFile().size();i++) {
+					String url = fileUpload(vo.getFile().get(i));
+					img.setFreeImgUrl(url);
+					img.setFreeCode(vo.getFreeCode());
+					service.registerBoarddFreeImg(img);
+				}
 			}
 		}
 		return "redirect:/viewOneBoardFree?freeCode="+vo.getFreeCode();
