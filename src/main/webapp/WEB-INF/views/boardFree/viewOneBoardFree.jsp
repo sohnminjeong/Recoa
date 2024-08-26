@@ -132,7 +132,7 @@
 }
 /*------------------------- 댓글 ----------------------------*/
 #containerComments{
-	width:50%;
+	width:55%;
 	height:20%;
 	margin-top:20px;
 	display: flex;
@@ -239,8 +239,12 @@
 					}
 				}
 				#updateComment{
+					form{
+						display:flex;
+					}
 					input{
 						font-family: 'SDMiSaeng';
+						border: 1px solid black;
 					}
 					
 					button{
@@ -249,6 +253,7 @@
 		               	margin: 0 3px;
 		                border: none;
 		                border-radius: 5px;
+		                width:15%;
 					}
 					button:hover{
 						border:0.3px dashed black;
@@ -536,10 +541,8 @@ $('.fa-sort-up').click(function(){
 $('#updateCommentBtn').click(function(){
 	$('#updateComment').css({"display":"block"});
 	$('#existingComment').css({"display":"none"});
-	$('#updateCommentBtn').css({"display":"none"});
-	$('#deleteCommentBtn').css({"display":"none"});
+	$('#bottomBtn').css({"display":"none"});
 	
-
 })
 
 function validate(){
