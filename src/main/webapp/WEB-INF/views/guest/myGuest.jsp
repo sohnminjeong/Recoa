@@ -121,9 +121,9 @@
 									</c:choose>
 
 								</li>
-
 								<c:forEach begin="${paging.startPage}" end="${paging.endPage}" var="page">
 									<li class="page-item">
+									
 										<c:choose>
 											<c:when test="${(paging.select != null) && (paging.keyword != null)}">
 												<a class="page-link ${paging.page== page ? 'active' : ''}"
@@ -139,9 +139,9 @@
 												</a>
 											</c:otherwise>
 										</c:choose>
+										
 									</li>
 								</c:forEach>
-
 								<li class="page-item ${paging.next ? '' : 'disabled'}">
 									<c:choose>
 										<c:when
