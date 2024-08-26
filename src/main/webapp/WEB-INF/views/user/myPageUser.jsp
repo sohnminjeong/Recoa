@@ -81,6 +81,12 @@
 		font-size : 1.3rem;
 		font-family: 'GangwonEdu_OTFBoldA';
 	}
+#userFloating{
+	position: fixed;
+    z-index: 1;
+    bottom: 6%;
+    right: 4%;
+}
 </style>
 </head>
 <body>
@@ -90,11 +96,11 @@
 	<div id="header">
 		<%@ include file="../main/header.jsp" %>
 	</div>
+	
 	<div id="content">
 		<div id="userSideBar">
 			<%@ include file="../user/userSideBar.jsp" %>
 		</div>
-		
 		<div id="container">
 			<h3>내 정보</h3>
 			<div id="containerContent">
@@ -126,5 +132,8 @@
 			</div>
 		</div>
 	</div>	
+	<div id="userFloating">
+		<%@ include file="../main/floating.jsp" %>
+	</div>
 </body>
 </html>

@@ -299,7 +299,12 @@
 		justify-content:center;
 	}	
 }
-
+#userFloating{
+	position: fixed;
+    z-index: 1;
+    bottom: 6%;
+    right: 4%;
+}
 </style>
 </head>
 <body>
@@ -498,6 +503,9 @@
 			</div>
 		</div>
 	</div>
+</div>
+<div id="userFloating">
+	<%@ include file="../main/floating.jsp" %>
 </div>
 <script>
 

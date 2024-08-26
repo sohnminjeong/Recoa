@@ -25,7 +25,8 @@
 	    flex-direction: column;
 	    align-items: center;
 	    height: 100%;
-	    padding: 40px 0;
+	    padding-top: 20px;
+	    padding-bottom: 30px;
 	}
 	#sideBar a{
 		font-family: 'GangwonEdu_OTFBoldA';
@@ -37,13 +38,13 @@
 		font-size : 1.1rem;
 	}
 	#sideBar>ul>li:nth-child(1){
-		height:15%;
+		height:10%;
 	}
 	#sideBar>ul>li:nth-child(2){
-		height:35%;
+		height:33%;
 	}
 	#sideBar>ul>li:nth-child(3){
-		height:30%;
+		height:35%;
 	}
 	#sideBar>ul>li:nth-child(4){
 		height:20%;

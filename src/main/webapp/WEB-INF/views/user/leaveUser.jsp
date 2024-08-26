@@ -119,7 +119,12 @@
 	#pwdCheck div span{
 		margin-right:20px;
 	}
-	
+#userFloating{
+	position: fixed;
+    z-index: 1;
+    bottom: 6%;
+    right: 4%;
+}	
 	
 </style>
 </head>
@@ -156,6 +161,9 @@
 		</form>
 	</div>
 </div>
+<div id="userFloating">
+		<%@ include file="../main/floating.jsp" %>
+	</div>
 <script>
 let pwdDoubleCheck = false;
 //변경할 비밀번호 재입력 일치 확인

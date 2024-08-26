@@ -29,6 +29,13 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         z-index: 0;
         height: 100vh;
       }
+      #userFloating{
+	position: fixed;
+    z-index: 1;
+    bottom: 6%;
+    right: 4%;
+    
+}
     </style>
   </head>
   <body>
@@ -42,5 +49,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     <div id="section3">
       <%@ include file="WEB-INF/views/main/section3.jsp" %>
     </div>
+    <div id="userFloating">
+		<%@ include file="WEB-INF/views/main/floating.jsp" %>
+	</div>
   </body>
 </html>

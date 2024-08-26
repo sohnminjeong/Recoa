@@ -7,7 +7,7 @@
 	</resultMap>
 	
 	<!-- 쪽지 파일 삽입 -->
-	<insert id="registerNoteFile" parameterMap="NoteFile" useGeneratedKeys="true" keyColumn="note_file_code" keyProperty="noteFileCode">
+	<insert id="registerNoteFile" parameterType="NoteFile" useGeneratedKeys="true" keyColumn="note_file_code" keyProperty="noteFileCode">
 	INSERT INTO note_file(note_code, note_file_url)
 	VALUES (#{noteCode}, #{noteFileUrl})
 	</insert>

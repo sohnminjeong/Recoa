@@ -110,6 +110,12 @@
 	button:hover{
 		border : 1px solid black;
 	}
+#userFloating{
+	position: fixed;
+    z-index: 1;
+    bottom: 6%;
+    right: 4%;
+}
 </style>
 </head>
 <body>
@@ -149,6 +155,9 @@
 				</div>
 			</div>
 		</form>
+	</div>
+	<div id="userFloating">
+		<%@ include file="../main/floating.jsp" %>
 	</div>
 	<script>
 	// 이미지 클릭 시 file upload

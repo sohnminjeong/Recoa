@@ -120,6 +120,12 @@
 		height:100%;
 		width:100%;
 	}
+	#userFloating{
+	position: fixed;
+    z-index: 1;
+    bottom: 6%;
+    right: 4%;
+}
 </style>
 </head>
 <body>
@@ -179,6 +185,9 @@
 			</div>
 		</form>
 	</div>
+</div>
+<div id="userFloating">
+	<%@ include file="../main/floating.jsp" %>
 </div>
 <script>
 let PwdCheck = false;

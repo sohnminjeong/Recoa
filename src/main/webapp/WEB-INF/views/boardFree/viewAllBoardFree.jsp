@@ -125,7 +125,12 @@ table{
 	    justify-content: space-evenly;
 	}
 }
-
+#userFloating{
+	position: fixed;
+    z-index: 1;
+    bottom: 6%;
+    right: 4%;
+}
 </style>
 </head>
 <body>
@@ -236,6 +241,9 @@ table{
 			</ul>
 		</nav>
 	</div>
+</div>
+<div id="userFloating">
+	<%@ include file="../main/floating.jsp" %>
 </div>
 </body>
 </html>
