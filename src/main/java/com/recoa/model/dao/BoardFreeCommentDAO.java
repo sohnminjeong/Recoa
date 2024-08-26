@@ -41,7 +41,7 @@ public class BoardFreeCommentDAO {
 	}
 	// 대댓글 작성 
 	public int registerReplyComment(BoardFreeComment vo) {
-		return session.insert("boardFreeCommentMapper.regissterReplyComment", vo);
+		return session.insert("boardFreeCommentMapper.registerReplyComment", vo);
 	}
 	// 대댓글 전체 보기 
 	public List<BoardFreeComment> viewAllReplyComment(int commentParentCode){

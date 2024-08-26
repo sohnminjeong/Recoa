@@ -69,7 +69,7 @@
 	
 	<!-- 대댓글 작성 -->
 	<insert id="registerReplyComment" parameterType="BoardFreeComment" useGeneratedKeys="true" keyColumn="free_comment_code" keyProperty="freeCommentCode">
-	INSERT INTO board_free_comment(free_code, user_code, free_comment_contenet, comment_parent_code)
+	INSERT INTO board_free_comment(free_code, user_code, free_comment_content, comment_parent_code)
 	VALUES (#{freeCode}, #{userCode},#{freeCommentContent},#{commentParentCode})
 	</insert>
 	

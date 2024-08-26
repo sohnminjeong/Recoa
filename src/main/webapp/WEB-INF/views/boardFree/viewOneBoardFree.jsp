@@ -421,6 +421,8 @@
 										<div id="bottomInfo">
 											<!-- 기존 댓글 보기 -->
 											<span id="existingComment">${comment.freeCommentContent}</span>	
+								
+											
 											<!-- 댓글 수정 폼-->
 											<div id="updateComment" style="display:none">
 												<form action="/updateBoardFreeComment" method="post" onsubmit="return validate()">
@@ -430,10 +432,13 @@
 													<button type="button" onclick="location.href='/viewOneBoardFree?freeCode=${comment.freeCode}'">수정 취소</button>
 												</form>
 											</div>
+											
+											
 										</div>
 									</c:when>
 									<c:otherwise>
-										<span>${comment.freeCommentContent}</span>		
+										<span>${comment.freeCommentContent}</span>
+									
 									</c:otherwise>
 								</c:choose>
 
@@ -491,8 +496,6 @@
 					</ul>
 				</nav>
 			</div>
-			
-
 		</div>
 	</div>
 </div>
@@ -554,6 +557,7 @@ function validate(){
 	return true;
 	
 }
+
 </script>
 </body>
 </html>
