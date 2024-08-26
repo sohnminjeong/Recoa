@@ -1,0 +1,14 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="noteFileMapper">
+	<resultMap type="NoteFile" id="noteFileMap">
+		<id column="note_file_code" property="noteFileCode"/>
+		<result column="note_code" property="noteCode"/>
+		<result column="note_file_url" property="noteFileUrl"/>
+	</resultMap>
+	
+	<!-- 쪽지 파일 삽입 -->
+	<insert id="registerNoteFile" parameterMap="NoteFile" useGeneratedKeys="true" keyColumn="note_file_code" keyProperty="noteFileCode">
+	INSERT INTO note_file(note_code, note_file_url)
+	VALUES (#{noteCode}, #{noteFileUrl})
+	</insert>
+</mapper>

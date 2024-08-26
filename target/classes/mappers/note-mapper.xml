@@ -1,0 +1,33 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="noteMapper">
+	<resultMap type="Note" id="noteMap">
+		<id column="note_code" property="noteCode"/>
+		<result column="note_sender" property="noteSender"/>
+		<result column="note_reciever" property="noteReceiver"/>
+		<result column="note_title" property="noteTitle"/>
+		<result column="note_content" property="noteContent"/>
+		<result column="note_writedate" property="noteWritedate"/>
+		<result column="sender_delete" property="senderDelete"/>
+		<result column="receiver_delete" property="receiverDelete"/>
+		<collection property="user" resultMap="userMap"></collection>
+	</resultMap>
+	
+	<resultMap type="User" id="userMap">
+		<id property="userCode" column="user_code"/>
+		<result property="userId" column="user_id"/>
+		<result property="userRealName" column="user_name"/>
+		<result property="userNickname" column="user_nickname"/>	
+		<result property="userImgUrl" column="user_img_url"/>
+		<result property="userPhone" column="user_phone"/>
+		<result property="userAdr" column="user_adr"/>
+		<result property="userAdrDetail" column="user_adr_detail"/>
+		<result property="userEmail" column="user_email"/>
+		<result property="userAdmin" column="user_admin"/>	
+	</resultMap>
+	
+	<!-- 쪽지 보내기 -->
+	<insert id="registerNote" parameterType="Note" useGeneratedKeys="true" keyColumn="note_code" keyProperty="noteCode">
+	INSERT INTO note(note_sender, note_receiver, note_title, note_content)
+	VALUES (${noteSender}, ${noteReceiver}, ${noteTitle}, ${noteContent})
+	</insert>
+</mapper>

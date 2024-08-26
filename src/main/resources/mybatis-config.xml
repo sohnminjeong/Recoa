@@ -16,6 +16,8 @@
 		<typeAlias type="com.recoa.model.vo.FreeLike" alias="FreeLike"/>
 		<typeAlias type="com.recoa.model.vo.BoardNotice" alias="BoardNotice" />
 		<typeAlias type="com.recoa.model.vo.Utillbill" alias="Utillbill"/>
+		<typeAlias type="com.recoa.model.vo.Note" alias="Note"/>
+		<typeAlias type="com.recoa.model.vo.NoteFile" alias="NoteFile"/>
 	</typeAliases>
 
 	<!-- 쿼리문 -->
@@ -29,5 +31,7 @@
 		<mapper resource="mappers/freeLike-mapper.xml"/>
 		<mapper resource="mappers/boardNotice-mapper.xml"/>
 		<mapper resource="mappers/utillbill-mapper.xml"/>
+		<mapper resource="mappers/note-mapper.xml"/>
+		<mapper resource="mappers/noteFile-mapper.xml"/>
 	</mappers>
 </configuration>
