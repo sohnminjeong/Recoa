@@ -173,9 +173,6 @@ public class ReserveGuestController {
 		model.addAttribute("list", list);
 		model.addAttribute("paging", paging);
 		
-		System.out.println("page : " + page);
-		System.out.println("offset : " + paging.getOffset());
-		System.out.println("limit : " + paging.getLimit());
 //		paging.setKeyword(keyword);
 //		paging.setSelect(select);
 					

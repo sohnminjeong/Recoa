@@ -74,7 +74,7 @@
 				<th>룸 타입</th>
 				<th>호실 번호</th>
 				<th>예약 상태</th>
-				<th>예약 취소</th>
+			
 			</tr>
 		</thead>
 		<tbody>
@@ -83,8 +83,15 @@
 					<td>${item.reserve_guest_code}</td>
 					<td><fmt:formatDate value="${item.start_time}" pattern="yy-MM-dd" /></td>
 					<td><fmt:formatDate value="${item.end_time}" pattern="yy-MM-dd" /></td>
-					<td>${item.room_type}</td>
-					<td>${item.room_code}</td>
+					 <c:choose>
+					    <c:when test="${item.room_type == 1 }">
+					    	<td>원룸</td>
+					    </c:when>
+					    <c:otherwise>
+							 <td>투룸</td>
+					    </c:otherwise>
+					</c:choose>
+					<td>${item.room_code}호실</td>
 					<td>예약 취소됨</td>
 				</tr>
 			</c:forEach>
@@ -102,10 +109,10 @@
 										</c:when>
 										<c:when
 											test="${(paging.startPage == 1)&&(paging.select == null) && (paging.keyword == null)}">
-											<a class="page-link" href="/myGuestCancel?page=${paging.startPage=1}">Previous</a>
+											<a class="page-link" href="/myGuestCancel?page=${paging.startPage=1}"><</a>
 										</c:when>
 										<c:otherwise>
-											<a class="page-link" href="/myGuestCancel?page=${paging.startPage-1}">Previous</a>
+											<a class="page-link" href="/myGuestCancel?page=${paging.startPage-1}"><</a>
 										</c:otherwise>
 									</c:choose>
 
@@ -141,10 +148,10 @@
 										<c:when
 											test="${(paging.endPage < 10)&&(paging.select == null) && (paging.keyword == null)}">
 											<a class="page-link"
-												href="/myGuestCancel?page=${paging.endPage=paging.endPage}">Next</a>
+												href="/myGuestCancel?page=${paging.endPage=paging.endPage}">></a>
 										</c:when>
 										<c:otherwise>
-											<a class="page-link" href="/myGuestCancel?page=${paging.endPage + 1}">Next</a>
+											<a class="page-link" href="/myGuestCancel?page=${paging.endPage + 1}">></a>
 										</c:otherwise>
 									</c:choose>
 								</li>

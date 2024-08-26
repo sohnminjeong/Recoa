@@ -65,10 +65,5 @@ public class ReserveGuestDAO {
 	public int updateBill(Utillbill vo) {
 		return session.update("UtillBill.updatebill", vo);
 	}
-
-
-
-
-
 	
 }

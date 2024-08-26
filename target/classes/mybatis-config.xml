@@ -10,6 +10,7 @@
 		<typeAlias type="com.recoa.model.vo.ReservePaging" alias="ReservePaging"/>
 		<typeAlias type="com.recoa.model.vo.User" alias="User" />
 		<typeAlias type="com.recoa.model.vo.BoardFree" alias="BoardFree" />
+		<typeAlias type="com.recoa.model.vo.BoardNotice" alias="BoardNotice" />
 		<typeAlias type="com.recoa.model.vo.Utillbill" alias="Utillbill"/>
 	</typeAliases>
 
@@ -19,6 +20,7 @@
 		<mapper resource="mappers/reserveguest-mapper.xml" />
 		<mapper resource="mappers/user-mapper.xml"/>
 		<mapper resource="mappers/boardFree-mapper.xml"/>
+		<mapper resource="mappers/boardNotice-mapper.xml"/>
 		<mapper resource="mappers/utillbill-mapper.xml"/>
 	</mappers>
 </configuration>

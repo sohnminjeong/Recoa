@@ -21,7 +21,6 @@ public class ReserveGuestService {
 	
 	// 사용 가능한 방 조회
 	public List<Map<String, Object>> getAvailableRooms(Map<String, Object> params) {
-        System.out.println("service : " + params);
         return dao.checkRoom(params);
     }
 	
@@ -54,7 +53,6 @@ public class ReserveGuestService {
 		UserDetails userDetails = (UserDetails) principal;
 
 		paging.setOffset(paging.getLimit() * (paging.getPage() - 1));
-
 		paging.setId(userDetails.getUsername());
 		
 		return dao.myGuestCancel(paging);
@@ -64,7 +62,6 @@ public class ReserveGuestService {
 	public int CancelGuesttotal() {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		UserDetails userDetails = (UserDetails) principal;
-		System.out.println("취소내역.. 조회는 되고있어 ");
 		return dao.CancelGuesttotal(userDetails.getUsername());
 	}
 	
@@ -76,7 +73,6 @@ public class ReserveGuestService {
 	// 고지서 조회
 	public List<Utillbill> checkBill(Utillbill vo) {
 		List<Utillbill> bill = dao.checkBill(vo);
-		System.out.println("서비스 : " + bill.size());
 		return dao.checkBill(vo);
 	}
 	

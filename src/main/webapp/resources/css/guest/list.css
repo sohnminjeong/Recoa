@@ -17,14 +17,12 @@ table {
     border-radius: 8px;
     min-height: 420px;
     margin-bottom: 10px;
-    
 }
 
 th, td {
     border: 1px solid #ddd;
     padding: 12px;
     text-align: center;
-   
 }
 
 th {
@@ -37,13 +35,25 @@ table th {
     border-bottom: 2px solid black;
     height: 30px;
     vertical-align: middle;
-     font-family: 'GangwonEdu_OTFBoldA';
+    font-family: 'GangwonEdu_OTFBoldA';
 }
 
 table td {
-    font-size: 0.9rem;
     padding-top: 10px;
-     font-family: 'GangwonEdu_OTFBoldA';
+    font-family: 'GangwonEdu_OTFBoldA';
+}
+
+#cancel{
+	font-family: 'GangwonEdu_OTFBoldA';	
+	height: 29px;
+	border-radius: 5px;
+	border: 0.2px solid gray;
+	padding-top: 5px;
+}
+
+#cancel:hover{
+	background-color: black;
+	color: white;
 }
 
 .pagination {
@@ -51,5 +61,13 @@ table td {
 	align-items: center;
 	justify-content: center;
 	text-align: center;
-	margin-top: 20px;
+	margin: 20px auto;
+	background-color: pink;
+	width: 50%;
+}
+
+.pagination a {
+	text-decoration: underline;
+	background-color: skyblue;
+	width: 100%;
 }

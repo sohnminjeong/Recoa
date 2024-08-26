@@ -9,15 +9,14 @@ drop table reserve_guest;
 drop table guest;
 drop table reserve_library;
 drop table library;
-drop table notice_bookmark;
 drop table free_like;
 drop table board_free_comment;
 drop table board_free_img;
 drop table board_free;
 drop table board_notice_img;
+drop table notice_bookmark;
 drop table board_notice;
 drop table user;
-
 
 create table user(
 	user_code INT PRIMARY KEY AUTO_INCREMENT,
@@ -39,9 +38,7 @@ create table board_notice(
     notice_title VARCHAR(100),
     notice_content TEXT,
     notice_writedate DATETIME DEFAULT CURRENT_TIMESTAMP,
-    notice_mainImg_url VARCHAR(500),
-    notice_view INT,
-    notice_bookmark boolean DEFAULT false
+    notice_view INT
 );
 
 create table board_notice_img(
@@ -51,14 +48,12 @@ create table board_notice_img(
 );
 
 create table board_free(
-	free_code INT PRIMARY KEY AUTO_INCREMENT,
+   free_code INT PRIMARY KEY AUTO_INCREMENT,
     user_code INT,
     free_title VARCHAR(30),
     free_content TEXT,
-    free_writedate DATETIME DEFAULT CURRENT_TIMESTAMP,
-    free_mainImg_url VARCHAR(500),
-    free_view INT,
-    free_like INT
+    free_writedate timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    free_view INT default 0
 );
 
 create table board_free_img(
@@ -72,7 +67,7 @@ create table board_free_comment(
     free_code INT,
     user_code INT,
     free_comment_content TEXT,
-    free_comment_writedate DATETIME DEFAULT CURRENT_TIMESTAMP,
+    free_comment_writedate timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     comment_parent_code INT
 );
 
@@ -105,6 +100,12 @@ create table reserve_library(
     status boolean DEFAULT false
 );
 
+create table guest(
+	room_type INT PRIMARY KEY,
+    room_code INT,
+    status boolean DEFAULT false
+);
+
 create table reserve_guest(
 	reserve_guest_code INT PRIMARY KEY AUTO_INCREMENT,
     user_code INT,
@@ -113,7 +114,7 @@ create table reserve_guest(
     start_time DATETIME,
     end_time DATETIME,
     regi_date DATETIME DEFAULT CURRENT_TIMESTAMP,
-    status boolean default FALSE
+    status boolean default TRUE
 );
 
 create table util_bill(
@@ -203,6 +204,9 @@ alter table free_like add constraint foreign key(free_code) references board_fre
 -- library랑 연결
 alter table reserve_library add constraint foreign key(library_code) references library (library_code) ON DELETE CASCADE;
 
+-- guest랑 연결
+alter table reserve_guest add constraint foreign key(room_type) references guest (room_type) ON DELETE CASCADE;
+
 -- note랑 연결
 alter table note_file add constraint foreign key(note_code) references note (note_code) ON DELETE CASCADE;
 
@@ -211,12 +215,3 @@ alter table chat add constraint foreign key(chat_room_code) references chat_room
 
 -- chat이랑 연결
 alter table chat_file add constraint foreign key(chat_code) references chat (chat_code) ON DELETE CASCADE;
-
-
-/*
-테이블 변경 사항
-
-[240725]
-1. user 테이블의 user_admin 컬럼에 default 'user' 속성 추가
-2. guest 테이블 삭제 및 연결되는 foreign key 삭제
-*/
