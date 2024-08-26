@@ -1,0 +1,15 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="BoardNoticeImg">
+	<resultMap type="BoardNoticeImg" id="BoardNoticeImgMap">
+		<id property="noticeImgCode" column="notice_img_code"/>
+		<result property="noticeCode" column="notice_code"/>
+		<result property="noticeImgUrl" column="notice_img_url"/>	
+	</resultMap>
+	
+	<!-- 이미지 등록 -->
+	<insert id="registerBoardNoticeImg" parameterType="BoardNoticeImg" useGeneratedKeys="true" keyColumn="notice_img_code" keyProperty="noticeImgCode">
+		INSERT INTO board_notice_img(notice_code, notice_img_url)
+		VALUES (#{noticeCode}, #{noticeImgUrl})
+	</insert>
+</mapper>
+	

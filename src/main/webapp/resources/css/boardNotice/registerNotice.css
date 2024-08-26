@@ -1,26 +1,112 @@
+@font-face {
+    font-family: 'GangwonEdu_OTFBoldA';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFBoldA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SDMiSaeng';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/SDMiSaeng.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+h1{
+	font-family: 'GangwonEdu_OTFBoldA';
+}
+
 form{
-	width: 50%;
+	width: 45%;
 	border: 1px solid;
 	border-radius: 10px;
 	height: 60%;
 	display: flex;
     flex-direction: column;
     justify-content: space-between;
+    margin-top: 30px;
+    padding-top: 15px;
+    font-family: 'GangwonEdu_OTFBoldA';
 }
 
 form input, textarea{
-	width: 80%;
-	margin-top: 10px;
-	margin-left: 10px;
-	margin-right: 10px;
+	width: 75%;
+	margin: 10px auto;
+	font-family: 'SDMiSaeng';
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+form input, textarea::placeholder{
+	font-size: 1.5rem;
+}
+
+input{
+	height: 40px;
 }
 
 textarea{
-	height: 100px;
-	overflow: scroll;
+	height: 80px;
+	overflow-y: scroll;
+	resize: none;
+	font-size: 1.5rem;
+}
+
+#images {
+    width: 100%;
+
+}
+
+#button-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+    position: relative;
+}
+
+#preview {
+    width: 100%;
+    min-height: 120px;
+    text-align: center;
+    margin-top: 10px;
+    padding-top: 10px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+img {
+    width: 100px;
+    height: 100px;
+    margin: 0 10px;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+button {
+    width:70px;
+    font-family: 'GangwonEdu_OTFBoldA';
+    border: 2px solid;
+    border-radius: 5px;
+    padding: 5px 0;
+    margin: 5px;
+    cursor: pointer;
+    text-align: center;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #input{
 	display: flex;
 	flex-direction: column;
+}
+
+#buttons{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	margin-bottom: 25px;
 }
