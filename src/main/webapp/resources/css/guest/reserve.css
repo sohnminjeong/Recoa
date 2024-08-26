@@ -37,11 +37,17 @@ h2{
 	display: flex;
 	flex-direction: center;
 	justify-content: center;
+	margin-top: 40px;
 }
 
 .roompicture img{
 	overflow: hidden;
     object-fit: contain;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 400px;
 }
 
 h1{

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.recoa.model.vo.ReserveGuest;
+import com.recoa.model.vo.ReservePaging;
 import com.recoa.model.vo.Utillbill;
 
 @Repository
@@ -26,9 +27,43 @@ public class ReserveGuestDAO {
 		return session.insert("ReserveGuest.registerGuestReserve", reserveguest);
 	}
 	
+	// 내 게스트룸 예약 내역 조회
+	public List<ReserveGuest> myGuest(ReservePaging paging){
+		return session.selectList("ReserveGuest.myGuest", paging);
+	}
+	
+	public int Guesttotal(String userId) {
+		return session.selectOne("ReserveGuest.guestTotal", userId);
+	}
+	
+	// 예약 취소 내역 조회
+	public List<ReserveGuest> myGuestCancel(ReservePaging paging){
+		return session.selectList("ReserveGuest.myGuestCancel", paging);
+	}
+	
+	public int CancelGuesttotal(String userId) {
+		return session.selectOne("ReserveGuest.CancelGuesttotal", userId);
+	}
+	
+	
+	// 게스트룸 예약 취소
+	public int cancelGuest(Integer reserveGuestCode) {
+		return session.update("ReserveGuest.cancelGuest", reserveGuestCode);
+	}
+	
 	// 고지서 조회
-	public Utillbill checkBill(int userCode) {
-		return session.selectOne("UtillBill.checkBill", userCode);
+	public List<Utillbill> checkBill(Utillbill vo) {
+		return session.selectList("UtillBill.checkBill", vo);
+	}
+	
+	// 고지서 등록
+	public int regiBill(Utillbill vo) {
+		return session.insert("UtillBill.Regibill", vo);
+	}
+	
+	// 고지서 수정
+	public int updateBill(Utillbill vo) {
+		return session.update("UtillBill.updatebill", vo);
 	}
 	
 }

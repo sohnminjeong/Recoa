@@ -1,7 +1,9 @@
 package com.recoa.controller;
 
+import java.security.Principal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -20,7 +22,10 @@ import java.util.List;
 import java.util.Map;
 
 import com.recoa.model.vo.ReserveGuest;
+import com.recoa.model.vo.ReservePaging;
+import com.recoa.model.vo.Utillbill;
 import com.recoa.service.ReserveGuestService;
+
 
 @Controller
 public class ReserveGuestController {
@@ -54,16 +59,12 @@ public class ReserveGuestController {
 		return "guest/reserveGuest";
 	}
 	
-
-	
-	
 	@InitBinder
     public void initBinder(WebDataBinder binder) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         dateFormat.setLenient(false);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
-
 	
 	@PostMapping("/reserveGuest")
 	public String reserveGuest( @RequestParam("startTime") Date startTime,
@@ -91,17 +92,120 @@ public class ReserveGuestController {
 
         // 고지서 관리
         // 1. 고지서 조회
-        if(service.checkBill(vo.getUserCode()) == null) {
-        	System.out.println("등록!");
-        } else {
-        	System.out.println("업데이트!");
-        }
+        LocalDate today = LocalDate.now();
+        int year = today.getYear();
+        int month = today.getMonthValue(); 
         
+        // 두 날짜 사이의 차이를 밀리초로 계산
+        long diffInMillis = endTime.getTime() - startTime.getTime();
+
+        // 밀리초를 일(day) 단위로 변환
+        int diffInDays = (int) (diffInMillis / (1000 * 60 * 60 * 24));
+
+        
+        Utillbill checkbill = new Utillbill();
+        checkbill.setUserCode(userCode);
+        checkbill.setBillYear(year);
+        checkbill.setBillMonth(month);
+        
+        // 해당 유저의 고지서 존재 여부 확인
+        List<Utillbill> check = service.checkBill(checkbill);
+        
+        if(check.size() == 0) {
+        	System.out.println("유저의 고지서가 비어있구나 등록!");
+        	// 2. 첫 고지서 등록
+        	
+        	Utillbill bill = new Utillbill();
+        	bill.setUserCode(vo.getUserCode());
+        	bill.setBillYear(year);
+        	bill.setBillMonth(month);
+        	bill.setLibUsePeriod(0);
+        	bill.setLibTotalPrice(0);
+        	
+        	
+        	if(vo.getRoomType() == '1') {
+        		bill.setGuest1UsePeriod(diffInDays);
+        		bill.setGuest2UsePeriod(0);
+        		bill.setRoomTotalPrice(diffInDays * 40000);
+        		bill.setTotalPrice(diffInDays * 40000);
+        	} else {
+        		bill.setGuest2UsePeriod(diffInDays);
+        		bill.setGuest1UsePeriod(0);
+        		bill.setRoomTotalPrice(diffInDays * 50000);
+        		bill.setTotalPrice(diffInDays * 50000);
+        	}
+        	
+        	System.out.println("등록 : " + bill);
+        	service.registBill(bill);
+        } else {
+        	// 고지서 업데이트 쿼리
+        	
+        	Utillbill bill = new Utillbill();
+        	
+        	bill.setUserCode(userCode);
+        	
+        	if(vo.getRoomType() == '1') {
+        		bill.setGuest1UsePeriod(diffInDays);
+        		bill.setGuest2UsePeriod(0);
+        		bill.setRoomTotalPrice(diffInDays * 40000);
+        		bill.setTotalPrice(diffInDays * 40000);
+        	} else {
+        		bill.setGuest2UsePeriod(diffInDays);
+        		bill.setGuest1UsePeriod(0);
+        		bill.setRoomTotalPrice(diffInDays * 50000);
+        		bill.setTotalPrice(diffInDays * 50000);
+        	}
+        	System.out.println("업데이트!");
+        	//service.updateBill(bill);
+        }
         return "guest/reserveSuccess"; // 예약 성공 페이지로 이동
-       
+	}
+
+	// 마이페이지 (내 게스트룸 예약 내역)
+	@GetMapping("/myGuest")
+	public String myGuest(Principal principal, @RequestParam(value = "page", defaultValue = "1") int page, Model model) {
+		
+		// 페이징처리
+		int total = service.Guesttotal();
+					
+		ReservePaging paging = new ReservePaging(page, total);
+		List<ReserveGuest> list = service.myGuest(paging);
+		model.addAttribute("list", list);
+		model.addAttribute("paging", paging);
+		
+//		paging.setKeyword(keyword);
+//		paging.setSelect(select);
+					
+		return "guest/myGuest";
+	} 
+	
+	// 마이페이지 (내 게스트룸 예약 취소 내역)
+	@GetMapping("/myGuestCancel")
+	public String myGuestCancel(Principal principal, @RequestParam(value = "page", defaultValue = "1") int page, Model model) {
+		int total = service.CancelGuesttotal();
+		
+		ReservePaging paging = new ReservePaging(page, total);
+		List<ReserveGuest> list = service.myGuestCancel(paging);
+		model.addAttribute("list", list);
+		model.addAttribute("paging", paging);
+		
+		return "guest/myGuestCancel";
 	}
 	
-
+	@PostMapping("/cancelGuest")
+	public String cancelGuest(Principal principal,  @RequestParam(value = "page", defaultValue = "1") int page, @RequestParam("reserveGuestCode") Integer reserveGuestCode, Model model) {
+		int total = service.Guesttotal();
+		
+		ReservePaging paging = new ReservePaging(page, total);
+		List<ReserveGuest> list = service.myGuestCancel(paging);
+		
+		System.out.println("reserveGuestCode : " + reserveGuestCode);
+		service.cancelGuest(reserveGuestCode);
+		model.addAttribute("list", list);
+		model.addAttribute("paging", paging);
+		
+		return "redirect:/myGuest";
+	}
 	
 	
 }
