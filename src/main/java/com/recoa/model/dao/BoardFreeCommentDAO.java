@@ -39,4 +39,17 @@ public class BoardFreeCommentDAO {
 	public int findFreeCodeByCommentCode(int freeCommentCode) {
 		return session.selectOne("boardFreeCommentMapper.findFreeCodeByCommentCode", freeCommentCode);
 	}
+	// 대댓글 작성 
+	public int registerReplyComment(BoardFreeComment vo) {
+		return session.insert("boardFreeCommentMapper.regissterReplyComment", vo);
+	}
+	// 대댓글 전체 보기 
+	public List<BoardFreeComment> viewAllReplyComment(int commentParentCode){
+		return session.selectList("boardFreeCommentMapper.viewAllReplyComment", commentParentCode);
+	}
+	// 대댓글 삭제 
+	public int deleteReplyComment(int freeCommentCode) {
+		return session.delete("boardFreeCommentMapper.deleteReplyComment", freeCommentCode);
+	}
+	
 }

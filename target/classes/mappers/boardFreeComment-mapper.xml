@@ -66,4 +66,23 @@
 	FROM board_free_comment
 	WHERE free_comment_code=#{freeCommentCode}
 	</select>
+	
+	<!-- 대댓글 작성 -->
+	<insert id="registerReplyComment" parameterType="BoardFreeComment" useGeneratedKeys="true" keyColumn="free_comment_code" keyProperty="freeCommentCode">
+	INSERT INTO board_free_comment(free_code, user_code, free_comment_contenet, comment_parent_code)
+	VALUES (#{freeCode}, #{userCode},#{freeCommentContent},#{commentParentCode})
+	</insert>
+	
+	<!-- 대댓글 전체 보기 -->
+	<select id="viewAllReplyComment" parameterType="int" resultType="BoardFreeComment">
+	SELECT *
+	FROM board_free_comment
+	WHERE comment_parent_code=#{commentParentCode}
+	</select>
+	
+	<!-- 대댓글 삭제 -->
+	<delete id="deleteReplyComment" parameterType="id">
+	DELETE FROM board_free_comment
+	WHERE free_comment_code=#{freeCommentCode}
+	</delete>
 </mapper>

@@ -40,4 +40,16 @@ public class BoardFreeCommentService {
 	public int findFreeCodeByCommentCode(int freeCommentCode) {
 		return dao.findFreeCodeByCommentCode(freeCommentCode);
 	}
+	// 대댓글 작성 
+	public int registerReplyComment(BoardFreeComment vo) {
+		return dao.registerReplyComment(vo);
+	}
+	// 대댓글 전체 보기 
+	public List<BoardFreeComment> viewAllReplyComment(int commentParentCode){
+		return dao.viewAllReplyComment(commentParentCode);
+	}
+	// 대댓글 삭제 
+	public int deleteReplyComment(int freeCommentCode) {
+		return dao.deleteReplyComment(freeCommentCode);
+	}
 }
