@@ -81,7 +81,7 @@
 	</select>
 	
 	<!-- 대댓글 삭제 -->
-	<delete id="deleteReplyComment" parameterType="id">
+	<delete id="deleteReplyComment" parameterType="int">
 	DELETE FROM board_free_comment
 	WHERE free_comment_code=#{freeCommentCode}
 	</delete>
