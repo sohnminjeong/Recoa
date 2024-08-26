@@ -4,9 +4,8 @@ drop table chat;
 drop table chat_room;
 drop table note_file;
 drop table note;
-drop table util_bill;
+drop table utill_bill;
 drop table reserve_guest;
-drop table guest;
 drop table reserve_library;
 drop table library;
 drop table free_like;
@@ -100,12 +99,6 @@ create table reserve_library(
     status boolean DEFAULT false
 );
 
-create table guest(
-	room_type INT PRIMARY KEY,
-    room_code INT,
-    status boolean DEFAULT false
-);
-
 create table reserve_guest(
 	reserve_guest_code INT PRIMARY KEY AUTO_INCREMENT,
     user_code INT,
@@ -117,7 +110,7 @@ create table reserve_guest(
     status boolean default TRUE
 );
 
-create table util_bill(
+create table utill_bill(
 	bill_code INT PRIMARY KEY AUTO_INCREMENT,
 	user_code INT,
     bill_year INT,
@@ -184,7 +177,7 @@ alter table free_like add constraint foreign key(user_code) references user (use
 alter table notice_bookmark add constraint foreign key(user_code) references user (user_code) ON DELETE CASCADE;
 alter table reserve_library add constraint foreign key(user_code) references user (user_code) ON DELETE CASCADE;
 alter table reserve_guest add constraint foreign key(user_code) references user (user_code) ON DELETE CASCADE;
-alter table util_bill add constraint foreign key(user_code) references user (user_code) ON DELETE CASCADE;
+alter table utill_bill add constraint foreign key(user_code) references user (user_code) ON DELETE CASCADE;
 alter table note add constraint sender_user foreign key(note_sender) references user (user_code) ON DELETE CASCADE;
 alter table note add constraint receiver_user foreign key(note_receiver) references user (user_code) ON DELETE CASCADE;
 alter table chat_room add constraint user1 foreign key(user_number1) references user (user_code) ON DELETE CASCADE;
@@ -203,9 +196,6 @@ alter table free_like add constraint foreign key(free_code) references board_fre
 
 -- library랑 연결
 alter table reserve_library add constraint foreign key(library_code) references library (library_code) ON DELETE CASCADE;
-
--- guest랑 연결
-alter table reserve_guest add constraint foreign key(room_type) references guest (room_type) ON DELETE CASCADE;
 
 -- note랑 연결
 alter table note_file add constraint foreign key(note_code) references note (note_code) ON DELETE CASCADE;
