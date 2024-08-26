@@ -13,6 +13,7 @@
     width: 100%;
     top: 0;
     left: 0;
+    border-bottom:1px solid black;
 }
 #content{
 	position:relative;

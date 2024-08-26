@@ -158,7 +158,7 @@ public class ReserveGuestController {
         	System.out.println("업데이트!");
         	//service.updateBill(bill);
         }
-        return "guest/reserveSuccess"; // 예약 성공 페이지로 이동
+        return "redirect:/myGuest"; // 예약 성공 페이지로 이동
 	}
 
 	// 마이페이지 (내 게스트룸 예약 내역)

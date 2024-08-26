@@ -43,7 +43,7 @@
 	<li>
 		<a href="/">게시판</a>
 		<ul class="submenu" id="submenu3">
-			<li><a href="/">공지 게시판</a></li>
+			<li><a href="/boardNoticeList">공지 게시판</a></li>
 			<li><a href="/viewAllBoardFree">자유 게시판</a></li>
 		</ul>
 	</li>
