@@ -58,7 +58,7 @@ h1{
 				<button type="button" id="deleteImg" style="display:none;">이미지 삭제</button>
 			</div>
 			<!-- 미리보기 보일 곳 -->
-			<div id="preview"></div>
+			<div id="preview" style="display: none;"></div>
 			<div id="buttons">
 				<button type="submit" id="submit">등록하기</button>
 				<button type="button" onclick="location.href='/boardNoticeList';">작성 취소</button>
@@ -107,7 +107,7 @@ h1{
 		while(preview.hasChildNodes()){
 			preview.removeChild(preview.firstChild);
 		}
-		preview.style.display = "block";
+		preview.style.display = "none";
 	    addImg.style.display = "block";
 	    deleteImg.style.display = "none";
 	})
