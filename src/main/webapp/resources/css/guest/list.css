@@ -12,40 +12,44 @@
     font-style: normal;
 }
 
-table {
-    width: 100%;
-    border-radius: 8px;
-    min-height: 420px;
-    margin-bottom: 10px;
-}
 
-th, td {
-    border: 1px solid #ddd;
-    padding: 12px;
-    text-align: center;
-}
-
-th {
-    font-size: 1.1rem;
-    font-weight: bold;
-    border-bottom: 2px solid black; 
-}
-
-table th {
-    border-bottom: 2px solid black;
-    height: 30px;
-    vertical-align: middle;
-    font-family: 'GangwonEdu_OTFBoldA';
-}
-
-table td {
-    padding-top: 10px;
-    font-family: 'GangwonEdu_OTFBoldA';
+table{
+   width:100%;
+   height:420px;
+   font-family: 'GangwonEdu_OTFBoldA';
+   font-size : 1.2rem;
+   thead{
+      height: 8%;
+         border-bottom: 1px solid black;
+         color : gray;
+   }
+   tr{
+      display: grid;
+        grid-template-columns: 0.5fr 1fr 1fr 1fr 1fr 1fr;
+        width: 100%;
+        text-align: center;
+        
+          a:hover{
+             color : gray;
+          }
+        
+   }
+   
+   tbody{
+      height: 100%;
+        display: grid;
+        grid-template-rows: repeat(10, 1fr);
+        margin-top: 15px;
+   }
+   button{
+   		height: 15px;
+   		margin-bottom: 5px;
+   }
 }
 
 #cancel{
 	font-family: 'GangwonEdu_OTFBoldA';	
-	height: 29px;
+	height: 22px;
 	border-radius: 5px;
 	border: 0.2px solid gray;
 	padding-top: 5px;
@@ -55,19 +59,24 @@ table td {
 	background-color: black;
 	color: white;
 }
-
-.pagination {
+#paging{
+	width: 100%;
 	display: flex;
-	align-items: center;
-	justify-content: center;
-	text-align: center;
-	margin: 20px auto;
-	background-color: pink;
-	width: 50%;
+	flex-direction: row;
 }
 
-.pagination a {
-	text-decoration: underline;
-	background-color: skyblue;
+#paging ul{
 	width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.pagination{
+	align-items: center;
+	margin: 0 auto;
+	display: flex;
+	justify-content: space-evenly;
+	padding-top: 25px;
+    width: 100%;
+    position: relative;
 }
