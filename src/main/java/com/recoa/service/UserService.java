@@ -92,4 +92,9 @@ public class UserService implements UserDetailsService{
 	public User findPwd(User user) {
 		return dao.findPwd(user);
 	}
+	
+	// 쪽지 작성용 : 닉네임으로 회원 코드 찾기
+	public int findUserCode(String userNickname) {
+		return dao.findUserCode(userNickname);
+	}
 }

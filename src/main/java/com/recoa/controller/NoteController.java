@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.recoa.model.vo.Note;
 import com.recoa.model.vo.NoteFile;
 import com.recoa.service.NoteService;
+import com.recoa.service.UserService;
 
 @Controller
 public class NoteController {
@@ -20,6 +21,9 @@ public class NoteController {
 	
 	@Autowired
 	private NoteService service;
+	
+	@Autowired
+	private UserService userService;
 	
 	// 파일 저장
 	private String path = "C:\\recoaImg\\note\\";
@@ -43,6 +47,10 @@ public class NoteController {
 	// 쪽지 보내기 
 	@PostMapping("/registerNote")
 	public String registerNote(Note vo) throws IllegalStateException, IOException {
+		int senderCode = userService.findUserCode(vo.getSenderNick());
+		vo.setNoteSender(senderCode);
+		int receiverCode = userService.findUserCode(vo.getReceiverNick());
+		vo.setNoteReceiver(receiverCode);
 		service.registerNote(vo);
 		NoteFile files = new NoteFile();
 		if(vo.getFile()!=null&&vo.getFile().get(0).getOriginalFilename()!="") {
@@ -53,6 +61,6 @@ public class NoteController {
 				service.registerNoteFile(files);
 			}
 		}
-		return "/";
+		return "guest/myGuest";
 	}
 }

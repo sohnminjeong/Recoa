@@ -342,8 +342,17 @@
 					</c:choose>
 					<div id="writerDetail">
 						<span id="writerAdr">${vo.user.userAdr}동</span>
-						<span id="writerNickname">${vo.user.userNickname}</span>
+						<span id="writerNickname">${vo.user.userNickname}
+							<i class="fa-solid fa-caret-right"></i>
+						</span>
 					</div>
+					<div id="noteJsp" style="display : none">
+						<jsp:include page="../note/noteSideBar.jsp" flush="true">
+							<jsp:param value="${vo.user.userNickname}" name="param1"/>
+						</jsp:include>
+					</div>
+					
+					
 				</div>	
 				<div id="writerRight">
 					<fmt:formatDate value="${vo.freeWritedate}" pattern="yy-MM-dd HH:mm"/>&nbsp;
@@ -565,6 +574,10 @@ function validate(){
 	return true;
 	
 }
+
+$('.fa-caret-right').click(function(){
+	$('#noteJsp').css({"display":"block"});
+})
 
 </script>
 </body>

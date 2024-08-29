@@ -110,4 +110,10 @@
 	AND user_email=#{userEmail}
 	</select>
 	
+	<!-- 쪽지 작성용 : 회원 닉네임으로 회원 코드 찾기 -->
+	<select id="findUserCode" parameterType="String" resultType="int">
+	SELECT user_code
+	FROM user
+	WHERE user_nickname=#{userNickname}
+	</select>
 </mapper>

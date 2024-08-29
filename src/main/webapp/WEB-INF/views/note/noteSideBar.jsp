@@ -3,6 +3,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%String param1=request.getParameter("param1"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,31 +14,40 @@
 <script src="https://kit.fontawesome.com/cbb1359000.js" crossorigin="anonymous"></script>
 <style>
 #noteSideBar{
-	width:100px;
-	height:100px;
-	border:1px solid black;
+	width: 80px;
+    height: 35px;
+    border: 1px solid black;
+    border-radius: 10px;
+    align-content: center;
+    text-align: center;
+    font-size: 0.8rem;
+    margin-left: 7px;
 	
+	span:hover{
+		color : black;
+	}
 }
+
 #noteWrite{
 	width:200px;
 	height:200px;
 	border : 1px solid black;
 	border-radius:10px;
 }
+
 </style>
 </head>
 <body>
 <sec:authentication property="principal" var="user" />
 	<div id="noteSideBar">
-		<span id="noteBtn">쪽지 보내기</span>
+		<span id="noteBtn">쪽지 보내기</span><br>
 		<span>채팅 하기</span>
 	</div>
 	<div id="noteWrite" style="display:none">
 		<h3>쪽지 보내기</h3>
 		<form action="/registerNote" method="post" enctype="multipart/form-data">
-		<input type="text" id="noteSender" name="noteSender" value="${user.userNickname}">
-		<input type="text" id="noteReceiver" name="noteReceiver" value="${user.userNickname}">
-		
+		<input type="text" id="senderNick" name="senderNick" value="${user.userNickname}">
+		<input type="text" id="receiverNick" name="receiverNick" value="<%=param1%>">
 		<input type="text" id="noteTitle" name="noteTitle" placeholder="제목"> 
 		<textarea placeholder="내용" name="noteContent" id="noteContent"></textarea>
 		<input type="file" id="file" name="file" multiple="multiple" >

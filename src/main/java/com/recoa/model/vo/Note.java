@@ -13,7 +13,7 @@ public class Note {
 	
 	private int noteCode;
 	private int noteSender;
-	private int noteReciever;
+	private int noteReceiver;
 	private String noteTitle;
 	private String noteContent;
 	private Date noteWritedate;
@@ -22,5 +22,7 @@ public class Note {
 	
 	private List<MultipartFile> file;
 	private User user;
+	private String senderNick;
+	private String receiverNick;
 	
 }

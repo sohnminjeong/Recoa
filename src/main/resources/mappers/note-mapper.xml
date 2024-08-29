@@ -28,6 +28,6 @@
 	<!-- 쪽지 보내기 -->
 	<insert id="registerNote" parameterType="Note" useGeneratedKeys="true" keyColumn="note_code" keyProperty="noteCode">
 	INSERT INTO note(note_sender, note_receiver, note_title, note_content)
-	VALUES (${noteSender}, ${noteReceiver}, ${noteTitle}, ${noteContent})
+	VALUES (#{noteSender}, #{noteReceiver}, #{noteTitle}, #{noteContent})
 	</insert>
 </mapper>
