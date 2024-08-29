@@ -16,6 +16,7 @@
 		<typeAlias type="com.recoa.model.vo.FreeLike" alias="FreeLike"/>
 		<typeAlias type="com.recoa.model.vo.BoardNotice" alias="BoardNotice" />
 		<typeAlias type="com.recoa.model.vo.BoardNoticeImg" alias="BoardNoticeImg"/>
+		<typeAlias type="com.recoa.model.vo.BoardNoticePaging" alias="BoardNoticePaging"/>
 		<typeAlias type="com.recoa.model.vo.Utillbill" alias="Utillbill"/>
 		<typeAlias type="com.recoa.model.vo.Note" alias="Note"/>
 		<typeAlias type="com.recoa.model.vo.NoteFile" alias="NoteFile"/>

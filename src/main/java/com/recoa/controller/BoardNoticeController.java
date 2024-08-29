@@ -3,12 +3,14 @@ package com.recoa.controller;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.recoa.model.vo.BoardNotice;
 import com.recoa.model.vo.BoardNoticeImg;
+import com.recoa.model.vo.BoardNoticePaging;
 import com.recoa.service.BoardNoticeService;
 
 
@@ -40,10 +43,21 @@ public class BoardNoticeController {
 	
 	 // 게시판으로 이동
 	@GetMapping("/boardNoticeList")
-	public String boardNoticeList() {
+	public String boardNoticeList(@RequestParam(value = "page", defaultValue = "1") int page,
+								Model model, String select, String keyword) {
+		
+		System.out.println("page : " + page);
+		
+		int total = service.noticeListTotal();
+		BoardNoticePaging paging = new BoardNoticePaging(page, total);
+		paging.setSelect(select);
+		paging.setKeyword(keyword);
+		
+		List<BoardNotice> list = service.viewNoticeList(paging);
+		model.addAttribute("list", list);
+		model.addAttribute("paging", paging);
 		
 		// 리스트 출력.. (페이징 처리도)
-		
 		return "boardNotice/boardNoticeViewAll";
 	}
 	

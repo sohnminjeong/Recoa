@@ -1,13 +1,18 @@
 package com.recoa.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.recoa.model.dao.BoardNoticeDAO;
+import com.recoa.model.vo.BoardFree;
+import com.recoa.model.vo.BoardFreePaging;
 import com.recoa.model.vo.BoardNotice;
 import com.recoa.model.vo.BoardNoticeImg;
+import com.recoa.model.vo.BoardNoticePaging;
 
 @Service
 public class BoardNoticeService {
@@ -26,4 +31,15 @@ public class BoardNoticeService {
 		
 		return dao.registerNoticeImg(img);
 	}
+	
+	// 공지 리스트
+	public List<BoardNotice> viewNoticeList(BoardNoticePaging paging){
+		return dao.viewNoticeList(paging);
+	}
+	
+	// 공지 리스트 total
+	public int noticeListTotal() {
+		return dao.viewNoticeListTotal();
+	}
+	
 }
