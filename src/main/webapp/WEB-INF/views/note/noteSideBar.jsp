@@ -29,10 +29,18 @@
 }
 
 #noteWrite{
-	width:200px;
-	height:200px;
+	width:400px;
+	height:250px;
 	border : 1px solid black;
 	border-radius:10px;
+	position:fixed;
+	left:35%;
+	box-shadow : rgba(0,0,0,0.5) 0 0 0 9999px;
+	background-color : black;
+	color : white;
+	padding : 10px;
+	display:flex;
+	flex-direction:column;
 }
 
 </style>
@@ -46,8 +54,15 @@
 	<div id="noteWrite" style="display:none">
 		<h3>쪽지 보내기</h3>
 		<form action="/registerNote" method="post" enctype="multipart/form-data">
-		<input type="text" id="senderNick" name="senderNick" value="${user.userNickname}">
-		<input type="text" id="receiverNick" name="receiverNick" value="<%=param1%>">
+		<div>
+			<span>보내는 사람</span>
+			<input type="text" id="senderNick" name="senderNick" value="${user.userNickname}">
+		</div>
+		<div>
+			<span>받는 사람</span>
+			<input type="text" id="receiverNick" name="receiverNick" value="<%=param1%>">
+		</div>
+		
 		<input type="text" id="noteTitle" name="noteTitle" placeholder="제목"> 
 		<textarea placeholder="내용" name="noteContent" id="noteContent"></textarea>
 		<input type="file" id="file" name="file" multiple="multiple" >

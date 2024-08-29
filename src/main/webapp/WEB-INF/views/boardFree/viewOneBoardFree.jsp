@@ -305,6 +305,9 @@
     bottom: 6%;
     right: 4%;
 }
+.fa-caret-right:hover{
+	color : green;
+}
 </style>
 </head>
 <body>
