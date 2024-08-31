@@ -172,17 +172,19 @@ table{
 						<td>제목</td>
 						<td>작성일</td>
 						<td>조회수</td>
+						<td>북마크</td>
 					</tr>
 				</thead>
 				<tbody>
 					<c:forEach items="${list}" var="item" varStatus="status">
 						<tr>
 							<td>${item.noticeCode}</td>
-							<td><a href="/boardNoticeList?noticeCode=${item.noticeCode}">${item.noticeTitle}</a></td>
+							<td><a href="/viewNotice?noticeCode=${item.noticeCode}">${item.noticeTitle}</a></td>
 							<td>
 								<fmt:formatDate value="${item.noticeWritedate}" pattern="yy-MM-dd HH:mm" />
 							</td>
 							<td>조회수..</td>
+							<td>북마크수</td>
 						</tr>
 					</c:forEach>
 				</tbody>

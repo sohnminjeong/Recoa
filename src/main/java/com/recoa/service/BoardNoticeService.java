@@ -42,4 +42,23 @@ public class BoardNoticeService {
 		return dao.viewNoticeListTotal();
 	}
 	
+	// 공지 하나 보기
+	public BoardNotice viewNotice(int noticeCode) {
+		return dao.viewNotice(noticeCode);
+	}
+	
+	// 공지 하나 이미지
+	public List<BoardNoticeImg> noticeImg(int noticeCode){
+		return dao.noticeImg(noticeCode);
+	}
+	
+	// 공지 삭제하기
+	public int deleteNotice(int noticeCode) {
+		return dao.deleteNotice(noticeCode);
+	}
+	
+	// 공지 이미지 삭제하기
+	public int deleteImg(int noticeCode) {
+		return dao.deleteImg(noticeCode);
+	}
 }

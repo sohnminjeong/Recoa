@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -53,6 +54,10 @@ public class BoardNoticeController {
 		paging.setSelect(select);
 		paging.setKeyword(keyword);
 		
+		int offset = (page - 1) * paging.getLimit();
+		paging.setOffset(offset); 
+		System.out.println("offset : " + paging.getOffset());
+		
 		List<BoardNotice> list = service.viewNoticeList(paging);
 		model.addAttribute("list", list);
 		model.addAttribute("paging", paging);
@@ -86,6 +91,36 @@ public class BoardNoticeController {
 				service.registerBoardNoticeImg(img);
 			}
 		}
+		
+		return "redirect:/boardNoticeList";
+	}
+	
+	// 공지 한 개 보기
+	@GetMapping("/viewNotice")
+	public String viewNotice(int noticeCode, Model model) {
+		
+		System.out.println("code : " + noticeCode);
+		BoardNotice notice = service.viewNotice(noticeCode);
+		List<BoardNoticeImg> images = service.noticeImg(noticeCode);
+		model.addAttribute("notice", notice);
+		model.addAttribute("images", images);
+		
+		System.out.println("notice : " + notice);
+		return "boardNotice/viewBoardNotice";
+	}
+	
+	// 공지 삭제하기
+	@GetMapping("/deleteNotice")
+	public String deleteNotice(int noticeCode) {
+		List<BoardNoticeImg> images = service.noticeImg(noticeCode);
+		if(images != null) {
+			for(BoardNoticeImg image : images) {
+				File file = new File(path + image.getNoticeImgUrl());
+				file.delete();
+			}
+		}
+		service.deleteNotice(noticeCode);
+		service.deleteImg(noticeCode);
 		
 		return "redirect:/boardNoticeList";
 	}

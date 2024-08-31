@@ -19,5 +19,6 @@ public class BoardNotice {
 	
 	//private int bookmark;
 	private List<MultipartFile> files;
+	private User user;
 	
 }

@@ -34,4 +34,25 @@ public class BoardNoticeDAO {
 	public int viewNoticeListTotal() {
 		return session.selectOne("BoardNotice.noticeListTotal");
 	}
+	
+	// 공지 하나 보기
+	public BoardNotice viewNotice(int noticeCode) {
+		System.out.println("noticeCode : " + noticeCode);
+		return session.selectOne("BoardNotice.noticeOne", noticeCode);
+	}
+	
+	// 공지 하나 이미지
+	public List<BoardNoticeImg> noticeImg(int noticeCode){
+		return session.selectList("BoardNoticeImg.noticeImg", noticeCode);
+	}
+	
+	// 공지 삭제하기
+	public int deleteNotice(int noticeCode) {
+		return session.delete("BoardNotice.deleteNotice", noticeCode);
+	}
+	
+	// 공지 이미지 삭제하기
+	public int deleteImg(int noticeCode) {
+		return session.delete("BoardNoticeImg.deleteImg", noticeCode);
+	}
 }

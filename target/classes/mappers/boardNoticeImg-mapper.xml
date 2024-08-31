@@ -11,5 +11,18 @@
 		INSERT INTO board_notice_img(notice_code, notice_img_url)
 		VALUES (#{noticeCode}, #{noticeImgUrl})
 	</insert>
+	
+	<!-- 이미지 보기 -->
+	<select id="noticeImg" parameterType="int" resultMap="BoardNoticeImgMap">
+		SELECT *
+		FROM board_notice_img
+		WHERE notice_code=#{noticeCode}
+	</select>
+	
+	<!-- 이미지 삭제하기 -->
+	<delete id="deleteImg" parameterType="int">
+		DELETE FROM board_notice_img
+		WHERE notice_code=#{noticeCode}
+	</delete>
 </mapper>
 	

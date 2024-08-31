@@ -9,6 +9,19 @@
 		<result property="noticeView" column="notice_view"/>
 	</resultMap>
 	
+	<resultMap type="User" id="userMap">
+		<id property="userCode" column="user_code"/>
+		<result property="userId" column="user_id"/>
+		<result property="userRealName" column="user_name"/>
+		<result property="userNickname" column="user_nickname"/>	
+		<result property="userImgUrl" column="user_img_url"/>
+		<result property="userPhone" column="user_phone"/>
+		<result property="userAdr" column="user_adr"/>
+		<result property="userAdrDetail" column="user_adr_detail"/>
+		<result property="userEmail" column="user_email"/>
+		<result property="userAdmin" column="user_admin"/>	
+	</resultMap>
+	
 	<!-- 공지 작성 -->
 	<insert id="registerNotice" parameterType="boardNotice" useGeneratedKeys="true" keyProperty="noticeCode" keyColumn="noticeCode">
 		INSERT INTO board_notice(user_code, notice_title, notice_content, notice_writedate)
@@ -56,4 +69,18 @@
 		</where>
 	</select>
 	
+	<!-- 공지 하나 보기 -->
+	<select  id="noticeOne" parameterType="int" resultMap="BoardNoticeMap">
+		SELECT *
+		FROM board_notice
+		JOIN user
+		USING (user_code)
+		WHERE notice_code=#{noticeCode}
+	</select>
+	
+	<!-- 삭제 -->
+	<delete id="deleteNotice" parameterType="int">
+		DELETE FROM board_notice
+		WHERE notice_code=#{noticeCode}
+	</delete>
 </mapper>
