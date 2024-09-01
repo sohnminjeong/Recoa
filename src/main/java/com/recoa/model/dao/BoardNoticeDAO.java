@@ -41,6 +41,11 @@ public class BoardNoticeDAO {
 		return session.selectOne("BoardNotice.noticeOne", noticeCode);
 	}
 	
+	// 조회수 증가
+	public int addViewCount(int noticeCode) {
+		return session.update("BoardNotice.addViewCount", noticeCode);
+	}
+	
 	// 공지 하나 이미지
 	public List<BoardNoticeImg> noticeImg(int noticeCode){
 		return session.selectList("BoardNoticeImg.noticeImg", noticeCode);

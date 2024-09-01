@@ -1,5 +1,6 @@
 package com.recoa.model.vo;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class BoardNotice {
 	private int userCode;
 	private String noticeTitle;
 	private String noticeContent;
-	private Date noticeWritedate;
+	private Timestamp noticeWritedate;
 	private int noticeView;
 	
 	//private int bookmark;

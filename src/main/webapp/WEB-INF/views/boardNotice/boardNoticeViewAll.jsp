@@ -179,11 +179,15 @@ table{
 					<c:forEach items="${list}" var="item" varStatus="status">
 						<tr>
 							<td>${item.noticeCode}</td>
-							<td><a href="/viewNotice?noticeCode=${item.noticeCode}">${item.noticeTitle}</a></td>
+							<td>
+								<a href="/viewNotice?noticeCode=${item.noticeCode}">
+					                ${item.noticeTitle}
+					            </a>
+							</td>
 							<td>
 								<fmt:formatDate value="${item.noticeWritedate}" pattern="yy-MM-dd HH:mm" />
 							</td>
-							<td>조회수..</td>
+							<td>${item.noticeView}</td>
 							<td>북마크수</td>
 						</tr>
 					</c:forEach>
@@ -253,5 +257,8 @@ table{
 						</nav>
 	</div>
 </div>
+<script>
+
+</script>
 </body>
 </html>

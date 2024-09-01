@@ -24,8 +24,8 @@
 	
 	<!-- 공지 작성 -->
 	<insert id="registerNotice" parameterType="boardNotice" useGeneratedKeys="true" keyProperty="noticeCode" keyColumn="noticeCode">
-		INSERT INTO board_notice(user_code, notice_title, notice_content, notice_writedate)
-		VALUES(#{userCode}, #{noticeTitle}, #{noticeContent}, #{noticeWritedate})
+		INSERT INTO board_notice(user_code, notice_title, notice_content)
+		VALUES(#{userCode}, #{noticeTitle}, #{noticeContent})
 	</insert>
 	
 	<!-- 공지 리스트 -->
@@ -77,6 +77,13 @@
 		USING (user_code)
 		WHERE notice_code=#{noticeCode}
 	</select>
+	
+	<!-- 공지 조회수 증가 -->
+	<update id="addViewCount" parameterType="int">
+		UPDATE board_notice
+		SET notice_view = notice_view + 1
+		WHERE notice_code = #{noticeCode}
+	</update>
 	
 	<!-- 삭제 -->
 	<delete id="deleteNotice" parameterType="int">

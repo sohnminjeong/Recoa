@@ -2,9 +2,12 @@ package com.recoa.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -97,17 +100,25 @@ public class BoardNoticeController {
 	
 	// 공지 한 개 보기
 	@GetMapping("/viewNotice")
-	public String viewNotice(int noticeCode, Model model) {
+	public String viewNotice(int noticeCode, Model model, HttpSession session) {
 		
-		System.out.println("code : " + noticeCode);
+		String sessionKey = "viewedNotice_" + noticeCode;
+		
+	    // 새로고침 시 조회수가 계속 올라가는 현상 막기 (한 번 조회한 사람은 조회수 증가에 영향x)
+	    if (session.getAttribute(sessionKey) == null) {
+	        service.addViewCount(noticeCode);  				// 조회수 증가
+	        session.setAttribute(sessionKey, true);
+	    }
+		
 		BoardNotice notice = service.viewNotice(noticeCode);
 		List<BoardNoticeImg> images = service.noticeImg(noticeCode);
 		model.addAttribute("notice", notice);
 		model.addAttribute("images", images);
 		
-		System.out.println("notice : " + notice);
 		return "boardNotice/viewBoardNotice";
 	}
+	
+
 	
 	// 공지 삭제하기
 	@GetMapping("/deleteNotice")

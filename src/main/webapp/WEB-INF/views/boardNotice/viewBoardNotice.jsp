@@ -10,6 +10,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="../../../resources/css/reset.css" />
+<script src="https://kit.fontawesome.com/cbb1359000.js" crossorigin="anonymous"></script>
 <style>
 @font-face {
     font-family: 'GangwonEdu_OTFBoldA';
@@ -96,6 +97,8 @@
 		display: flex;
 		flex-direction: row;
 		background-color: pink;
+		font-family: 'GangwonEdu_OTFBoldA';
+    	font-wieght:light;
 	}
 }
 #noticeContent{
@@ -149,8 +152,21 @@
     		</div>
     	</div>
     	<div id="noticedesc">
-    		<p>작성일: <fmt:formatDate value="${notice.noticeWritedate}" pattern="yyyy-MM-dd HH:mm:ss" /></p>
-			<p>조회수</p>
+    		<p><fmt:formatDate value="${notice.noticeWritedate}" pattern="yy-MM-dd HH:mm"/></p>&nbsp;
+			<p><i class="fa-solid fa-eye"></i>${notice.noticeView}</p>&nbsp;
+			<c:choose>
+				<c:when test="${user=='anonymousUser'}">
+					비회원
+				</c:when>
+				<!-- 북마크 안 누른 회원일 때 -->
+				<c:when test="${user!='anonymousUser'}">
+					<i class="fa-regular fa-bookmark"></i>
+				</c:when>
+				<!-- 북마크 누른 회원일 때 -->
+				<c:otherwise>
+					<i class="fa-solid fa-bookmark"></i>
+				</c:otherwise>
+			</c:choose>
 			<p>북마크 수</p>
     	</div>
     </div>

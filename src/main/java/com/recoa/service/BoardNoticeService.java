@@ -47,6 +47,11 @@ public class BoardNoticeService {
 		return dao.viewNotice(noticeCode);
 	}
 	
+	// 조회수 증가
+	public int addViewCount(int noticeCode) {
+		return dao.addViewCount(noticeCode);
+	}
+	
 	// 공지 하나 이미지
 	public List<BoardNoticeImg> noticeImg(int noticeCode){
 		return dao.noticeImg(noticeCode);
