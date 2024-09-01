@@ -1,5 +1,7 @@
 package com.recoa.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,5 +22,10 @@ public class NoteService {
 	// 쪽지 파일 첨부
 	public int registerNoteFile(NoteFile vo) {
 		return dao.registerNoteFile(vo);
+	}
+	
+	// 쪽지 전체 보기
+	public List<Note> viewAllNote(int noteSender) {
+		return dao.viewAllNote(noteSender);
 	}
 }

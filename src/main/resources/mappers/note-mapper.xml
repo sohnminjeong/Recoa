@@ -3,7 +3,7 @@
 	<resultMap type="Note" id="noteMap">
 		<id column="note_code" property="noteCode"/>
 		<result column="note_sender" property="noteSender"/>
-		<result column="note_reciever" property="noteReceiver"/>
+		<result column="note_receiver" property="noteReceiver"/>
 		<result column="note_title" property="noteTitle"/>
 		<result column="note_content" property="noteContent"/>
 		<result column="note_writedate" property="noteWritedate"/>
@@ -30,4 +30,25 @@
 	INSERT INTO note(note_sender, note_receiver, note_title, note_content)
 	VALUES (#{noteSender}, #{noteReceiver}, #{noteTitle}, #{noteContent})
 	</insert>
+	
+	<!-- sender||receiver==회원 쪽지 전체보기 -->
+	<select id="viewAllNote" parameterType="int" resultMap="noteMap">
+	SELECT *
+	FROM note
+	WHERE note_sender=#{userCode} || note_receiver=#{userCode}
+	</select>
+	
+	<!-- sender==회원 쪽지 전체보기 -->
+	<select id="viewAllBySender" parameterType="int" resultMap="noteMap"> 
+	SELECT * 
+	FROM note
+	WHERE note_sender=#{noteSender}
+	</select>
+	
+	<!-- receiver==회원 쪽지 전체보기  -->
+	<select id="viewAllByReceiver" parameterType="int" resultMap="noteMap"> 
+	SELECT * 
+	FROM note
+	WHERE note_receiver=#{noteReceiver}
+	</select>
 </mapper>

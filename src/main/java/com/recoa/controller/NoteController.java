@@ -2,10 +2,12 @@ package com.recoa.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
@@ -53,14 +55,22 @@ public class NoteController {
 		vo.setNoteReceiver(receiverCode);
 		service.registerNote(vo);
 		NoteFile files = new NoteFile();
-		if(vo.getFile()!=null&&vo.getFile().get(0).getOriginalFilename()!="") {
-			for(int i=0; i<vo.getFile().size(); i++) {
-				String url = fileUpload(vo.getFile().get(i));
+		if(vo.getNoteFile()!=null&&vo.getNoteFile().get(0).getOriginalFilename()!="") {
+			for(int i=0; i<vo.getNoteFile().size(); i++) {
+				String url = fileUpload(vo.getNoteFile().get(i));
 				files.setNoteFileUrl(url);
 				files.setNoteCode(vo.getNoteCode());
 				service.registerNoteFile(files);
 			}
 		}
-		return "guest/myGuest";
+		return "note/viewAllNote";
+	}
+	
+	// 쪽지 전체보기
+	@GetMapping("/viewAllNote")
+	public String viewAllNote(Model model, int noteSender) {
+		List<Note> list = service.viewAllNote(noteSender);
+		model.addAttribute("list", list);
+		return "note/viewAllNote";
 	}
 }

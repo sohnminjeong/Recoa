@@ -31,13 +31,16 @@
     height: 35px;
     border: 1px solid black;
     border-radius: 10px;
-    align-content: center;
-    text-align: center;
-    font-size: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     margin-left: 7px;
-	
+	font-family: 'SDMiSaeng';
+	font-size : 1rem;
 	span:hover{
 		color : black;
+		cursor: pointer;
 	}
 }
 
@@ -46,8 +49,18 @@
     height: 60%;
     border: 1px solid black;
     border-radius: 10px;
+    
     position: fixed;
-    left: 25%;
+    margin: 0 auto;
+    left:26%;
+    top: 0px;
+    bottom: 0;
+    margin-top: auto;
+    margin-bottom: auto;
+    
+    /*position: fixed;
+    left: 25%;*/
+    
     box-shadow: rgba(0, 0, 0, 0.5) 0 0 0 9999px;
     background-color: black;
     color: white;
@@ -81,7 +94,7 @@
     		
     		input{
     			font-family: 'SDMiSaeng';
-    			font-size: 1rem;
+    			font-size: 1.2rem;
     		}
         }
         #innerContents{
@@ -102,7 +115,7 @@
     			font-family: 'SDMiSaeng';
                 font-size: 1.4rem;
 		    }
-		    #file{
+		    #noteFile{
 		    	margin-bottom:10px;
 		    	font-family: 'SDMiSaeng';
                 font-size: 0.8rem;
@@ -128,7 +141,7 @@
 <body>
 <sec:authentication property="principal" var="user" />
 	<div id="noteSideBar">
-		<span id="noteBtn">쪽지 보내기</span><br>
+		<span id="noteBtn">쪽지 보내기</span>
 		<span>채팅 하기</span>
 	</div>
 	<div id="noteWrite" style="display:none">
@@ -148,11 +161,11 @@
 				<div id="innerContents">
 					<input type="text" id="noteTitle" name="noteTitle" placeholder="제목"> 
 					<textarea placeholder="내용" name="noteContent" id="noteContent"></textarea>
-					<input type="file" id="file" name="file" multiple="multiple" onchange="fileRegi(event)" >
+					<input type="file" id="noteFile" name="noteFile" multiple="multiple" onchange="fileRegi(event)" >
 				</div>
 				<div id="innerBtn">
 					<button>쪽지 전송</button>
-					<button type="button" onclick="location.href='/viewOneBoardFree?freeCode=<%=param2%>'">쪽지 취소</button>
+					<button type="button" onclick="location.href=location.href">쪽지 취소</button>
 				</div>
 				
 			</form>
@@ -163,11 +176,11 @@
 		$('#noteWrite').css({"display":"block"});
 	})
 	
-	const file = document.querySelector('#file');
+	const file = document.querySelector('#noteFile');
 	function fileRegi(event){
 		if(event.target.files.length>=4){
 			alert("최대 파일 첨부 갯수는 3개입니다.");
-			$("#file").val("");
+			$("#noteFile").val("");
 		}
 	}
 	</script>

@@ -20,7 +20,7 @@ public class Note {
 	private boolean senderDelete;
 	private boolean receiverDelete;
 	
-	private List<MultipartFile> file;
+	private List<MultipartFile> noteFile;
 	private User user;
 	private String senderNick;
 	private String receiverNick;

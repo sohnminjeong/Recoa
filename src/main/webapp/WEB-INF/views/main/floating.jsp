@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,14 +49,16 @@
 </style>
 </head>
 <body>
+<sec:authentication property="principal" var="user" />
 	<div id="floating">
-		<ul class="submenus" id="submenu11">
-			<li><a href="/"><i class="fa-solid fa-envelope"></i></a></li>
-			<li><a href="/"><i class="fa-solid fa-comments"></i></a></li>
-			<li><a href="/"><i class="fa-solid fa-bell"></i></a></li>
-		</ul>
-		<i class="fa-solid fa-tree"></i>
-		
+		<c:if test="${user!='anonymousUser'}">
+			<ul class="submenus" id="submenu11">
+				<li><a href="/viewAllNote?noteSender=${user.userCode}"><i class="fa-solid fa-envelope"></i></a></li>
+				<li><a href="/"><i class="fa-solid fa-comments"></i></a></li>
+				<li><a href="/"><i class="fa-solid fa-bell"></i></a></li>
+			</ul>
+			<i class="fa-solid fa-tree"></i>
+		</c:if>
 	</div>
 <script>
 $('.fa-tree').mouseover(function(){

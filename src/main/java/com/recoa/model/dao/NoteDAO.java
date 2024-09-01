@@ -1,5 +1,7 @@
 package com.recoa.model.dao;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -21,4 +23,10 @@ public class NoteDAO {
 	public int registerNoteFile(NoteFile vo) {
 		return session.insert("noteFileMapper.registerNoteFile", vo);
 	}
+	
+	// 쪽지 전체 보기
+	public List<Note> viewAllNote(int userCode) {
+		return session.selectList("noteMapper.viewAllNote", userCode);
+	}
+	
 }

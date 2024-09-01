@@ -131,6 +131,14 @@ table{
     bottom: 6%;
     right: 4%;
 }
+#nickName:hover{
+	color : green;
+	cursor:pointer;
+}
+#nickNameNote{
+	display: flex;
+    justify-content: center;
+}
 </style>
 </head>
 <body>
@@ -174,7 +182,16 @@ table{
 					<tr>
 						<td>${paging.total - (paging.page - 1) * 10 - status.index}</td>
 						<td><a href="/viewOneBoardFree?freeCode=${item.freeCode}">${item.freeTitle}</a></td>
-						<td>${item.user.userNickname}</td>
+						<td id="nickNameNote"><span id="nickName">${item.user.userNickname}</span>
+							<!-- 
+								<div id="noteJsp" style="display : none">
+									<jsp:include page="../note/noteSideBar.jsp" flush="true">
+										<jsp:param value="${item.user.userNickname}" name="param1"/>
+										<jsp:param value="${item.freeCode}" name="param2"/>
+									</jsp:include>
+								</div>							
+							 -->
+						</td>
 						<td>
 							<fmt:formatDate value="${item.freeWritedate}" pattern="yy-MM-dd HH:mm" />
 						</td>
@@ -245,5 +262,11 @@ table{
 <div id="userFloating">
 	<%@ include file="../main/floating.jsp" %>
 </div>
+<script>
+/*
+$('#nickName').click(function(){
+	$('#noteJsp').css({"display":"block"});
+})*/
+</script>
 </body>
 </html>
