@@ -87,6 +87,10 @@
 			margin-right: 10px;
 		}
 		
+		#writeAdr{
+			font-family: 'GangwonEdu_OTFBoldA';
+		}
+		
 	}
 	#noticedesc{
 		display: flex;
@@ -101,6 +105,15 @@
 	p{
 		font-family: 'GangwonEdu_OTFBoldA';
 		font-size: 1.3rem;
+	}
+	#images{
+		margin-top:30px;
+		height:200px;
+		img{
+			width:200px;
+			height:200px;
+			margin:0 10px;
+		}
 	}
 }
 </style>
@@ -127,7 +140,7 @@
 					<img src="resources/images/user/default_profile.png" class="userImg"/>
 				</c:when>
 				<c:otherwise>
-					<img src="/recoaImg/user/${vo.user.userImgUrl}" class="userImg"/>
+					<img src="/recoaImg/user/${notice.user.userImgUrl}" class="userImg"/>
 				</c:otherwise>
 			</c:choose>
     		<div>
@@ -143,6 +156,11 @@
     </div>
     <div id="noticeContent">
     	<p>${notice.noticeContent}</p>
+    	<div id="images">
+    		<c:forEach items="${images}" var="img" varStatus="status">
+    			<img src="/recoaImg/boardNotice/${img.noticeImgUrl}"/>
+    		</c:forEach>
+    	</div>
     </div>
     
     </div>
