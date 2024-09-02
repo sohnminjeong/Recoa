@@ -1,7 +1,6 @@
 package com.recoa.model.vo;
 
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -21,5 +20,4 @@ public class BoardNotice {
 	private int bookmarkCount;
 	private List<MultipartFile> files;
 	private User user;
-	
 }

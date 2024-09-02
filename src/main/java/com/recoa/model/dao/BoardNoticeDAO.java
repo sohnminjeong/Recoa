@@ -10,6 +10,7 @@ import com.recoa.model.vo.BoardNotice;
 import com.recoa.model.vo.BoardNoticeImg;
 import com.recoa.model.vo.BoardNoticePaging;
 import com.recoa.model.vo.NoticeBookmark;
+import com.recoa.model.vo.User;
 
 @Repository
 public class BoardNoticeDAO {
@@ -36,6 +37,7 @@ public class BoardNoticeDAO {
 	public List<BoardNotice> viewNoticeList(BoardNoticePaging paging) {
 		return session.selectList("BoardNotice.noticeList", paging);
 	}
+	
 	// 리스트 total
 	public int viewNoticeListTotal() {
 		return session.selectOne("BoardNotice.noticeListTotal");
@@ -43,8 +45,12 @@ public class BoardNoticeDAO {
 	
 	// 공지 하나 보기
 	public BoardNotice viewNotice(int noticeCode) {
-		System.out.println("noticeCode : " + noticeCode);
 		return session.selectOne("BoardNotice.noticeOne", noticeCode);
+	}
+	
+	// 공지 작성자 조회
+	public User noticeWriter(int noticeCode) {
+		return session.selectOne("BoardNotice.noticeWriter", noticeCode);
 	}
 	
 	// 조회수 증가

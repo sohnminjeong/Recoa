@@ -34,7 +34,7 @@
 	SELECT A.*, B.user_nickname 
 	FROM board_free as A 
 	JOIN user as B 
-	USING(user_code)
+	USING (user_code)
 	<where>
 		<choose>
 			<when test="select=='allFind'">

@@ -88,9 +88,13 @@
 			border-radius: 50%;
 			margin-right: 10px;
 		}
-		
-		#writerAdr{
+		#writerdesc{
+			display: flex;
+			flex-direction: column;
 			font-family: 'GangwonEdu_OTFBoldA';
+		}
+		#writerNickname{
+			margin-top: 3px;
 		}
 		
 	}
@@ -159,17 +163,25 @@
     <div id="desc">
     	<div id="writer">
     		<c:choose>
-				<c:when test="${vo.user.userImgUrl==null}">
+				<c:when test="${notice.user.userImgUrl==null}">
 					<img src="resources/images/user/default_profile.png" class="userImg"/>
 				</c:when>
 				<c:otherwise>
 					<img src="/recoaImg/user/${notice.user.userImgUrl}" class="userImg"/>
 				</c:otherwise>
 			</c:choose>
-    		<div>
+    		<div id="writerdesc">
 	    		<span id="writerAdr">관리자</span>
-				<span id="writerNickname">${notice.user.userNickname}</span>
+				<span id="writerNickname">${notice.user.userNickname}
+				<i class="fa-solid fa-caret-right"></i>
+				</span>
     		</div>
+    		<div id="noteJsp" style="display : none">
+				<jsp:include page="../note/noteSideBar.jsp" flush="true">
+					<jsp:param value="${notice.user.userNickname}" name="param1"/>
+					<jsp:param value="${notice.noticeCode}" name="param2"/>
+				</jsp:include>
+			</div>
     	</div>
     	<div id="noticedesc">
     		<p><fmt:formatDate value="${notice.noticeWritedate}" pattern="yy-MM-dd HH:mm"/></p>&nbsp;
@@ -222,6 +234,10 @@ $(document).ready(function() {
         });
     });
 });
+
+$('.fa-caret-right').click(function(){
+	$('#noteJsp').css({"display":"block"});
+})
 </script>
 </body>
 </html>

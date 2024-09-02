@@ -27,6 +27,7 @@ import com.recoa.model.vo.BoardNotice;
 import com.recoa.model.vo.BoardNoticeImg;
 import com.recoa.model.vo.BoardNoticePaging;
 import com.recoa.model.vo.NoticeBookmark;
+import com.recoa.model.vo.User;
 import com.recoa.service.BoardNoticeService;
 
 
@@ -65,7 +66,7 @@ public class BoardNoticeController {
 		List<BoardNotice> list = service.viewNoticeList(paging);
 		model.addAttribute("list", list);
 		model.addAttribute("paging", paging);
-		
+		System.out.println("list : " + list);
 		// 북마크 개수 
 		Map<Integer, Integer> bookmarkCount = new HashMap<>();
 	    

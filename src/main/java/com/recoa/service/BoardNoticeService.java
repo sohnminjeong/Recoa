@@ -14,6 +14,7 @@ import com.recoa.model.vo.BoardNotice;
 import com.recoa.model.vo.BoardNoticeImg;
 import com.recoa.model.vo.BoardNoticePaging;
 import com.recoa.model.vo.NoticeBookmark;
+import com.recoa.model.vo.User;
 
 @Service
 public class BoardNoticeService {
@@ -28,7 +29,6 @@ public class BoardNoticeService {
 	
 	// 공지 작성
 	public int registerNotice(BoardNotice notice) {
-		
 		return dao.registerNotice(notice);
 	}
 	
@@ -50,11 +50,7 @@ public class BoardNoticeService {
 	
 	// 공지 하나 보기
 	public BoardNotice viewNotice(int noticeCode) {
-		BoardNotice vo = dao.viewNotice(noticeCode);
-		vo.setUser(dao.viewNotice(noticeCode).getUser());
-		System.out.println("user : " + dao.viewNotice(noticeCode).getUser());
-		System.out.println("vo : " + vo);
-		return vo;
+		return dao.viewNotice(noticeCode);
 	}
 	
 	// 조회수 증가

@@ -92,7 +92,6 @@ table{
 	width:70%;
 	height:60%;
 	
-	font-size : 1.2rem;
 	thead{
 		height: 8%;
    		border-bottom: 1px solid black;
@@ -100,10 +99,11 @@ table{
 	}
 	tr{
 		display: grid;
-        grid-template-columns: 0.5fr 2fr 1fr 1fr 0.5fr;
+        grid-template-columns: 0.5fr 2fr 1fr 0.5fr 0.5fr 0.5fr;
         width: 100%;
         text-align: center;
         font-family: 'GangwonEdu_OTFBoldA';
+        font-size: 1.2rem;
        	a:hover{
        		color : gray;
        	}
@@ -115,6 +115,7 @@ table{
         grid-template-rows: repeat(10, 1fr);
         margin-top: 15px;
         font-family: 'GangwonEdu_OTFBoldA';
+        font-size: 1.2rem;
 	}
 }
 
@@ -179,6 +180,7 @@ table{
 						<td>번호</td>
 						<td>제목</td>
 						<td>작성일</td>
+						<td>작성자</td>
 						<td>조회수</td>
 						<td>북마크</td>
 					</tr>
@@ -187,14 +189,17 @@ table{
 					<c:forEach items="${list}" var="item" varStatus="status">
 						<tr>
 							<td>${paging.total - (paging.page - 1) * 10 - status.index}</td>
+							
 							<td>
 								<a href="/viewNotice?noticeCode=${item.noticeCode}">
 					                ${item.noticeTitle}
 					            </a>
 							</td>
+							
 							<td>
 								<fmt:formatDate value="${item.noticeWritedate}" pattern="yy-MM-dd HH:mm" />
 							</td>
+							<td>${item.user.userNickname}</td>
 							<td>${item.noticeView}</td>
 							<td>${bookmarkCount[item.noticeCode]}</td>
 						</tr>

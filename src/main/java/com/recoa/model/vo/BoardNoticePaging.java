@@ -5,8 +5,10 @@ import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor
 public class BoardNoticePaging {
-		private int userCode;
-	   private String keyword;
+	private int userCode;
+	private int noticeCode;
+	
+	private String keyword;
 	   private String select;
 	   
 	   private int page = 1; // 현재 페이지
