@@ -83,6 +83,11 @@ h3{
 	padding-top: 5px;
 	font-family: 'GangwonEdu_OTFBoldA';
 }
+#regist button:hover{
+	background-color: black;
+	color: white;
+	cursor: pointer;
+}
 
 table{
 	width:70%;
@@ -161,9 +166,14 @@ table{
 		</div>
 		
 		<div id="regist">
-			<c:if test="${user!='anonymousUser'}">
-				<button type="button" onclick="location.href='/registerNotice'">공지 작성</button>
-			</c:if>
+			<c:choose>
+				<c:when test="${user!='anonymousUser' && user.userAdmin == 'admin'}">
+					<button type="button" onclick="location.href='/registerNotice'">공지 작성</button>
+				</c:when>
+				<c:otherwise>
+					<button type="button" style="visibility: hidden;"></button>
+				</c:otherwise>
+			</c:choose>
 		</div>
 			<table>
 				<thead>
@@ -188,7 +198,7 @@ table{
 								<fmt:formatDate value="${item.noticeWritedate}" pattern="yy-MM-dd HH:mm" />
 							</td>
 							<td>${item.noticeView}</td>
-							<td>북마크수</td>
+							<td>${bookmarkCount[item.noticeCode]}</td>
 						</tr>
 					</c:forEach>
 				</tbody>

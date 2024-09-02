@@ -17,6 +17,7 @@
 		<typeAlias type="com.recoa.model.vo.BoardNotice" alias="BoardNotice" />
 		<typeAlias type="com.recoa.model.vo.BoardNoticeImg" alias="BoardNoticeImg"/>
 		<typeAlias type="com.recoa.model.vo.BoardNoticePaging" alias="BoardNoticePaging"/>
+		<typeAlias type="com.recoa.model.vo.NoticeBookmark" alias="NoticeBookmark"/>
 		<typeAlias type="com.recoa.model.vo.Utillbill" alias="Utillbill"/>
 		<typeAlias type="com.recoa.model.vo.Note" alias="Note"/>
 		<typeAlias type="com.recoa.model.vo.NoteFile" alias="NoteFile"/>
@@ -33,6 +34,7 @@
 		<mapper resource="mappers/freeLike-mapper.xml"/>
 		<mapper resource="mappers/boardNotice-mapper.xml"/>
 		<mapper resource="mappers/boardNoticeImg-mapper.xml"/>
+		<mapper resource="mappers/noticeBookmark-mapper.xml"/>
 		<mapper resource="mappers/utillbill-mapper.xml"/>
 		<mapper resource="mappers/note-mapper.xml"/>
 		<mapper resource="mappers/noteFile-mapper.xml"/>

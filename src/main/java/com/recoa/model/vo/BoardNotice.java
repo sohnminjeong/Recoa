@@ -18,7 +18,7 @@ public class BoardNotice {
 	private Timestamp noticeWritedate;
 	private int noticeView;
 	
-	//private int bookmark;
+	private int bookmarkCount;
 	private List<MultipartFile> files;
 	private User user;
 	

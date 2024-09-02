@@ -1,0 +1,34 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="NoticeBookmark">
+	<resultMap type="NoticeBookmark" id="NoticeBookmarkMap">
+		<id property="bookmarkCode" column="bookmark_code"/>
+		<result property="userCode" column="user_code"/>	
+		<result property="noticeCode" column="notice_code"/>
+	</resultMap>
+	
+	<!-- 북마크 등록하기 -->
+	<insert id="addBookmark" parameterType="NoticeBookmark" useGeneratedKeys="true" keyColumn="bookmark_code" keyProperty="bookmarkCode">
+		INSERT INTO notice_bookmark(user_code, notice_code)
+		VALUES (#{userCode}, #{noticeCode})
+	</insert>
+	
+	<!-- 북마크 취소하기 -->
+	<delete id="delBookmark" parameterType="NoticeBookmark">
+		DELETE FROM notice_bookmark
+		WHERE user_code=#{userCode} AND notice_code=#{noticeCode}
+	</delete>
+	
+	<!-- 북마크 갯수 조회하기 -->
+	<select id="countBookmark" parameterType="int" resultType="int">
+		SELECT count(*)
+		FROM notice_bookmark
+		WHERE notice_code=#{noticeCode}
+	</select>
+	
+	<!-- 로그인한 회원의 해당 북마크 여부 확인 -->
+	<select id="checkBookmark" parameterType="NoticeBookmark" resultType="int">
+		SELECT count(*)
+		FROM notice_bookmark
+		WHERE notice_code=#{noticeCode} AND user_code=#{userCode}
+	</select>
+	</mapper>

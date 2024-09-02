@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
@@ -18,11 +20,13 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.recoa.model.vo.BoardNotice;
 import com.recoa.model.vo.BoardNoticeImg;
 import com.recoa.model.vo.BoardNoticePaging;
+import com.recoa.model.vo.NoticeBookmark;
 import com.recoa.service.BoardNoticeService;
 
 
@@ -50,8 +54,6 @@ public class BoardNoticeController {
 	public String boardNoticeList(@RequestParam(value = "page", defaultValue = "1") int page,
 								Model model, String select, String keyword) {
 		
-		System.out.println("page : " + page);
-		
 		int total = service.noticeListTotal();
 		BoardNoticePaging paging = new BoardNoticePaging(page, total);
 		paging.setSelect(select);
@@ -59,13 +61,21 @@ public class BoardNoticeController {
 		
 		int offset = (page - 1) * paging.getLimit();
 		paging.setOffset(offset); 
-		System.out.println("offset : " + paging.getOffset());
 		
 		List<BoardNotice> list = service.viewNoticeList(paging);
 		model.addAttribute("list", list);
 		model.addAttribute("paging", paging);
 		
-		// 리스트 출력.. (페이징 처리도)
+		// 북마크 개수 
+		Map<Integer, Integer> bookmarkCount = new HashMap<>();
+	    
+	    for (BoardNotice notice : list) {
+	        int count = service.countBookmark(notice.getNoticeCode());
+	        bookmarkCount.put(notice.getNoticeCode(), count);
+	    }
+	    
+	    model.addAttribute("bookmarkCount", bookmarkCount);
+	    
 		return "boardNotice/boardNoticeViewAll";
 	}
 	
@@ -100,7 +110,7 @@ public class BoardNoticeController {
 	
 	// 공지 한 개 보기
 	@GetMapping("/viewNotice")
-	public String viewNotice(int noticeCode, Model model, HttpSession session) {
+	public String viewNotice(int noticeCode, Model model, HttpSession session, Principal principal) {
 		
 		String sessionKey = "viewedNotice_" + noticeCode;
 		
@@ -109,16 +119,35 @@ public class BoardNoticeController {
 	        service.addViewCount(noticeCode);  				// 조회수 증가
 	        session.setAttribute(sessionKey, true);
 	    }
+	    
+	    int isBookmarked = 0;
+	    
+	    // 북마크 여부 확인
+	    // 로그인 된 회원의 경우
+	    if(principal != null) {
+	    	String userId = principal.getName(); 
+	        int userCode = service.findUserCode(userId);
+	        
+	        NoticeBookmark vo = new NoticeBookmark();
+	        vo.setUserCode(userCode);
+	        vo.setNoticeCode(noticeCode);
+	        
+	        isBookmarked = service.checkBookmark(vo);
+	        model.addAttribute("isBookmarked", isBookmarked);
+	    }
+	    
+	    // 북마크 갯수 확인
+	    int count = service.countBookmark(noticeCode);
 		
 		BoardNotice notice = service.viewNotice(noticeCode);
+		notice.setBookmarkCount(count);
+		
 		List<BoardNoticeImg> images = service.noticeImg(noticeCode);
 		model.addAttribute("notice", notice);
 		model.addAttribute("images", images);
 		
 		return "boardNotice/viewBoardNotice";
 	}
-	
-
 	
 	// 공지 삭제하기
 	@GetMapping("/deleteNotice")
@@ -135,4 +164,30 @@ public class BoardNoticeController {
 		
 		return "redirect:/boardNoticeList";
 	}
+	
+	/*----- 북마크 -----*/
+	
+	// 북마크 생성, 삭제
+	@PostMapping("/updateBookmark")
+	@ResponseBody
+	public String updateBookmark(@RequestParam("noticeCode") int noticeCode, Principal principal) {
+	    String userId = principal.getName();
+	       
+	    int userCode = service.findUserCode(userId);
+	        
+	    NoticeBookmark vo = new NoticeBookmark();
+	    vo.setUserCode(userCode);
+	    vo.setNoticeCode(noticeCode);
+	        
+	    int isBookmarked = service.checkBookmark(vo);
+
+	    if (isBookmarked == 1) {
+	        service.delBookmark(vo);
+	        return "deleted";
+	    } else {
+	        service.addBookmark(vo);
+	        return "added";
+	    }
+	}
+
 }

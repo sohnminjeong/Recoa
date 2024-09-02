@@ -11,6 +11,7 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="../../../resources/css/reset.css" />
 <script src="https://kit.fontawesome.com/cbb1359000.js" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <style>
 @font-face {
     font-family: 'GangwonEdu_OTFBoldA';
@@ -80,7 +81,7 @@
 	justify-content: space-between;
 	#writer{
 		display: flex;
-		
+		color: gray;
 		img{
 			width: 30px;
 			height: 30px;
@@ -88,7 +89,7 @@
 			margin-right: 10px;
 		}
 		
-		#writeAdr{
+		#writerAdr{
 			font-family: 'GangwonEdu_OTFBoldA';
 		}
 		
@@ -96,9 +97,14 @@
 	#noticedesc{
 		display: flex;
 		flex-direction: row;
-		background-color: pink;
 		font-family: 'GangwonEdu_OTFBoldA';
     	font-wieght:light;
+    	color: gray;
+	}
+	#noticedesc i{
+	font-size: 0.7rem;
+	font-weight: light;
+	margin-right: 5px;
 	}
 }
 #noticeContent{
@@ -120,6 +126,7 @@
 	}
 }
 </style>
+
 </head>
 <body>
 <sec:authentication property="principal" var="user" />
@@ -131,9 +138,16 @@
 	<div id="topBar">
 		<h3>${notice.noticeTitle}</h3>
 		<div id="buttons">
-			<button type="button" onclick="location.href=''">수정</button>
-			<button type="button" onclick="location.href='/deleteNotice?noticeCode=${notice.noticeCode}'">삭제</button>
-			<button type="button" onclick="location.href='/boardNoticeList'">목록</button>
+		<c:choose>
+			<c:when test="${user == 'anonymousUser' || user.userCode != notice.userCode}">
+				<button type="button" onclick="location.href='/boardNoticeList'">목록</button>
+			</c:when>
+			<c:otherwise>
+				<button type="button" onclick="location.href='/boardNoticeList'">목록</button>
+				<button type="button" onclick="location.href=''">수정</button>
+				<button type="button" onclick="location.href='/deleteNotice?noticeCode=${notice.noticeCode}'">삭제</button>
+			</c:otherwise>
+		</c:choose>
 		</div>
 	</div>
     <div id="desc">
@@ -154,20 +168,19 @@
     	<div id="noticedesc">
     		<p><fmt:formatDate value="${notice.noticeWritedate}" pattern="yy-MM-dd HH:mm"/></p>&nbsp;
 			<p><i class="fa-solid fa-eye"></i>${notice.noticeView}</p>&nbsp;
+			
 			<c:choose>
 				<c:when test="${user=='anonymousUser'}">
-					비회원
+					<i class="fa-regular fa-bookmark" id="bookmarkIcon"></i>
 				</c:when>
-				<!-- 북마크 안 누른 회원일 때 -->
-				<c:when test="${user!='anonymousUser'}">
-					<i class="fa-regular fa-bookmark"></i>
+				<c:when test="${isBookmarked == 0}">
+					<i class="fa-regular fa-bookmark" id="bookmarkIcon"></i>
 				</c:when>
-				<!-- 북마크 누른 회원일 때 -->
 				<c:otherwise>
-					<i class="fa-solid fa-bookmark"></i>
+					<i class="fa-solid fa-bookmark" id="bookmarkIcon"></i>
 				</c:otherwise>
 			</c:choose>
-			<p>북마크 수</p>
+			<p>${notice.bookmarkCount}</p>
     	</div>
     </div>
     <div id="noticeContent">
@@ -181,5 +194,25 @@
     
     </div>
 </div>
+<script>
+$(document).ready(function() {
+    $("#bookmarkIcon").click(function() {
+        var noticeCode = ${notice.noticeCode};
+        $.post("/updateBookmark", { noticeCode: noticeCode }, function(data) {
+        	if (data === "added") {
+                $("#bookmarkIcon").removeClass("far").addClass("fas");
+                location.reload(); // 페이지 새로고침
+            } else if (data === "deleted") {
+                $("#bookmarkIcon").removeClass("fas").addClass("far");
+                alert("북마크가 삭제되었습니다.");
+                location.reload(); // 페이지 새로고침
+            } else {
+                alert("로그인이 필요합니다.");
+                window.location.href = "/login"; // 로그인 페이지로 이동
+            }
+        });
+    });
+});
+</script>
 </body>
 </html>

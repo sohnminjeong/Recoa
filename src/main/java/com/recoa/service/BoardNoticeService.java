@@ -13,12 +13,18 @@ import com.recoa.model.vo.BoardFreePaging;
 import com.recoa.model.vo.BoardNotice;
 import com.recoa.model.vo.BoardNoticeImg;
 import com.recoa.model.vo.BoardNoticePaging;
+import com.recoa.model.vo.NoticeBookmark;
 
 @Service
 public class BoardNoticeService {
 
 	@Autowired
 	private BoardNoticeDAO dao;
+	
+	// userId로 userCode 조회
+	public int findUserCode(String userId) {
+		return dao.findUserCode(userId);
+	}
 	
 	// 공지 작성
 	public int registerNotice(BoardNotice notice) {
@@ -44,7 +50,11 @@ public class BoardNoticeService {
 	
 	// 공지 하나 보기
 	public BoardNotice viewNotice(int noticeCode) {
-		return dao.viewNotice(noticeCode);
+		BoardNotice vo = dao.viewNotice(noticeCode);
+		vo.setUser(dao.viewNotice(noticeCode).getUser());
+		System.out.println("user : " + dao.viewNotice(noticeCode).getUser());
+		System.out.println("vo : " + vo);
+		return vo;
 	}
 	
 	// 조회수 증가
@@ -65,5 +75,26 @@ public class BoardNoticeService {
 	// 공지 이미지 삭제하기
 	public int deleteImg(int noticeCode) {
 		return dao.deleteImg(noticeCode);
+	}
+	
+	/* ----- 북마크 ----- */
+	// 1. 북마크 생성
+	public int addBookmark(NoticeBookmark bookmark) {
+		return dao.addBookmark(bookmark);
+	}
+	
+	// 2. 북마크 취소
+	public int delBookmark(NoticeBookmark bookmark) {
+		return dao.delBookmark(bookmark);
+	}
+	
+	// 3. 북마크 수 카운트
+	public int countBookmark(int noticeCode) {
+		return dao.countBookmark(noticeCode);
+	}
+	
+	// 4. 북마크 여부 확인
+	public int checkBookmark(NoticeBookmark bookmark) {
+		return dao.checkBookmark(bookmark);
 	}
 }

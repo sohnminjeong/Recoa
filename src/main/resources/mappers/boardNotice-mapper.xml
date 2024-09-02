@@ -90,4 +90,11 @@
 		DELETE FROM board_notice
 		WHERE notice_code=#{noticeCode}
 	</delete>
+	
+	<!-- id로 userCode 조회 -->
+	<select id="findUserCode" parameterType="String" resultType="int">
+		SELECT user_code
+		FROM user
+		WHERE user_id = #{userId}
+	</select>
 </mapper>
