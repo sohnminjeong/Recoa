@@ -78,13 +78,15 @@ table{
 		height: 8%;
    		border-bottom: 1px solid black;
    		color : gray;
+   		
 	}
 	tr{
 		display: grid;
         grid-template-columns: 0.5fr 2fr 1fr 1fr 0.5fr;
         width: 100%;
         text-align: center;
-        
+        font-family: 'GangwonEdu_OTFBoldA';
+        font-size : 1.2rem;
        	a:hover{
        		color : gray;
        	}
@@ -183,14 +185,7 @@ table{
 						<td>${paging.total - (paging.page - 1) * 10 - status.index}</td>
 						<td><a href="/viewOneBoardFree?freeCode=${item.freeCode}">${item.freeTitle}</a></td>
 						<td id="nickNameNote"><span id="nickName">${item.user.userNickname}</span>
-							<!-- 
-								<div id="noteJsp" style="display : none">
-									<jsp:include page="../note/noteSideBar.jsp" flush="true">
-										<jsp:param value="${item.user.userNickname}" name="param1"/>
-										<jsp:param value="${item.freeCode}" name="param2"/>
-									</jsp:include>
-								</div>							
-							 -->
+							
 						</td>
 						<td>
 							<fmt:formatDate value="${item.freeWritedate}" pattern="yy-MM-dd HH:mm" />

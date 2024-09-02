@@ -136,41 +136,79 @@
         
     }
 }
+#noteWriteInnerNo{
+	display: flex;
+    flex-direction: column;
+    justify-content:center;
+    height: 100%;
+    span{
+    	font-family: 'SDMiSaeng';
+    	font-size: 1.2rem;
+    	text-align: center;
+        margin-bottom: 30px;
+    }
+    div{
+    	display:flex;
+    	justify-content: center;
+    	button{
+    		height: 75%;
+   			margin: 0 5px;
+   			font-family: 'SDMiSaeng';
+  			font-size: 1.2rem;
+            padding-bottom: 5px;
+    	}
+    }
+}
 </style>
 </head>
 <body>
 <sec:authentication property="principal" var="user" />
-	<div id="noteSideBar">
-		<span id="noteBtn">쪽지 보내기</span>
-		<span>채팅 하기</span>
-	</div>
+	
+		<div id="noteSideBar">
+			<span id="noteBtn">쪽지 보내기</span>
+			<span>채팅 하기</span>
+		</div>
+	
 	<div id="noteWrite" style="display:none">
-		<div id="noteWriteInner">
-			<h3>쪽지 보내기</h3>
-			<form action="/registerNote" method="post" enctype="multipart/form-data">
-				<div id="person">
-					<div>
-						<span>보내는 사람</span>
-						<input type="text" id="senderNick" name="senderNick" value="${user.userNickname}">
+		<c:if test="${user!='anonymousUser'}">
+			<div id="noteWriteInner">
+				<h3>쪽지 보내기</h3>
+				<form action="/registerNote" method="post" enctype="multipart/form-data">
+					<div id="person">
+						<div>
+							<span>보내는 사람</span>
+							<input type="text" id="senderNick" name="senderNick" value="${user.userNickname}">
+						</div>
+						<div>
+							<span>받는 사람</span>
+							<input type="text" id="receiverNick" name="receiverNick" value="<%=param1%>">
+						</div>
 					</div>
-					<div>
-						<span>받는 사람</span>
-						<input type="text" id="receiverNick" name="receiverNick" value="<%=param1%>">
+					<div id="innerContents">
+						<input type="text" id="noteTitle" name="noteTitle" placeholder="제목"> 
+						<textarea placeholder="내용" name="noteContent" id="noteContent"></textarea>
+						<input type="file" id="noteFile" name="noteFile" multiple="multiple" onchange="fileRegi(event)" >
 					</div>
-				</div>
-				<div id="innerContents">
-					<input type="text" id="noteTitle" name="noteTitle" placeholder="제목"> 
-					<textarea placeholder="내용" name="noteContent" id="noteContent"></textarea>
-					<input type="file" id="noteFile" name="noteFile" multiple="multiple" onchange="fileRegi(event)" >
-				</div>
-				<div id="innerBtn">
-					<button>쪽지 전송</button>
-					<button type="button" onclick="location.href=location.href">쪽지 취소</button>
+					<div id="innerBtn">
+						<button>쪽지 전송</button>
+						<button type="button" onclick="location.href=location.href">쪽지 취소</button>
+					</div>
+				</form>
+			</div>
+		</c:if>
+		<c:if test="${user=='anonymousUser'}">
+			<div id="noteWriteInnerNo">
+				<span>비회원의 경우, 로그인 부탁드립니다.</span>
+				<div>
+					<button type="button" onclick="location.href='/loginUser';">로그인</button>
+					<button type="button" onclick="location.href=location.href">뒤로가기</button>
 				</div>
 				
-			</form>
-		</div>
+			</div>
+		</c:if>
 	</div>
+	
+	
 	<script>
 	$('#noteBtn').click(function(){
 		$('#noteWrite').css({"display":"block"});
