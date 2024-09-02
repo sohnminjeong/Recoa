@@ -29,6 +29,11 @@ public class NoteDAO {
 	public Note oneViewNote(int noteCode) {
 		return session.selectOne("noteMapper.oneViewNote", noteCode);
 	}
+	// 쪽지 파일 전체 보기 
+	public List<NoteFile> viewAllNoteFile(int noteCode){
+		return session.selectList("noteFileMapper.viewAllNoteFile", noteCode);
+	}
+		
 	
 	// 쪽지 전체 보기
 	public List<Note> viewAllNote(NotePaging paging) {
@@ -39,10 +44,21 @@ public class NoteDAO {
 		return session.selectOne("noteMapper.countNote", userCode);
 	}
 	
-	
-	// 쪽지 파일 전체 보기 
-	public List<NoteFile> viewAllNoteFile(int noteCode){
-		return session.selectList("noteFileMapper.viewAllNoteFile", noteCode);
+	// 보낸 쪽지함 전체 보기
+	public List<Note> viewAllBySender(NotePaging paging){
+		return session.selectList("noteMapper.viewAllBySender", paging);
 	}
+	public int countSenderNote(int userCode) {
+		return session.selectOne("noteMapper.countSenderNote", userCode);
+	}
+	
+	// 받은 쪽지함 전체 보기
+	public List<Note> viewAllByReceiver(NotePaging paging){
+		return session.selectList("noteMapper.viewAllByReceiver", paging);
+	}
+	public int countReceiverNote(int userCode) {
+		return session.selectOne("noteMapper.countReceiverNote", userCode);
+	}
+	
 	
 }

@@ -31,6 +31,11 @@ public class NoteService {
 	public Note oneViewNote(int noteCode) {
 		return dao.oneViewNote(noteCode);
 	}
+	// 쪽지 파일 전체 보기 
+	public List<NoteFile> viewAllNoteFile(int noteCode){
+		return dao.viewAllNoteFile(noteCode);
+	}
+	
 	
 	// 쪽지 전체 보기
 	public List<Note> viewAllNote(NotePaging paging) {
@@ -41,9 +46,22 @@ public class NoteService {
 	public int total(int userCode) {
 		return dao.total(userCode);
 	}
-
-	// 쪽지 파일 전체 보기 
-	public List<NoteFile> viewAllNoteFile(int noteCode){
-		return dao.viewAllNoteFile(noteCode);
+	
+	// 보낸 쪽지함 전체 보기
+	public List<Note> viewAllBySender(NotePaging paging){
+		paging.setOffset(paging.getLimit()*(paging.getPage()-1));
+		return dao.viewAllBySender(paging);
+	}
+	public int countSenderNote(int userCode) {
+		return dao.countSenderNote(userCode);
+	}
+	
+	// 받은 쪽지함 전체 보기
+	public List<Note> viewAllByReceiver(NotePaging paging){
+		paging.setOffset(paging.getLimit()*(paging.getPage()-1));
+		return dao.viewAllByReceiver(paging);
+	}
+	public int countReceiverNote(int userCode) {
+		return dao.countReceiverNote(userCode);
 	}
 }

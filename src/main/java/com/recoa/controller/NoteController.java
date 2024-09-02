@@ -65,17 +65,16 @@ public class NoteController {
 				service.registerNoteFile(files);
 			}
 		}
-		return "note/viewAllNote";
+		
+		return "redirect:/viewAllNote?userCode="+vo.getNoteSender();
 	}
 	
 	// 쪽지 전체보기
 	@GetMapping("/viewAllNote")
-	public String viewAllNote(int userCode, Model model, @RequestParam(value="page", defaultValue="1")int page, int noteSender) {
-		System.out.println("userCode : "+userCode);
+	public String viewAllNote(int userCode, Model model, @RequestParam(value="page", defaultValue="1") int page) {
 		int total = service.total(userCode);
 		NotePaging paging = new NotePaging(page, total, userCode);
 		List<Note> list = service.viewAllNote(paging);
-		System.out.println("list : " +list);
 		for(int i=0; i<list.size();i++) {
 			
 			String senderNick=userService.findUserNickname(list.get(i).getNoteSender());
@@ -93,5 +92,63 @@ public class NoteController {
 		model.addAttribute("paging",paging);
 		
 		return "note/viewAllNote";
+	}
+	
+	// 보낸 쪽지함 전체 보기
+	@GetMapping("/viewSenderNote")
+	public String viewSederNote(int userCode, Model model, @RequestParam(value="page", defaultValue="1") int page) {
+		int total = service.countSenderNote(userCode);
+		NotePaging paging = new NotePaging(page, total, userCode);
+		List<Note> list = service.viewAllBySender(paging);
+		
+		for(int i=0; i<list.size();i++) {
+			String receiverNick=userService.findUserNickname(list.get(i).getNoteReceiver());
+			list.get(i).setReceiverNick(receiverNick);
+			List<NoteFile> listFile = service.viewAllNoteFile(list.get(i).getNoteCode());
+			if(listFile.size()!=0) {
+				list.get(i).setHasNote(true);
+			}
+		}
+		
+		model.addAttribute("list", list);
+		model.addAttribute("paging",paging);
+		return "note/viewSenderNote";
+		
+	}
+	
+	// 받은 쪽지함 전체 보기
+	@GetMapping("/viewReceiverNote")
+	public String viewReceiverNote(int userCode, Model model, @RequestParam(value="page", defaultValue="1") int page) {
+		int total = service.countReceiverNote(userCode);
+		NotePaging paging = new NotePaging(page, total, userCode);
+		List<Note> list = service.viewAllByReceiver(paging);
+		
+		for(int i=0; i<list.size();i++) {
+			String senderNick=userService.findUserNickname(list.get(i).getNoteSender());
+			list.get(i).setSenderNick(senderNick);
+			List<NoteFile> listFile = service.viewAllNoteFile(list.get(i).getNoteCode());
+			if(listFile.size()!=0) {
+				list.get(i).setHasNote(true);
+			}
+		}
+		
+		model.addAttribute("list", list);
+		model.addAttribute("paging",paging);
+		return "note/viewReceiverNote";
+	}
+	
+	// 쪽지 한개 보기
+	@GetMapping("/viewOneNote")
+	public String viewOneNote(int noteCode, Model model) {
+		Note vo = service.oneViewNote(noteCode);
+		vo.setSenderNick(userService.findUserNickname(vo.getNoteSender()));
+		vo.setReceiverNick(userService.findUserNickname(vo.getNoteReceiver()));
+		List<NoteFile> files = service.viewAllNoteFile(noteCode);
+		if(files.size()!=0) {
+			model.addAttribute("files", files);
+		}
+		model.addAttribute("vo", vo);
+		
+		return "note/viewOneNote";
 	}
 }

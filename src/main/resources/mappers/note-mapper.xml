@@ -38,7 +38,7 @@
 	WHERE note_code=#{noteCode}
 	</select>
 	
-	<!-- sender||receiver==회원 쪽지 전체보기 -->
+	<!-- 회원 쪽지 전체보기 -->
 	<select id="viewAllNote" parameterType="NotePaging" resultMap="noteMap">
 	SELECT *
 	FROM note
@@ -52,17 +52,33 @@
 	WHERE note_sender=#{userCode} || note_receiver=#{userCode}
 	</select>
 	
-	<!-- sender==회원 쪽지 전체보기 -->
-	<select id="viewAllBySender" parameterType="int" resultMap="noteMap"> 
+	<!-- 보낸 쪽지 전체보기 -->
+	<select id="viewAllBySender" parameterType="NotePaging" resultMap="noteMap"> 
 	SELECT * 
 	FROM note
-	WHERE note_sender=#{noteSender}
+	WHERE note_sender=#{userCode}
+	ORDER BY note_code DESC
+	LIMIT #{offset}, #{limit}
 	</select>
 	
-	<!-- receiver==회원 쪽지 전체보기  -->
-	<select id="viewAllByReceiver" parameterType="int" resultMap="noteMap"> 
+	<select id="countSenderNote" parameterType="int" resultType="int">
+	SELECT count(*)
+	FROM note
+	WHERE note_sender=#{userCode}
+	</select>
+	
+	<!-- 받은 쪽지 전체보기  -->
+	<select id="viewAllByReceiver" parameterType="NotePaging" resultMap="noteMap"> 
 	SELECT * 
 	FROM note
-	WHERE note_receiver=#{noteReceiver}
+	WHERE note_receiver=#{userCode}
+	ORDER BY note_code DESC
+	LIMIT #{offset}, #{limit}
 	</select>
+	<select id="countReceiverNote" parameterType="int" resultType="int">
+	SELECT count(*)
+	FROM note
+	WHERE note_receiver=#{userCode}
+	</select>
+	
 </mapper>

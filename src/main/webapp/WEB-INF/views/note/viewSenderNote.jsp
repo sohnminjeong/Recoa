@@ -88,7 +88,7 @@ table{
 	}
 	tr{
 		display: grid;
-        grid-template-columns: 0.5fr 1.6fr 0.7fr 0.7fr 0.9fr 0.4fr;
+        grid-template-columns: 0.5fr 1.6fr 0.8fr 0.8fr 0.4fr;
         width: 100%;
         text-align: center;
         align-items: center;
@@ -130,7 +130,7 @@ table{
 		<%@ include file="../note/noteViewBar.jsp" %>
 	</div>
 	<div id="container">
-		<h3>내 쪽지함 _ 전체 쪽지함</h3>
+		<h3>내 쪽지함 _ 보낸 쪽지함</h3>
 		<div id="containerContent">
 			
 			<table>
@@ -138,7 +138,6 @@ table{
 					<tr>
 						<td>번호</td>
 						<td>제목</td>
-						<td>보낸 사람</td>
 						<td>받은 사람</td>
 						<td>작성일</td>
 						<td>첨부 파일</td>
@@ -149,7 +148,6 @@ table{
 						<tr>
 							<td>${paging.total-(paging.page-1)*10-status.index}</td>
 							<td><a href="/viewOneNote?noteCode=${item.noteCode}">${item.noteTitle}</a></td>
-							<td>${item.senderNick}</td>
 							<td>${item.receiverNick}</td>
 							<td>
 								<fmt:formatDate value="${item.noteWritedate}" pattern="yy-MM-dd HH:mm" />
@@ -171,12 +169,12 @@ table{
 							<c:when
 								test="${paging.startPage == 1}">
 								<a class="page-link"
-									href="/viewAllNote?page=${paging.startPage=1}&userCode=${user.userCode}">
+									href="/viewSenderNote?page=${paging.startPage=1}&userCode=${user.userCode}">
 									<i class="fa-solid fa-chevron-left"></i>
 								</a>
 							</c:when>
 							<c:otherwise>
-								<a class="page-link" href="/viewAllNote?page=${paging.startPage-1}&userCode=${user.userCode}">
+								<a class="page-link" href="/viewSenderNote?page=${paging.startPage-1}&userCode=${user.userCode}">
 									<i class="fa-solid fa-chevron-left"></i>
 								</a>
 							</c:otherwise>
@@ -185,7 +183,7 @@ table{
 					<c:forEach begin="${paging.startPage}" end="${paging.endPage}" var="page">
 						<li class="page-item">
 							<a class="page-link ${paging.page== page ? 'active' : ''}"
-								href="/viewAllNote?page=${page}&userCode=${user.userCode}" id="page_num">
+								href="/viewSenderNote?page=${page}&userCode=${user.userCode}" id="page_num">
 								${page}
 							</a>
 						</li>
@@ -196,12 +194,12 @@ table{
 							<c:when
 								test="${paging.endPage < 100}">
 								<a class="page-link"
-									href="/viewAllNote?page=${paging.endPage}&userCode=${user.userCode}">
+									href="/viewSenderNote?page=${paging.endPage}&userCode=${user.userCode}">
 									<i class="fa-solid fa-chevron-right"></i>
 								</a>
 							</c:when>
 							<c:otherwise>
-								<a class="page-link" href="/viewAllNote?page=${paging.endPage + 1}&userCode=${user.userCode}">
+								<a class="page-link" href="/viewSenderNote?page=${paging.endPage + 1}&userCode=${user.userCode}">
 									<i class="fa-solid fa-chevron-right"></i>
 								</a>
 							</c:otherwise>

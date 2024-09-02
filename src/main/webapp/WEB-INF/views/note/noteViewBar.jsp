@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,11 +38,12 @@
 </style>
 </head>
 <body>
+<sec:authentication property="principal" var="user" />
 <div id="sideBar">
 	<ul>
-		<li><a href="/viewAllNote" id="myInfo">전체 쪽지함</a></li>
-		<li><a href="/" id="">받은 쪽지함</a></li>
-		<li><a href="/" id="">보낸 쪽지함</a></li>
+		<li><a href="/viewAllNote?userCode=${user.userCode}">전체 쪽지함</a></li>
+		<li><a href="/viewReceiverNote?userCode=${user.userCode}">받은 쪽지함</a></li>
+		<li><a href="/viewSenderNote?userCode=${user.userCode}">보낸 쪽지함</a></li>
 	</ul>
 </div>
 </body>
