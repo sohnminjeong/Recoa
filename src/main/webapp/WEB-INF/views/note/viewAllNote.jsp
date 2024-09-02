@@ -62,10 +62,11 @@
 	font-family: 'GangwonEdu_OTFBoldA';
 }
 #container>#containerContent{
-	width:90%;
+	width:100%;
 	border : 2px solid black;
 	border-radius : 30px;
 	height:100%;
+	padding: 0 10px;
 	
 }
 #userFloating{
@@ -88,7 +89,7 @@ table{
 	}
 	tr{
 		display: grid;
-        grid-template-columns: 0.5fr 2fr 0.7fr 0.7fr 1.1fr;
+        grid-template-columns: 0.5fr 1.6fr 0.7fr 0.7fr 0.9fr 0.4fr;
         width: 100%;
         text-align: center;
         align-items: center;
@@ -107,6 +108,7 @@ table{
         
 	}
 }
+
 </style>
 </head>
 <body>
@@ -130,6 +132,7 @@ table{
 						<td>보낸 사람</td>
 						<td>받은 사람</td>
 						<td>작성일</td>
+						<td>첨부 파일</td>
 					</tr>
 				</thead>
 				<tbody>
@@ -137,15 +140,66 @@ table{
 						<tr>
 							<td>ㅎ</td>
 							<td>${item.noteTitle}</td>
-							<td>${item.noteSender}</td>
-							<td>${item.noteReceiver}</td>
+							<td>${item.senderNick}</td>
+							<td>${item.receiverNick}</td>
 							<td>
 								<fmt:formatDate value="${item.noteWritedate}" pattern="yy-MM-dd HH:mm" />
+							</td>
+							<td>
+								<c:if test="${item.hasNote!=false}">
+									<i class="fa-solid fa-file-lines"></i>
+								</c:if>
 							</td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
+			
+			<nav id="paging">
+			<ul class="pagination">
+				<li class="page-item ${paging.prev ? '':'disabled'}">
+					<c:choose>
+						<c:when
+							test="${paging.startPage == 1}">
+							<a class="page-link"
+								href="/viewAllNote?page=${paging.startPage=1}">
+								<i class="fa-solid fa-chevron-left"></i>
+							</a>
+						</c:when>
+						<c:otherwise>
+							<a class="page-link" href="/viewAllNote?page=${paging.startPage-1}">
+								<i class="fa-solid fa-chevron-left"></i>
+							</a>
+						</c:otherwise>
+					</c:choose>
+				</li>
+				<c:forEach begin="${paging.startPage}" end="${paging.endPage}" var="page">
+					<li class="page-item">
+						<a class="page-link ${paging.page== page ? 'active' : ''}"
+							href="/viewAllNote?page=${page}" id="page_num">
+							${page}
+						</a>
+					</li>
+				</c:forEach>
+	
+				<li class="page-item ${paging.next ? '' : 'disabled'}">
+					<c:choose>
+						<c:when
+							test="${paging.endPage < 100}">
+							<a class="page-link"
+								href="/viewAllNote?page=${paging.endPage}">
+								<i class="fa-solid fa-chevron-right"></i>
+							</a>
+						</c:when>
+						<c:otherwise>
+							<a class="page-link" href="/viewAllNote?page=${paging.endPage + 1}">
+								<i class="fa-solid fa-chevron-right"></i>
+							</a>
+						</c:otherwise>
+					</c:choose>
+				</li>
+			</ul>
+		</nav>
 		</div>
 	</div>
 </div>

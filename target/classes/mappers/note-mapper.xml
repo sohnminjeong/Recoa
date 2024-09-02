@@ -31,10 +31,24 @@
 	VALUES (#{noteSender}, #{noteReceiver}, #{noteTitle}, #{noteContent})
 	</insert>
 	
-	<!-- sender||receiver==회원 쪽지 전체보기 -->
-	<select id="viewAllNote" parameterType="int" resultMap="noteMap">
+	<!-- 쪽지 한 개 보기 -->
+	<select id="oneViewNote" parameterType="int" resultMap="noteMap">
 	SELECT *
 	FROM note
+	WHERE note_code=#{noteCode}
+	</select>
+	
+	<!-- sender||receiver==회원 쪽지 전체보기 -->
+	<select id="viewAllNote" parameterType="NotePaging" resultMap="noteMap">
+	SELECT *
+	FROM note
+	WHERE note_sender=#{userCode} || note_receiver=#{userCode}
+	ORDER BY note_code DESC
+	LIMIT #{offset}, #{limit}
+	</select>
+	
+	<select id="countNote" parameterType="int" resultType="int">
+	SELECT count(*) FROM note
 	WHERE note_sender=#{userCode} || note_receiver=#{userCode}
 	</select>
 	

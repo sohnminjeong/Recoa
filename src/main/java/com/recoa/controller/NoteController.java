@@ -10,10 +10,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.recoa.model.vo.Note;
 import com.recoa.model.vo.NoteFile;
+import com.recoa.model.vo.NotePaging;
 import com.recoa.service.NoteService;
 import com.recoa.service.UserService;
 
@@ -68,9 +70,28 @@ public class NoteController {
 	
 	// 쪽지 전체보기
 	@GetMapping("/viewAllNote")
-	public String viewAllNote(Model model, int noteSender) {
-		List<Note> list = service.viewAllNote(noteSender);
+	public String viewAllNote(int userCode, Model model, @RequestParam(value="page", defaultValue="1")int page, int noteSender) {
+		System.out.println("userCode : "+userCode);
+		int total = service.total(userCode);
+		NotePaging paging = new NotePaging(page, total, userCode);
+		List<Note> list = service.viewAllNote(paging);
+		System.out.println("list : " +list);
+		for(int i=0; i<list.size();i++) {
+			
+			String senderNick=userService.findUserNickname(list.get(i).getNoteSender());
+			list.get(i).setSenderNick(senderNick);
+			String receiverNick=userService.findUserNickname(list.get(i).getNoteReceiver());
+			list.get(i).setReceiverNick(receiverNick);
+			
+			List<NoteFile> listFile = service.viewAllNoteFile(list.get(i).getNoteCode());
+			if(listFile.size()!=0) {
+				list.get(i).setHasNote(true);
+			}
+		}
+		
 		model.addAttribute("list", list);
+		model.addAttribute("paging",paging);
+		
 		return "note/viewAllNote";
 	}
 }

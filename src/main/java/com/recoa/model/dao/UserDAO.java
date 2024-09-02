@@ -78,4 +78,9 @@ public class UserDAO {
 	public int findUserCode(String userNickname) {
 		return session.selectOne("userMapper.findUserCode", userNickname);
 	}
+	// 쪽지 보기용 : 회원 코드로 닉네임 찾기 
+	public String findUserNickname(int userCode) {
+		return session.selectOne("userMapper.findUserNickname", userCode);
+	}
+	
 }

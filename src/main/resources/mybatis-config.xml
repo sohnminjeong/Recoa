@@ -21,6 +21,7 @@
 		<typeAlias type="com.recoa.model.vo.Utillbill" alias="Utillbill"/>
 		<typeAlias type="com.recoa.model.vo.Note" alias="Note"/>
 		<typeAlias type="com.recoa.model.vo.NoteFile" alias="NoteFile"/>
+		<typeAlias type="com.recoa.model.vo.NotePaging" alias="NotePaging"/>
 	</typeAliases>
 
 	<!-- 쿼리문 -->

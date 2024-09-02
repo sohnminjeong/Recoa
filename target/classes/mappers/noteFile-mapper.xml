@@ -11,4 +11,11 @@
 	INSERT INTO note_file(note_code, note_file_url)
 	VALUES (#{noteCode}, #{noteFileUrl})
 	</insert>
+	
+	<!-- 쪽지 파일 전체보기 -->
+	<select id="viewAllNoteFile" parameterType="int" resultMap="noteFileMap">
+	SELECT * 
+	FROM note_file
+	WHERE note_code=#{noteCode}
+	</select>
 </mapper>

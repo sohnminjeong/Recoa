@@ -21,6 +21,7 @@ public class Note {
 	private boolean receiverDelete;
 	
 	private List<MultipartFile> noteFile;
+	private boolean hasNote;
 	private User user;
 	private String senderNick;
 	private String receiverNick;
