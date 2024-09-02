@@ -42,21 +42,21 @@
 	<select id="viewAllNote" parameterType="NotePaging" resultMap="noteMap">
 	SELECT *
 	FROM note
-	WHERE note_sender=#{userCode} || note_receiver=#{userCode}
+	WHERE (note_sender=#{userCode} AND sender_delete=false) || (note_receiver=#{userCode} AND receiver_delete=false)
 	ORDER BY note_code DESC
 	LIMIT #{offset}, #{limit}
 	</select>
 	
 	<select id="countNote" parameterType="int" resultType="int">
 	SELECT count(*) FROM note
-	WHERE note_sender=#{userCode} || note_receiver=#{userCode}
+	WHERE (note_sender=#{userCode} AND sender_delete=false) || (note_receiver=#{userCode} AND receiver_delete=false)
 	</select>
 	
 	<!-- 보낸 쪽지 전체보기 -->
 	<select id="viewAllBySender" parameterType="NotePaging" resultMap="noteMap"> 
 	SELECT * 
 	FROM note
-	WHERE note_sender=#{userCode}
+	WHERE note_sender=#{userCode} AND sender_delete=false
 	ORDER BY note_code DESC
 	LIMIT #{offset}, #{limit}
 	</select>
@@ -64,21 +64,21 @@
 	<select id="countSenderNote" parameterType="int" resultType="int">
 	SELECT count(*)
 	FROM note
-	WHERE note_sender=#{userCode}
+	WHERE note_sender=#{userCode} AND sender_delete=false
 	</select>
 	
 	<!-- 받은 쪽지 전체보기  -->
 	<select id="viewAllByReceiver" parameterType="NotePaging" resultMap="noteMap"> 
 	SELECT * 
 	FROM note
-	WHERE note_receiver=#{userCode}
+	WHERE note_receiver=#{userCode}  AND receiver_delete=false
 	ORDER BY note_code DESC
 	LIMIT #{offset}, #{limit}
 	</select>
 	<select id="countReceiverNote" parameterType="int" resultType="int">
 	SELECT count(*)
 	FROM note
-	WHERE note_receiver=#{userCode}
+	WHERE note_receiver=#{userCode}  AND receiver_delete=false
 	</select>
 	
 	<!-- 받은 쪽지 삭제 update -->
