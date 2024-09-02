@@ -81,4 +81,23 @@
 	WHERE note_receiver=#{userCode}
 	</select>
 	
+	<!-- 받은 쪽지 삭제 update -->
+	<update id="deleteUpdateReceiver" parameterType="int">
+	UPDATE note
+	SET receiver_delete = true
+	WHERE note_code=#{noteCode}
+	</update>
+	
+	<!-- 보낸 쪽지 삭제 update -->
+	<update id="deleteUpdateSender" parameterType="int">
+	UPDATE note
+	SET sender_delete = true
+	WHERE note_code=#{noteCode}
+	</update>
+	
+	<!-- 둘 다 삭제 시 db 삭제 -->
+	<delete id="deleteNote" parameterType="int">
+	DELETE FROM note
+	WHERE note_code=#{noteCode} AND sender_delete=true AND receiver_delete=true
+	</delete>
 </mapper>

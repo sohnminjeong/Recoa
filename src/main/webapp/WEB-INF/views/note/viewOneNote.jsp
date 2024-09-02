@@ -78,27 +78,34 @@
 #contentCenter{
 	padding: 15px 0 10px 0;
 	border-bottom:1px dashed gray;
+	display: flex;
+	justify-content: space-between;
 	
 	span{
 		font-size:1.5rem;
 	}
 	
+	#contentFiles{
+		display: flex;
+    	flex-direction: column;
+    	i{
+			font-size:0.8rem;
+		}
+		a{
+			font-family: 'SDMiSaeng';
+			font-size:1rem;
+		}
+	}
+	
 }
 #contentBottom{
 	padding: 15px 0 10px 0;
-	display: flex;
-	justify-content: space-between;
+	
 	height: 65%;
 	span{
 		font-size:1rem;
 	}
-	i{
-		font-size:0.8rem;
-	}
-	a{
-		font-family: 'SDMiSaeng';
-		font-size:1rem;
-	}
+	
 }
 #noteBtn{
 	display:flex;
@@ -153,19 +160,21 @@
 			</div>
 			<div id="contentCenter">
 				<span>${vo.noteTitle }</span>
+				<div id="contentFiles">
+					<c:forEach items="${files}" var="file" >
+						<a href="/recoaImg/note/${file.noteFileUrl}" download>
+		                <i class="fa-solid fa-file-arrow-down"> </i>
+		                첨부 파일 다운로드
+		              </a>
+					</c:forEach>
+				</div>
 			</div>
 			<div id="contentBottom">
 				<span>${vo.noteContent}</span>
-				<c:forEach items="${files}" var="file" >
-					<a href="/recoaImg/note/${file.noteFileUrl}" download>
-	                <i class="fa-solid fa-file-arrow-down"> </i>
-	                첨부 파일 다운로드
-	              </a>
-				</c:forEach>
 			</div>
 			<div id="noteBtn">
 				<button>답장</button>
-				<button>삭제</button>
+				<button type="button" onclick="location.href='/deleteNote?noteCode=${vo.noteCode}'">삭제</button>
 				<button type="button"  onclick="history.back()">목록</button>
 			</div>
 		</div>

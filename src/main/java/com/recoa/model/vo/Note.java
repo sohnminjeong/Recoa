@@ -26,4 +26,5 @@ public class Note {
 	private String senderNick;
 	private String receiverNick;
 	
+
 }

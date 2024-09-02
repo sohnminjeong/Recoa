@@ -18,4 +18,10 @@
 	FROM note_file
 	WHERE note_code=#{noteCode}
 	</select>
+	
+	<!-- 쪽지 파일 삭제하기 -->
+	<delete id="deleteNoteFile">
+	DELETE FROM note_file
+	WHERE note_code=#{noteCode}
+	</delete>
 </mapper>

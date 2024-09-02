@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.recoa.model.vo.Note;
 import com.recoa.model.vo.NoteFile;
 import com.recoa.model.vo.NotePaging;
+import com.recoa.model.vo.User;
 import com.recoa.service.NoteService;
 import com.recoa.service.UserService;
 
@@ -144,11 +147,43 @@ public class NoteController {
 		vo.setSenderNick(userService.findUserNickname(vo.getNoteSender()));
 		vo.setReceiverNick(userService.findUserNickname(vo.getNoteReceiver()));
 		List<NoteFile> files = service.viewAllNoteFile(noteCode);
+		
 		if(files.size()!=0) {
 			model.addAttribute("files", files);
 		}
 		model.addAttribute("vo", vo);
 		
 		return "note/viewOneNote";
+	}
+	
+	// 쪽지 삭제하기 
+	@GetMapping("/deleteNote")
+	public String deleteNote(int noteCode) {
+		List<NoteFile> files = service.viewAllNoteFile(noteCode);
+		
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		UserDetails userDetails = (UserDetails) principal;
+		String userId = userDetails.getUsername();
+		User user = userService.selectUser(userId);
+		Note vo = service.oneViewNote(noteCode);
+		
+		if(user.getUserCode()==vo.getNoteSender()) {
+			service.deleteUpdateSender(noteCode);
+		}else if(user.getUserCode()==vo.getNoteReceiver()) {
+			service.deleteUpdateReceiver(noteCode);
+		}
+		
+		int deleteSuccess = service.deleteNote(noteCode);
+		
+		if(deleteSuccess==1) {
+			if(files!=null) {
+				for(NoteFile noteFile : files) {
+					File file = new File(path+noteFile.getNoteFileUrl());
+					file.delete();
+				}
+			}
+			service.deleteNoteFile(noteCode);
+		}
+		return "redirect:/viewAllNote?userCode="+user.getUserCode();
 	}
 }

@@ -61,4 +61,21 @@ public class NoteDAO {
 	}
 	
 	
+	// 받은 쪽지 삭제 update 
+	public int deleteUpdateReceiver(int noteCode) {
+		return session.update("noteMapper.deleteUpdateReceiver", noteCode);
+	}
+	// 보낸 쪽지 삭제 update 
+	public int deleteUpdateSender(int noteCode) {
+		return session.update("noteMapper.deleteUpdateSender", noteCode);
+	}
+	// 둘 다 삭제 시 db 삭제
+	public int deleteNote(int noteCode) {
+		return session.update("noteMapper.deleteNote", noteCode);
+	}
+	// 쪽지 파일 삭제
+	public int deleteNoteFile(int noteCode) {
+		return session.delete("noteFileMapper.deleteNoteFile", noteCode);
+	}
+	
 }

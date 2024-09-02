@@ -64,4 +64,22 @@ public class NoteService {
 	public int countReceiverNote(int userCode) {
 		return dao.countReceiverNote(userCode);
 	}
+	
+	
+	// 받은 쪽지 삭제 update 
+	public int deleteUpdateReceiver(int noteCode) {
+		return dao.deleteUpdateReceiver(noteCode);
+	}
+	// 보낸 쪽지 삭제 update 
+	public int deleteUpdateSender(int noteCode) {
+		return dao.deleteUpdateSender(noteCode);
+	}
+	// 둘 다 삭제 시 db 삭제
+	public int deleteNote(int noteCode) {
+		return dao.deleteNote(noteCode);
+	}
+	// 쪽지 파일 삭제
+	public int deleteNoteFile(int noteCode) {
+		return dao.deleteNoteFile(noteCode);
+	}
 }
