@@ -75,6 +75,7 @@ public class NoteController {
 	// 쪽지 전체보기
 	@GetMapping("/viewAllNote")
 	public String viewAllNote(int userCode, Model model, @RequestParam(value="page", defaultValue="1") int page) {
+		
 		int total = service.total(userCode);
 		NotePaging paging = new NotePaging(page, total, userCode);
 		List<Note> list = service.viewAllNote(paging);
