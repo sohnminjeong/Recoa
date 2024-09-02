@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -73,6 +74,39 @@
     bottom: 6%;
     right: 4%;
 }
+table{
+	width:100%;
+	height:100%;
+	font-family: 'GangwonEdu_OTFBoldA';
+	
+	thead{
+		height: 12%;
+   		border-bottom: 1px solid black;
+   		color : gray;
+   		font-family: 'GangwonEdu_OTFBoldA';
+   		font-size : 1rem;
+	}
+	tr{
+		display: grid;
+        grid-template-columns: 0.5fr 2fr 0.7fr 0.7fr 1.1fr;
+        width: 100%;
+        text-align: center;
+        align-items: center;
+        height: 100%;
+        
+       	a:hover{
+       		color : gray;
+       	}
+        
+	}
+	tbody{
+		height: 92%;
+        display: grid;
+        grid-template-rows: repeat(10, 1fr);
+        margin-top: 15px;
+        
+	}
+}
 </style>
 </head>
 <body>
@@ -85,9 +119,33 @@
 		<%@ include file="../note/noteViewBar.jsp" %>
 	</div>
 	<div id="container">
-		<h3>내 쪽지함</h3>
+		<h3>내 쪽지함 _ 전체 쪽지함</h3>
 		<div id="containerContent">
-			ㅎㅎㅎㅎ
+			
+			<table>
+				<thead>
+					<tr>
+						<td>번호</td>
+						<td>제목</td>
+						<td>보낸 사람</td>
+						<td>받은 사람</td>
+						<td>작성일</td>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach items="${list}" var="item" varStatus="status">
+						<tr>
+							<td>ㅎ</td>
+							<td>${item.noteTitle}</td>
+							<td>${item.noteSender}</td>
+							<td>${item.noteReceiver}</td>
+							<td>
+								<fmt:formatDate value="${item.noteWritedate}" pattern="yy-MM-dd HH:mm" />
+							</td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
 		</div>
 	</div>
 </div>
