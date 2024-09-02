@@ -34,6 +34,13 @@ h1{
 	font-size: 2rem;
 	
 }
+
+#userFloating{
+	position: fixed;
+    z-index: 1;
+    bottom: 6%;
+    right: 4%;
+}
 </style>
 </head>
 <body>
@@ -65,6 +72,9 @@ h1{
 			</div>
 		</form>
 	</div>
+<div id="userFloating">
+	<%@ include file="../main/floating.jsp" %>
+</div>
 	<script>
 	
 	// 이미지 첨부하기 클릭 시 input file로 넘어가도록

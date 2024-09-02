@@ -22,6 +22,12 @@
 		<result property="userAdmin" column="user_admin"/>	
 	</resultMap>
 	
+	<resultMap type="NoticeBookmark" id="NoticeBookmarkMap">
+		<id property="bookmarkCode" column="bookmark_code"/>
+		<result property="userCode" column="user_code"/>	
+		<result property="noticeCode" column="notice_code"/>
+	</resultMap>
+	
 	<!-- 공지 작성 -->
 	<insert id="registerNotice" parameterType="boardNotice" useGeneratedKeys="true" keyProperty="noticeCode" keyColumn="noticeCode">
 		INSERT INTO board_notice(user_code, notice_title, notice_content)
@@ -90,6 +96,22 @@
 		DELETE FROM board_notice
 		WHERE notice_code=#{noticeCode}
 	</delete>
+	
+	<!-- 로그인한 회원의 북마크 글 리스트 조회하기 -->
+	<select id="bookmarked" parameterType="BoardNoticePaging" resultMap="BoardNoticeMap">
+		SELECT *
+		FROM notice_bookmark
+		JOIN board_notice
+		USING (notice_code)
+		WHERE board_notice.user_code=#{userCode}
+	</select>
+	
+	<!-- 북마크 글 리스트 total -->
+	<select id="bookmarkedTotal" parameterType="int" resultType="int">
+		SELECT count(*)
+		FROM notice_bookmark
+		WHERE user_code=#{userCode}
+	</select>
 	
 	<!-- id로 userCode 조회 -->
 	<select id="findUserCode" parameterType="String" resultType="int">

@@ -97,4 +97,14 @@ public class BoardNoticeService {
 	public int checkBookmark(NoticeBookmark bookmark) {
 		return dao.checkBookmark(bookmark);
 	}
+	
+	// 5. 북마크한 글 리스트 조회
+	public List<BoardNotice> bookmarked(BoardNoticePaging paging){
+		return dao.bookmarked(paging);
+	}
+	
+	// 6. 북마크한 글 total
+	public int bookmarkedTotal(int userCode) {
+		return dao.bookmarkedTotal(userCode);
+	}
 }

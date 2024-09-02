@@ -51,7 +51,12 @@
 	margin : 20px;
 	font-family: 'GangwonEdu_OTFBoldA';
 }
-
+#userFloating{
+	position: fixed;
+    z-index: 1;
+    bottom: 6%;
+    right: 4%;
+}
 </style>
 </head>
 <body>
@@ -163,6 +168,8 @@
 						</nav>
 	</div>
 	</div>
-
+<div id="userFloating">
+	<%@ include file="../main/floating.jsp" %>
+</div>
 </body>
 </html>

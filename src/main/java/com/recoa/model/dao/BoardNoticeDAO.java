@@ -87,4 +87,14 @@ public class BoardNoticeDAO {
 	public int checkBookmark(NoticeBookmark bookmark) {
 		return session.selectOne("NoticeBookmark.checkBookmark", bookmark);
 	}
+	
+	// 5. 북마크한 글 리스트 조회
+	public List<BoardNotice> bookmarked(BoardNoticePaging paging){
+		return session.selectList("BoardNotice.bookmarked", paging);
+	}
+	
+	// 6. 북마크한 글 페이징 total
+	public int bookmarkedTotal(int userCode) {
+		return session.selectOne("BoardNotice.bookmarkedTotal", userCode);
+	}
 }

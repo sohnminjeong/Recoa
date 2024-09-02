@@ -83,7 +83,7 @@
 					<li>-------------------</li>
 					<li><a href="/" class="subInfo">작성한 게시물</a></li>
 					<li><a href="/" class="subInfo">좋아요</a></li>
-					<li><a href="/" class="subInfo">북마크</a></li>
+					<li><a href="/bookmarked" class="subInfo">북마크</a></li>
 				</ul>
 			</li>
 			

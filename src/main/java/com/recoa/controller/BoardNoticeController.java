@@ -49,7 +49,7 @@ public class BoardNoticeController {
 		 return filename;
 	 }
 	
-	 // 게시판으로 이동
+	// 게시판으로 이동
 	@GetMapping("/boardNoticeList")
 	public String boardNoticeList(@RequestParam(value = "page", defaultValue = "1") int page,
 								Model model, String select, String keyword) {
@@ -188,6 +188,45 @@ public class BoardNoticeController {
 	        service.addBookmark(vo);
 	        return "added";
 	    }
+	}
+	
+	// 북마크한 글만 보기
+	@GetMapping("/bookmarked")
+	public String bookmarked(@RequestParam(value = "page", defaultValue = "1") int page,
+										Model model, String select, String keyword, Principal principal) {
+		
+		String userId = principal.getName(); 
+	    int userCode = service.findUserCode(userId);
+			
+	    NoticeBookmark vo = new NoticeBookmark();
+	    vo.setUserCode(userCode);
+	    System.out.println(userCode);
+	       
+		int total = service.bookmarkedTotal(userCode);
+		System.out.println(total);
+			
+		BoardNoticePaging paging = new BoardNoticePaging(page, total);
+		paging.setUserCode(userCode);
+		paging.setSelect(select);
+		paging.setKeyword(keyword);
+			
+		int offset = (page - 1) * paging.getLimit();
+		paging.setOffset(offset); 
+			
+		List<BoardNotice> list = service.bookmarked(paging);
+		model.addAttribute("list", list);
+		model.addAttribute("paging", paging);
+		
+		Map<Integer, Integer> bookmarkCount = new HashMap<>();
+	    
+	    for (BoardNotice notice : list) {
+	        int count = service.countBookmark(notice.getNoticeCode());
+	        bookmarkCount.put(notice.getNoticeCode(), count);
+	    }
+	    
+	    model.addAttribute("bookmarkCount", bookmarkCount);
+		
+		return "boardNotice/myBookmark";
 	}
 
 }
