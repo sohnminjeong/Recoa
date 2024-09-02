@@ -74,7 +74,7 @@ table{
         grid-template-columns: 0.5fr 1.5fr 1fr 1fr 1fr;
         width: 100%;
         text-align: center;
-        
+        font-family: 'GangwonEdu_OTFBoldA';
           a:hover{
              color : gray;
           }
@@ -82,6 +82,7 @@ table{
    }
    
    tbody{
+   font-family: 'GangwonEdu_OTFBoldA';
       height: 100%;
         display: grid;
         grid-template-rows: repeat(10, 1fr);
@@ -182,7 +183,6 @@ table{
 								</li>
 								<c:forEach begin="${paging.startPage}" end="${paging.endPage}" var="page">
 									<li class="page-item">
-									
 										<c:choose>
 											<c:when test="${(paging.select != null) && (paging.keyword != null)}">
 												<a class="page-link ${paging.page== page ? 'active' : ''}"
