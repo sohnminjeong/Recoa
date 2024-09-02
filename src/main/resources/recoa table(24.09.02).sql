@@ -32,12 +32,12 @@ create table user(
 );
 
 create table board_notice(
-	notice_code INT PRIMARY KEY AUTO_INCREMENT,
+   notice_code INT PRIMARY KEY AUTO_INCREMENT,
     user_code INT,
     notice_title VARCHAR(100),
     notice_content TEXT,
-    notice_writedate DATETIME DEFAULT CURRENT_TIMESTAMP,
-    notice_view INT
+    notice_writedate TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    notice_view INT DEFAULT 0
 );
 
 create table board_notice_img(
@@ -130,8 +130,8 @@ create table note(
     note_title VARCHAR(30),
     note_content TEXT,
     note_writedate DATETIME DEFAULT CURRENT_TIMESTAMP,
-    sender_delete boolean,
-    receiver_delete boolean
+    sender_delete boolean default false,
+    receiver_delete boolean default false
 );
 
 create table note_file(
