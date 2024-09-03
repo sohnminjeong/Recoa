@@ -76,10 +76,11 @@
     
 }
 #contentCenter{
-	padding: 15px 0 10px 0;
-	border-bottom:1px dashed gray;
-	display: flex;
-	justify-content: space-between;
+    border-bottom: 1px dashed gray;
+    display: flex;
+    justify-content: space-between;
+    height: 15%;
+    align-items: center;
 	
 	span{
 		font-size:1.5rem;
@@ -173,7 +174,14 @@
 				<span>${vo.noteContent}</span>
 			</div>
 			<div id="noteBtn">
-				<button>답장</button>
+				<c:if test="${vo.receiverNick==user.userNickname}">
+					<button type="button" id="replyNote">답장</button>
+					<div id="noteJsp" style="display : none">
+						<jsp:include page="../note/noteSideBar.jsp" flush="true">
+							<jsp:param value="${vo.senderNick}" name="param1"/>
+						</jsp:include>
+					</div>
+				</c:if>
 				<button type="button" onclick="location.href='/deleteNote?noteCode=${vo.noteCode}'">삭제</button>
 				<button type="button"  onclick="history.back()">목록</button>
 			</div>
@@ -183,5 +191,11 @@
 <div id="userFloating">
 	<%@ include file="../main/floating.jsp" %>
 </div>
+<script>
+$('#replyNote').click(function(){
+	$('#noteJsp').css({"display":"block"});
+	$('#noteSideBar').css({"display":"none"});
+})
+</script>
 </body>
 </html>

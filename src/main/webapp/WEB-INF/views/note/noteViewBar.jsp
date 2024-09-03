@@ -26,11 +26,19 @@
     flex-direction: column;
     align-items: center;
     height: 100%;
-    padding-top: 20px;
-    padding-bottom: 30px;
+    padding : 30px 10px;
 }
 #sideBar a{
 	font-family: 'GangwonEdu_OTFBoldA';
+}
+#sideBar>ul>li:nth-child(1){
+	height:40%;
+}
+#sideBar>ul>li:nth-child(2){
+	height:30%;
+}
+#sideBar>ul>li:nth-child(3){
+	height:30%;
 }
 #sideBar ul li a:hover{
 	color : gray;
@@ -41,9 +49,26 @@
 <sec:authentication property="principal" var="user" />
 <div id="sideBar">
 	<ul>
-		<li><a href="/viewAllNote?userCode=${user.userCode}">전체 쪽지함</a></li>
-		<li><a href="/viewReceiverNote?userCode=${user.userCode}">받은 쪽지함</a></li>
-		<li><a href="/viewSenderNote?userCode=${user.userCode}">보낸 쪽지함</a></li>
+		<li><i class="fa-solid fa-envelope"></i>
+			<ul>
+				<li>-------------------</li>
+				<li><a href="/viewAllNote?userCode=${user.userCode}">전체 쪽지함</a></li>
+				<li><a href="/viewReceiverNote?userCode=${user.userCode}">받은 쪽지함</a></li>
+				<li><a href="/viewSenderNote?userCode=${user.userCode}">보낸 쪽지함</a></li>
+			</ul>
+		</li>
+		<li><i class="fa-solid fa-comments"></i>
+			<ul>
+				<li>-------------------</li>
+				<li><a href="/">채팅방</a></li>
+			</ul>
+		</li>
+		<li><i class="fa-solid fa-bell"></i>
+			<ul>
+				<li>-------------------</li>
+				<li><a href="">알림</a></li>
+			</ul>
+		</li>
 	</ul>
 </div>
 </body>

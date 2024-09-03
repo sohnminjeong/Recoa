@@ -58,9 +58,6 @@
     margin-top: auto;
     margin-bottom: auto;
     
-    /*position: fixed;
-    left: 25%;*/
-    
     box-shadow: rgba(0, 0, 0, 0.5) 0 0 0 9999px;
     background-color: black;
     color: white;
@@ -131,6 +128,15 @@
     			margin: 0 5px;
     			font-family: 'SDMiSaeng';
    				font-size: 1rem;
+   				width: 55px;
+                border: 1px solid white;
+                border-radius: 5px;
+		    }
+		    button:hover{
+		    	cursor:pointer;
+		    	color : black;
+		    	background-color:white;
+		    	border : 1px solid black;
 		    }
         }
         
