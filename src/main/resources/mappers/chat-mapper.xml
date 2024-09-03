@@ -1,0 +1,28 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="chatMapper">
+	<resultMap type="Chat" id="chatMap">
+		<id column="chat_code" property="chatCode"/>
+		<result column="chat_message" property="chatMessage"/>
+		<result column="chat_time" property="chatTime"/>
+		<result column="chat_room_code" property="chatRoomCode"/>
+		<result column="user_number" property="userNumber"/>
+	</resultMap>
+	
+	<resultMap type="ChatRoom" id="chatRoomMap">
+		<id column="chat_room_code" property="chatRoomCode"/>
+		<result column="user_number1" property="userNumber1"/>
+		<result column="user_number2" property="userNumber2"/>
+	</resultMap>
+
+	<!-- 채팅방 생성 -->
+	<insert id="insertChatRoom" parameterType="ChatRoom" useGeneratedKeys="true" keyColumn="chat_room_code" keyProperty="chatRoomCode">
+	INSERT INTO chat_room(user_number1, user_number2)
+	VALUES(#{userNumber1}, #{userNumber2})
+	</insert>
+	
+	<!-- 채팅 생성 -->
+	<insert id="insertChatting" parameterType="Chat" useGeneratedKeys="true" keyColumn="chat_code" keyProperty="chatCode">
+	INSERT INTO chat(chat_message, chat_room_code, user_number)
+	VALUES (#{chatMessage}, #{chatRoomCode}, #{userNumber})
+	</insert>
+</mapper>

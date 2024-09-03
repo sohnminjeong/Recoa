@@ -22,6 +22,8 @@
 		<typeAlias type="com.recoa.model.vo.Note" alias="Note"/>
 		<typeAlias type="com.recoa.model.vo.NoteFile" alias="NoteFile"/>
 		<typeAlias type="com.recoa.model.vo.NotePaging" alias="NotePaging"/>
+		<typeAlias type="com.recoa.model.vo.Chat" alias="Chat"/>
+		<typeAlias type="com.recoa.model.vo.ChatRoom" alias="ChatRoom"/>
 	</typeAliases>
 
 	<!-- 쿼리문 -->
@@ -39,5 +41,6 @@
 		<mapper resource="mappers/utillbill-mapper.xml"/>
 		<mapper resource="mappers/note-mapper.xml"/>
 		<mapper resource="mappers/noteFile-mapper.xml"/>
+		<mapper resource="mappers/chat-mapper.xml"/>
 	</mappers>
 </configuration>
