@@ -142,7 +142,7 @@
         
     }
 }
-#noteWriteInnerNo{
+.noteWriteInnerNo{
 	display: flex;
     flex-direction: column;
     justify-content:center;
@@ -176,7 +176,8 @@
 		</div>
 	
 	<div id="noteWrite" style="display:none">
-		<c:if test="${user!='anonymousUser'}">
+	<c:set var="receiverNick" value="<%=param1 %>"/>
+		<c:if test="${user!='anonymousUser' and user.userNickname ne receiverNick }">
 			<div id="noteWriteInner">
 				<h3>쪽지 보내기</h3>
 				<form action="/registerNote" method="post" enctype="multipart/form-data">
@@ -203,17 +204,23 @@
 			</div>
 		</c:if>
 		<c:if test="${user=='anonymousUser'}">
-			<div id="noteWriteInnerNo">
+			<div class="noteWriteInnerNo">
 				<span>비회원의 경우, 로그인 부탁드립니다.</span>
 				<div>
 					<button type="button" onclick="location.href='/loginUser';">로그인</button>
 					<button type="button" onclick="location.href=location.href">뒤로가기</button>
 				</div>
-				
+			</div>
+		</c:if>
+		<c:if test="${user!='anonymousUser' and user.userNickname eq receiverNick }">
+			<div class="noteWriteInnerNo">
+				<span>본인에게 쪽지 보내기는 불가합니다.</span>
+				<div>
+					<button type="button" onclick="location.href=location.href">뒤로가기</button>
+				</div>
 			</div>
 		</c:if>
 	</div>
-	
 	
 	<script>
 	$('#noteBtn').click(function(){
