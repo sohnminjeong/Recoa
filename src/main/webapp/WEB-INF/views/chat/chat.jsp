@@ -99,7 +99,21 @@
 				
 				<div>
 					<div id="chatMessageArea" class="col">
-						<!-- 내용이 적히는 부분 -->
+						<!-- 기존 적힌 부분 -->
+						<c:forEach items="${chatList}" var="hadChat">
+							<!-- 채팅 작성자==현유저 -->
+							<c:if test="${hadChat.userNumber==user.userCode}">
+								<div class="backColorGray">
+									<b>${hadChat.chatMessage}</b>
+								</div>
+							</c:if>
+							<c:if test="${hadChat.userNumber!=user.userCode}">
+								<div class="backColorYellow">
+									<b>${hadChat.chatMessage}</b>
+								</div>
+							</c:if>
+						</c:forEach>
+		 				<!-- 새로 적히는 부분 -->
 					</div>
 					
 					<div class="col-6">
@@ -120,13 +134,27 @@
 <div id="userFloating">
 	<%@ include file="../main/floating.jsp" %>
 </div>
+
 <!-- sockJs의 CDN 추가해야 함 -->
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 <script>
 var sock = new SockJS('http://localhost:8080/chatting');
 sock.onmessage = onMessage;
 sock.onclose = onClose;
-sock.onopen = onOpen;
+var chatRoomCode = ${chatRoomCode};
+//채팅창에 들어왔을 때 자동실행
+// sock.send( JSON.stringify({"chatRoomCode": chatRoomCode}));
+sock.onopen = function(){
+	alert(chatRoomCode);
+	var user = '${user.userNickname}';
+	var str="<div>";
+	 str+="<b>" + user + "님이 입장하셨습니다." + "</b>";
+	 str+="</div>"
+	 
+	$("#chatMessageArea").append(str);
+}
+
+
 //전송 버튼 누르는 이벤트
 $("#button-send").on("click", function(e) {
 	sendMessage();
@@ -145,17 +173,10 @@ function onMessage(msg) {
 	var message = null;
 	
 	var arr = data.split(":");
-	// arr[0] : 회원 아이디
-	// arr[1] : 보낸 내용 
-	for(var i=0; i<arr.length; i++){
-		console.log('arr[' + i + ']: ' + arr[i]);
-	}
+	sessionId = arr[0]; // 작성자 닉네임
+	message = arr[1]; // 작성 내용
 	
 	var cur_session = '${user.userNickname}'; //현재 세션에 로그인 한 사람
-	console.log("cur_session : " + cur_session);
-	
-	sessionId = arr[0]; // 보낸 아이디
-	message = arr[1]; // 보낸 내용
 	
     //로그인 한 클라이언트와 타 클라이언트를 분류하기 위함
 	if(sessionId == cur_session){
@@ -163,7 +184,6 @@ function onMessage(msg) {
 		var str="<div class='backColorGray'>";
 		 str+="<b>" + sessionId + " : " + message + "</b>";
 		 str+="</div>"
-		
 		
 		$("#chatMessageArea").append(str);
 	}
@@ -176,6 +196,20 @@ function onMessage(msg) {
 		$("#chatMessageArea").append(str);
 	}
 	
+	$.ajax({
+		type:"post",
+		url:"/insertChatting",
+		data : {"chatRoomCode":chatRoomCode, "chatMessage":message,"userNumber":${user.userCode}},
+		 
+		success:function(result){
+			if(result){
+				alert("디비 저장 성공");
+			}else{
+				alert("디비 저장 실패");
+			}
+		}
+	})
+	
 }
 //채팅창에서 나갔을 때
 function onClose() {
@@ -186,16 +220,7 @@ function onClose() {
 	$("#chatMessageArea").append(str);
 	//location.replace("/");
 }
-//채팅창에 들어왔을 때
-function onOpen(evt) {
-	
-	var user = '${user.userNickname}';
-	var str="<div>";
-	 str+="<b>" + user + "님이 입장하셨습니다." + "</b>";
-	 str+="</div>"
-	 
-	$("#chatMessageArea").append(str);
-}
+
 
 </script>
 </body>

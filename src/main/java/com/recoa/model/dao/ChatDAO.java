@@ -1,5 +1,7 @@
 package com.recoa.model.dao;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -23,5 +25,14 @@ public class ChatDAO {
 		return session.insert("chatMapper.insertChatting", vo);
 	}
 
+	// 삭제 안된 채팅방 + 이미 회원 두명이 일치하는 경우 중복 확인
+	public ChatRoom checkChatRoom(ChatRoom vo) {
+		return session.selectOne("chatMapper.checkChatRoom", vo);
+	}
+	
+	// 대화 내용 전체 확인 
+	public List<Chat> viewAllChatting(int chatRoomCode) {
+		return session.selectList("chatMapper.viewAllChatting", chatRoomCode);
+	}
 	
 }

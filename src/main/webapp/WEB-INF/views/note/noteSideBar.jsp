@@ -5,6 +5,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%String param1=request.getParameter("param1"); %>
 <%String param2=request.getParameter("param2"); %>
+<%int param3=Integer.parseInt(request.getParameter("param3")); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -172,7 +173,7 @@
 	
 		<div id="noteSideBar">
 			<span id="noteBtn">쪽지 보내기</span>
-			<span>채팅 하기</span>
+			<span id="chatBtn">채팅 하기</span>
 		</div>
 	
 	<div id="noteWrite" style="display:none">
@@ -234,6 +235,23 @@
 			$("#noteFile").val("");
 		}
 	}
+	
+	const receiverCode = <%=param3%>;
+	const senderCode = ${user.userCode};
+	$('#chatBtn').click(function(){
+		
+		$.ajax({
+			type:"post",
+			url:"/insertChatRoom",
+			data : {"userNumber1":senderCode, "userNumber2":receiverCode},
+			
+			success:function(result){
+				location.replace("/chat?chatRoomCode="+result);
+			}
+		})
+	})
+	
+	
 	</script>
 </body>
 </html>

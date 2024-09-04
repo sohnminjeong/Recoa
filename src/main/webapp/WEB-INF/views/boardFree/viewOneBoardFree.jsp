@@ -353,6 +353,7 @@
 						<jsp:include page="../note/noteSideBar.jsp" flush="true">
 							<jsp:param value="${vo.user.userNickname}" name="param1"/>
 							<jsp:param value="${vo.freeCode}" name="param2"/>
+							<jsp:param value="${vo.user.userCode}" name="param3"/>
 						</jsp:include>
 					</div>
 					

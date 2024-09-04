@@ -25,4 +25,18 @@
 	INSERT INTO chat(chat_message, chat_room_code, user_number)
 	VALUES (#{chatMessage}, #{chatRoomCode}, #{userNumber})
 	</insert>
+	
+	<!-- 삭제 안된 채팅방 + 이미 회원 두명이 일치하는 경우 중복 확인 -->
+	<select id="checkChatRoom" parameterType="ChatRoom" resultMap="chatRoomMap">
+	SELECT *
+	FROM chat_room
+	WHERE (user_number1=#{userNumber1} AND user_number2=#{userNumber2}) OR (user_number1=#{userNumber2} AND user_number2=#{userNumber1})
+	</select>
+	
+	<!-- 대화 내용 전체 확인 -->
+	<select id="viewAllChatting" parameterType="int" resultMap="chatMap">
+	SELECT *
+	FROM chat
+	WHERE chat_room_code=#{chatRoomCode}
+	</select>
 </mapper>
