@@ -126,6 +126,7 @@
 			width:200px;
 			height:200px;
 			margin:0 10px;
+			object-fit: cover;
 		}
 	}
 }
