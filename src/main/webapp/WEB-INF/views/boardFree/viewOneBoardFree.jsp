@@ -308,6 +308,12 @@
 .fa-caret-right:hover{
 	color : green;
 }
+.noView{
+	display:none;
+}
+.yseView{
+	display:block;
+}
 </style>
 </head>
 <body>
@@ -349,7 +355,7 @@
 							<i class="fa-solid fa-caret-right"></i>
 						</span>
 					</div>
-					<div id="noteJsp" style="display : none">
+					<div id="noteJsp" class="noView">
 						<jsp:include page="../note/noteSideBar.jsp" flush="true">
 							<jsp:param value="${vo.user.userNickname}" name="param1"/>
 							<jsp:param value="${vo.freeCode}" name="param2"/>
@@ -581,7 +587,13 @@ function validate(){
 }
 
 $('.fa-caret-right').click(function(){
-	$('#noteJsp').css({"display":"block"});
+	if($('#noteJsp').hasClass("noView")){
+		$('#noteJsp').removeClass("noView");
+		$('#noteJsp').addClass("yesView");
+	}else{
+		$('#noteJsp').removeClass("yesView");
+		$('#noteJsp').addClass("noView");
+	}
 })
 
 </script>

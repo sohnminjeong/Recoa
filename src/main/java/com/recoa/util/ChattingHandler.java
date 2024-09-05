@@ -40,13 +40,10 @@ public class ChattingHandler extends TextWebSocketHandler {
 	// 채팅 위해 해당 페이지에 들어오면 클라이언트가 연결된 후 해당 클라이언트의 세션을 sessionList에 add
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		//System.out.println("sesson.getID.last :"+session.getId().lastIndexOf("/"));
-		//System.out.println("입장 session :"+session.getUri().getPath().substring(0));
-		
 		
 		sessions.add(session);
-		System.out.println("{}연결됨 :"+session.getAttributes().get("userCode"));
-		System.out.println("방코드 ?:"+session.getAttributes().get("chatRoomCode"));
+		//System.out.println("{}연결됨 :"+session.getAttributes().get("userCode"));
+		//System.out.println("방코드 ?:"+session.getAttributes().get("chatRoomCode"));
 		
 	}
 
@@ -92,9 +89,9 @@ public class ChattingHandler extends TextWebSocketHandler {
 	// 클라이언트와 연결 끊어진 후 (채팅방 나간 경우) remove로 해당 세션 제거
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		System.out.println("퇴장 sessions ; "+session);
-		System.out.println("status : " +status);
-		//sessionList.remove(session);
+		//System.out.println("퇴장 sessions ; "+session);
+		//System.out.println("status : " +status);
+		
 		sessions.remove(session);	
 	}
 }

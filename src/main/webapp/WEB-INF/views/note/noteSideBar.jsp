@@ -166,6 +166,20 @@
     	}
     }
 }
+
+
+#nowChatting{
+	position: fixed;
+    z-index: 1;
+    bottom: 6%;
+    left: 3%;
+    width: 12%;
+    border: 1px solid black;
+    height: 40%;
+    border-radius:5px;
+}
+
+
 </style>
 </head>
 <body>
@@ -222,36 +236,40 @@
 			</div>
 		</c:if>
 	</div>
-	
-	<script>
-	$('#noteBtn').click(function(){
-		$('#noteWrite').css({"display":"block"});
-	})
-	
-	const file = document.querySelector('#noteFile');
-	function fileRegi(event){
-		if(event.target.files.length>=4){
-			alert("최대 파일 첨부 갯수는 3개입니다.");
-			$("#noteFile").val("");
-		}
+<div id="nowChatting" class="nowChatting" style="display:none">
+</div>	
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script>
+$('#noteBtn').click(function(){
+	$('#noteWrite').css({"display":"block"});
+})
+
+const file = document.querySelector('#noteFile');
+function fileRegi(event){
+	if(event.target.files.length>=4){
+		alert("최대 파일 첨부 갯수는 3개입니다.");
+		$("#noteFile").val("");
 	}
+}
+
+const receiverCode = <%=param3%>;
+const senderCode = ${user.userCode};
+$('#chatBtn').click(function(){
 	
-	const receiverCode = <%=param3%>;
-	const senderCode = ${user.userCode};
-	$('#chatBtn').click(function(){
+	$.ajax({
+		type:"post",
+		url:"/insertChatRoom",
+		data : {"userNumber1":senderCode, "userNumber2":receiverCode},
 		
-		$.ajax({
-			type:"post",
-			url:"/insertChatRoom",
-			data : {"userNumber1":senderCode, "userNumber2":receiverCode},
+		success:function(result){
+			$('.nowChatting').css({"display":"block"});
+			$('.nowChatting').load("/chat?chatRoomCode="+result);
 			
-			success:function(result){
-				location.replace("/chat?chatRoomCode="+result);
-			}
-		})
+		}
 	})
 	
-	
-	</script>
+})
+
+</script>
 </body>
 </html>

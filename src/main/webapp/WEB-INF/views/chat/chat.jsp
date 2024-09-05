@@ -25,115 +25,91 @@
     font-weight: normal;
     font-style: normal;
 }
-#header{
-	position:absolute;
-	z-index:1;
+#chattingRoom{
+	/*width: 12%;height: 35%;*/
 	width:100%;
-	border-bottom:1px solid black;
+    height: 100%;
+     border: 1px solid black;
+	 border-radius:5px;
 }
-#content{
-	position:relative;
-	z-index:0;
-	height:100vh;
-	padding-top:10vh;
+#chattingReceiver{
+	height:8%;
+	border-bottom:1px dashed black;
 	display:flex;
-	align-items:center;
-	margin:0 50px;
+	justify-content:space-between;
 }
-#content>#noteViewBar{
-	height:80%;
-	width:15%;
-	margin-left : 10%;
-	margin-right:5%;
+#chattingContents{
+	height:92%
+}
+#chattingContents>#chatMessageArea{
+	height:90%;
+	overflow-y: scroll;
+	display:grid;
+	grid-template-columns: 1fr 1fr;
+}
+#chattingContents>#chatRoomBottom{
+	display:flex;
+	justify-content: space-between;
+	height:10%;
+	border-top : 1px dashed gray;
 	
-}
-#content>#container{
-	width: 75%;
-	height:80%;
-    display: flex;
-    flex-direction: column;
-    margin-right: 10%;
-}
-#container>h3{
-	font-size : 1.7rem;
-	font-weight:bold;
-	margin : 20px;
-	font-family: 'GangwonEdu_OTFBoldA';
-}
-#container>#containerContent{
-	width:100%;
-	border : 2px solid black;
-	border-radius : 30px;
-	height:100%;
-	padding: 0 10px;
-	
-}
-#userFloating{
-	position: fixed;
-    z-index: 1;
-    bottom: 6%;
-    right: 4%;
+	input{
+		width:80%;
+	}
+	button{
+		font-family: 'SDMiSaeng';
+		width: 20%;
+        font-size: 1.1rem;
+	}
 }
 .backColorGray{
-	background-color:gray;
+	background-color:pink;
 }
 .backColorYellow{
 	background-color:yellow;
+}
+i:hover{
+	color : yellow;
+	cursor:pointer;
 }
 </style>
 </head>
 <body>
 <sec:authentication property="principal" var="user" />
-<div id="header">
-	<%@ include file="../main/header.jsp" %>
-</div>
-<div id="content">
-	<div id="noteViewBar">
-		<%@ include file="../note/noteViewBar.jsp" %>
+<div id="chattingRoom">
+	<div id="chattingReceiver">
+		<h3>채팅하는 상대의 사진/닉네임</h3>
+		<i class="fa-regular fa-circle-xmark"></i>
+		<i class="fa-solid fa-door-open" onclick="onClose()"></i>
 	</div>
-	<div id="container">
-		<h3>채팅</h3>
-		<div id="containerContent">
-			<!-- 채팅 -->
-			<div class="container">
-				
-				<div>
-					<div id="chatMessageArea" class="col">
-						<!-- 기존 적힌 부분 -->
-						<c:forEach items="${chatList}" var="hadChat">
-							<!-- 채팅 작성자==현유저 -->
-							<c:if test="${hadChat.userNumber==user.userCode}">
-								<div class="backColorGray">
-									<b>${hadChat.chatMessage}</b>
-								</div>
-							</c:if>
-							<c:if test="${hadChat.userNumber!=user.userCode}">
-								<div class="backColorYellow">
-									<b>${hadChat.chatMessage}</b>
-								</div>
-							</c:if>
-						</c:forEach>
-		 				<!-- 새로 적히는 부분 -->
+	<div id="chattingContents">
+		<div id="chatMessageArea" class="col">
+			<!-- 기존 적힌 부분 -->
+			<c:forEach items="${chatList}" var="hadChat">
+				<!-- 채팅 작성자==현유저 -->
+				<c:if test="${hadChat.userNumber==user.userCode}">
+					<div class="backColorGray">
+						<b>${hadChat.chatMessage}</b>
 					</div>
-					
-					<div class="col-6">
-						<div class="input-group mb-3">
-							<!-- input태그에 메세지 작성해 #button-send누르면 메세지 전송 -->
-							<input type="text" id="chatMessage" class="form-control" aria-label="Recipient's username" aria-describedby="button-addon2">
-							<div class="input-group-append">
-								<button class="btn btn-outline-secondary" type="button" id="button-send">전송</button>
-								<button type="button" onclick="onClose()">나가기</button>
-							</div>
-						</div>
+				</c:if>
+				<c:if test="${hadChat.userNumber!=user.userCode}">
+					<div class="backColorYellow">
+						<b>${hadChat.chatMessage}</b>
 					</div>
-				</div>
-			</div>
+				</c:if>
+			</c:forEach>
+				<!-- 새로 적히는 부분 -->
 		</div>
+		<!-- input태그에 메세지 작성해 #button-send누르면 메세지 전송 -->
+		<div id="chatRoomBottom" class="col">
+			<input type="text" id="chatMessage" class="chatMessage">
+			<button type="button" id="button-send">전송</button>
+			<!-- <button type="button" onclick="onClose()">나가기</button> -->
+		</div>	
 	</div>
 </div>
-<div id="userFloating">
-	<%@ include file="../main/floating.jsp" %>
-</div>
+		
+
 
 <!-- sockJs의 CDN 추가해야 함 -->
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
@@ -203,29 +179,12 @@ function onMessage(msg) {
 		$("#chatMessageArea").append(str);
 	}
 }
-/*
- // 채팅 db 저장
-$.ajax({
-	type:"post",
-	url:"/insertChatting",
-	data : {"chatRoomCode":chatRoomCode, "chatMessage":message,"userNumber":${user.userCode}},
-	 
-	success:function(result){
-		if(result){
-			alert("디비 저장 성공");
-		}else{
-			alert("디비 저장 실패");
-		}
-	}
-})
-*/
 
 //채팅창에서 나갔을 때
 function onClose() {
 	var user = '${user.userNickname}';
 	var str = user + " 님이 퇴장하셨습니다.";
 	$("#chatMessageArea").append(str);
-	//location.replace("/");
 }
 
 

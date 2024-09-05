@@ -36,6 +36,7 @@ public class ChatController {
 	public String chat(Model model, int chatRoomCode, HttpServletRequest request) {
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		List<Chat> chatList = service.viewAllChatting(chatRoomCode);
+		System.out.println("chatList : "+chatList);
 		HttpSession session = request.getSession();
 		session.setAttribute("chatRoomCode", chatRoomCode);
 		session.setAttribute("userCode", user.getUserCode());
