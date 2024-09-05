@@ -35,10 +35,21 @@
 	
 	<context:component-scan base-package="com.recoa" />
 	
+	<!-- websocket 요청 시 해들러 클래스와 연결 -->
+	<beans:bean id="chattingHandler" class="com.recoa.util.ChattingHandler"/>
+	
 	<websocket:handlers>
+		<!-- 웹소켓 요청(주소)을 처리할 bean 지정 -->
 		<websocket:mapping handler="chattingHandler" path="/chatting"/>
+		<!-- interceptor : http 통신에서 req, resp 가로채는 역할
+			handshake-interceptors:요청 관련 데이터 중 HttpSession(로그인 정보, 채팅방번호)을 가로채서 WebSocketSession에 넣어주는 역할
+		 -->
+		<websocket:handshake-interceptors>
+			<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
+		</websocket:handshake-interceptors>
+		<!-- SockJS 라이브러리를 이용해서 만들어진 웹소켓 객체임을 인식 -->
 		<websocket:sockjs></websocket:sockjs>
 	</websocket:handlers>
-	<beans:bean id="chattingHandler" class="com.recoa.util.ChattingHandler"/>
+	
 	
 </beans:beans>

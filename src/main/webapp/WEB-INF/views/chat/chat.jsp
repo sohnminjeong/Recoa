@@ -93,6 +93,7 @@
 	</div>
 	<div id="container">
 		<h3>채팅</h3>
+		${user }
 		<div id="containerContent">
 			<!-- 채팅 -->
 			<div class="container">
@@ -138,10 +139,13 @@
 <!-- sockJs의 CDN 추가해야 함 -->
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 <script>
+const chatRoomCode = ${chatRoomCode};
+const userCode = ${user.userCode};
+
 var sock = new SockJS('http://localhost:8080/chatting');
 sock.onmessage = onMessage;
 sock.onclose = onClose;
-var chatRoomCode = ${chatRoomCode};
+//var chatRoomCode = ${chatRoomCode};
 //채팅창에 들어왔을 때 자동실행
 // sock.send( JSON.stringify({"chatRoomCode": chatRoomCode}));
 sock.onopen = function(){
@@ -161,8 +165,16 @@ $("#button-send").on("click", function(e) {
 	$('#chatMessage').val('')
 });
 // 작성한 내용 전달
+// sock.send($("#chatMessage").val());
 function sendMessage() {
-	sock.send($("#chatMessage").val());
+	
+	const chatContext = {
+			"userCode" : userCode,
+			"chatRoomCode":chatRoomCode,
+			"chatMessage":$("#chatMessage").val()
+	};
+	alert(JSON.stringify(chatContext));
+	sock.send(JSON.stringify(chatContext));
 }
 
 //서버에서 메시지를 받았을 때
@@ -186,6 +198,7 @@ function onMessage(msg) {
 		 str+="</div>"
 		
 		$("#chatMessageArea").append(str);
+		  
 	}
 	else{
 		// 보낸 user와 방을 연 user가 다를 경우
@@ -195,22 +208,22 @@ function onMessage(msg) {
 		
 		$("#chatMessageArea").append(str);
 	}
-	
-	$.ajax({
-		type:"post",
-		url:"/insertChatting",
-		data : {"chatRoomCode":chatRoomCode, "chatMessage":message,"userNumber":${user.userCode}},
-		 
-		success:function(result){
-			if(result){
-				alert("디비 저장 성공");
-			}else{
-				alert("디비 저장 실패");
-			}
-		}
-	})
-	
 }
+/*// 채팅 db 저장
+		$.ajax({
+			type:"post",
+			url:"/insertChatting",
+			data : {"chatRoomCode":chatRoomCode, "chatMessage":message,"userNumber":${user.userCode}},
+			 
+			success:function(result){
+				if(result){
+					alert("디비 저장 성공");
+				}else{
+					alert("디비 저장 실패");
+				}
+			}
+		})*/
+
 //채팅창에서 나갔을 때
 function onClose() {
 	

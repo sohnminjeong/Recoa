@@ -3,6 +3,9 @@ package com.recoa.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -21,7 +24,6 @@ import com.recoa.service.UserService;
 import lombok.extern.java.Log;
 
 @Controller
-@Log
 public class ChatController {
 
 	@Autowired
@@ -31,10 +33,12 @@ public class ChatController {
 	
 	// 채팅방 입장
 	@GetMapping("/chat")
-	public String chat(Model model, int chatRoomCode) {
+	public String chat(Model model, int chatRoomCode, HttpServletRequest request) {
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		List<Chat> chatList = service.viewAllChatting(chatRoomCode);
-		
+		HttpSession session = request.getSession();
+		session.setAttribute("chatRoomCode", chatRoomCode);
+		session.setAttribute("userCode", user.getUserCode());
 		model.addAttribute("userId", user.getUsername());
 		model.addAttribute("chatList", chatList);
 		model.addAttribute("chatRoomCode", chatRoomCode);
