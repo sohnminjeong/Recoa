@@ -100,6 +100,14 @@
 		WHERE notice_code=#{noticeCode}
 	</delete>
 	
+	<!-- 수정 -->
+	<update id="updateNotice" parameterType="BoardNotice">
+		UPDATE board_notice
+		SET notice_title=#{noticeTitle},
+			notice_content=#{noticeContent}
+		WHERE notice_code=#{noticeCode}
+	</update>
+	
 	<!-- 로그인한 회원의 북마크 글 리스트 조회하기 -->
 	<select id="bookmarked" parameterType="BoardNoticePaging" resultMap="BoardNoticeMap">
 		SELECT *

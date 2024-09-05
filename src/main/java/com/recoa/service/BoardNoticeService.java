@@ -73,6 +73,16 @@ public class BoardNoticeService {
 		return dao.deleteImg(noticeCode);
 	}
 	
+	// 공지 수정하기
+	public int updateNotice(BoardNotice notice) {
+		return dao.updateNotice(notice);
+	}
+	
+	// 공지 이미지 수정하기
+	public int updateNoticeImg(BoardNoticeImg img) {
+		return dao.updateNoticeImg(img);
+	}
+	
 	/* ----- 북마크 ----- */
 	// 1. 북마크 생성
 	public int addBookmark(NoticeBookmark bookmark) {

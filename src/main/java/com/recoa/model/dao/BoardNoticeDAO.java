@@ -73,6 +73,16 @@ public class BoardNoticeDAO {
 		return session.delete("BoardNoticeImg.deleteImg", noticeCode);
 	}
 	
+	// 공지 수정하기
+	public int updateNotice(BoardNotice notice) {
+		return session.update("BoardNotice.updateNotice", notice);
+	}
+	
+	// 공지 이미지 수정하기
+	public int updateNoticeImg(BoardNoticeImg img) {
+		return session.update("BoardNoticeImg.updateNoticeImg", img);
+	}
+	
 	/* ----- 북마크 ----- */
 	// 1. 북마크 생성
 	public int addBookmark(NoticeBookmark bookmark) {

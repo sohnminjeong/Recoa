@@ -66,7 +66,6 @@ public class BoardNoticeController {
 		List<BoardNotice> list = service.viewNoticeList(paging);
 		model.addAttribute("list", list);
 		model.addAttribute("paging", paging);
-		System.out.println("list : " + list);
 		// 북마크 개수 
 		Map<Integer, Integer> bookmarkCount = new HashMap<>();
 	    
@@ -164,6 +163,105 @@ public class BoardNoticeController {
 		service.deleteImg(noticeCode);
 		
 		return "redirect:/boardNoticeList";
+	}
+	
+	// 공지 수정하기
+	@GetMapping("/updateNotice")
+	public String updateNotice(int noticeCode, Model model) {
+		BoardNotice notice = service.viewNotice(noticeCode);
+		List<BoardNoticeImg> images = service.noticeImg(noticeCode);
+		
+		if(images.size() != 0) {
+			model.addAttribute("images", images);
+		}
+		model.addAttribute("notice", notice);
+		
+		return "boardNotice/updateBoardNotice";
+	}
+	
+	@PostMapping("/updateBoardNotice")
+	public String updateBoardNotice(BoardNotice vo, @RequestParam("delImages") String delImages) throws IllegalStateException, IOException {
+		System.out.println("delImages : " + delImages);
+		
+		// 1. 이미지 제외 먼저 수정
+		service.updateNotice(vo);
+		
+		/* ----- 이미지 수정 -----*/
+		// 이전 이미지
+		List<BoardNoticeImg> prev = service.noticeImg(vo.getNoticeCode());
+		// 추가되는 이미지
+		List<MultipartFile> images = vo.getFiles();
+		
+		
+		System.out.println(" 이전 prev : " + prev);
+		System.out.println(" 추가 images : " + images);
+		
+		// 기존 이미지가 없을 때
+		if(prev.size() == 0) {
+			if(images != null && images.size() != 0 && images.get(0).getSize() > 0) {
+				System.out.println("2. 기존 이미지가 없고, 추가하는 이미지가 있어");
+				for(MultipartFile image : images) {
+					BoardNoticeImg img = new BoardNoticeImg();
+					
+					String url = fileUpload(image);
+					img.setNoticeImgUrl(url);
+					img.setNoticeCode(vo.getNoticeCode());
+					
+					service.registerBoardNoticeImg(img);
+				}
+			} else {
+				System.out.println("1. 기존 이미지가 없고, 추가하는 이미지도 없어");
+				
+			}
+			// 기존 이미지가 있을 때
+		} else {
+			// 기존 이미지 삭제!
+			if ("true".equals(delImages)) {
+				// 기존 이미지 파일 삭제
+				for(BoardNoticeImg image : prev) {
+					File file = new File(image.getNoticeImgUrl());
+				    file.delete();
+				}
+				// 기존 이미지 DB 삭제
+				service.deleteImg(vo.getNoticeCode());
+				System.out.println("3. 기존 이미지 있는데 삭제만 해");
+				
+				if(images != null && images.size() != 0 && images.get(0).getSize() > 0) {
+					// 기존 이미지를 삭제하고, 새로 이미지를 추가할 때 (변경)
+					System.out.println("6. 삭제하고 추가해");
+					for(MultipartFile image : images) {
+						BoardNoticeImg img = new BoardNoticeImg();
+						
+						String url = fileUpload(image);
+						img.setNoticeImgUrl(url);
+						img.setNoticeCode(vo.getNoticeCode());
+						
+						service.registerBoardNoticeImg(img);
+					}
+				}
+				
+			} else {
+				// 삭제x, 생성o
+				if(images != null && images.size() != 0 && images.get(0).getSize() > 0) {
+					System.out.println("5. 삭제하지 않고 추가해");
+					for(MultipartFile image : images) {
+						BoardNoticeImg img = new BoardNoticeImg();
+						
+						String url = fileUpload(image);
+						img.setNoticeImgUrl(url);
+						img.setNoticeCode(vo.getNoticeCode());
+						
+						service.registerBoardNoticeImg(img);
+					}
+				} else {
+					System.out.println("4. 삭제하지 않고, 그대로 둬. 추가 없이");
+				}
+			}
+		}
+		
+
+		
+		return "redirect:/viewNotice?noticeCode=" + vo.getNoticeCode();
 	}
 	
 	/*----- 북마크 -----*/

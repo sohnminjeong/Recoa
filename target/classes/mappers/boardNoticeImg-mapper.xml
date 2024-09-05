@@ -24,5 +24,12 @@
 		DELETE FROM board_notice_img
 		WHERE notice_code=#{noticeCode}
 	</delete>
+	
+	<!-- 이미지 수정하기 -->
+	<update id="updateNoticeImg" parameterType="BoardNoticeImg">
+		UPDATE board_notice_img
+		SET notice_img_url=#{noticeImgUrl}
+		WHERE notice_code=#{noticeCode}
+	</update>
 </mapper>
 	

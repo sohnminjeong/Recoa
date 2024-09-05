@@ -154,7 +154,7 @@
 			</c:when>
 			<c:otherwise>
 				<button type="button" onclick="location.href='/boardNoticeList'">목록</button>
-				<button type="button" onclick="location.href=''">수정</button>
+				<button type="button" onclick="location.href='/updateNotice?noticeCode=${notice.noticeCode}'">수정</button>
 				<button type="button" onclick="location.href='/deleteNotice?noticeCode=${notice.noticeCode}'">삭제</button>
 			</c:otherwise>
 		</c:choose>
@@ -171,7 +171,7 @@
 				</c:otherwise>
 			</c:choose>
     		<div id="writerdesc">
-	    		<span id="writerAdr">관리자</span>
+	    		<span id="writerAdr">${notice.user.userAdmin}</span>
 				<span id="writerNickname">${notice.user.userNickname}
 				<i class="fa-solid fa-caret-right"></i>
 				</span>
