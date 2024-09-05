@@ -93,7 +93,6 @@
 	</div>
 	<div id="container">
 		<h3>채팅</h3>
-		${user }
 		<div id="containerContent">
 			<!-- 채팅 -->
 			<div class="container">
@@ -145,11 +144,8 @@ const userCode = ${user.userCode};
 var sock = new SockJS('http://localhost:8080/chatting');
 sock.onmessage = onMessage;
 sock.onclose = onClose;
-//var chatRoomCode = ${chatRoomCode};
 //채팅창에 들어왔을 때 자동실행
-// sock.send( JSON.stringify({"chatRoomCode": chatRoomCode}));
 sock.onopen = function(){
-	alert(chatRoomCode);
 	var user = '${user.userNickname}';
 	var str="<div>";
 	 str+="<b>" + user + "님이 입장하셨습니다." + "</b>";
@@ -165,7 +161,6 @@ $("#button-send").on("click", function(e) {
 	$('#chatMessage').val('')
 });
 // 작성한 내용 전달
-// sock.send($("#chatMessage").val());
 function sendMessage() {
 	
 	const chatContext = {
@@ -173,7 +168,6 @@ function sendMessage() {
 			"chatRoomCode":chatRoomCode,
 			"chatMessage":$("#chatMessage").val()
 	};
-	alert(JSON.stringify(chatContext));
 	sock.send(JSON.stringify(chatContext));
 }
 
@@ -209,27 +203,27 @@ function onMessage(msg) {
 		$("#chatMessageArea").append(str);
 	}
 }
-/*// 채팅 db 저장
-		$.ajax({
-			type:"post",
-			url:"/insertChatting",
-			data : {"chatRoomCode":chatRoomCode, "chatMessage":message,"userNumber":${user.userCode}},
-			 
-			success:function(result){
-				if(result){
-					alert("디비 저장 성공");
-				}else{
-					alert("디비 저장 실패");
-				}
-			}
-		})*/
+/*
+ // 채팅 db 저장
+$.ajax({
+	type:"post",
+	url:"/insertChatting",
+	data : {"chatRoomCode":chatRoomCode, "chatMessage":message,"userNumber":${user.userCode}},
+	 
+	success:function(result){
+		if(result){
+			alert("디비 저장 성공");
+		}else{
+			alert("디비 저장 실패");
+		}
+	}
+})
+*/
 
 //채팅창에서 나갔을 때
 function onClose() {
-	
 	var user = '${user.userNickname}';
 	var str = user + " 님이 퇴장하셨습니다.";
-	
 	$("#chatMessageArea").append(str);
 	//location.replace("/");
 }

@@ -80,7 +80,6 @@ public class ChattingHandler extends TextWebSocketHandler {
 			for ( WebSocketSession s : sessions ) {
 				// WebSocketSession == HttpSession (로그인정보,채팅방정보) 을 가로챈것..
 				int nowChatRoomCode = (Integer) s.getAttributes().get("chatRoomCode");
-				System.out.println("newChatRoomCdoe : "+nowChatRoomCode);
 				// WebSocketSession에 담겨있는 채팅방 번호와 chat에 담겨있는 채팅방 번호가 같은 경우  === 같은방 클라이언트
 				if ( nowChatRoomCode == chat.getChatRoomCode() ) {
 					//같은방 클라이언트에게 JSON 형식의 메시지를 보냄 
