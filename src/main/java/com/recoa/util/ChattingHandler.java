@@ -91,8 +91,13 @@ public class ChattingHandler extends TextWebSocketHandler {
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		System.out.println("퇴장 sessions ; "+session);
-		//System.out.println("status : " +status);
+		int chatRoomCode = (Integer) session.getAttributes().get("chatRoomCode");
 		
-		sessions.remove(session);	
+		int deleteChatRoom = chatService.deleteChatRoom(chatRoomCode);
+		if(deleteChatRoom!=0) {
+			System.out.println("채팅방 지워짐");
+		}
+		sessions.remove(session);
+		
 	}
 }

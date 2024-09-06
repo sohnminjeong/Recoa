@@ -57,10 +57,12 @@
 }
 #chattingContents{
 	height:90%;
+	width:100%;
 	font-size: 0.8rem;
 }
 #chattingContents>#chatMessageArea{
 	height:90%;
+	width:100%;
 	overflow-y: scroll;
 	overflow-x: hidden;
     position: relative;
@@ -73,6 +75,7 @@
 	
 	input{
 		width:80%;
+		font-family: 'SDMiSaeng';
 	}
 	button{
 		font-family: 'SDMiSaeng';
@@ -83,18 +86,19 @@
 .backColorGray{
 	
 	position: relative;
-    left: 50%;
-    width: 50%;
-    margin : 5px 0;
-    padding : 5px;
-    display:flex;
+    left: 30%;
+    width: 70%;
+    margin: 5px 0;
+    padding: 5px;
+    display: flex;
+    justify-content: flex-end;
 
     b{
-    	border:0.1px solid gray;
-    	border-radius:3px;
-    	margin : 0px 5px;
-    	width:95%;
-    	padding : 5px;
+    	border: 0.1px solid gray;
+        border-radius: 3px;
+        margin-left: 5px;
+        width: 100%;
+        padding: 5px;
     }
 	
 }
@@ -102,7 +106,7 @@
 	
 	position: relative;
     left: 0%;
-    width: 50%;
+    width: 70%;
    	margin : 5px 0;
     padding : 5px;
     display:flex;
@@ -236,7 +240,7 @@ function onMessage(msg) {
 	if(sessionId == cur_session){
 		// 보낸user와 먼저 방을 연 user가 같을 경우
 		var str="<div class='backColorGray'>";
-			str+="<b>"+chatTimeHour+":"+chatTimeMinutes+"</b>"
+			str+="<span>"+chatTimeHour+":"+chatTimeMinutes+"</span>";
 		 	str+="<b>"+message + "</b>";
 		 	str+="</div>"
 		
@@ -246,6 +250,7 @@ function onMessage(msg) {
 	else{
 		// 보낸 user와 방을 연 user가 다를 경우
 		var str="<div class='backColorYellow'>";
+		str+="<span>"+chatTimeHour+":"+chatTimeMinutes+"</span>";
 		 str+="<b>" + message + "</b>";
 		 str+="</div>"
 		
@@ -258,7 +263,7 @@ function onClose() {
 	var user = '${user.userNickname}';
 	var str = user + " 님이 퇴장하셨습니다.";
 	$("#chatMessageArea").append(str);
-	
+	window.location.reload();
 }
 
 

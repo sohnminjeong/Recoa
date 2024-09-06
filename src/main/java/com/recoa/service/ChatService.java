@@ -44,4 +44,13 @@ public class ChatService {
 	public Chat viewChattingByChatCode(int chatCode) {
 		return dao.viewChattingByChatCode(chatCode);
 	}
+	
+	// 채팅 삭제 
+	public int deleteChatting(int chatRoomCode) {
+		return dao.deleteChatting(chatRoomCode);
+	}
+	// 채팅룸 삭제
+	public int deleteChatRoom(int chatRoomCode) {
+		return dao.deleteChatRoom(chatRoomCode);
+	}
 }

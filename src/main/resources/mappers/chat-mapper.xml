@@ -53,4 +53,16 @@
 	FROM chat
 	WHERE chat_code=#{chatCode}
 	</select>
+	
+	<!-- 채팅 삭제 -->
+	<delete id="deleteChatting" parameterType="int">
+	DELETE FROM chat
+	WHERE chat_room_code=#{chatRoomCode}
+	</delete>
+	<!-- 채팅룸 삭제 -->
+	<delete id="deleteChatRoom" parameterType="int">
+	DELETE FROM chat_room
+	WHERE chat_room_code=#{chatRoomCode}
+	</delete>
+	
 </mapper>

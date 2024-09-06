@@ -45,4 +45,13 @@ public class ChatDAO {
 		return session.selectOne("chatMapper.viewChattingByChatCode", chatCode);
 	}
 	
+	// 채팅 삭제 
+	public int deleteChatting(int chatRoomCode) {
+		return session.delete("chatMapper.deleteChatting", chatRoomCode);
+	}
+	// 채팅룸 삭제
+	public int deleteChatRoom(int chatRoomCode) {
+		return session.delete("chatMapper.deleteChatRoom", chatRoomCode);
+	}
+	
 }

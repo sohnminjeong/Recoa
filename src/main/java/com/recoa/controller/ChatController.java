@@ -76,11 +76,9 @@ public class ChatController {
 		if(hasChatRoom == null) {
 			// 톡방이 없는 경우
 			service.insertChatRoom(vo);
-			System.out.println("새로운 방 코드 :"+vo.getChatRoomCode());
 			return vo.getChatRoomCode();
 		} else {
 			// 기존 방이 있는 경우 
-			System.out.println("기존 방 코드 : "+hasChatRoom.getChatRoomCode());
 			return hasChatRoom.getChatRoomCode();
 		}
 	}
