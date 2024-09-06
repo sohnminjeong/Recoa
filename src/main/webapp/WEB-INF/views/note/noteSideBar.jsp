@@ -173,8 +173,8 @@
     z-index: 1;
     bottom: 6%;
     left: 3%;
-    width: 12%;
-    height: 40%;
+   	width: 15%;
+    height: 50%;
     border-radius:5px;
 }
 

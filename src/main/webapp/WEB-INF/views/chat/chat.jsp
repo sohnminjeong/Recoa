@@ -33,7 +33,7 @@
 	 border-radius:5px;
 }
 #chattingReceiver{
-	height:8%;
+	height:10%;
 	border-bottom:1px dashed black;
 	display:flex;
 	justify-content:space-between;
@@ -56,13 +56,14 @@
 	
 }
 #chattingContents{
-	height:92%
+	height:90%;
+	font-size: 0.8rem;
 }
 #chattingContents>#chatMessageArea{
 	height:90%;
 	overflow-y: scroll;
-	display:grid;
-	grid-template-columns: 1fr 1fr;
+	overflow-x: hidden;
+    position: relative;
 }
 #chattingContents>#chatRoomBottom{
 	display:flex;
@@ -80,10 +81,26 @@
 	}
 }
 .backColorGray{
-	background-color:pink;
+	
+	position: relative;
+    left: 50%;
+    width: 50%;
+    border:0.1px solid gray;
+    border-radius:3px;
+    margin : 5px 0;
+    padding : 5px;
+	
 }
 .backColorYellow{
-	background-color:yellow;
+	
+	position: relative;
+    left: 0%;
+    width: 50%;
+    border:0.1px solid gray;
+    border-radius:3px;
+    margin : 5px 0;
+     padding : 5px;
+	
 }
 i:hover{
 	cursor:pointer;
@@ -195,7 +212,7 @@ function onMessage(msg) {
 	if(sessionId == cur_session){
 		// 보낸user와 먼저 방을 연 user가 같을 경우
 		var str="<div class='backColorGray'>";
-		 str+="<b>" + sessionId + " : " + message + "</b>";
+		 str+="<b>" + message + "</b>";
 		 str+="</div>"
 		
 		$("#chatMessageArea").append(str);
@@ -204,7 +221,7 @@ function onMessage(msg) {
 	else{
 		// 보낸 user와 방을 연 user가 다를 경우
 		var str="<div class='backColorYellow'>";
-		 str+="<b>" + sessionId + " : " + message + "</b>";
+		 str+="<b>" + message + "</b>";
 		 str+="</div>"
 		
 		$("#chatMessageArea").append(str);
