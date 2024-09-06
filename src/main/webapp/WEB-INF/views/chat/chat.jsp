@@ -123,6 +123,9 @@
 i:hover{
 	cursor:pointer;
 }
+.enter{
+	margin:5px;
+}
 </style>
 </head>
 <body>
@@ -196,7 +199,7 @@ sock.onclose = onClose;
 //채팅창에 들어왔을 때 자동실행
 sock.onopen = function(){
 	var user = '${user.userNickname}';
-	var str="<div>";
+	var str="<div class='enter'>";
 	 str+="<b>" + user + "님이 입장하셨습니다." + "</b>";
 	 str+="</div>"
 	 
