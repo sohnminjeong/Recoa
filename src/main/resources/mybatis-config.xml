@@ -24,6 +24,7 @@
 		<typeAlias type="com.recoa.model.vo.NotePaging" alias="NotePaging"/>
 		<typeAlias type="com.recoa.model.vo.Chat" alias="Chat"/>
 		<typeAlias type="com.recoa.model.vo.ChatRoom" alias="ChatRoom"/>
+		<typeAlias type="com.recoa.model.vo.ChatFile" alias="ChatFile"/>
 	</typeAliases>
 
 	<!-- 쿼리문 -->

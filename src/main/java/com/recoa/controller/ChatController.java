@@ -1,7 +1,10 @@
 package com.recoa.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -14,14 +17,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.recoa.model.vo.Chat;
 import com.recoa.model.vo.ChatRoom;
 import com.recoa.model.vo.User;
 import com.recoa.service.ChatService;
 import com.recoa.service.UserService;
-
-import lombok.extern.java.Log;
 
 @Controller
 public class ChatController {
@@ -30,6 +32,20 @@ public class ChatController {
 	private ChatService service;
 	@Autowired
 	private UserService userService;
+	
+	// 파일 저장
+	private String path = "C:\\recoaImg\\chat\\";
+	
+	// 파일 업로드 기능
+	public String fileUpload(MultipartFile file) throws IllegalStateException, IOException {
+		UUID uuid =UUID.randomUUID();
+		String filename = uuid.toString()+"_"+file.getOriginalFilename();
+		File copyFile = new File(path+filename);
+		file.transferTo(copyFile);
+		return filename;
+	}
+	
+	 /* ---------------------------------------------------- */	
 	
 	// 채팅방 입장
 	@GetMapping("/chat")

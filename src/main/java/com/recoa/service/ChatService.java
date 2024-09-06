@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.recoa.model.dao.ChatDAO;
 import com.recoa.model.vo.Chat;
+import com.recoa.model.vo.ChatFile;
 import com.recoa.model.vo.ChatRoom;
 
 @Service
@@ -23,6 +24,11 @@ public class ChatService {
 	// 채팅 생성 
 	public int insertChatting(Chat vo) {
 		return dao.insertChatting(vo);
+	}
+	
+	// 파일 첨부 
+	public int insertChatFile(ChatFile vo) {
+		return dao.insertChatFile(vo);
 	}
 	
 	// 삭제 안된 채팅방 + 이미 회원 두명이 일치하는 경우 중복 확인
@@ -45,9 +51,19 @@ public class ChatService {
 		return dao.viewChattingByChatCode(chatCode);
 	}
 	
+	// chatCode로 파일 리스트 찾기 
+	public List<ChatFile> viewChatFileByChatCode(int chatCode){
+		return dao.viewChatFileByChatCode(chatCode);
+	}
+	
 	// 채팅 삭제 
 	public int deleteChatting(int chatRoomCode) {
 		return dao.deleteChatting(chatRoomCode);
+	}
+	
+	//  채팅 파일 삭제 
+	public int deleteChatFile(int chatCode) {
+		return dao.deleteChatFile(chatCode);
 	}
 	// 채팅룸 삭제
 	public int deleteChatRoom(int chatRoomCode) {

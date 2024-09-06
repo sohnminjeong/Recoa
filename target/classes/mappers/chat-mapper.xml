@@ -13,6 +13,12 @@
 		<result column="user_number1" property="userNumber1"/>
 		<result column="user_number2" property="userNumber2"/>
 	</resultMap>
+	
+	<resultMap type="ChatFile" id="chatFileMap">
+		<id column="chat_file_code" property="chatFileCode"/>
+		<result column="chat_code" property="chatCode"/>
+		<result column="chat_file_url" property="chatFileUrl"/>
+	</resultMap>
 
 	<!-- 채팅방 생성 -->
 	<insert id="insertChatRoom" parameterType="ChatRoom" useGeneratedKeys="true" keyColumn="chat_room_code" keyProperty="chatRoomCode">
@@ -24,6 +30,12 @@
 	<insert id="insertChatting" parameterType="Chat" useGeneratedKeys="true" keyColumn="chat_code" keyProperty="chatCode">
 	INSERT INTO chat(chat_message, chat_room_code, user_number)
 	VALUES (#{chatMessage}, #{chatRoomCode}, #{userNumber})
+	</insert>
+	
+	<!-- 파일 첨부 -->
+	<insert id="insertChatFile" parameterType="ChatFile" useGeneratedKeys="true" keyColumn="chat_file_code" keyProperty="chatFileCode">
+	INSERT INTO chatFile(chat_code, chat_file_url)
+	VALUES (#{chatCode}, #{chatFileUrl})
 	</insert>
 	
 	<!-- 삭제 안된 채팅방 + 이미 회원 두명이 일치하는 경우 중복 확인 -->
@@ -54,11 +66,25 @@
 	WHERE chat_code=#{chatCode}
 	</select>
 	
+	<!-- chatCode로 파일 리스트 찾기 -->
+	<select id="viewChatFileByChatCode" parameterType="int" resultMap="chatFileMap">
+	SELECT *
+	FROM chat_file
+	WHERE chat_code=#{chatCode}
+	</select>
+	
 	<!-- 채팅 삭제 -->
 	<delete id="deleteChatting" parameterType="int">
 	DELETE FROM chat
 	WHERE chat_room_code=#{chatRoomCode}
 	</delete>
+	
+	<!-- 채팅 파일 삭제 -->
+	<delete id="deleteChatFile" parameterType="int">
+	DELETE FROM chat_file
+	WHERE chat_code=#{chatCode}
+	</delete>
+	
 	<!-- 채팅룸 삭제 -->
 	<delete id="deleteChatRoom" parameterType="int">
 	DELETE FROM chat_room

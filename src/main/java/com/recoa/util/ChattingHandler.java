@@ -3,6 +3,7 @@ package com.recoa.util;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,13 +91,16 @@ public class ChattingHandler extends TextWebSocketHandler {
 	// 클라이언트와 연결 끊어진 후 (채팅방 나간 경우) remove로 해당 세션 제거
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		System.out.println("퇴장 sessions ; "+session);
+		//System.out.println("퇴장 sessions ; "+session);
 		int chatRoomCode = (Integer) session.getAttributes().get("chatRoomCode");
-		
-		int deleteChatRoom = chatService.deleteChatRoom(chatRoomCode);
-		if(deleteChatRoom!=0) {
-			System.out.println("채팅방 지워짐");
+		List<Chat> chatList = chatService.viewAllChatting(chatRoomCode);
+		for(int i=0; i<chatList.size(); i++) {
+			int chatCode = chatList.get(i).getChatCode();
+			if(chatService.viewChatFileByChatCode(chatCode)!=null) {
+				chatService.deleteChatFile(chatCode);
+			}
 		}
+		chatService.deleteChatRoom(chatRoomCode);
 		sessions.remove(session);
 		
 	}
