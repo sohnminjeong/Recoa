@@ -37,9 +37,9 @@
 			                <img src="/recoaImg/boardNotice/${img.noticeImgUrl}"/>
 			            </c:forEach>
 			        </c:if>
-			        <!-- 동적으로 추가되는 이미지 미리보기가 여기에 들어갑니다 -->
-			        <div id="preview"></div>
 			    </div>
+			    <!-- 동적으로 추가되는 이미지 미리보기가 여기에 들어갑니다 -->
+			        <div id="preview"></div>
 			    <div id="imgButtons">
 			        <button type="button" id="addImg">이미지 추가</button>
 			        <button type="button" id="deleteImg" style="display: none;">이미지 삭제</button> <!-- Always in DOM -->
@@ -78,8 +78,8 @@
 		
 		file.value="";
 		
-		preview.style.display = "none";
-		preview.style.visibility = "hidden";
+		preview.style.display = "block";
+		prev.style.display="none";
 		
 	    addImg.style.display = "block";
 	    deleteImg.style.display = "none";

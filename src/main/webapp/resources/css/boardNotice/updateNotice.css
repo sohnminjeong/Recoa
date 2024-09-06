@@ -85,18 +85,12 @@
 	    position: relative;
 	    
 		#images {
-			border: 1px solid;
 		    width: 100%;
 		    display: flex;
 		    flex-dircetion: row;
 		    align-items: center;
 		    justify-content: center;
-		    height: 50px;
-		    
 
-		}
-		#preview{
-		    background-color: pink;
 		}
 		
 		#imgButtons{
