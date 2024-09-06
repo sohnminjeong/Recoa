@@ -29,6 +29,12 @@ public class ChatService {
 	public ChatRoom checkChatRoom(ChatRoom vo) {
 		return dao.checkChatRoom(vo);
 	}
+	
+	// chat_room_code로 ChatRoom 찾기 
+	public ChatRoom chatRoomFindByRoomCode(int chatRoomCode) {
+		return dao.chatRoomFindByRoomCode(chatRoomCode);
+	}
+	
 	// 대화 내용 전체 확인 
 	public List<Chat> viewAllChatting(int chatRoomCode) {
 		return dao.viewAllChatting(chatRoomCode);

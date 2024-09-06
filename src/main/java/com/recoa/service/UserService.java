@@ -97,8 +97,8 @@ public class UserService implements UserDetailsService{
 	public int findUserCode(String userNickname) {
 		return dao.findUserCode(userNickname);
 	}
-	// 쪽지 보기용 : 회원 코드로 닉네임 찾기 
-	public String findUserNickname(int userCode) {
-		return dao.findUserNickname(userCode);
+	// 쪽지 보기용 : 회원 코드로 회원 찾기 
+	public User findUserByCode(int userCode) {
+		return dao.findUserByCode(userCode);
 	}
 }

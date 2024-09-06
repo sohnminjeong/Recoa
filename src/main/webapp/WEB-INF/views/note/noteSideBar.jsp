@@ -174,7 +174,6 @@
     bottom: 6%;
     left: 3%;
     width: 12%;
-    border: 1px solid black;
     height: 40%;
     border-radius:5px;
 }

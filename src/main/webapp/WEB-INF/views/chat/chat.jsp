@@ -37,6 +37,23 @@
 	border-bottom:1px dashed black;
 	display:flex;
 	justify-content:space-between;
+	align-items:center;
+	padding: 0 10px;
+	
+	  #interlocutor{
+    	display:flex;
+    	align-items:center;
+    	
+    	img{
+    		border-radius:50%;
+    		width:20px;
+    		height:20px;
+    		margin-right:10px;
+    		border:0.5px solid black;
+    	}
+    	
+    }
+	
 }
 #chattingContents{
 	height:92%
@@ -69,7 +86,6 @@
 	background-color:yellow;
 }
 i:hover{
-	color : yellow;
 	cursor:pointer;
 }
 </style>
@@ -78,9 +94,24 @@ i:hover{
 <sec:authentication property="principal" var="user" />
 <div id="chattingRoom">
 	<div id="chattingReceiver">
-		<h3>채팅하는 상대의 사진/닉네임</h3>
-		<i class="fa-regular fa-circle-xmark"></i>
-		<i class="fa-solid fa-door-open" onclick="onClose()"></i>
+		<div id="interlocutor">
+			<c:choose>
+				<c:when test="${interlocutor.userImgUrl==null}">
+					<img src="resources/images/user/default_profile.png" class="userImg"/>
+				</c:when>
+				<c:otherwise>
+					<img src="/recoaImg/user/${interlocutor.userImgUrl}" class="userImg"/>
+				</c:otherwise>
+			</c:choose>
+			
+			<span id="interlocutorNickname">${interlocutor.userNickname}</span>
+			
+		</div>	
+		<div id="chatRoomOutBtn">
+			<!-- <i class="fa-regular fa-circle-xmark"onclick=""></i> -->
+			<i class="fa-solid fa-door-open" onclick="onClose()"></i>
+		</div>
+		
 	</div>
 	<div id="chattingContents">
 		<div id="chatMessageArea" class="col">
@@ -185,6 +216,7 @@ function onClose() {
 	var user = '${user.userNickname}';
 	var str = user + " 님이 퇴장하셨습니다.";
 	$("#chatMessageArea").append(str);
+	$("#chattingRoom").css({"display":"none"});	
 }
 
 

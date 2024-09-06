@@ -81,10 +81,11 @@ public class NoteController {
 		List<Note> list = service.viewAllNote(paging);
 		for(int i=0; i<list.size();i++) {
 			
-			String senderNick=userService.findUserNickname(list.get(i).getNoteSender());
-			list.get(i).setSenderNick(senderNick);
-			String receiverNick=userService.findUserNickname(list.get(i).getNoteReceiver());
-			list.get(i).setReceiverNick(receiverNick);
+			
+			User sender = userService.findUserByCode(list.get(i).getNoteSender());
+			list.get(i).setSenderNick(sender.getUserNickname());
+			User receiver = userService.findUserByCode(list.get(i).getNoteReceiver());
+			list.get(i).setReceiverNick(receiver.getUserNickname());
 			
 			List<NoteFile> listFile = service.viewAllNoteFile(list.get(i).getNoteCode());
 			if(listFile.size()!=0) {
@@ -106,8 +107,8 @@ public class NoteController {
 		List<Note> list = service.viewAllBySender(paging);
 		
 		for(int i=0; i<list.size();i++) {
-			String receiverNick=userService.findUserNickname(list.get(i).getNoteReceiver());
-			list.get(i).setReceiverNick(receiverNick);
+			User receiver = userService.findUserByCode(list.get(i).getNoteReceiver());
+			list.get(i).setReceiverNick(receiver.getUserNickname());
 			List<NoteFile> listFile = service.viewAllNoteFile(list.get(i).getNoteCode());
 			if(listFile.size()!=0) {
 				list.get(i).setHasNote(true);
@@ -128,8 +129,8 @@ public class NoteController {
 		List<Note> list = service.viewAllByReceiver(paging);
 		
 		for(int i=0; i<list.size();i++) {
-			String senderNick=userService.findUserNickname(list.get(i).getNoteSender());
-			list.get(i).setSenderNick(senderNick);
+			User sender = userService.findUserByCode(list.get(i).getNoteSender());
+			list.get(i).setSenderNick(sender.getUserNickname());
 			List<NoteFile> listFile = service.viewAllNoteFile(list.get(i).getNoteCode());
 			if(listFile.size()!=0) {
 				list.get(i).setHasNote(true);
@@ -145,8 +146,8 @@ public class NoteController {
 	@GetMapping("/viewOneNote")
 	public String viewOneNote(int noteCode, Model model) {
 		Note vo = service.oneViewNote(noteCode);
-		vo.setSenderNick(userService.findUserNickname(vo.getNoteSender()));
-		vo.setReceiverNick(userService.findUserNickname(vo.getNoteReceiver()));
+		vo.setSenderNick(userService.findUserByCode(vo.getNoteSender()).getUserNickname());
+		vo.setReceiverNick(userService.findUserByCode(vo.getNoteReceiver()).getUserNickname());
 		List<NoteFile> files = service.viewAllNoteFile(noteCode);
 		
 		if(files.size()!=0) {

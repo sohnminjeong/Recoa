@@ -117,10 +117,12 @@
 	WHERE user_nickname=#{userNickname}
 	</select>
 	
-	<!-- 쪽지 보기용 : 회원 코드로 닉네임 찾기 -->
-	<select id="findUserNickname" parameterType="int" resultType="String">
-	SELECT user_nickname
+	<!-- 쪽지 보기용 : 회원 코드로 회원 정보 찾기 -->
+	<select id="findUserByCode" parameterType="int" resultMap="userMap">
+	SELECT *
 	FROM user
 	WHERE user_code=#{userCode}
 	</select>
+	
+	
 </mapper>
