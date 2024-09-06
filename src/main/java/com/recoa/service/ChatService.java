@@ -39,4 +39,9 @@ public class ChatService {
 	public List<Chat> viewAllChatting(int chatRoomCode) {
 		return dao.viewAllChatting(chatRoomCode);
 	}
+	
+	// chatCode로 Chat 찾기
+	public Chat viewChattingByChatCode(int chatCode) {
+		return dao.viewChattingByChatCode(chatCode);
+	}
 }

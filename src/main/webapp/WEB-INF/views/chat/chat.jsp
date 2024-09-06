@@ -85,10 +85,17 @@
 	position: relative;
     left: 50%;
     width: 50%;
-    border:0.1px solid gray;
-    border-radius:3px;
     margin : 5px 0;
     padding : 5px;
+    display:flex;
+
+    b{
+    	border:0.1px solid gray;
+    	border-radius:3px;
+    	margin : 0px 5px;
+    	width:95%;
+    	padding : 5px;
+    }
 	
 }
 .backColorYellow{
@@ -96,10 +103,17 @@
 	position: relative;
     left: 0%;
     width: 50%;
-    border:0.1px solid gray;
-    border-radius:3px;
-    margin : 5px 0;
-     padding : 5px;
+   	margin : 5px 0;
+    padding : 5px;
+    display:flex;
+
+    b{
+    	border:0.1px solid gray;
+    	border-radius:3px;
+    	margin : 0px 5px;
+    	width:95%;
+    	padding : 5px;
+    }
 	
 }
 i:hover{
@@ -137,12 +151,19 @@ i:hover{
 				<!-- 채팅 작성자==현유저 -->
 				<c:if test="${hadChat.userNumber==user.userCode}">
 					<div class="backColorGray">
+						<div>
+							<fmt:formatDate value="${hadChat.chatTime}" pattern="HH:mm" />
+						</div>
+						
 						<b>${hadChat.chatMessage}</b>
 					</div>
 				</c:if>
 				<c:if test="${hadChat.userNumber!=user.userCode}">
 					<div class="backColorYellow">
 						<b>${hadChat.chatMessage}</b>
+						<div>
+							<fmt:formatDate value="${hadChat.chatTime}" pattern="HH:mm" />
+						</div>
 					</div>
 				</c:if>
 			</c:forEach>
@@ -201,10 +222,13 @@ function onMessage(msg) {
 	var data = msg.data;
 	var sessionId = null; //데이터를 보낸 사람
 	var message = null;
+	var chatTime = null;
 	
 	var arr = data.split(":");
 	sessionId = arr[0]; // 작성자 닉네임
 	message = arr[1]; // 작성 내용
+	chatTimeHour = arr[2]; // 작성 시간
+	chatTimeMinutes = arr[3]; // 작성 분
 	
 	var cur_session = '${user.userNickname}'; //현재 세션에 로그인 한 사람
 	
@@ -212,8 +236,9 @@ function onMessage(msg) {
 	if(sessionId == cur_session){
 		// 보낸user와 먼저 방을 연 user가 같을 경우
 		var str="<div class='backColorGray'>";
-		 str+="<b>" + message + "</b>";
-		 str+="</div>"
+			str+="<b>"+chatTimeHour+":"+chatTimeMinutes+"</b>"
+		 	str+="<b>"+message + "</b>";
+		 	str+="</div>"
 		
 		$("#chatMessageArea").append(str);
 		  
@@ -233,7 +258,7 @@ function onClose() {
 	var user = '${user.userNickname}';
 	var str = user + " 님이 퇴장하셨습니다.";
 	$("#chatMessageArea").append(str);
-	$("#chattingRoom").css({"display":"none"});	
+	
 }
 
 

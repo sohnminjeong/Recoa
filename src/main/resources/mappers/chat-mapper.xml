@@ -46,4 +46,11 @@
 	FROM chat
 	WHERE chat_room_code=#{chatRoomCode}
 	</select>
+	
+	<!-- chatCode로 Chat 찾기 -->
+	<select id="viewChattingByChatCode" parameterType="int" resultMap="chatMap">
+	SELECT *
+	FROM chat
+	WHERE chat_code=#{chatCode}
+	</select>
 </mapper>

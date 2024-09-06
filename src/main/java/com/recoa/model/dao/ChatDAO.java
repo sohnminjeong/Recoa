@@ -40,4 +40,9 @@ public class ChatDAO {
 		return session.selectList("chatMapper.viewAllChatting", chatRoomCode);
 	}
 	
+	// chatCode로 Chat 찾기
+	public Chat viewChattingByChatCode(int chatCode) {
+		return session.selectOne("chatMapper.viewChattingByChatCode", chatCode);
+	}
+	
 }

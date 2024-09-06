@@ -1,11 +1,8 @@
 package com.recoa.util;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +68,9 @@ public class ChattingHandler extends TextWebSocketHandler {
 		
 		//채팅 메시지 DB 삽입
 		int result = chatService.insertChatting(chat);
+		Chat newChat = chatService.viewChattingByChatCode(chat.getChatCode());
+		int hour = newChat.getChatTime().getHours();
+		int minutes = newChat.getChatTime().getMinutes();
 		
 		if(result>0) {
 			
@@ -80,16 +80,17 @@ public class ChattingHandler extends TextWebSocketHandler {
 				// WebSocketSession에 담겨있는 채팅방 번호와 chat에 담겨있는 채팅방 번호가 같은 경우  === 같은방 클라이언트
 				if ( nowChatRoomCode == chat.getChatRoomCode() ) {
 					//같은방 클라이언트에게 JSON 형식의 메시지를 보냄 
-					s.sendMessage( new TextMessage( user.getUserNickname()+":"+chatMessage ));
+					s.sendMessage( new TextMessage( user.getUserNickname()+":"+chatMessage+":"+hour+":"+minutes));
 				}
 			}	
 		}
 	}
 
+
 	// 클라이언트와 연결 끊어진 후 (채팅방 나간 경우) remove로 해당 세션 제거
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		//System.out.println("퇴장 sessions ; "+session);
+		System.out.println("퇴장 sessions ; "+session);
 		//System.out.println("status : " +status);
 		
 		sessions.remove(session);	
