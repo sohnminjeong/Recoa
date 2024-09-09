@@ -37,6 +37,11 @@ public class ChatDAO {
 		return session.selectOne("chatMapper.checkChatRoom", vo);
 	}
 	
+	// userCode로 chatRoom 찾기
+	public List<Chat> chatRoomList(int userCode){
+		return session.selectList("chatMapper.chatRoomList", userCode);
+	}
+	
 	// chat_room_code로 ChatRoom 찾기 
 	public ChatRoom chatRoomFindByRoomCode(int chatRoomCode) {
 		return session.selectOne("chatMapper.chatRoomFindByRoomCode", chatRoomCode);

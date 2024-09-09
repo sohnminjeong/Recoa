@@ -18,5 +18,5 @@ public class Chat {
 	private int chatRoomCode;
 	private int userNumber;
 	
-	private List<MultipartFile> file;
+	private List<MultipartFile> chatFile;
 }

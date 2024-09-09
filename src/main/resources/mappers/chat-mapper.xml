@@ -19,6 +19,10 @@
 		<result column="chat_code" property="chatCode"/>
 		<result column="chat_file_url" property="chatFileUrl"/>
 	</resultMap>
+	
+	<resultMap type="User" id="userMap">
+		<id column="user_code" property="userCode"/>
+	</resultMap>
 
 	<!-- 채팅방 생성 -->
 	<insert id="insertChatRoom" parameterType="ChatRoom" useGeneratedKeys="true" keyColumn="chat_room_code" keyProperty="chatRoomCode">
@@ -43,6 +47,18 @@
 	SELECT *
 	FROM chat_room
 	WHERE (user_number1=#{userNumber1} AND user_number2=#{userNumber2}) OR (user_number1=#{userNumber2} AND user_number2=#{userNumber1})
+	</select>
+	
+	<!-- userCode로 chatRoom 찾기 -->
+	<select id="chatRoomList" parameterType="int" resultMap="chatMap">
+	select *
+	from chat
+	where chat_room_code in (SELECT chat_room_code
+		FROM chat_room
+		WHERE user_number1=#{userCode} OR user_number2=#{userCode}
+		ORDER BY chat_room_code DESC
+	    )
+	order by chat_code DESC
 	</select>
 	
 	<!-- chat_room_code로 ChatRoom 찾기 -->

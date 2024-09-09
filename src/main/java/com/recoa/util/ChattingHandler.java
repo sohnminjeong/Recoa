@@ -57,33 +57,43 @@ public class ChattingHandler extends TextWebSocketHandler {
 		
 		ObjectMapper objectMapper = new ObjectMapper();
 		JsonNode jsonNode = objectMapper.readTree(message.getPayload());
-		//System.out.println("jsonNode : "+jsonNode);
 		int userCode = jsonNode.get("userCode").asInt();
 		int chatRoomCode = jsonNode.get("chatRoomCode").asInt();
 		String chatMessage = jsonNode.get("chatMessage").asText();
 		
-		Chat chat = new Chat();
-		chat.setChatMessage(chatMessage);
-		chat.setChatRoomCode(chatRoomCode);
-		chat.setUserNumber(userCode);
-		
-		//채팅 메시지 DB 삽입
-		int result = chatService.insertChatting(chat);
-		Chat newChat = chatService.viewChattingByChatCode(chat.getChatCode());
-		int hour = newChat.getChatTime().getHours();
-		int minutes = newChat.getChatTime().getMinutes();
-		
-		if(result>0) {
-			
-			for ( WebSocketSession s : sessions ) {
-				// WebSocketSession == HttpSession (로그인정보,채팅방정보) 을 가로챈것..
-				int nowChatRoomCode = (Integer) s.getAttributes().get("chatRoomCode");
-				// WebSocketSession에 담겨있는 채팅방 번호와 chat에 담겨있는 채팅방 번호가 같은 경우  === 같은방 클라이언트
-				if ( nowChatRoomCode == chat.getChatRoomCode() ) {
-					//같은방 클라이언트에게 JSON 형식의 메시지를 보냄 
-					s.sendMessage( new TextMessage( user.getUserNickname()+":"+chatMessage+":"+hour+":"+minutes));
+		if(chatMessage.equals("chatRoomOut")) {
+			List<Chat> chatList = chatService.viewAllChatting(chatRoomCode);
+			for(int i=0; i<chatList.size(); i++) {
+				int chatCode = chatList.get(i).getChatCode();
+				if(chatService.viewChatFileByChatCode(chatCode)!=null) {
+					chatService.deleteChatFile(chatCode);
 				}
-			}	
+			}
+			chatService.deleteChatRoom(chatRoomCode);
+		} else {
+			Chat chat = new Chat();
+			chat.setChatMessage(chatMessage);
+			chat.setChatRoomCode(chatRoomCode);
+			chat.setUserNumber(userCode);
+			
+			//채팅 메시지 DB 삽입
+			int result = chatService.insertChatting(chat);
+			Chat newChat = chatService.viewChattingByChatCode(chat.getChatCode());
+			int hour = newChat.getChatTime().getHours();
+			int minutes = newChat.getChatTime().getMinutes();
+			
+			if(result>0) {
+				
+				for ( WebSocketSession s : sessions ) {
+					// WebSocketSession == HttpSession (로그인정보,채팅방정보) 을 가로챈것..
+					int nowChatRoomCode = (Integer) s.getAttributes().get("chatRoomCode");
+					// WebSocketSession에 담겨있는 채팅방 번호와 chat에 담겨있는 채팅방 번호가 같은 경우  === 같은방 클라이언트
+					if ( nowChatRoomCode == chat.getChatRoomCode() ) {
+						//같은방 클라이언트에게 JSON 형식의 메시지를 보냄 
+						s.sendMessage( new TextMessage( user.getUserNickname()+":"+chatMessage+":"+hour+":"+minutes));
+					}
+				}	
+			}
 		}
 	}
 
@@ -91,16 +101,7 @@ public class ChattingHandler extends TextWebSocketHandler {
 	// 클라이언트와 연결 끊어진 후 (채팅방 나간 경우) remove로 해당 세션 제거
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		//System.out.println("퇴장 sessions ; "+session);
-		int chatRoomCode = (Integer) session.getAttributes().get("chatRoomCode");
-		List<Chat> chatList = chatService.viewAllChatting(chatRoomCode);
-		for(int i=0; i<chatList.size(); i++) {
-			int chatCode = chatList.get(i).getChatCode();
-			if(chatService.viewChatFileByChatCode(chatCode)!=null) {
-				chatService.deleteChatFile(chatCode);
-			}
-		}
-		chatService.deleteChatRoom(chatRoomCode);
+		System.out.println("퇴장 sessions : "+session);
 		sessions.remove(session);
 		
 	}

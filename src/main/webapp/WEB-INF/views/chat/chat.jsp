@@ -72,10 +72,14 @@
 	justify-content: space-between;
 	height:10%;
 	border-top : 1px dashed gray;
+	align-items : center;
 	
 	input{
 		width:80%;
 		font-family: 'SDMiSaeng';
+		height:90%;
+		border:none;
+		
 	}
 	button{
 		font-family: 'SDMiSaeng';
@@ -147,7 +151,7 @@ i:hover{
 		</div>	
 		<div id="chatRoomOutBtn">
 			<!-- <i class="fa-regular fa-circle-xmark"onclick=""></i> -->
-			<i class="fa-solid fa-door-open" onclick="onClose()"></i>
+			<i class="fa-solid fa-door-open" onclick="onOut()"></i>
 		</div>
 		
 	</div>
@@ -179,6 +183,11 @@ i:hover{
 		<!-- input태그에 메세지 작성해 #button-send누르면 메세지 전송 -->
 		<div id="chatRoomBottom" class="col">
 			<input type="text" id="chatMessage" class="chatMessage">
+			<!-- 
+			<i class="fa-solid fa-paperclip"></i>
+			<input type="file" name="chatFile" id="chatFile" multiple="multiple" onchange="showChatFile(event)" style="display:none">
+			 -->
+			
 			<button type="button" id="button-send">전송</button>
 			<!-- <button type="button" onclick="onClose()">나가기</button> -->
 		</div>	
@@ -192,6 +201,29 @@ i:hover{
 <script>
 const chatRoomCode = ${chatRoomCode};
 const userCode = ${user.userCode};
+
+/* 
+ const fileUploadIcon = document.querySelector('.fa-paperclip');
+ const chatFile = document.querySelector('#chatFile');
+ fileUploadIcon.addEventListener('click', ()=>chatFile.click());
+
+ function showChatFile(event){
+ 	if(event.target.files.length>=6){
+ 		alert("한번에 가능한 파일 첨부 갯수는 5개입니다.");
+ 		return;
+ 	}
+ 	
+ 	console.log(event.target.files);
+ 	for(let i=0; i<event.target.files.length; i++){
+ 		var str = "<div class='enter'>";
+ 		str+=event.target.files[i].name;
+ 		str+="</div>";
+ 		
+ 		$("#chatMessageArea").append(str);
+ 	}
+ } 
+ */
+
 
 var sock = new SockJS('http://localhost:8080/chatting');
 sock.onmessage = onMessage;
@@ -269,6 +301,17 @@ function onClose() {
 	window.location.reload();
 }
 
+// 채팅방 나가기
+function onOut(){
+	
+	const chatContext = {
+			"userCode" : userCode,
+			"chatRoomCode":chatRoomCode,
+			"chatMessage":"chatRoomOut"
+	};
+	sock.send(JSON.stringify(chatContext));
+	window.location.reload();
+}
 
 </script>
 </body>

@@ -60,7 +60,7 @@
 		<li><i class="fa-solid fa-comments"></i>
 			<ul>
 				<li>-------------------</li>
-				<li><a href="/">채팅방</a></li>
+				<li><a href="/viewListChat?userCode=${user.userCode}">채팅방 목록</a></li>
 			</ul>
 		</li>
 		<li><i class="fa-solid fa-bell"></i>

@@ -2,6 +2,7 @@ package com.recoa.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -107,12 +108,10 @@ public class ChatController {
 		String chatMessage = map.get("chatMessage");
 		// map_userNumber : 작성자 닉네임
 		int userNumber = Integer.parseInt(map.get("userNumber"));
-		System.out.println("userNumber : "+userNumber);
 		Chat vo = new Chat();
 		vo.setChatRoomCode(chatRoomCode);
 		vo.setChatMessage(chatMessage);
 		vo.setUserNumber(userNumber);
-		System.out.println("vo : "+vo);
 		int success = service.insertChatting(vo);
 		if(success!=0) {
 			return true;
@@ -120,6 +119,26 @@ public class ChatController {
 		return false;
 	}
 
+	// 채팅 목록창 넘어가기 
+	@GetMapping("/viewListChat")
+	public String viewListChat(int userCode, Model model) {
+		//User user = userService.findUserByCode(userCode);
+		List<Chat> chatRoomList = service.chatRoomList(userCode);
+		List<Integer> roomCodeList = new ArrayList<>();
+		List<Chat> chatList = new ArrayList<>();
+		for(int i=0; i<chatRoomList.size(); i++) {
+			
+			if(!roomCodeList.contains(chatRoomList.get(i).getChatRoomCode())) {
+				roomCodeList.add(chatRoomList.get(i).getChatRoomCode());
+				chatList.add(chatRoomList.get(i));
+				System.out.println("chatList : "+chatList);
+			}
+			
+		}
+		
+		model.addAttribute("chatList", chatList);
+		return "chat/viewListChat";
+	}
 	
 	
 }
