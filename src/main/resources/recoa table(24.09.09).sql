@@ -7,7 +7,6 @@ drop table note;
 drop table utill_bill;
 drop table reserve_guest;
 drop table reserve_library;
-drop table library;
 drop table free_like;
 drop table board_free_comment;
 drop table board_free_img;
@@ -82,12 +81,6 @@ create table notice_bookmark(
     notice_code INT
 );
 
-create table library(
-	library_code INT PRIMARY KEY AUTO_INCREMENT,
-    seat_code INT,
-    status boolean DEFAULT true
-);
-
 create table reserve_library(
 	reserve_lib_code INT PRIMARY KEY AUTO_INCREMENT,
     user_code INT,
@@ -96,7 +89,7 @@ create table reserve_library(
     start_time DATETIME,
     end_time DATETIME,
     regi_date DATETIME DEFAULT CURRENT_TIMESTAMP,
-    status boolean DEFAULT false
+    status boolean DEFAULT TRUE
 );
 
 create table reserve_guest(
@@ -107,7 +100,7 @@ create table reserve_guest(
     start_time DATETIME,
     end_time DATETIME,
     regi_date DATETIME DEFAULT CURRENT_TIMESTAMP,
-    status boolean default TRUE
+    status boolean DEFAULT TRUE
 );
 
 create table utill_bill(
@@ -193,9 +186,6 @@ alter table notice_bookmark add constraint foreign key(notice_code) references b
 alter table board_free_img add constraint foreign key(free_code) references board_free (free_code) ON DELETE CASCADE;
 alter table board_free_comment add constraint foreign key(free_code) references board_free (free_code) ON DELETE CASCADE;
 alter table free_like add constraint foreign key(free_code) references board_free (free_code) ON DELETE CASCADE;
-
--- library랑 연결
-alter table reserve_library add constraint foreign key(library_code) references library (library_code) ON DELETE CASCADE;
 
 -- note랑 연결
 alter table note_file add constraint foreign key(note_code) references note (note_code) ON DELETE CASCADE;
