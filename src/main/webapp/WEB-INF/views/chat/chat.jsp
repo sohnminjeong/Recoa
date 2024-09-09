@@ -79,6 +79,7 @@
 		font-family: 'SDMiSaeng';
 		height:90%;
 		border:none;
+		font-size:1rem;
 		
 	}
 	button{

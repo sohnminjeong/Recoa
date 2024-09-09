@@ -77,11 +77,39 @@
 	    
 	    .chat{
 	    	display:flex;
-	    	justify-content:space-between;
+	    	flex-direction:column;
+	    	
 	    	border-bottom : 0.5px dashed black;
 	    	border-top : 0.5px dashed black;
 	    	padding : 5px 0;
 	    	font-family: 'GangwonEdu_OTFBoldA';
+	    	
+	    	#chat_interlocutor{
+		    	display:flex;
+		    	align-items:center;
+		    	height:50%;
+		    	
+		    	img{
+		    		border-radius:50%;
+		    		width:20px;
+		    		height:20px;
+		    		margin-right:10px;
+		    		border:0.5px solid black;
+		    	}
+		    	
+		    }
+		    #chat_content{
+		    	height:50%;
+		    	display:flex;
+		    	justify-content:space-between;
+		    	  font-family: 'SDMiSaeng';
+		    	  font-size:1.2rem;
+		    	  margin : 5px 10px 0 35px;
+		    	  
+		    	  #chatTime{
+		    	  	font-size:1rem;
+		    	  }
+		    }
 	    	
 	    }
 	}
@@ -115,11 +143,24 @@
 			<div id="chatList">
 				<c:forEach items="${chatList}" var="chat">
 					<div class="chat">
-						
-						<div>${chat.chatMessage}</div>
-						<div>
-							<fmt:formatDate value="${chat.chatTime}" pattern="yy-MM-dd HH:mm" />
+						<div id="chat_interlocutor">
+							<c:choose>
+								<c:when test="${chat.user.userImgUrl==null}">
+									<img src="resources/images/user/default_profile.png" class="userImg"/>
+								</c:when>
+								<c:otherwise>
+									<img src="/recoaImg/user/${chat.user.userImgUrl}" class="userImg"/>
+								</c:otherwise>
+							</c:choose>
+							<span id="chat_interlocutorNickname">${chat.user.userNickname}</span>
 						</div>
+						<div id="chat_content">
+							<div>${chat.chatMessage}</div>
+							<div  id="chatTime"> 
+								<fmt:formatDate value="${chat.chatTime}" pattern="yy-MM-dd HH:mm"/>
+							</div>
+						</div>	
+						
 					</div>
 				</c:forEach>
 			</div>

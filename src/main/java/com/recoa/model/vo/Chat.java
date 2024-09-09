@@ -19,4 +19,5 @@ public class Chat {
 	private int userNumber;
 	
 	private List<MultipartFile> chatFile;
+	private User user;
 }

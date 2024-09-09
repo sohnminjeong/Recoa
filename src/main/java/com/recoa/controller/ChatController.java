@@ -122,19 +122,32 @@ public class ChatController {
 	// 채팅 목록창 넘어가기 
 	@GetMapping("/viewListChat")
 	public String viewListChat(int userCode, Model model) {
-		//User user = userService.findUserByCode(userCode);
+		User user = new User();
 		List<Chat> chatRoomList = service.chatRoomList(userCode);
 		List<Integer> roomCodeList = new ArrayList<>();
 		List<Chat> chatList = new ArrayList<>();
+		 
 		for(int i=0; i<chatRoomList.size(); i++) {
 			
 			if(!roomCodeList.contains(chatRoomList.get(i).getChatRoomCode())) {
 				roomCodeList.add(chatRoomList.get(i).getChatRoomCode());
 				chatList.add(chatRoomList.get(i));
-				System.out.println("chatList : "+chatList);
+				
+			}
+		}
+		
+		for(int i=0; i<chatList.size(); i++) {
+			ChatRoom room = service.chatRoomFindByRoomCode(chatList.get(i).getChatRoomCode());
+			if(room.getUserNumber1()==userCode) {	
+				user = userService.findUserByCode(room.getUserNumber2());
+				chatList.get(i).setUser(user);
+			} else if(room.getUserNumber1()!=userCode){
+				user = userService.findUserByCode(room.getUserNumber1());
+				chatList.get(i).setUser(user);
 			}
 			
 		}
+		
 		
 		model.addAttribute("chatList", chatList);
 		return "chat/viewListChat";

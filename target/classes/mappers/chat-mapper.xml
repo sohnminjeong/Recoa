@@ -6,6 +6,7 @@
 		<result column="chat_time" property="chatTime"/>
 		<result column="chat_room_code" property="chatRoomCode"/>
 		<result column="user_number" property="userNumber"/>
+		<collection property="user" resultMap="userMap"/>
 	</resultMap>
 	
 	<resultMap type="ChatRoom" id="chatRoomMap">
@@ -22,6 +23,15 @@
 	
 	<resultMap type="User" id="userMap">
 		<id column="user_code" property="userCode"/>
+		<result property="userId" column="user_id"/>
+		<result property="userRealName" column="user_name"/>
+		<result property="userNickname" column="user_nickname"/>	
+		<result property="userImgUrl" column="user_img_url"/>
+		<result property="userPhone" column="user_phone"/>
+		<result property="userAdr" column="user_adr"/>
+		<result property="userAdrDetail" column="user_adr_detail"/>
+		<result property="userEmail" column="user_email"/>
+		<result property="userAdmin" column="user_admin"/>	
 	</resultMap>
 
 	<!-- 채팅방 생성 -->
