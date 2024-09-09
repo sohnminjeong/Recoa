@@ -38,7 +38,6 @@
 			            </c:forEach>
 			        </c:if>
 			    </div>
-			    <!-- 동적으로 추가되는 이미지 미리보기가 여기에 들어갑니다 -->
 			        <div id="preview"></div>
 			    <div id="imgButtons">
 			        <button type="button" id="addImg">이미지 추가</button>
@@ -46,7 +45,6 @@
     			</div> 	
 			</div>
 			
-			<!-- 미리보기 보일 곳 -->
 			<div id="buttons">
 				<button type="submit" id="submit">수정하기</button>
 				<button type="button" onclick="location.href='/viewNotice?noticeCode=${notice.noticeCode}'">수정 취소</button>

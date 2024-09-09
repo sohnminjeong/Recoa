@@ -1,0 +1,96 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ReserveLibrary">
+	<resultMap type="ReserveLibrary" id="ReserveLibraryMap">
+		<id property="reserveLibCode" column="reserve_lib_code"/>
+		<result property="userCode" column="user_code"/>
+		<result property="libraryCode" column="library_code"/>
+		<result property="seatCode" column="seat_code"/>
+		<result property="startTime" column="start_time"/>
+		<result property="endTIme" column="end_time"/>
+		<result property="regiDate" column="regi_date"/>
+		<result property="status" column="status"/>
+	</resultMap>
+	
+	<!-- 예약 가능 여부 조회 -->
+	<select id="checkSeat" parameterType="map" resultType="map">
+	<![CDATA[
+	        SELECT seat_code, library_code
+        FROM reserve_library
+        WHERE library_code = #{libraryCode}
+        AND seat_code IN (
+            SELECT seat_code 
+            FROM reserve_library
+            WHERE library_code = #{libraryCode}
+            AND (
+                (DATE(#{startTime}) < DATE(start_time) AND DATE(#{endTime}) > DATE(start_time)) OR
+                (DATE(#{startTime}) = DATE(start_time) AND DATE(end_time) > DATE(#{endTime})) OR
+                (DATE(#{startTime}) = DATE(start_time) AND DATE(#{endTime}) = DATE(end_time)) OR
+                (DATE(#{startTime}) > DATE(start_time) AND DATE(#{startTime}) < DATE(end_time) AND DATE(#{endTime}) = DATE(end_time)) OR
+                (DATE(#{startTime}) > DATE(start_time) AND DATE(#{startTime}) < DATE(end_time) AND DATE(#{endTime}) > DATE(end_time))
+            )
+        )
+	]]>
+	</select>
+	
+	<!-- 독서실 예약 등록 -->
+	<insert id="registerLibraryReserve" parameterType="ReserveLibrary"  useGeneratedKeys="true" keyProperty="reserveLibraryCode" keyColumn="reserveLibraryCode">
+		INSERT INTO reserve_library(user_code, library_code, seat_code, start_time, end_time)
+		VALUES(#{userCode}, #{libraryCode}, #{seatCode}, #{startTime}, #{endTime})
+	</insert>
+	
+		<!-- 내 독서실 예약 내역 조회 -->
+	<select id="myLibrary" parameterType="ReservePaging" resultType="map" >
+		 SELECT * 
+		    FROM reserve_library
+		    WHERE user_code = (
+		        SELECT user_code 
+		        FROM user 
+		        WHERE user_id = #{id}
+    		) AND status=1
+    		ORDER BY 1 DESC
+			LIMIT #{offset}, #{limit}
+	</select>
+	
+		<!-- 예약 내역 total -->
+	<select id="libraryTotal" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+			FROM reserve_library
+			WHERE user_code = (
+		        SELECT user_code 
+		        FROM user 
+		        WHERE user_id = #{userId}
+    		) AND status=1 
+	</select>
+	
+		<!-- 게스트룸 예약 취소 -->
+	<update id = "cancelLibrary" parameterType="Integer">
+		UPDATE reserve_library
+		SET status = 0
+		WHERE reserve_lib_code = #{reserveLibCode}
+	</update>
+	
+	<!-- 예약 취소 내역 조회 -->
+		<select id="myLibraryCancel" parameterType="ReservePaging" resultType="map" >
+		 SELECT * 
+		    FROM reserve_library
+		    WHERE user_code = (
+		        SELECT user_code 
+		        FROM user 
+		        WHERE user_id = #{id}
+    		) AND status=0
+    		ORDER BY 1 DESC
+			LIMIT #{offset}, #{limit}
+	</select>
+	
+		<!-- 예약 취소 내역 total -->
+	<select id="CancelLibrarytotal" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+			FROM reserve_library
+			WHERE user_code = (
+		        SELECT user_code 
+		        FROM user 
+		        WHERE user_id = #{userId}
+    		) AND status=0
+	</select>
+</mapper>
