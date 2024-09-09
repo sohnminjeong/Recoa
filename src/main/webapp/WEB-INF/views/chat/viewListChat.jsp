@@ -112,6 +112,9 @@
 		    }
 	    	
 	    }
+	    .chat:hover{
+	    	cursor : pointer;
+	    }
 	}
 	#chatBox{
 		width:60%;
