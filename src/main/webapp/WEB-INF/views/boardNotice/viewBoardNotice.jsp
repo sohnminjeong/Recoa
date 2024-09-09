@@ -181,6 +181,7 @@
 				<jsp:include page="../note/noteSideBar.jsp" flush="true">
 					<jsp:param value="${notice.user.userNickname}" name="param1"/>
 					<jsp:param value="${notice.noticeCode}" name="param2"/>
+					<jsp:param value="${notice.user.userCode}" name="param3"/>
 				</jsp:include>
 			</div>
     	</div>
