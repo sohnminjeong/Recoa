@@ -7,11 +7,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor
-public class ReserveGuest {
-	private int reserveGuestCode;
+public class ReserveLibrary {
+	private int reserveLibCode;
 	private int userCode;
-	private int roomType;
-	private int roomCode;
+	private int libraryCode;
+	private int seatCode;
 	private Date startTime;
 	private Date endTime;
 	private LocalDateTime regiDate;

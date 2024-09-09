@@ -74,7 +74,7 @@
 					<li>-------------------</li>
 					<li><a href="/myGuest" class="subInfo">내 게스트룸 예약</a></li>
 					<li><a href="/myGuestCancel" class="subInfo">게스트룸 취소 내역</a></li>
-					<li><a href="/" class="subInfo">내 독서실 예약</a></li>
+					<li><a href="/myLibrary" class="subInfo">내 독서실 예약</a></li>
 					<li><a href="/" class="subInfo">내 고지서 확인</a></li>
 				</ul>
 			</li>
@@ -83,7 +83,7 @@
 					<li>-------------------</li>
 					<li><a href="/" class="subInfo">작성한 게시물</a></li>
 					<li><a href="/" class="subInfo">좋아요</a></li>
-					<li><a href="/" class="subInfo">북마크</a></li>
+					<li><a href="/bookmarked" class="subInfo">북마크</a></li>
 				</ul>
 			</li>
 			

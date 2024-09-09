@@ -33,9 +33,6 @@ form select option p{
 }
 
 </style>
-
-
-
 </head>
 <body>
 	<sec:authentication property="principal" var="user" />
@@ -69,13 +66,13 @@ form select option p{
 	            
 		</div>
 		  <div id="agree">
-		  <div id="agreetext">
-			  <p>1. 예약 취소의 경우 마이페이지 내 예약 목록에서 취소 부탁드리며 당일 취소는 불가합니다.
-			  <p>2. 게스트하우스 체크인 및 체크아웃 시간 안내</p>
-			  <p>&nbsp;&nbsp;&nbsp;&nbsp;- 체크인 15:00 ~ 23:00</p>
-			  <p>&nbsp;&nbsp;&nbsp;&nbsp;- 체크아웃 11:00</p>
-			  <p>3. 게스트하우스는 세대 당 월 1회 이용 가능합니다.</p>
-		  </div>
+			  <div id="agreetext">
+				  <p>1. 예약 취소의 경우 마이페이지 내 예약 목록에서 취소 부탁드리며 당일 취소는 불가합니다.
+				  <p>2. 게스트하우스 체크인 및 체크아웃 시간 안내</p>
+				  <p>&nbsp;&nbsp;&nbsp;&nbsp;- 체크인 15:00 ~ 23:00</p>
+				  <p>&nbsp;&nbsp;&nbsp;&nbsp;- 체크아웃 11:00</p>
+				  <p>3. 게스트하우스는 세대 당 월 1회 이용 가능합니다.</p>
+			  </div>
 		  	<div id="selection-summary">
 			    <h2>예약 내용</h2>
 			    <br>

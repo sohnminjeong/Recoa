@@ -5,9 +5,10 @@
 	</settings>
 
 	<typeAliases>
-		<typeAlias type="com.recoa.model.vo.Guest" alias="Guest" />
 		<typeAlias type="com.recoa.model.vo.ReserveGuest" alias="ReserveGuest" />
 		<typeAlias type="com.recoa.model.vo.ReservePaging" alias="ReservePaging"/>
+		<typeAlias type="com.recoa.model.vo.ReserveLibrary" alias="ReserveLibrary"/>
+		
 		<typeAlias type="com.recoa.model.vo.User" alias="User" />
 		<typeAlias type="com.recoa.model.vo.BoardFree" alias="BoardFree" />
 		<typeAlias type="com.recoa.model.vo.BoardFreeImg" alias="BoardFreeImg"/>
@@ -29,8 +30,8 @@
 
 	<!-- 쿼리문 -->
 	<mappers>
-		<mapper resource="mappers/guest-mapper.xml" />
 		<mapper resource="mappers/reserveguest-mapper.xml" />
+		<mapper resource="mappers/reservelibrary-mapper.xml" />
 		<mapper resource="mappers/user-mapper.xml"/>
 		<mapper resource="mappers/boardFree-mapper.xml"/>
 		<mapper resource="mappers/boardFreeImg-mapper.xml"/>

@@ -31,4 +31,5 @@
 		FROM notice_bookmark
 		WHERE notice_code=#{noticeCode} AND user_code=#{userCode}
 	</select>
+	
 	</mapper>

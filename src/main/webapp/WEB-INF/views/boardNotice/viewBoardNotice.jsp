@@ -88,9 +88,13 @@
 			border-radius: 50%;
 			margin-right: 10px;
 		}
-		
-		#writerAdr{
+		#writerdesc{
+			display: flex;
+			flex-direction: column;
 			font-family: 'GangwonEdu_OTFBoldA';
+		}
+		#writerNickname{
+			margin-top: 3px;
 		}
 		
 	}
@@ -122,8 +126,15 @@
 			width:200px;
 			height:200px;
 			margin:0 10px;
+			object-fit: cover;
 		}
 	}
+}
+#userFloating{
+	position: fixed;
+    z-index: 1;
+    bottom: 6%;
+    right: 4%;
 }
 </style>
 
@@ -144,7 +155,7 @@
 			</c:when>
 			<c:otherwise>
 				<button type="button" onclick="location.href='/boardNoticeList'">목록</button>
-				<button type="button" onclick="location.href=''">수정</button>
+				<button type="button" onclick="location.href='/updateNotice?noticeCode=${notice.noticeCode}'">수정</button>
 				<button type="button" onclick="location.href='/deleteNotice?noticeCode=${notice.noticeCode}'">삭제</button>
 			</c:otherwise>
 		</c:choose>
@@ -153,17 +164,25 @@
     <div id="desc">
     	<div id="writer">
     		<c:choose>
-				<c:when test="${vo.user.userImgUrl==null}">
+				<c:when test="${notice.user.userImgUrl==null}">
 					<img src="resources/images/user/default_profile.png" class="userImg"/>
 				</c:when>
 				<c:otherwise>
 					<img src="/recoaImg/user/${notice.user.userImgUrl}" class="userImg"/>
 				</c:otherwise>
 			</c:choose>
-    		<div>
-	    		<span id="writerAdr">관리자</span>
-				<span id="writerNickname">${notice.user.userNickname}</span>
+    		<div id="writerdesc">
+	    		<span id="writerAdr">${notice.user.userAdmin}</span>
+				<span id="writerNickname">${notice.user.userNickname}
+				<i class="fa-solid fa-caret-right"></i>
+				</span>
     		</div>
+    		<div id="noteJsp" style="display : none">
+				<jsp:include page="../note/noteSideBar.jsp" flush="true">
+					<jsp:param value="${notice.user.userNickname}" name="param1"/>
+					<jsp:param value="${notice.noticeCode}" name="param2"/>
+				</jsp:include>
+			</div>
     	</div>
     	<div id="noticedesc">
     		<p><fmt:formatDate value="${notice.noticeWritedate}" pattern="yy-MM-dd HH:mm"/></p>&nbsp;
@@ -193,6 +212,9 @@
     </div>
     
     </div>
+   <div id="userFloating">
+	<%@ include file="../main/floating.jsp" %>
+</div>
 </div>
 <script>
 $(document).ready(function() {
@@ -213,6 +235,10 @@ $(document).ready(function() {
         });
     });
 });
+
+$('.fa-caret-right').click(function(){
+	$('#noteJsp').css({"display":"block"});
+})
 </script>
 </body>
 </html>

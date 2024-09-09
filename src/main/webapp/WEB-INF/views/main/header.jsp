@@ -27,7 +27,16 @@
 	<li>
 		<a href="/">커뮤니티 예약</a>
 		<ul class="submenu" id="submenu2">
-			<li><a href="/">독서실 예약</a></li>
+			<li>
+				<c:choose>
+					<c:when test="${user=='anonymousUser'}">
+						<a href="/loginUser">독서실 예약</a><br>
+					</c:when>
+					<c:otherwise>
+						<a href="/reserveLibrary">독서실 예약</a>
+					</c:otherwise>
+				</c:choose>
+			</li>
 			<li>
 				<c:choose>
 					<c:when test="${user=='anonymousUser'}">

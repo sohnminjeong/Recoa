@@ -51,7 +51,12 @@
 	margin : 20px;
 	font-family: 'GangwonEdu_OTFBoldA';
 }
-
+#userFloating{
+	position: fixed;
+    z-index: 1;
+    bottom: 6%;
+    right: 4%;
+}
 </style>
 </head>
 <body>
@@ -80,7 +85,7 @@
 		<tbody>
 			<c:forEach items="${list}" var="item" varStatus="status">
 				<tr>
-					<td>${item.reserve_guest_code}</td>
+					<td>${paging.total - (paging.page - 1) * 10 - status.index}</td>
 					<td><fmt:formatDate value="${item.start_time}" pattern="yy-MM-dd" /></td>
 					<td><fmt:formatDate value="${item.end_time}" pattern="yy-MM-dd" /></td>
 					<c:choose>
@@ -163,6 +168,8 @@
 						</nav>
 	</div>
 	</div>
-
+<div id="userFloating">
+	<%@ include file="../main/floating.jsp" %>
+</div>
 </body>
 </html>

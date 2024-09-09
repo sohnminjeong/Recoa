@@ -145,8 +145,8 @@ form select option{
 }
 
 #checkbox label {
-    display: block; /* 레이블을 블록 요소로 설정하여 전체 줄을 차지하도록 */
-    margin-top: 10px; /* 레이블 위에 여백 추가 */
+    display: block; 
+    margin-top: 10px;
 }
 
 #submit{

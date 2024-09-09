@@ -27,6 +27,7 @@ import com.recoa.model.vo.BoardNotice;
 import com.recoa.model.vo.BoardNoticeImg;
 import com.recoa.model.vo.BoardNoticePaging;
 import com.recoa.model.vo.NoticeBookmark;
+import com.recoa.model.vo.User;
 import com.recoa.service.BoardNoticeService;
 
 
@@ -49,7 +50,7 @@ public class BoardNoticeController {
 		 return filename;
 	 }
 	
-	 // 게시판으로 이동
+	// 게시판으로 이동
 	@GetMapping("/boardNoticeList")
 	public String boardNoticeList(@RequestParam(value = "page", defaultValue = "1") int page,
 								Model model, String select, String keyword) {
@@ -65,7 +66,6 @@ public class BoardNoticeController {
 		List<BoardNotice> list = service.viewNoticeList(paging);
 		model.addAttribute("list", list);
 		model.addAttribute("paging", paging);
-		
 		// 북마크 개수 
 		Map<Integer, Integer> bookmarkCount = new HashMap<>();
 	    
@@ -165,6 +165,105 @@ public class BoardNoticeController {
 		return "redirect:/boardNoticeList";
 	}
 	
+	// 공지 수정하기
+	@GetMapping("/updateNotice")
+	public String updateNotice(int noticeCode, Model model) {
+		BoardNotice notice = service.viewNotice(noticeCode);
+		List<BoardNoticeImg> images = service.noticeImg(noticeCode);
+		
+		if(images.size() != 0) {
+			model.addAttribute("images", images);
+		}
+		model.addAttribute("notice", notice);
+		
+		return "boardNotice/updateBoardNotice";
+	}
+	
+	@PostMapping("/updateBoardNotice")
+	public String updateBoardNotice(BoardNotice vo, @RequestParam("delImages") String delImages) throws IllegalStateException, IOException {
+		System.out.println("delImages : " + delImages);
+		
+		// 1. 이미지 제외 먼저 수정
+		service.updateNotice(vo);
+		
+		/* ----- 이미지 수정 -----*/
+		// 이전 이미지
+		List<BoardNoticeImg> prev = service.noticeImg(vo.getNoticeCode());
+		// 추가되는 이미지
+		List<MultipartFile> images = vo.getFiles();
+		
+		
+		System.out.println(" 이전 prev : " + prev);
+		System.out.println(" 추가 images : " + images);
+		
+		// 기존 이미지가 없을 때
+		if(prev.size() == 0) {
+			if(images != null && images.size() != 0 && images.get(0).getSize() > 0) {
+				System.out.println("2. 기존 이미지가 없고, 추가하는 이미지가 있어");
+				for(MultipartFile image : images) {
+					BoardNoticeImg img = new BoardNoticeImg();
+					
+					String url = fileUpload(image);
+					img.setNoticeImgUrl(url);
+					img.setNoticeCode(vo.getNoticeCode());
+					
+					service.registerBoardNoticeImg(img);
+				}
+			} else {
+				System.out.println("1. 기존 이미지가 없고, 추가하는 이미지도 없어");
+				
+			}
+			// 기존 이미지가 있을 때
+		} else {
+			// 기존 이미지 삭제!
+			if ("true".equals(delImages)) {
+				// 기존 이미지 파일 삭제
+				for(BoardNoticeImg image : prev) {
+					File file = new File(image.getNoticeImgUrl());
+				    file.delete();
+				}
+				// 기존 이미지 DB 삭제
+				service.deleteImg(vo.getNoticeCode());
+				System.out.println("3. 기존 이미지 있는데 삭제만 해");
+				
+				if(images != null && images.size() != 0 && images.get(0).getSize() > 0) {
+					// 기존 이미지를 삭제하고, 새로 이미지를 추가할 때 (변경)
+					System.out.println("6. 삭제하고 추가해");
+					for(MultipartFile image : images) {
+						BoardNoticeImg img = new BoardNoticeImg();
+						
+						String url = fileUpload(image);
+						img.setNoticeImgUrl(url);
+						img.setNoticeCode(vo.getNoticeCode());
+						
+						service.registerBoardNoticeImg(img);
+					}
+				}
+				
+			} else {
+				// 삭제x, 생성o
+				if(images != null && images.size() != 0 && images.get(0).getSize() > 0) {
+					System.out.println("5. 삭제하지 않고 추가해");
+					for(MultipartFile image : images) {
+						BoardNoticeImg img = new BoardNoticeImg();
+						
+						String url = fileUpload(image);
+						img.setNoticeImgUrl(url);
+						img.setNoticeCode(vo.getNoticeCode());
+						
+						service.registerBoardNoticeImg(img);
+					}
+				} else {
+					System.out.println("4. 삭제하지 않고, 그대로 둬. 추가 없이");
+				}
+			}
+		}
+		
+
+		
+		return "redirect:/viewNotice?noticeCode=" + vo.getNoticeCode();
+	}
+	
 	/*----- 북마크 -----*/
 	
 	// 북마크 생성, 삭제
@@ -188,6 +287,45 @@ public class BoardNoticeController {
 	        service.addBookmark(vo);
 	        return "added";
 	    }
+	}
+	
+	// 북마크한 글만 보기
+	@GetMapping("/bookmarked")
+	public String bookmarked(@RequestParam(value = "page", defaultValue = "1") int page,
+										Model model, String select, String keyword, Principal principal) {
+		
+		String userId = principal.getName(); 
+	    int userCode = service.findUserCode(userId);
+			
+	    NoticeBookmark vo = new NoticeBookmark();
+	    vo.setUserCode(userCode);
+	    System.out.println(userCode);
+	       
+		int total = service.bookmarkedTotal(userCode);
+		System.out.println(total);
+			
+		BoardNoticePaging paging = new BoardNoticePaging(page, total);
+		paging.setUserCode(userCode);
+		paging.setSelect(select);
+		paging.setKeyword(keyword);
+			
+		int offset = (page - 1) * paging.getLimit();
+		paging.setOffset(offset); 
+			
+		List<BoardNotice> list = service.bookmarked(paging);
+		model.addAttribute("list", list);
+		model.addAttribute("paging", paging);
+		
+		Map<Integer, Integer> bookmarkCount = new HashMap<>();
+	    
+	    for (BoardNotice notice : list) {
+	        int count = service.countBookmark(notice.getNoticeCode());
+	        bookmarkCount.put(notice.getNoticeCode(), count);
+	    }
+	    
+	    model.addAttribute("bookmarkCount", bookmarkCount);
+		
+		return "boardNotice/myBookmark";
 	}
 
 }
