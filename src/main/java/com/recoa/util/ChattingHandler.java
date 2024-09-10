@@ -101,7 +101,7 @@ public class ChattingHandler extends TextWebSocketHandler {
 	// 클라이언트와 연결 끊어진 후 (채팅방 나간 경우) remove로 해당 세션 제거
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		System.out.println("퇴장 sessions : "+session);
+		//System.out.println("퇴장 sessions : "+session);
 		sessions.remove(session);
 		
 	}

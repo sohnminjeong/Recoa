@@ -131,6 +131,34 @@ i:hover{
 .enter{
 	margin:5px;
 }
+#checkOut{
+	position:fixed;
+	left:43%;
+	top:50%;
+	width:300px;
+	height:200px;
+	border : 1px solid black;
+	border-radius:3px;
+	background-color : black;
+	
+	color:white;
+	display:flex;
+	flex-direction:column;
+	align-items:center;
+	justify-content:center;
+	z-index:1;
+	
+	button{
+		font-family: 'SDMiSaeng';
+		font-size:1rem;
+		margin-top:10px;
+		
+	}
+	button:hover{
+		cursor:pointer;
+		
+	}
+}
 </style>
 </head>
 <body>
@@ -151,8 +179,15 @@ i:hover{
 			
 		</div>	
 		<div id="chatRoomOutBtn">
-			<!-- <i class="fa-regular fa-circle-xmark"onclick=""></i> -->
-			<i class="fa-solid fa-door-open" onclick="onOut()"></i>
+			<i class="fa-solid fa-door-open" onclick="viewCheckOut()"></i>
+		</div>
+		<div id="checkOut" style="display:none">
+			<span>채팅방을 나가시겠습니까?</span>
+			<span>채팅방을 나갈 경우, 대화 내용이 전부 삭제됩니다.</span>
+			<div id="checkOutBtn">
+				<button type="button" onclick="onOut()">나가기</button>
+				<button type="button"  onClick="window.location.reload()">취소</button>
+			</div>
 		</div>
 		
 	</div>
@@ -190,7 +225,6 @@ i:hover{
 			 -->
 			
 			<button type="button" id="button-send">전송</button>
-			<!-- <button type="button" onclick="onClose()">나가기</button> -->
 		</div>	
 	</div>
 </div>
@@ -200,8 +234,8 @@ i:hover{
 <!-- sockJs의 CDN 추가해야 함 -->
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 <script>
-const chatRoomCode = ${chatRoomCode};
-const userCode = ${user.userCode};
+var chatRoomCode = ${chatRoomCode};
+var userCode = ${user.userCode};
 
 /* 
  const fileUploadIcon = document.querySelector('.fa-paperclip');
@@ -312,8 +346,12 @@ function onOut(){
 	};
 	sock.send(JSON.stringify(chatContext));
 	window.location.reload();
+	
 }
 
+function viewCheckOut(){
+	$('#checkOut').css({"display":"flex"});
+}
 </script>
 </body>
 </html>

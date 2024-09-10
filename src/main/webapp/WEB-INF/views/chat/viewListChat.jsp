@@ -57,67 +57,77 @@
 #container>h3{
 	font-size : 1.7rem;
 	font-weight:bold;
-	margin : 20px;
+	margin: 0px 20px 10px 20px;
 	font-family: 'GangwonEdu_OTFBoldA';
 }
 #container>#containerContent{
-	width:100%;
-	border : 2px solid black;
-	border-radius : 30px;
-	height:100%;
-	padding: 0 10px;
-	display:flex;
+	width: 100%;
+    border: 2px solid black;
+    border-radius: 30px;
+    height: 100%;
+    padding: 0 10px;
+    display: flex;
+	
 	
 	#chatList{
-		width:40%;
-		display: grid;
-	    grid-template-rows: repeat(10, 1fr);
-	    overflow-y: scroll;
-	    padding: 10px;
+		width: 40%;
+        display: grid;
+        grid-template-rows: repeat(10, 10%);
+        overflow-y: scroll;
+        padding: 7px;
 	    
 	    .chat{
-	    	display:flex;
-	    	flex-direction:column;
-	    	
-	    	border-bottom : 0.5px dashed black;
-	    	border-top : 0.5px dashed black;
-	    	padding : 5px 0;
-	    	font-family: 'GangwonEdu_OTFBoldA';
+	    	display: flex;
+            flex-direction: column;
+            border-bottom: 0.5px dashed black;
+            border-top: 0.5px dashed black;
+            padding: 3px 0;
+            font-family: 'GangwonEdu_OTFBoldA';
+            justify-content: center;
 	    	
 	    	#chat_interlocutor{
-		    	display:flex;
-		    	align-items:center;
-		    	height:50%;
+		    	display: flex;
+                align-items: center;
+                height: 50%;
 		    	
 		    	img{
-		    		border-radius:50%;
-		    		width:20px;
-		    		height:20px;
-		    		margin-right:10px;
-		    		border:0.5px solid black;
+		    		border-radius: 50%;
+                    width: 16px;
+                    height: 15px;
+                    margin-right: 7px;
+                    margin-left: 5px;
+                    border: 0.5px solid black;
 		    	}
 		    	
 		    }
-		    #chat_content{
-		    	height:50%;
-		    	display:flex;
-		    	justify-content:space-between;
-		    	  font-family: 'SDMiSaeng';
-		    	  font-size:1.2rem;
-		    	  margin : 5px 10px 0 35px;
+		    .chat_content{
+		    	height: 50%;
+                display: flex;
+                justify-content: space-between;
+                font-family: 'SDMiSaeng';
+                font-size: 1.2rem;
+                margin: 0px 5px 0 5px;
+		    	  
+		    	  #content_chatMessage{
+		    	  	overflow:hidden;
+		    	  	width:60%;
+		    	  }
 		    	  
 		    	  #chatTime{
 		    	  	font-size:1rem;
 		    	  }
 		    }
+		    .chat_content:hover{
+		    	cursor:pointer;
+		    }
 	    	
 	    }
-	    .chat:hover{
-	    	cursor : pointer;
-	    }
+	   
 	}
 	#chatBox{
 		width:60%;
+		font-family: 'GangwonEdu_OTFBoldA';
+		height:100%;
 	}
 	
 }
@@ -144,7 +154,7 @@
 		<div id="containerContent">
 			<!-- 채팅방 리스트 -->
 			<div id="chatList">
-				<c:forEach items="${chatList}" var="chat">
+				<c:forEach items="${chatList}" var="chat" varStatus="status">
 					<div class="chat">
 						<div id="chat_interlocutor">
 							<c:choose>
@@ -157,28 +167,34 @@
 							</c:choose>
 							<span id="chat_interlocutorNickname">${chat.user.userNickname}</span>
 						</div>
-						<div id="chat_content">
-							<div>${chat.chatMessage}</div>
-							<div  id="chatTime"> 
-								<fmt:formatDate value="${chat.chatTime}" pattern="yy-MM-dd HH:mm"/>
-							</div>
-						</div>	
+						<div class="chat_content" id="chatContent${chat.chatRoomCode}" value="${chat.chatRoomCode}">
 						
+							<div id="content_chatMessage">${chat.chatMessage}</div>
+							<div  id="chatTime"> 
+								<fmt:formatDate value="${chat.chatTime}" pattern="yy.MM.dd HH:mm"/>
+							</div>
+							<input  type="hidden" id="chatRoomCode" value="${chat.chatRoomCode}"/>
+						</div>	
 					</div>
 				</c:forEach>
 			</div>
 			
-			
-			
 			<!-- 채팅방 클릭 시 채팅 창 열릴 공간 -->
-			<div id="chatBox">
-			
-			</div>
+			<div id="chatBox" ></div>
 		</div>
 	</div>
 </div>
 <div id="userFloating">
 	<%@ include file="../main/floating.jsp" %>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script>
+
+$('.chat_content').on("click",function(event){
+	var chatRoomCode = this.id.split("chatContent")[1];
+	$('#chatBox').load("/chat?chatRoomCode="+chatRoomCode);
+	
+})
+</script>
 </body>
 </html>
