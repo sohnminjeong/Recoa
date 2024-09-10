@@ -43,7 +43,7 @@
 	  #interlocutor{
     	display:flex;
     	align-items:center;
-    	
+    	 font-family: 'GangwonEdu_OTFBoldA';
     	img{
     		border-radius:50%;
     		width:20px;
@@ -89,7 +89,7 @@
 	}
 }
 .backColorGray{
-	
+	 font-family: 'GangwonEdu_OTFBoldA';
 	position: relative;
     left: 30%;
     width: 70%;
@@ -108,7 +108,7 @@
 	
 }
 .backColorYellow{
-	
+	 font-family: 'GangwonEdu_OTFBoldA';
 	position: relative;
     left: 0%;
     width: 70%;
@@ -130,6 +130,7 @@ i:hover{
 }
 .enter{
 	margin:5px;
+	 font-family: 'GangwonEdu_OTFBoldA';
 }
 #checkOut{
 	position:fixed;
@@ -219,10 +220,10 @@ i:hover{
 		<!-- input태그에 메세지 작성해 #button-send누르면 메세지 전송 -->
 		<div id="chatRoomBottom" class="col">
 			<input type="text" id="chatMessage" class="chatMessage">
-			<!-- 
+			 
 			<i class="fa-solid fa-paperclip"></i>
 			<input type="file" name="chatFile" id="chatFile" multiple="multiple" onchange="showChatFile(event)" style="display:none">
-			 -->
+			
 			
 			<button type="button" id="button-send">전송</button>
 		</div>	
@@ -237,28 +238,10 @@ i:hover{
 var chatRoomCode = ${chatRoomCode};
 var userCode = ${user.userCode};
 
-/* 
+
  const fileUploadIcon = document.querySelector('.fa-paperclip');
  const chatFile = document.querySelector('#chatFile');
  fileUploadIcon.addEventListener('click', ()=>chatFile.click());
-
- function showChatFile(event){
- 	if(event.target.files.length>=6){
- 		alert("한번에 가능한 파일 첨부 갯수는 5개입니다.");
- 		return;
- 	}
- 	
- 	console.log(event.target.files);
- 	for(let i=0; i<event.target.files.length; i++){
- 		var str = "<div class='enter'>";
- 		str+=event.target.files[i].name;
- 		str+="</div>";
- 		
- 		$("#chatMessageArea").append(str);
- 	}
- } 
- */
-
 
 var sock = new SockJS('http://localhost:8080/chatting');
 sock.onmessage = onMessage;
@@ -270,8 +253,31 @@ sock.onopen = function(){
 	 str+="<b>" + user + "님이 입장하셨습니다." + "</b>";
 	 str+="</div>"
 	 
-	$("#chatMessageArea").append(str);
+	$("#chatMessageArea").append(str);	 
 }
+
+
+function showChatFile(event){
+	if(event.target.files.length>=6){
+		alert("한번에 가능한 파일 첨부 갯수는 5개입니다.");
+		return;
+	}
+	
+	for(let i=0; i<event.target.files.length; i++){
+		var str = "<div class='backColorGray'>";
+		str+=event.target.files[i].name;
+		str+="</div>";
+		
+		$("#chatMessageArea").append(str);
+	}
+	alert(JSON.stringify(event.target.files));
+	const chatFile={
+			"userCode":userCode,
+			"chatRoomCode":chatRoomCode,
+			"chatFile":event.target.files
+	};
+	alert(JSON.stringify(chatFile));
+} 
 
 
 //전송 버튼 누르는 이벤트
