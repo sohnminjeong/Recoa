@@ -262,7 +262,7 @@ function showChatFile(event){
 		alert("한번에 가능한 파일 첨부 갯수는 5개입니다.");
 		return;
 	}
-	
+	console.log(event.target);
 	for(let i=0; i<event.target.files.length; i++){
 		var str = "<div class='backColorGray'>";
 		str+=event.target.files[i].name;
@@ -270,12 +270,15 @@ function showChatFile(event){
 		
 		$("#chatMessageArea").append(str);
 	}
+	
 	alert(JSON.stringify(event.target.files));
+	
 	const chatFile={
 			"userCode":userCode,
 			"chatRoomCode":chatRoomCode,
 			"chatFile":event.target.files
 	};
+	
 	alert(JSON.stringify(chatFile));
 } 
 
