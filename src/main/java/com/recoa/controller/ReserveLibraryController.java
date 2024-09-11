@@ -90,14 +90,14 @@ public class ReserveLibraryController {
 	} 
 	
 	@PostMapping("/cancelLibrary")
-	public String cancelLibrary(Principal principal,  @RequestParam(value = "page", defaultValue = "1") int page, @RequestParam("reserveLibraryCode") Integer reserveLibraryCode, Model model) {
+	public String cancelLibrary(Principal principal,  @RequestParam(value = "page", defaultValue = "1") int page, @RequestParam("reserveLibCode") Integer reserveLibCode, Model model) {
 		int total = service.libraryTotal();
 		
 		ReservePaging paging = new ReservePaging(page, total);
 		List<ReserveLibrary> list = service.mylibraryCancel(paging);
 		
-		System.out.println("reserveGuestCode : " + reserveLibraryCode);
-		service.cancelLibrary(reserveLibraryCode);
+		System.out.println("reserveGuestCode : " + reserveLibCode);
+		service.cancelLibrary(reserveLibCode);
 		model.addAttribute("list", list);
 		model.addAttribute("paging", paging);
 		

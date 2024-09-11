@@ -92,7 +92,7 @@
 					<td>${item.seat_code}번 좌석</td>
 					
 					<td><form action="cancelLibrary" method="post">
-		                <input type="hidden" name="reserveLibraryCode" value="${item.reserve_library_code}" />
+		                <input type="hidden" name="reserveLibCode" value="${item.reserve_lib_code}" />
 		                <button type="submit" id="cancel">예약 취소</button>
 		            </form></td>
 				</tr>
