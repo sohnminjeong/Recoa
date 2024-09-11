@@ -14,37 +14,24 @@
 	
 	<!-- 예약 가능 여부 조회 -->
 <select id="checkSeat" parameterType="map" resultType="map">
-<![CDATA[
-    SELECT seat_code, library_code
-    FROM reserve_library
-    WHERE library_code = #{libraryCode}
-    AND seat_code IN (
-        SELECT seat_code 
+    <![CDATA[
+        SELECT seat_code
         FROM reserve_library
         WHERE library_code = #{libraryCode}
-        AND (
-            (
-                #{ticketType} = 'daily' AND
-                DATE(#{startTime}) = DATE(start_time) AND
-                DATE(#{startTime}) = DATE(end_time)
-            )
-            OR
-            (
-                #{ticketType} = 'monthly' AND
-                (
-                    (DATE(#{startTime}) < DATE(start_time) AND DATE(#{endTime}) > DATE(start_time)) OR
-                    (DATE(#{startTime}) = DATE(start_time) AND DATE(#{endTime}) > DATE(end_time)) OR
-                    (DATE(#{startTime}) = DATE(start_time) AND DATE(#{endTime}) = DATE(end_time)) OR
-                    (DATE(#{startTime}) > DATE(start_time) AND DATE(#{startTime}) < DATE(end_time)) OR
-                    (DATE(#{endTime}) > DATE(start_time) AND DATE(#{endTime}) < DATE(end_time)) OR
-                    (DATE(#{startTime}) < DATE(end_time) AND DATE(#{endTime}) > DATE(start_time))
-                )
-            )
-        )
-    )
-]]>
+    ]]>
+    <if test="startTime == endTime">
+        <![CDATA[
+        AND DATE(start_time) = DATE(#{startTime})
+        ]]>
+    </if>
+    <if test="startTime != endTime">
+        <![CDATA[
+        AND DATE(#{startTime}) <= DATE(end_time)
+        AND DATE(#{endTime}) >= DATE(start_time)
+        ]]>
+    </if>
+    AND status = 1
 </select>
-
 	
 	<!-- 독서실 예약 등록 -->
 	<insert id="registerLibraryReserve" parameterType="ReserveLibrary"  useGeneratedKeys="true" keyProperty="reserveLibCode" keyColumn="reserveLibCode">

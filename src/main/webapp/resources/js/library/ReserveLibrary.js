@@ -26,6 +26,8 @@
                 // 종료일 출력
                 $('#endDate').text(endDate.format('YYYY-MM-DD'));
                 $('#endDateText').show(); 
+                end = endDate;
+                
             } else {
                 $('#endTime').val(start.format('YYYY-MM-DD')); 
                 $('#endDateText').hide();
@@ -69,31 +71,46 @@
 	    	});
 	    }
         
-        // 10. 좌석 출력하기
-        function updateSeatOptions(seats){
-        	const seatGrid = document.querySelector('#seat-grid');
-	        seatGrid.innerHTML = '';
+// 10. 좌석 출력하기
+function updateSeatOptions(seats) {
+    const seatGrid = document.querySelector('#seat-grid');
+    seatGrid.innerHTML = ''; // 그리드 초기화
 
-	        // 여기서 사용 가능한 좌석 정보를 서버에서 받아와야 함.
-	        const totalSeats = 20;
-	        const reservedSeats = seats; // 예시로 이미 예약된 좌석 번호
-	        for (let i = 1; i <= totalSeats; i++) {
-	            const seat = document.createElement('div');
-	            seat.classList.add('seat');
-	            seat.textContent = i;
+    const totalSeats = 20; // 좌석 총 개수
+	const reservedSeats = seats.map(seat => seat.seat_code);
+    console.log('Reserved seats:', reservedSeats);
+	
+    for (let i = 1; i <= totalSeats; i++) {
+        const seat = document.createElement('div');
+        seat.classList.add('seat');
+        
+        // 좌석 번호 표시
+        const seatNumber = document.createElement('span');
+        seatNumber.textContent = i;
+        seat.appendChild(seatNumber);
 
-	            // 예약된 좌석은 비활성화
-	            if (reservedSeats.includes(i)) {
-	                seat.classList.add('reserved');
-	            } else {
-	            	seat.addEventListener('click', function() {
-	                    selectSeat(i);
-	                    
-	                });
-	            }
-	            seatGrid.appendChild(seat);
-	        }
-	    }
+        // 예약된 좌석인 경우
+        if (reservedSeats.includes(i)) {
+            seat.classList.add('reserved');
+            seat.style.backgroundColor = 'black'; // 붉은 색으로 표시
+        } else {
+            // 예약되지 않은 좌석에 대한 클릭 이벤트
+            seat.addEventListener('click', function() {
+                selectSeat(i);
+            });
+        }
+
+        // 그리드에 좌석 추가
+        seatGrid.appendChild(seat);
+    }
+}
+
+// 좌석 선택 시 처리 함수
+function selectSeat(seatNumber) {
+    alert(seatNumber + '번 좌석을 선택하셨습니다');
+    document.getElementById('selected-seatCode').textContent = seatNumber; // 선택한 좌석 표시
+}
+
 
 	    // 좌석 선택 시
 	    function selectSeat(seatCodeText) {
@@ -120,6 +137,16 @@
         $('#libraryCode').click(function() {
         	  let start = $('#daterange').data('daterangepicker').startDate;
               let end = $('#daterange').data('daterangepicker').endDate;
+              
+              if (ticketType === 'monthly') {
+                let endDate = moment(start).add(30, 'days');
+                $('#endTime').val(endDate.format('YYYY-MM-DD')); 
+                
+                end = endDate;
+            } else {
+                $('#endTime').val(start.format('YYYY-MM-DD')); 
+                end = start;
+            }
               
               // 호점 선택 시 화면에 표시
               let libraryCodeText = $(this).find("option:selected").text();

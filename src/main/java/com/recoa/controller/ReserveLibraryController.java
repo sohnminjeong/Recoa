@@ -44,6 +44,13 @@ public class ReserveLibraryController {
 		params.put("endTime", endTime);
 		params.put("libraryCode", libraryCode);
 		
+		System.out.println("startTime : " + startTime);
+		System.out.println("endTime : " + endTime);
+		System.out.println("libraryCode : " + libraryCode);
+		System.out.println("params : " + params);
+		
+		System.out.println("service. 어쩌구 : " + service.getAvailableSeats(params));
+		
 		return service.getAvailableSeats(params);
 	}
 	
