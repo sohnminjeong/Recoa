@@ -26,7 +26,7 @@
     font-style: normal;
 }
 #chattingRoom{
-	/*width: 12%;height: 35%;*/
+	
 	width:100%;
     height: 100%;
      border: 1px solid black;
@@ -86,6 +86,7 @@
 		font-family: 'SDMiSaeng';
 		width: 20%;
         font-size: 1.1rem;
+        height:100%;
 	}
 }
 .backColorGray{
@@ -222,9 +223,7 @@ i:hover{
 			<input type="text" id="chatMessage" class="chatMessage">
 			 
 			<i class="fa-solid fa-paperclip"></i>
-			<input type="file" name="chatFile" id="chatFile" multiple="multiple" onchange="showChatFile(event)" style="display:none">
-			
-			
+			<input type="file" name="chatFile" id="chatFile" onchange="showChatFile(event)" style="display:none">
 			<button type="button" id="button-send">전송</button>
 		</div>	
 	</div>
@@ -258,28 +257,18 @@ sock.onopen = function(){
 
 
 function showChatFile(event){
-	if(event.target.files.length>=6){
-		alert("한번에 가능한 파일 첨부 갯수는 5개입니다.");
-		return;
-	}
-	console.log(event.target);
-	for(let i=0; i<event.target.files.length; i++){
-		var str = "<div class='backColorGray'>";
-		str+=event.target.files[i].name;
-		str+="</div>";
-		
-		$("#chatMessageArea").append(str);
-	}
 	
-	alert(JSON.stringify(event.target.files));
-	
+	var str = "<div class='backColorGray'>";
+	str+=event.target.files[0].name;
+	str+="</div>";
+	$("#chatMessageArea").append(str);
+	alert(event.target.files[0].name);
 	const chatFile={
 			"userCode":userCode,
 			"chatRoomCode":chatRoomCode,
-			"chatFile":event.target.files
+			"chatFile":event.target.files[0].name
 	};
-	
-	alert(JSON.stringify(chatFile));
+	sock.send(JSON.stringify(chatFile));
 } 
 
 
@@ -290,7 +279,6 @@ $("#button-send").on("click", function(e) {
 });
 // 작성한 내용 전달
 function sendMessage() {
-	
 	const chatContext = {
 			"userCode" : userCode,
 			"chatRoomCode":chatRoomCode,
@@ -301,7 +289,6 @@ function sendMessage() {
 
 //서버에서 메시지를 받았을 때
 function onMessage(msg) {
-	
 	var data = msg.data;
 	var sessionId = null; //데이터를 보낸 사람
 	var message = null;

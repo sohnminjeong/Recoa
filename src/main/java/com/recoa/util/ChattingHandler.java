@@ -1,12 +1,15 @@
 package com.recoa.util;
 
+import java.io.File;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -23,6 +26,9 @@ import com.recoa.service.UserService;
 
 public class ChattingHandler extends TextWebSocketHandler {
 
+	// 파일 저장
+	private String path = "C:\\recoaImg\\chat\\";
+	
 	@Autowired
 	private UserService userService;
 	
@@ -50,18 +56,22 @@ public class ChattingHandler extends TextWebSocketHandler {
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		
-		// 작성자 아이디 : session.getPrincipal().getName()
 		// 작성자가 쓴 내용 : message.getPayload()
 		String userId = session.getPrincipal().getName();
 		User user = userService.selectUser(userId);
 		
+	
 		ObjectMapper objectMapper = new ObjectMapper();
 		JsonNode jsonNode = objectMapper.readTree(message.getPayload());
 		int userCode = jsonNode.get("userCode").asInt();
 		int chatRoomCode = jsonNode.get("chatRoomCode").asInt();
 		String chatMessage = jsonNode.get("chatMessage").asText();
+		// 파일 전송 시 file.name
+		String chatFile = jsonNode.get("chatFile").asText();
+		
 		
 		if(chatMessage.equals("chatRoomOut")) {
+			// 채팅룸 나가기 O
 			List<Chat> chatList = chatService.viewAllChatting(chatRoomCode);
 			for(int i=0; i<chatList.size(); i++) {
 				int chatCode = chatList.get(i).getChatCode();
@@ -71,6 +81,31 @@ public class ChattingHandler extends TextWebSocketHandler {
 			}
 			chatService.deleteChatRoom(chatRoomCode);
 		} else {
+			
+//			if(vo.getFile()!=null&&vo.getFile().get(0).getOriginalFilename()!="") {
+//				for(int i=0; i<vo.getFile().size();i++) {
+//					
+//					String url = fileUpload(vo.getFile().get(i));
+//					img.setFreeImgUrl(url);
+//					img.setFreeCode(vo.getFreeCode());
+//					service.registerBoarddFreeImg(img);
+//					
+//				}
+//			}
+//			
+//			
+//			// 이미지 있을 경우
+//			MultipartFile file = null;
+//			UUID uuid = UUID.randomUUID();
+//			String filename = uuid.toString()+"_"+chatFile;
+//			File copyFile = new File(path+filename);
+//			file.transferTo(copyFile);
+//			
+//			System.out.println("filename : "+filename);
+//			System.out.println("file "+file);
+			
+			
+			// 채팅룸 나가기 X 
 			Chat chat = new Chat();
 			chat.setChatMessage(chatMessage);
 			chat.setChatRoomCode(chatRoomCode);
