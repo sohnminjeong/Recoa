@@ -1,18 +1,19 @@
 package com.recoa.model.vo;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Date;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor
 public class Utillbill {
-	private int billCode;
-	private int userCode;
-	private int billYear;
-	private int billMonth;
-	private int libUsePeriod;
-	private int libTotalPrice;
-	private int guest1UsePeriod;
-	private int guest2UsePeriod;
-	private int roomTotalPrice;
-	private int totalPrice;
+    private String serviceName; // "Library" 또는 "GuestHouse"
+    private Date startTime;
+    private Date endTime;
+    private Date regiDate;
+    private String roomType;
+    private BigDecimal price;
+    private String userCode;
 }

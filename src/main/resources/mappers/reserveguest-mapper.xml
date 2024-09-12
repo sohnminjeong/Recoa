@@ -20,6 +20,7 @@
         SELECT room_code, room_type
         FROM reserve_guest
         WHERE room_type = #{roomType}
+        AND status = 1
         AND room_code IN (
             SELECT room_code 
             FROM reserve_guest 
@@ -94,5 +95,18 @@
 		        FROM user 
 		        WHERE user_id = #{userId}
     		) AND status=0
+	</select>
+	
+	<select id="guestBill" parameterType="String" resultType="map">
+		SELECT *
+		FROM reserve_guest
+		WHERE user_code = (
+		        SELECT user_code 
+		        FROM user 
+		        WHERE user_id = #{userId}
+    		) 
+		AND YEAR(regi_date) = YEAR(CURDATE())
+    	AND MONTH(regi_date) = MONTH(CURDATE())
+		ANd status = 1
 	</select>
 </mapper>

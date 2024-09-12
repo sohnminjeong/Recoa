@@ -93,4 +93,17 @@
 		        WHERE user_id = #{userId}
     		) AND status=0
 	</select>
+	
+		<select id="libraryBill" parameterType="String" resultType="map">
+		SELECT *
+		FROM reserve_library
+		WHERE user_code = (
+		        SELECT user_code 
+		        FROM user 
+		        WHERE user_id = #{userId}
+    		)
+		AND YEAR(regi_date) = YEAR(CURDATE())
+    	AND MONTH(regi_date) = MONTH(CURDATE())
+		ANd status = 1
+	</select>
 </mapper>

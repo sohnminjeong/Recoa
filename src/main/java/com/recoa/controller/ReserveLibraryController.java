@@ -103,7 +103,6 @@ public class ReserveLibraryController {
 		ReservePaging paging = new ReservePaging(page, total);
 		List<ReserveLibrary> list = service.mylibraryCancel(paging);
 		
-		System.out.println("reserveGuestCode : " + reserveLibCode);
 		service.cancelLibrary(reserveLibCode);
 		model.addAttribute("list", list);
 		model.addAttribute("paging", paging);
