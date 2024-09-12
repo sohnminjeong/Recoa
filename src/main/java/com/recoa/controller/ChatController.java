@@ -1,7 +1,11 @@
 package com.recoa.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +14,9 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItem;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -19,6 +26,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.recoa.model.vo.Chat;
 import com.recoa.model.vo.ChatRoom;
@@ -40,9 +48,11 @@ public class ChatController {
 	// 파일 업로드 기능
 	public String fileUpload(MultipartFile file) throws IllegalStateException, IOException {
 		UUID uuid =UUID.randomUUID();
-		String filename = uuid.toString()+"_"+file.getOriginalFilename();
+		String filename = uuid.toString()+"_"+file.getName();
 		File copyFile = new File(path+filename);
 		file.transferTo(copyFile);
+		//file=copyFile;
+		System.out.println("uploadFile : "+file);
 		return filename;
 	}
 	
@@ -119,6 +129,15 @@ public class ChatController {
 		return false;
 	}
 
+	// 채팅 파일 보내기
+	@PostMapping("/insertChatFile")
+	@ResponseBody
+	public boolean insertChatFile(Chat chat) throws IllegalStateException, IOException {
+		System.out.println("chat : "+chat);
+		
+		return true;
+	}
+	
 	// 채팅 목록창 넘어가기 
 	@GetMapping("/viewListChat")
 	public String viewListChat(int userCode, Model model) {

@@ -17,6 +17,7 @@ public class Chat {
 	private Date chatTime;
 	private int chatRoomCode;
 	private int userNumber;
+	private String chatFileUrl;
 	
 	private List<MultipartFile> chatFile;
 	private User user;

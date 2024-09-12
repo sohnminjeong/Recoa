@@ -6,6 +6,7 @@
 		<result column="chat_time" property="chatTime"/>
 		<result column="chat_room_code" property="chatRoomCode"/>
 		<result column="user_number" property="userNumber"/>
+		<result column="chat_file_url" property="chatFileUrl"/>
 		<collection property="user" resultMap="userMap"/>
 	</resultMap>
 	
@@ -42,8 +43,8 @@
 	
 	<!-- 채팅 생성 -->
 	<insert id="insertChatting" parameterType="Chat" useGeneratedKeys="true" keyColumn="chat_code" keyProperty="chatCode">
-	INSERT INTO chat(chat_message, chat_room_code, user_number)
-	VALUES (#{chatMessage}, #{chatRoomCode}, #{userNumber})
+	INSERT INTO chat(chat_message, chat_room_code, user_number, chat_file_url)
+	VALUES (#{chatMessage}, #{chatRoomCode}, #{userNumber}, #{chatFileUrl})
 	</insert>
 	
 	<!-- 파일 첨부 -->

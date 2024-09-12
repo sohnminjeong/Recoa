@@ -61,7 +61,7 @@
 	font-size: 0.8rem;
 }
 #chattingContents>#chatMessageArea{
-	height:90%;
+	height:85%;
 	width:100%;
 	overflow-y: scroll;
 	overflow-x: hidden;
@@ -88,6 +88,9 @@
         font-size: 1.1rem;
         height:100%;
 	}
+}
+#fileNameSpace{
+	height:5%;
 }
 .backColorGray{
 	 font-family: 'GangwonEdu_OTFBoldA';
@@ -219,11 +222,16 @@ i:hover{
 				<!-- 새로 적히는 부분 -->
 		</div>
 		<!-- input태그에 메세지 작성해 #button-send누르면 메세지 전송 -->
+		<div id="fileNameSpace"></div>
 		<div id="chatRoomBottom" class="col">
 			<input type="text" id="chatMessage" class="chatMessage">
-			 
 			<i class="fa-solid fa-paperclip"></i>
-			<input type="file" name="chatFile" id="chatFile" onchange="showChatFile(event)" style="display:none">
+			<form action="/insertChatFile" method="post" id="insertChatFile" enctype="multipart/form-data">
+				<input type="hidden" name="chatRoomCode" value="${chatRoomCode}">
+				<input type="hidden" name="userNumber" value="${user.userCode}">
+				<input type="file" name="chatFile" id="chatFile" multiple="multiple" onchange="showChatFile(event)" style="display:none">
+			</form>
+			
 			<button type="button" id="button-send">전송</button>
 		</div>	
 	</div>
@@ -255,20 +263,37 @@ sock.onopen = function(){
 	$("#chatMessageArea").append(str);	 
 }
 
-
+// 이미지 name 보이도록
 function showChatFile(event){
 	
-	var str = "<div class='backColorGray'>";
-	str+=event.target.files[0].name;
-	str+="</div>";
-	$("#chatMessageArea").append(str);
-	alert(event.target.files[0].name);
-	const chatFile={
-			"userCode":userCode,
-			"chatRoomCode":chatRoomCode,
-			"chatFile":event.target.files[0].name
-	};
-	sock.send(JSON.stringify(chatFile));
+	
+	if(event.target.files.length>=3){
+		alert("최대 이미지 첨부 갯수는 2개입니다.");
+		return;
+	}
+	
+	for(let i=0; i<event.target.files.length; i++){
+		const reader = new  FileReader();
+		reader.onload=function(event){
+			var str = "<span id='fileName'>";
+			str+=event.target.files[i].name;
+			str+="</span>";
+			$("#fileNameSpace").append(str);
+		};
+		reader.readAsDataURL(event.target.files[i]);
+	}
+	
+	alert($("#chatFile").val());
+	$.ajax({
+		type:"post",
+		url:"/insertChatFile",
+		data: $("#insertChatFile").serialize(),
+		
+		success: function (result) {
+				alert("와성공예쓰바리");
+		}
+	})
+	console.log($("#chatFile").val());
 } 
 
 
@@ -282,7 +307,8 @@ function sendMessage() {
 	const chatContext = {
 			"userCode" : userCode,
 			"chatRoomCode":chatRoomCode,
-			"chatMessage":$("#chatMessage").val()
+			"chatMessage":$("#chatMessage").val(),
+			"chatFileUrl":$("#fileName").text()
 	};
 	sock.send(JSON.stringify(chatContext));
 }

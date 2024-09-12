@@ -1,6 +1,11 @@
 package com.recoa.util;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
@@ -59,15 +64,16 @@ public class ChattingHandler extends TextWebSocketHandler {
 		// 작성자가 쓴 내용 : message.getPayload()
 		String userId = session.getPrincipal().getName();
 		User user = userService.selectUser(userId);
-		
+		System.out.println("message.getPayload():"+message.getPayload());
 	
 		ObjectMapper objectMapper = new ObjectMapper();
 		JsonNode jsonNode = objectMapper.readTree(message.getPayload());
 		int userCode = jsonNode.get("userCode").asInt();
 		int chatRoomCode = jsonNode.get("chatRoomCode").asInt();
 		String chatMessage = jsonNode.get("chatMessage").asText();
+		
 		// 파일 전송 시 file.name
-		String chatFile = jsonNode.get("chatFile").asText();
+		String chatFileUrl = jsonNode.get("chatFileUrl").asText();
 		
 		
 		if(chatMessage.equals("chatRoomOut")) {
@@ -80,56 +86,47 @@ public class ChattingHandler extends TextWebSocketHandler {
 				}
 			}
 			chatService.deleteChatRoom(chatRoomCode);
-		} else {
-			
-//			if(vo.getFile()!=null&&vo.getFile().get(0).getOriginalFilename()!="") {
-//				for(int i=0; i<vo.getFile().size();i++) {
-//					
-//					String url = fileUpload(vo.getFile().get(i));
-//					img.setFreeImgUrl(url);
-//					img.setFreeCode(vo.getFreeCode());
-//					service.registerBoarddFreeImg(img);
-//					
-//				}
-//			}
-//			
-//			
-//			// 이미지 있을 경우
-//			MultipartFile file = null;
-//			UUID uuid = UUID.randomUUID();
-//			String filename = uuid.toString()+"_"+chatFile;
-//			File copyFile = new File(path+filename);
-//			file.transferTo(copyFile);
-//			
-//			System.out.println("filename : "+filename);
-//			System.out.println("file "+file);
-			
-			
-			// 채팅룸 나가기 X 
-			Chat chat = new Chat();
-			chat.setChatMessage(chatMessage);
-			chat.setChatRoomCode(chatRoomCode);
-			chat.setUserNumber(userCode);
-			
-			//채팅 메시지 DB 삽입
-			int result = chatService.insertChatting(chat);
-			Chat newChat = chatService.viewChattingByChatCode(chat.getChatCode());
-			int hour = newChat.getChatTime().getHours();
-			int minutes = newChat.getChatTime().getMinutes();
-			
-			if(result>0) {
-				
-				for ( WebSocketSession s : sessions ) {
-					// WebSocketSession == HttpSession (로그인정보,채팅방정보) 을 가로챈것..
-					int nowChatRoomCode = (Integer) s.getAttributes().get("chatRoomCode");
-					// WebSocketSession에 담겨있는 채팅방 번호와 chat에 담겨있는 채팅방 번호가 같은 경우  === 같은방 클라이언트
-					if ( nowChatRoomCode == chat.getChatRoomCode() ) {
-						//같은방 클라이언트에게 JSON 형식의 메시지를 보냄 
-						s.sendMessage( new TextMessage( user.getUserNickname()+":"+chatMessage+":"+hour+":"+minutes));
-					}
-				}	
-			}
 		}
+		
+		Chat chat = new Chat();
+		chat.setChatMessage(chatMessage);
+		chat.setChatRoomCode(chatRoomCode);
+		chat.setUserNumber(userCode);
+		
+		// 파일 있을 경우
+		if(chatFileUrl!=null&&chatFileUrl!="") {
+			UUID uuid = UUID.randomUUID();
+			String filename = uuid.toString()+"_"+chatFileUrl;
+			File file = new File(path+filename);
+			
+			try {
+			
+				FileOutputStream fos = new FileOutputStream(file);
+				
+				fos.close();
+			} catch(Exception e) {}
+			
+			chat.setChatFileUrl(filename);
+		}
+		
+		//채팅 메시지 DB 삽입
+		int result = chatService.insertChatting(chat);
+		Chat newChat = chatService.viewChattingByChatCode(chat.getChatCode());
+		int hour = newChat.getChatTime().getHours();
+		int minutes = newChat.getChatTime().getMinutes();
+		
+		if(result>0) {
+			for ( WebSocketSession s : sessions ) {
+				// WebSocketSession == HttpSession (로그인정보,채팅방정보) 을 가로챈것..
+				int nowChatRoomCode = (Integer) s.getAttributes().get("chatRoomCode");
+				// WebSocketSession에 담겨있는 채팅방 번호와 chat에 담겨있는 채팅방 번호가 같은 경우  === 같은방 클라이언트
+				if ( nowChatRoomCode == chat.getChatRoomCode() ) {
+					//같은방 클라이언트에게 JSON 형식의 메시지를 보냄 
+					s.sendMessage( new TextMessage( user.getUserNickname()+":"+chatMessage+":"+hour+":"+minutes));
+				}
+			}	
+		}
+		
 	}
 
 
