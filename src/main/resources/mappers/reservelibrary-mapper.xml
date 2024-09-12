@@ -26,10 +26,10 @@
     </if>
     <if test="startTime != endTime">
         <![CDATA[
-        AND DATE(#{startTime}) <= DATE(end_time)
-        AND DATE(#{endTime}) >= DATE(start_time)
+			 AND DATE(start_time) BETWEEN DATE(#{startTime}) AND DATE(#{endTime})
         ]]>
     </if>
+   
     AND status = 1
 </select>
 	
