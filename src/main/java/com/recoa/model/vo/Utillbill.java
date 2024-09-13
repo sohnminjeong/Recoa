@@ -1,7 +1,6 @@
 package com.recoa.model.vo;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 import lombok.Data;

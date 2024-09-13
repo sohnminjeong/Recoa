@@ -10,7 +10,7 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" href="../../resources/css/reset.css" />
 <title>Insert title here</title>
- <style>
+<style>
  @font-face {
     font-family: 'GangwonEdu_OTFBoldA';
     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFBoldA.woff') format('woff');
@@ -95,8 +95,16 @@
             font-weight: bold;
         }
         
+        tr{
+	        display: grid;
+	        grid-template-columns: 0.4fr 2fr 1fr 1fr;
+	        width: 80%;
+	        text-align: center;
+        }
+        
         td {
             font-size: 1rem;
+            margin-top: 15px;
         }
         
         .info-label {
@@ -104,104 +112,44 @@
             text-align: left;
         }
  }
- #cost{
- 	width: 100%;
- 	 font-family: 'GangwonEdu_OTFBoldA';
-   font-size : 1.2rem;
-   thead{
-      height: 8%;
-         border-bottom: 1px solid black;
-         color : gray;
-   }
-   tr{
-      display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        width: 100%;
-        text-align: center;
-          a:hover{
-             color : gray;
-          }
-   }
-   
-   tbody{
-	   height: 100px;
-        display: grid;
-        grid-template-rows: 1fr 1fr;
-        margin-top: 15px;
-   }
-   
-   td{
-   	margin-top: 15px;
-   }
-   
- }
- 
- .summary{
- 	text-align: right;
- 	margin-top: 45px;
- 	font-weight: bolder;
- 	font-size: 1.2rem;
- 	font-family: 'GangwonEdu_OTFBoldA';
- }
-</style>
+ </style>
 </head>
 <body>
-	<sec:authentication property="principal" var="user" />
+<sec:authentication property="principal" var="user" />
 	<div id="header">
 	<%@ include file="../main/header.jsp" %>
 	</div>
 	<div id="content">
 			<div id="userSideBar">
-		<%@ include file="../user/userSideBar.jsp" %>
-		</div>
-		<div id="container">
-		<h1>아파트 관리비 고지서</h1>
-	
-	<table id="table">
-	        <tr>
-	            <td class="info-label">아파트</td>
-	            <td>블루포레스트시티</td>
-	            <td class="info-label">이름</td>
-	            <td>${user.userRealName}</td>
-	        </tr>
-	        <tr>
-	            <td class="info-label">주소</td>
-	            <td>${user.userAdr}동 ${user.userAdrDetail}호</td>
-	            <td class="info-label">결제일</td>
-	            <td>2024-09-25</td>
-	        </tr>
+				<%@ include file="../user/userSideBar.jsp" %>
+			</div>
+			<div id="container">
+			<table id="cost">
+	        <thead>
+        <tr>
+        <th>NO</th>
+            <th>사용일</th>
+            <th>신청일</th>
+            <th>가격</th>
+        </tr>
+    </thead>
+    <tbody>
+        <c:forEach var="bill" items="${bills}">
+            <tr>
+            <!-- <td>${paging.total - (paging.page - 1) * 10 - status.index}</td> -->
+				<td></td>
+                <td>
+	               	<fmt:formatDate value="${bill.startTime}" pattern="yy-MM-dd" /> ~ <fmt:formatDate value="${bill.endTime}" pattern="yy-MM-dd" />     
+                </td>
+               <td>
+               		<fmt:formatDate value="${bill.regiDate}" pattern="yy-MM-dd" />
+				</td>
+                <td>${bill.price}</td>
+            </tr>
+        </c:forEach>
+    </tbody>
 	    </table>
-	
-	    <h2>예약 요금 내역</h2>
-	<table id="cost">
-		<thead>
-			<tr>
-				<th>서비스명</th>
-				<th>이용 요금</th>
-				<th></th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td>독서실</td>
-				<td>${libraryPrice}</td>
-				<td><button type="button" onclick="location.href='/myBillLibDesc'">상세보기</button></td>
-			</tr>
-			<tr>
-				<td>게스트하우스</td>
-				<td>${guestPrice}</td>
-				<td><button type="button" onclick="location.href='/myBillGuestDesc'">상세보기</button></td>
-			</tr>
-		</tbody>
-	</table>
-	    
-	
-	    <div class="summary">
-	        <p>총 예약 요금: ${totalPrice}원</p>
-	    </div>
-	
-	</div>
-	
+			</div>
 	</div>
 <div id="userFloating">
 	<%@ include file="../main/floating.jsp" %>
