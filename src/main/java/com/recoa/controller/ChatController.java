@@ -29,6 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.recoa.model.vo.Chat;
+import com.recoa.model.vo.ChatFile;
 import com.recoa.model.vo.ChatRoom;
 import com.recoa.model.vo.User;
 import com.recoa.service.ChatService;
@@ -48,11 +49,9 @@ public class ChatController {
 	// 파일 업로드 기능
 	public String fileUpload(MultipartFile file) throws IllegalStateException, IOException {
 		UUID uuid =UUID.randomUUID();
-		String filename = uuid.toString()+"_"+file.getName();
+		String filename = uuid.toString()+"_"+file.getOriginalFilename();
 		File copyFile = new File(path+filename);
 		file.transferTo(copyFile);
-		//file=copyFile;
-		System.out.println("uploadFile : "+file);
 		return filename;
 	}
 	
@@ -63,7 +62,6 @@ public class ChatController {
 	public String chat(Model model, int chatRoomCode, HttpServletRequest request) {
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		List<Chat> chatList = service.viewAllChatting(chatRoomCode);
-		
 		HttpSession session = request.getSession();
 		session.setAttribute("chatRoomCode", chatRoomCode);
 		session.setAttribute("userCode", user.getUserCode());
@@ -132,10 +130,22 @@ public class ChatController {
 	// 채팅 파일 보내기
 	@PostMapping("/insertChatFile")
 	@ResponseBody
-	public boolean insertChatFile(Chat chat) throws IllegalStateException, IOException {
-		System.out.println("chat : "+chat);
+	public List<String> insertChatFile(Chat chat) throws IllegalStateException, IOException {
 		
-		return true;
+		service.insertChatting(chat);
+		ChatFile file= new ChatFile();
+		for(int i=0; i<chat.getFileList().size(); i++) {
+			String url = fileUpload(chat.getFileList().get(i));
+			file.setChatFileUrl(url);
+			file.setChatCode(chat.getChatCode());
+			service.insertChatFile(file);
+		}
+		List<ChatFile> fileList = service.viewChatFileByChatCode(chat.getChatCode());
+		List<String> urlList = new ArrayList<>();
+		for(int i=0; i<fileList.size(); i++) {
+			urlList.add(fileList.get(i).getChatFileUrl());
+		}
+		return urlList;
 	}
 	
 	// 채팅 목록창 넘어가기 

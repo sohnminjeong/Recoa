@@ -6,8 +6,8 @@
 		<result column="chat_time" property="chatTime"/>
 		<result column="chat_room_code" property="chatRoomCode"/>
 		<result column="user_number" property="userNumber"/>
-		<result column="chat_file_url" property="chatFileUrl"/>
 		<collection property="user" resultMap="userMap"/>
+		<collection property="chatFile" resultMap="chatFileMap"/>
 	</resultMap>
 	
 	<resultMap type="ChatRoom" id="chatRoomMap">
@@ -43,13 +43,13 @@
 	
 	<!-- 채팅 생성 -->
 	<insert id="insertChatting" parameterType="Chat" useGeneratedKeys="true" keyColumn="chat_code" keyProperty="chatCode">
-	INSERT INTO chat(chat_message, chat_room_code, user_number, chat_file_url)
-	VALUES (#{chatMessage}, #{chatRoomCode}, #{userNumber}, #{chatFileUrl})
+	INSERT INTO chat(chat_message, chat_room_code, user_number)
+	VALUES (#{chatMessage}, #{chatRoomCode}, #{userNumber})
 	</insert>
 	
 	<!-- 파일 첨부 -->
 	<insert id="insertChatFile" parameterType="ChatFile" useGeneratedKeys="true" keyColumn="chat_file_code" keyProperty="chatFileCode">
-	INSERT INTO chatFile(chat_code, chat_file_url)
+	INSERT INTO chat_file(chat_code, chat_file_url)
 	VALUES (#{chatCode}, #{chatFileUrl})
 	</insert>
 	
@@ -83,6 +83,8 @@
 	<select id="viewAllChatting" parameterType="int" resultMap="chatMap">
 	SELECT *
 	FROM chat
+    left join chat_file
+    using (chat_code)
 	WHERE chat_room_code=#{chatRoomCode}
 	</select>
 	

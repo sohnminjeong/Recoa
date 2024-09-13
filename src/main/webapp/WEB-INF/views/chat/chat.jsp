@@ -61,7 +61,7 @@
 	font-size: 0.8rem;
 }
 #chattingContents>#chatMessageArea{
-	height:85%;
+	height:90%;
 	width:100%;
 	overflow-y: scroll;
 	overflow-x: hidden;
@@ -89,9 +89,7 @@
         height:100%;
 	}
 }
-#fileNameSpace{
-	height:5%;
-}
+
 .backColorGray{
 	 font-family: 'GangwonEdu_OTFBoldA';
 	position: relative;
@@ -201,18 +199,40 @@ i:hover{
 			<!-- 기존 적힌 부분 -->
 			<c:forEach items="${chatList}" var="hadChat">
 				<!-- 채팅 작성자==현유저 -->
+			
 				<c:if test="${hadChat.userNumber==user.userCode}">
 					<div class="backColorGray">
 						<div>
 							<fmt:formatDate value="${hadChat.chatTime}" pattern="HH:mm" />
 						</div>
-						
-						<b>${hadChat.chatMessage}</b>
+						<c:choose>
+							<c:when test="${hadChat.chatMessage==null}">
+							<b>
+								<a href="/recoaImg/chat/${hadChat.chatFile.chatFileUrl}" download>
+									${hadChat.chatFile.chatFileUrl}
+								</a>
+							</b>
+							</c:when>
+							<c:otherwise>
+								<b>${hadChat.chatMessage}</b>		
+							</c:otherwise>
+						</c:choose>
 					</div>
 				</c:if>
 				<c:if test="${hadChat.userNumber!=user.userCode}">
 					<div class="backColorYellow">
-						<b>${hadChat.chatMessage}</b>
+						<c:choose>
+							<c:when test="${hadChat.chatMessage==null}">
+								<b>
+									<a href="/recoaImg/chat/${hadChat.chatFile.chatFileUrl}" download>
+										${hadChat.chatFile.chatFileUrl}
+									</a>
+								</b>
+							</c:when>
+							<c:otherwise>
+								<b>${hadChat.chatMessage}</b>		
+							</c:otherwise>
+						</c:choose>
 						<div>
 							<fmt:formatDate value="${hadChat.chatTime}" pattern="HH:mm" />
 						</div>
@@ -222,14 +242,13 @@ i:hover{
 				<!-- 새로 적히는 부분 -->
 		</div>
 		<!-- input태그에 메세지 작성해 #button-send누르면 메세지 전송 -->
-		<div id="fileNameSpace"></div>
 		<div id="chatRoomBottom" class="col">
 			<input type="text" id="chatMessage" class="chatMessage">
 			<i class="fa-solid fa-paperclip"></i>
 			<form action="/insertChatFile" method="post" id="insertChatFile" enctype="multipart/form-data">
 				<input type="hidden" name="chatRoomCode" value="${chatRoomCode}">
 				<input type="hidden" name="userNumber" value="${user.userCode}">
-				<input type="file" name="chatFile" id="chatFile" multiple="multiple" onchange="showChatFile(event)" style="display:none">
+				<input type="file" name="fileList" id="fileList" multiple="multiple" onchange="showChatFile(event)" style="display:none">
 			</form>
 			
 			<button type="button" id="button-send">전송</button>
@@ -247,8 +266,8 @@ var userCode = ${user.userCode};
 
 
  const fileUploadIcon = document.querySelector('.fa-paperclip');
- const chatFile = document.querySelector('#chatFile');
- fileUploadIcon.addEventListener('click', ()=>chatFile.click());
+ const fileList = document.querySelector('#fileList');
+ fileUploadIcon.addEventListener('click', ()=>fileList.click());
 
 var sock = new SockJS('http://localhost:8080/chatting');
 sock.onmessage = onMessage;
@@ -265,37 +284,43 @@ sock.onopen = function(){
 
 // 이미지 name 보이도록
 function showChatFile(event){
-	
-	
-	if(event.target.files.length>=3){
-		alert("최대 이미지 첨부 갯수는 2개입니다.");
+	if(event.target.files.length>=4){
+		alert("한번에 첨부할 수 있는 파일 최대 갯수는 3개입니다.");
 		return;
-	}
-	
-	for(let j=0; j<event.target.files.length; j++){
-		var str = "<span id='fileName'>";
-		str+=event.target.files[j].name;
-		str+="</span>";
-		$("#fileNameSpace").append(str);
 	}
 	
 	const formData = new FormData();
 	formData.append('userNumber', userCode);
 	formData.append('chatRoomCode', chatRoomCode);
-	var chatFile = event.target.files;
-	formData.append('chatFile',chatFile);
+	var fileList = event.target.files;
+	for(var i=0; i<fileList.length; i++){
+		formData.append('fileList',fileList[i]);	
+	}
 	
-	
-	alert($("#chatFile").val());
+	var url = null;
+
 	$.ajax({
 		type:"post",
 		url:"/insertChatFile",
 		data: formData,
+		contentType:false,
+		processData:false,
 		
 		success: function (result) {
-			alert("와성공예쓰바리");
+			$(result).each(function(){
+				
+				var str="<div class='backColorGray'>";
+				str+="<b>";
+			 	str+="<a href='/recoaImg/chat/"+this+"'download >";
+			 	str+=this+"</a>"+"</b>"+"</div>"; 
+			
+				$("#chatMessageArea").append(str);
+			});
 		}
 	})
+	
+	
+	
 } 
 
 
@@ -309,8 +334,7 @@ function sendMessage() {
 	const chatContext = {
 			"userCode" : userCode,
 			"chatRoomCode":chatRoomCode,
-			"chatMessage":$("#chatMessage").val(),
-			"chatFileUrl":$("#fileName").text()
+			"chatMessage":$("#chatMessage").val()
 	};
 	sock.send(JSON.stringify(chatContext));
 }

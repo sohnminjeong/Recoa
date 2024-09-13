@@ -24,6 +24,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.recoa.model.vo.Chat;
+import com.recoa.model.vo.ChatFile;
 import com.recoa.model.vo.User;
 import com.recoa.service.ChatService;
 import com.recoa.service.UserService;
@@ -64,7 +65,6 @@ public class ChattingHandler extends TextWebSocketHandler {
 		// 작성자가 쓴 내용 : message.getPayload()
 		String userId = session.getPrincipal().getName();
 		User user = userService.selectUser(userId);
-		System.out.println("message.getPayload():"+message.getPayload());
 	
 		ObjectMapper objectMapper = new ObjectMapper();
 		JsonNode jsonNode = objectMapper.readTree(message.getPayload());
@@ -73,7 +73,7 @@ public class ChattingHandler extends TextWebSocketHandler {
 		String chatMessage = jsonNode.get("chatMessage").asText();
 		
 		// 파일 전송 시 file.name
-		String chatFileUrl = jsonNode.get("chatFileUrl").asText();
+		//String chatFileUrl = jsonNode.get("chatFileUrl").asText();
 		
 		
 		if(chatMessage.equals("chatRoomOut")) {
@@ -81,52 +81,41 @@ public class ChattingHandler extends TextWebSocketHandler {
 			List<Chat> chatList = chatService.viewAllChatting(chatRoomCode);
 			for(int i=0; i<chatList.size(); i++) {
 				int chatCode = chatList.get(i).getChatCode();
-				if(chatService.viewChatFileByChatCode(chatCode)!=null) {
+				List<ChatFile> files = chatService.viewChatFileByChatCode(chatCode);
+				if(files!=null) {
+					for(ChatFile f : files) {
+						File file = new File(path+f.getChatFileUrl());
+						file.delete();
+					}
 					chatService.deleteChatFile(chatCode);
 				}
+				
 			}
 			chatService.deleteChatRoom(chatRoomCode);
-		}
-		
-		Chat chat = new Chat();
-		chat.setChatMessage(chatMessage);
-		chat.setChatRoomCode(chatRoomCode);
-		chat.setUserNumber(userCode);
-		
-		// 파일 있을 경우
-		if(chatFileUrl!=null&&chatFileUrl!="") {
-			UUID uuid = UUID.randomUUID();
-			String filename = uuid.toString()+"_"+chatFileUrl;
-			File file = new File(path+filename);
+		}else {
+			Chat chat = new Chat();
+			chat.setChatMessage(chatMessage);
+			chat.setChatRoomCode(chatRoomCode);
+			chat.setUserNumber(userCode);
+
+			//채팅 메시지 DB 삽입
+			int result = chatService.insertChatting(chat);
+			Chat newChat = chatService.viewChattingByChatCode(chat.getChatCode());
+			int hour = newChat.getChatTime().getHours();
+			int minutes = newChat.getChatTime().getMinutes();
 			
-			try {
-			
-				FileOutputStream fos = new FileOutputStream(file);
-				
-				fos.close();
-			} catch(Exception e) {}
-			
-			chat.setChatFileUrl(filename);
+			if(result>0) {
+				for ( WebSocketSession s : sessions ) {
+					// WebSocketSession == HttpSession (로그인정보,채팅방정보) 을 가로챈것..
+					int nowChatRoomCode = (Integer) s.getAttributes().get("chatRoomCode");
+					// WebSocketSession에 담겨있는 채팅방 번호와 chat에 담겨있는 채팅방 번호가 같은 경우  === 같은방 클라이언트
+					if ( nowChatRoomCode == chat.getChatRoomCode() ) {
+						//같은방 클라이언트에게 JSON 형식의 메시지를 보냄 
+						s.sendMessage( new TextMessage( user.getUserNickname()+":"+chatMessage+":"+hour+":"+minutes));
+					}
+				}	
+			}						
 		}
-		
-		//채팅 메시지 DB 삽입
-		int result = chatService.insertChatting(chat);
-		Chat newChat = chatService.viewChattingByChatCode(chat.getChatCode());
-		int hour = newChat.getChatTime().getHours();
-		int minutes = newChat.getChatTime().getMinutes();
-		
-		if(result>0) {
-			for ( WebSocketSession s : sessions ) {
-				// WebSocketSession == HttpSession (로그인정보,채팅방정보) 을 가로챈것..
-				int nowChatRoomCode = (Integer) s.getAttributes().get("chatRoomCode");
-				// WebSocketSession에 담겨있는 채팅방 번호와 chat에 담겨있는 채팅방 번호가 같은 경우  === 같은방 클라이언트
-				if ( nowChatRoomCode == chat.getChatRoomCode() ) {
-					//같은방 클라이언트에게 JSON 형식의 메시지를 보냄 
-					s.sendMessage( new TextMessage( user.getUserNickname()+":"+chatMessage+":"+hour+":"+minutes));
-				}
-			}	
-		}
-		
 	}
 
 
