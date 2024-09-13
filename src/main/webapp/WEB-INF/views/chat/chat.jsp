@@ -272,28 +272,30 @@ function showChatFile(event){
 		return;
 	}
 	
-	for(let i=0; i<event.target.files.length; i++){
-		const reader = new  FileReader();
-		reader.onload=function(event){
-			var str = "<span id='fileName'>";
-			str+=event.target.files[i].name;
-			str+="</span>";
-			$("#fileNameSpace").append(str);
-		};
-		reader.readAsDataURL(event.target.files[i]);
+	for(let j=0; j<event.target.files.length; j++){
+		var str = "<span id='fileName'>";
+		str+=event.target.files[j].name;
+		str+="</span>";
+		$("#fileNameSpace").append(str);
 	}
+	
+	const formData = new FormData();
+	formData.append('userNumber', userCode);
+	formData.append('chatRoomCode', chatRoomCode);
+	var chatFile = event.target.files;
+	formData.append('chatFile',chatFile);
+	
 	
 	alert($("#chatFile").val());
 	$.ajax({
 		type:"post",
 		url:"/insertChatFile",
-		data: $("#insertChatFile").serialize(),
+		data: formData,
 		
 		success: function (result) {
-				alert("와성공예쓰바리");
+			alert("와성공예쓰바리");
 		}
 	})
-	console.log($("#chatFile").val());
 } 
 
 
