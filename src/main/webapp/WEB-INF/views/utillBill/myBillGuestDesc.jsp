@@ -128,6 +128,7 @@
     <tbody>
         <c:forEach var="bill" items="${bills}">
             <tr>
+            
                 <td>${bill.serviceName}</td>
                 <td>
 	               			 <fmt:formatDate value="${bill.startTime}" pattern="yy-MM-dd" /> ~ <fmt:formatDate value="${bill.endTime}" pattern="yy-MM-dd" />     

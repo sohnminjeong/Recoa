@@ -1,6 +1,7 @@
 package com.recoa.service;
 
 import java.math.BigDecimal;
+import java.security.Principal;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -10,9 +11,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.recoa.model.dao.UtillbillDAO;
+import com.recoa.model.vo.ReservePaging;
 import com.recoa.model.vo.Utillbill;
 
 @Service
@@ -59,11 +63,18 @@ public class UtillbillService {
 	
 	
 	
-	public List<Utillbill> viewMyBills(String userCode) {
+	public List<Utillbill> viewMyBills(ReservePaging paging) {
         List<Utillbill> bills = new ArrayList<>();
         
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		UserDetails userDetails = (UserDetails) principal;
+
+		paging.setOffset(paging.getLimit() * (paging.getPage() - 1));
+
+		paging.setId(userDetails.getUsername());
+		
      // 당월 독서실 예약 조회
-        List<Map<String, Object>> libList = dao.libraryBill(userCode);
+        List<Map<String, Object>> libList = dao.libraryBill(paging);
         for (Map<String, Object> library : libList) {
             Utillbill bill = new Utillbill();
             bill.setServiceName("library");
@@ -85,7 +96,7 @@ public class UtillbillService {
         }
 
         // 당월 게스트하우스 예약 조회
-        List<Map<String, Object>> guestList = dao.guestBill(userCode);
+        List<Map<String, Object>> guestList = dao.guestBill(paging);
         
         for (Map<String, Object> guest : guestList) {
             Utillbill bill = new Utillbill();
@@ -147,11 +158,18 @@ public class UtillbillService {
     }
     
     // 독서실 상세보기
-    public List<Utillbill> viewMyLibDesc(String userCode){
+    public List<Utillbill> viewMyLibDesc(ReservePaging paging){
 		List<Utillbill> bills = new ArrayList<>();
 		
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		UserDetails userDetails = (UserDetails) principal;
+
+		paging.setOffset(paging.getLimit() * (paging.getPage() - 1));
+
+		paging.setId(userDetails.getUsername());
+		
 		 // 당월 독서실 예약 조회
-        List<Map<String, Object>> libList = dao.libraryBill(userCode);
+        List<Map<String, Object>> libList = dao.libraryBill(paging);
         for (Map<String, Object> library : libList) {
             Utillbill bill = new Utillbill();
             bill.setServiceName("library");
@@ -174,11 +192,18 @@ public class UtillbillService {
         return bills;
 	}
     
-    public List<Utillbill> veiwMyGuestDesc(String userCode){
+    public List<Utillbill> veiwMyGuestDesc(ReservePaging paging){
     	List<Utillbill> bills = new ArrayList<>();
     	
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		UserDetails userDetails = (UserDetails) principal;
+
+		paging.setOffset(paging.getLimit() * (paging.getPage() - 1));
+
+		paging.setId(userDetails.getUsername());
+    	
     	// 당월 게스트하우스 예약 조회
-        List<Map<String, Object>> guestList = dao.guestBill(userCode);
+        List<Map<String, Object>> guestList = dao.guestBill(paging);
         
         for (Map<String, Object> guest : guestList) {
             Utillbill bill = new Utillbill();
@@ -204,5 +229,19 @@ public class UtillbillService {
             bills.add(bill);
         }
         return bills;
+    }
+    
+    public int libBillTotal() {
+    	Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		UserDetails userDetails = (UserDetails) principal;
+
+		return dao.libBillTotal(userDetails.getUsername());
+    }
+    
+    public int guestBillTotal() {
+    	Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		UserDetails userDetails = (UserDetails) principal;
+
+		return dao.guestBillTotal(userDetails.getUsername());
     }
 }

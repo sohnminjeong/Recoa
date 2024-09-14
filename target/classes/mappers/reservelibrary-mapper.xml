@@ -94,8 +94,23 @@
     		) AND status=0
 	</select>
 	
-		<select id="libraryBill" parameterType="String" resultType="map">
+		<select id="libraryBill" parameterType="ReservePaging" resultType="map">
 		SELECT *
+		FROM reserve_library
+		WHERE user_code = (
+		        SELECT user_code 
+		        FROM user 
+		        WHERE user_id = #{id}
+    		)
+		AND YEAR(regi_date) = YEAR(CURDATE())
+    	AND MONTH(regi_date) = MONTH(CURDATE())
+		ANd status = 1
+		ORDER BY 1 DESC
+		LIMIT #{offset}, #{limit}
+	</select>
+	
+	<select id="libBillTotal" parameterType="String" resultType="int">
+		SELECT COUNT(*)
 		FROM reserve_library
 		WHERE user_code = (
 		        SELECT user_code 
