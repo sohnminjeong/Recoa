@@ -34,6 +34,7 @@ import com.recoa.model.vo.ChatRoom;
 import com.recoa.model.vo.User;
 import com.recoa.service.ChatService;
 import com.recoa.service.UserService;
+import com.recoa.util.ChattingHandler;
 
 @Controller
 public class ChatController {
@@ -130,8 +131,8 @@ public class ChatController {
 	// 채팅 파일 보내기
 	@PostMapping("/insertChatFile")
 	@ResponseBody
-	public List<String> insertChatFile(Chat chat) throws IllegalStateException, IOException {
-		
+	public List<String> insertChatFile(Chat chat, Model model) throws IllegalStateException, IOException {
+		User user = userService.findUserByCode(chat.getUserNumber());
 		service.insertChatting(chat);
 		ChatFile file= new ChatFile();
 		for(int i=0; i<chat.getFileList().size(); i++) {
@@ -143,8 +144,9 @@ public class ChatController {
 		List<ChatFile> fileList = service.viewChatFileByChatCode(chat.getChatCode());
 		List<String> urlList = new ArrayList<>();
 		for(int i=0; i<fileList.size(); i++) {
-			urlList.add(fileList.get(i).getChatFileUrl());
+			urlList.add(fileList.get(i).getChatFileUrl()+":"+user.getUserNickname());
 		}
+		
 		return urlList;
 	}
 	

@@ -65,15 +65,12 @@ public class ChattingHandler extends TextWebSocketHandler {
 		// 작성자가 쓴 내용 : message.getPayload()
 		String userId = session.getPrincipal().getName();
 		User user = userService.selectUser(userId);
-	
+		
 		ObjectMapper objectMapper = new ObjectMapper();
 		JsonNode jsonNode = objectMapper.readTree(message.getPayload());
 		int userCode = jsonNode.get("userCode").asInt();
 		int chatRoomCode = jsonNode.get("chatRoomCode").asInt();
 		String chatMessage = jsonNode.get("chatMessage").asText();
-		
-		// 파일 전송 시 file.name
-		//String chatFileUrl = jsonNode.get("chatFileUrl").asText();
 		
 		
 		if(chatMessage.equals("chatRoomOut")) {

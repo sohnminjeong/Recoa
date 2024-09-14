@@ -162,6 +162,12 @@ i:hover{
 		
 	}
 }
+.hasUrl{
+	display: inline-block;
+    width: 100%;
+   overflow-wrap: break-word;
+    padding-top: 5px;
+}
 </style>
 </head>
 <body>
@@ -208,7 +214,7 @@ i:hover{
 						<c:choose>
 							<c:when test="${hadChat.chatMessage==null}">
 							<b>
-								<a href="/recoaImg/chat/${hadChat.chatFile.chatFileUrl}" download>
+								<a href="/recoaImg/chat/${hadChat.chatFile.chatFileUrl}" download class="hasUrl">
 									${hadChat.chatFile.chatFileUrl}
 								</a>
 							</b>
@@ -224,7 +230,7 @@ i:hover{
 						<c:choose>
 							<c:when test="${hadChat.chatMessage==null}">
 								<b>
-									<a href="/recoaImg/chat/${hadChat.chatFile.chatFileUrl}" download>
+									<a href="/recoaImg/chat/${hadChat.chatFile.chatFileUrl}" download class="hasUrl">
 										${hadChat.chatFile.chatFileUrl}
 									</a>
 								</b>
@@ -264,10 +270,9 @@ i:hover{
 var chatRoomCode = ${chatRoomCode};
 var userCode = ${user.userCode};
 
-
- const fileUploadIcon = document.querySelector('.fa-paperclip');
- const fileList = document.querySelector('#fileList');
- fileUploadIcon.addEventListener('click', ()=>fileList.click());
+var fileUploadIcon = document.querySelector('.fa-paperclip');
+var fileList = document.querySelector('#fileList');
+fileUploadIcon.addEventListener('click', ()=>fileList.click());
 
 var sock = new SockJS('http://localhost:8080/chatting');
 sock.onmessage = onMessage;
@@ -288,7 +293,6 @@ function showChatFile(event){
 		alert("한번에 첨부할 수 있는 파일 최대 갯수는 3개입니다.");
 		return;
 	}
-	
 	const formData = new FormData();
 	formData.append('userNumber', userCode);
 	formData.append('chatRoomCode', chatRoomCode);
@@ -297,8 +301,6 @@ function showChatFile(event){
 		formData.append('fileList',fileList[i]);	
 	}
 	
-	var url = null;
-
 	$.ajax({
 		type:"post",
 		url:"/insertChatFile",
@@ -308,19 +310,15 @@ function showChatFile(event){
 		
 		success: function (result) {
 			$(result).each(function(){
-				
 				var str="<div class='backColorGray'>";
 				str+="<b>";
-			 	str+="<a href='/recoaImg/chat/"+this+"'download >";
+			 	str+="<a href='/recoaImg/chat/"+this+"'download class='hasUrl'>";
 			 	str+=this+"</a>"+"</b>"+"</div>"; 
-			
-				$("#chatMessageArea").append(str);
+			 	onMessage("chatFile:" + this);
 			});
 		}
 	})
-	
-	
-	
+
 } 
 
 
@@ -329,7 +327,7 @@ $("#button-send").on("click", function(e) {
 	sendMessage();
 	$('#chatMessage').val('')
 });
-// 작성한 내용 전달
+// 작성한 내용 전달	
 function sendMessage() {
 	const chatContext = {
 			"userCode" : userCode,
@@ -341,38 +339,70 @@ function sendMessage() {
 
 //서버에서 메시지를 받았을 때
 function onMessage(msg) {
-	var data = msg.data;
-	var sessionId = null; //데이터를 보낸 사람
-	var message = null;
-	var chatTime = null;
-	
-	var arr = data.split(":");
-	sessionId = arr[0]; // 작성자 닉네임
-	message = arr[1]; // 작성 내용
-	chatTimeHour = arr[2]; // 작성 시간
-	chatTimeMinutes = arr[3]; // 작성 분
-	
 	var cur_session = '${user.userNickname}'; //현재 세션에 로그인 한 사람
+	if(msg.data == undefined){
+		var str = msg.split(":");
+		var url = str[1];
+		var sessionId =str[2];
+
+		   //로그인 한 클라이언트와 타 클라이언트를 분류하기 위함
+		if(sessionId == cur_session){
+			alert("1");
+			// 보낸user와 먼저 방을 연 user가 같을 경우
+			var str="<div class='backColorGray'>";
+				str+="<b>";
+			 	str+="<a href='/recoaImg/chat/"+url+"'download class='hasUrl'>";
+			 	str+=url+"</a>"+"</b>"+"</div>"; 
+			
+			$("#chatMessageArea").append(str);
+			  
+		}
+		else{
+			alert("2");
+			// 보낸 user와 방을 연 user가 다를 경우
+			var str="<div class='backColorYellow'>";
+				str+="<b>";
+			 	str+="<a href='/recoaImg/chat/"+url+"'download class='hasUrl'>";
+			 	str+=url+"</a>"+"</b>"+"</div>"; 
+			
+			$("#chatMessageArea").append(str);
+		}
+		   
+	} else{
 	
-    //로그인 한 클라이언트와 타 클라이언트를 분류하기 위함
-	if(sessionId == cur_session){
-		// 보낸user와 먼저 방을 연 user가 같을 경우
-		var str="<div class='backColorGray'>";
+		var data = msg.data;
+		var sessionId = null; //데이터를 보낸 사람
+		var message = null;
+		var chatTime = null;
+		
+		var arr = data.split(":");
+		sessionId = arr[0]; // 작성자 닉네임
+		message = arr[1]; // 작성 내용
+		chatTimeHour = arr[2]; // 작성 시간
+		chatTimeMinutes = arr[3]; // 작성 분
+		
+	    //로그인 한 클라이언트와 타 클라이언트를 분류하기 위함
+		if(sessionId == cur_session){
+			alert("3");
+			// 보낸user와 먼저 방을 연 user가 같을 경우
+			var str="<div class='backColorGray'>";
+				str+="<span>"+chatTimeHour+":"+chatTimeMinutes+"</span>";
+			 	str+="<b>"+message + "</b>";
+			 	str+="</div>"
+			
+			$("#chatMessageArea").append(str);
+			  
+		}
+		else{
+			alert("4");
+			// 보낸 user와 방을 연 user가 다를 경우
+			var str="<div class='backColorYellow'>";
 			str+="<span>"+chatTimeHour+":"+chatTimeMinutes+"</span>";
-		 	str+="<b>"+message + "</b>";
-		 	str+="</div>"
-		
-		$("#chatMessageArea").append(str);
-		  
-	}
-	else{
-		// 보낸 user와 방을 연 user가 다를 경우
-		var str="<div class='backColorYellow'>";
-		str+="<span>"+chatTimeHour+":"+chatTimeMinutes+"</span>";
-		 str+="<b>" + message + "</b>";
-		 str+="</div>"
-		
-		$("#chatMessageArea").append(str);
+			 str+="<b>" + message + "</b>";
+			 str+="</div>"
+			
+			$("#chatMessageArea").append(str);
+		}
 	}
 }
 
