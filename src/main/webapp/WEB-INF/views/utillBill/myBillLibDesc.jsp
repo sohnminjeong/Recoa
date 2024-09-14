@@ -162,7 +162,7 @@
                <td>
                		<fmt:formatDate value="${bill.regiDate}" pattern="yy-MM-dd" />
 				</td>
-                <td>${bill.price}</td>
+                <td>${bill.price}원</td>
             </tr>
         </c:forEach>
     </tbody>

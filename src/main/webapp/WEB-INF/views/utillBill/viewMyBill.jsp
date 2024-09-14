@@ -184,12 +184,16 @@
 		<tbody>
 			<tr>
 				<td>독서실</td>
-				<td>${libraryPrice}</td>
+				<td>
+				<fmt:formatNumber type="number" maxFractionDigits="3" value="${libraryPrice}" />원
+				</td>
 				<td><button type="button" onclick="location.href='/myBillLibDesc'">상세보기</button></td>
 			</tr>
 			<tr>
 				<td>게스트하우스</td>
-				<td>${guestPrice}</td>
+				<td>
+				<fmt:formatNumber type="number" maxFractionDigits="3" value="${guestPrice}" />원
+				</td>
 				<td><button type="button" onclick="location.href='/myBillGuestDesc'">상세보기</button></td>
 			</tr>
 		</tbody>
