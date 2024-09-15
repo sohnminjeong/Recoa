@@ -310,11 +310,7 @@ function showChatFile(event){
 		
 		success: function (result) {
 			$(result).each(function(){
-				var str="<div class='backColorGray'>";
-				str+="<b>";
-			 	str+="<a href='/recoaImg/chat/"+this+"'download class='hasUrl'>";
-			 	str+=this+"</a>"+"</b>"+"</div>"; 
-			 	onMessage("chatFile:" + this);
+			 	sock.send("chatFile:"+this);
 			});
 		}
 	})
@@ -340,68 +336,67 @@ function sendMessage() {
 //서버에서 메시지를 받았을 때
 function onMessage(msg) {
 	var cur_session = '${user.userNickname}'; //현재 세션에 로그인 한 사람
-	if(msg.data == undefined){
-		var str = msg.split(":");
-		var url = str[1];
-		var sessionId =str[2];
-
-		   //로그인 한 클라이언트와 타 클라이언트를 분류하기 위함
-		if(sessionId == cur_session){
-			alert("1");
-			// 보낸user와 먼저 방을 연 user가 같을 경우
-			var str="<div class='backColorGray'>";
-				str+="<b>";
-			 	str+="<a href='/recoaImg/chat/"+url+"'download class='hasUrl'>";
-			 	str+=url+"</a>"+"</b>"+"</div>"; 
-			
-			$("#chatMessageArea").append(str);
-			  
-		}
-		else{
-			alert("2");
-			// 보낸 user와 방을 연 user가 다를 경우
-			var str="<div class='backColorYellow'>";
-				str+="<b>";
-			 	str+="<a href='/recoaImg/chat/"+url+"'download class='hasUrl'>";
-			 	str+=url+"</a>"+"</b>"+"</div>"; 
-			
-			$("#chatMessageArea").append(str);
-		}
-		   
-	} else{
 	
-		var data = msg.data;
-		var sessionId = null; //데이터를 보낸 사람
-		var message = null;
-		var chatTime = null;
-		
-		var arr = data.split(":");
-		sessionId = arr[0]; // 작성자 닉네임
-		message = arr[1]; // 작성 내용
-		chatTimeHour = arr[2]; // 작성 시간
-		chatTimeMinutes = arr[3]; // 작성 분
-		
-	    //로그인 한 클라이언트와 타 클라이언트를 분류하기 위함
-		if(sessionId == cur_session){
-			alert("3");
-			// 보낸user와 먼저 방을 연 user가 같을 경우
+	var data = msg.data;
+	var sessionId = null; //데이터를 보낸 사람
+	var message = null;
+	var chatTime = null;
+	
+	var arr = data.split(":");
+	sessionId = arr[0]; // 작성자 닉네임
+	message = arr[1]; // 작성 내용
+	url=arr[2];
+	chatTimeHour = arr[3]; // 작성 시간
+	chatTimeMinutes = arr[4]; // 작성 분
+	alert("message :"+message);
+	alert("url :"+url);
+    //로그인 한 클라이언트와 타 클라이언트를 분류하기 위함
+	if(sessionId == cur_session){
+		// 보낸user와 먼저 방을 연 user가 같을 경우
+		if(url!=0){
+			// 파일 전송 경우
 			var str="<div class='backColorGray'>";
-				str+="<span>"+chatTimeHour+":"+chatTimeMinutes+"</span>";
-			 	str+="<b>"+message + "</b>";
-			 	str+="</div>"
-			
+			str+="<span>"+chatTimeHour+":"+chatTimeMinutes+"</span>";
+		 	str+="<b>";
+		 	str+="<a href='/recoaImg/chat/"+url+"'download class='hasUrl'>"; 
+		 	str+=url+"</a>";
+		 	str+= "</b>";
+		 	str+="</div>"
+		
 			$("#chatMessageArea").append(str);
-			  
+			
+		} else{
+			// 채팅 전송 경우
+			var str="<div class='backColorGray'>";
+			str+="<span>"+chatTimeHour+":"+chatTimeMinutes+"</span>";
+		 	str+="<b>"+message+"</b>";
+		 	str+="</div>"
+		
+			$("#chatMessageArea").append(str);	
 		}
-		else{
-			alert("4");
-			// 보낸 user와 방을 연 user가 다를 경우
+		  
+	}
+	else{
+		// 보낸 user와 방을 연 user가 다를 경우
+		if(url!=0){
+			// 파일 전송 경우
 			var str="<div class='backColorYellow'>";
 			str+="<span>"+chatTimeHour+":"+chatTimeMinutes+"</span>";
-			 str+="<b>" + message + "</b>";
-			 str+="</div>"
-			
+		 	str+="<b>";
+		 	str+="<a href='/recoaImg/chat/"+url+"'download class='hasUrl'>"; 
+		 	str+=url+"</a>";
+		 	str+= "</b>";
+		 	str+="</div>"
+		
 			$("#chatMessageArea").append(str);
+		}else{
+			// 채팅 전송 경우
+			var str="<div class='backColorYellow'>";
+			str+="<span>"+chatTimeHour+":"+chatTimeMinutes+"</span>";
+		 	str+="<b>"+message+"</b>";
+		 	str+="</div>"
+		
+			$("#chatMessageArea").append(str);	
 		}
 	}
 }

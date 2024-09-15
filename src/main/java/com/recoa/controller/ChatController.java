@@ -144,7 +144,7 @@ public class ChatController {
 		List<ChatFile> fileList = service.viewChatFileByChatCode(chat.getChatCode());
 		List<String> urlList = new ArrayList<>();
 		for(int i=0; i<fileList.size(); i++) {
-			urlList.add(fileList.get(i).getChatFileUrl()+":"+user.getUserNickname());
+			urlList.add(fileList.get(i).getChatFileUrl()+":"+user.getUserNickname()+":"+fileList.get(i).getChatCode());
 		}
 		
 		return urlList;
