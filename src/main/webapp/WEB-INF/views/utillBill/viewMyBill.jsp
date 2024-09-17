@@ -99,11 +99,18 @@
             font-size: 1rem;
         }
         
+
+        
         .info-label {
             font-weight: bold;
             text-align: left;
         }
  }
+ 
+#desc{
+      	color: gray;
+}
+        
  #cost{
  	width: 100%;
  	 font-family: 'GangwonEdu_OTFBoldA';
@@ -115,7 +122,7 @@
    }
    tr{
       display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
         width: 100%;
         text-align: center;
           a:hover{
@@ -177,13 +184,19 @@
 		<thead>
 			<tr>
 				<th>서비스명</th>
-				<th>이용 요금</th>
 				<th></th>
+				<th>이용 요금</th>
+				<th>총 요금</th>
+				<th>상세보기</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr>
 				<td>독서실</td>
+				<td></td>
+				<td>
+				<fmt:formatNumber type="number" maxFractionDigits="3" value="${libraryPrice}" />원
+				</td>
 				<td>
 				<fmt:formatNumber type="number" maxFractionDigits="3" value="${libraryPrice}" />원
 				</td>
@@ -191,6 +204,18 @@
 			</tr>
 			<tr>
 				<td>게스트하우스</td>
+				<td id="desc">원룸</td>
+				<td  id="desc">
+				<fmt:formatNumber type="number" maxFractionDigits="3" value="${guestOnePrice}" />원
+				</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td  id="desc">투룸</td>
+				<td  id="desc">
+				<fmt:formatNumber type="number" maxFractionDigits="3" value="${guestTwoPrice}" />원
+				</td>
 				<td>
 				<fmt:formatNumber type="number" maxFractionDigits="3" value="${guestPrice}" />원
 				</td>

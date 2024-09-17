@@ -34,11 +34,16 @@ public class UtillbillController {
         
         BigDecimal totalPrice = service.calculateTotalPrice(bills);
         BigDecimal libraryPrice = service.calculateLibPrice(bills);
+        
         BigDecimal guestPrice = service.calculateGuestPrice(bills);
+        BigDecimal guestOnePrice = service.calculateOneRoomGuestPrice(bills);
+        BigDecimal guestTwoPrice = service.calculateTwoRoomGuestPrice(bills);
         
 		model.addAttribute("bills", bills);
 		model.addAttribute("totalPrice", totalPrice);
 		model.addAttribute("libraryPrice", libraryPrice);
+		model.addAttribute("guestOnePrice", guestOnePrice);
+		model.addAttribute("guestTwoPrice", guestTwoPrice);
 		model.addAttribute("guestPrice", guestPrice);
 		
 		return "utillBill/viewMyBill";

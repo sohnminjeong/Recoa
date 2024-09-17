@@ -148,6 +148,28 @@ public class UtillbillService {
 		return total;
 	}
 	
+	public BigDecimal calculateOneRoomGuestPrice(List<Utillbill> bills) {
+		BigDecimal total = BigDecimal.ZERO;
+				
+				for(Utillbill bill : bills) {
+					if(bill.getServiceName() == "guest" && bill.getRoomType() == "one") {
+						total = total.add(bill.getPrice());
+					}
+				}
+				return total;
+	}
+	
+	public BigDecimal calculateTwoRoomGuestPrice(List<Utillbill> bills) {
+		BigDecimal total = BigDecimal.ZERO;
+		
+		for(Utillbill bill : bills) {
+			if(bill.getServiceName() == "guest" && bill.getRoomType() == "two") {
+				total = total.add(bill.getPrice());
+			}
+		}
+		return total;
+	}
+	
 	// 총합 계산 함수
     public BigDecimal calculateTotalPrice(List<Utillbill> bills) {
         BigDecimal total = BigDecimal.ZERO;
