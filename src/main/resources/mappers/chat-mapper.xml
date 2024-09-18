@@ -64,6 +64,8 @@
 	<select id="chatRoomList" parameterType="int" resultMap="chatMap">
 	select *
 	from chat
+	left join chat_file
+	using (chat_code)
 	where chat_room_code in (SELECT chat_room_code
 		FROM chat_room
 		WHERE user_number1=#{userCode} OR user_number2=#{userCode}

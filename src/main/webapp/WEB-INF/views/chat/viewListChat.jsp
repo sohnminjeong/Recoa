@@ -168,8 +168,15 @@
 							<span id="chat_interlocutorNickname">${chat.user.userNickname}</span>
 						</div>
 						<div class="chat_content" id="chatContent${chat.chatRoomCode}" value="${chat.chatRoomCode}">
-						
-							<div id="content_chatMessage">${chat.chatMessage}</div>
+							<c:choose>
+								<c:when test="${chat.chatMessage==null||chat.chatMessage=='' }">
+									<div id="content_chatMessage">${chat.chatFile.chatFileUrl}</div>
+								</c:when>
+								<c:otherwise>
+									<div id="content_chatMessage">${chat.chatMessage}</div>
+								</c:otherwise>
+							</c:choose>
+							
 							<div  id="chatTime"> 
 								<fmt:formatDate value="${chat.chatTime}" pattern="yy.MM.dd HH:mm"/>
 							</div>

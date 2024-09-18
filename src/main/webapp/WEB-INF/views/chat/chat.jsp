@@ -212,7 +212,7 @@ i:hover{
 							<fmt:formatDate value="${hadChat.chatTime}" pattern="HH:mm" />
 						</div>
 						<c:choose>
-							<c:when test="${hadChat.chatMessage==null}">
+							<c:when test="${hadChat.chatMessage==null||hadChat.chatMessage==''}">
 							<b>
 								<a href="/recoaImg/chat/${hadChat.chatFile.chatFileUrl}" download class="hasUrl">
 									${hadChat.chatFile.chatFileUrl}
@@ -228,7 +228,7 @@ i:hover{
 				<c:if test="${hadChat.userNumber!=user.userCode}">
 					<div class="backColorYellow">
 						<c:choose>
-							<c:when test="${hadChat.chatMessage==null}">
+							<c:when test="${hadChat.chatMessage==null||hadChat.chatMessage==''}">
 								<b>
 									<a href="/recoaImg/chat/${hadChat.chatFile.chatFileUrl}" download class="hasUrl">
 										${hadChat.chatFile.chatFileUrl}
@@ -348,8 +348,7 @@ function onMessage(msg) {
 	url=arr[2];
 	chatTimeHour = arr[3]; // 작성 시간
 	chatTimeMinutes = arr[4]; // 작성 분
-	alert("message :"+message);
-	alert("url :"+url);
+
     //로그인 한 클라이언트와 타 클라이언트를 분류하기 위함
 	if(sessionId == cur_session){
 		// 보낸user와 먼저 방을 연 user가 같을 경우
