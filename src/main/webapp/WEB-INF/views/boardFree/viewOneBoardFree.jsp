@@ -314,6 +314,9 @@
 .yseView{
 	display:block;
 }
+#registerBoardFreeCommentBtn:hover{
+	cursor:pointer;
+}
 </style>
 </head>
 <body>
@@ -402,11 +405,11 @@
 					</c:when>
 					<c:otherwise>
 						<span>${user.userNickname}</span>	
-						<form action="/registerBoardFreeComment" method="post">
+						<form action="/registerBoardFreeComment" method="post" id="registerBoardFreeComment">
 							<input type="hidden" name="freeCode" value="${vo.freeCode}" id="freeCode"/>
 							<input type="hidden" name="userCode" value="${user.userCode}" id="userCode"/>
 							<input type="text" placeholder="댓글을 남겨보세요" name="freeCommentContent" id="freeCommentContent">
-							<button>등록</button>
+							<button type="button" id="registerBoardFreeCommentBtn">등록</button>
 						</form>
 					</c:otherwise>
 				</c:choose>
@@ -594,6 +597,21 @@ $('.fa-caret-right').click(function(){
 		$('#noteJsp').removeClass("yesView");
 		$('#noteJsp').addClass("noView");
 	}
+})
+$("#registerBoardFreeCommentBtn").click(()=>{
+	$.ajax({
+		type:"post",
+		url:"/registerBoardFreeComment",
+		data: $("#registerBoardFreeComment").serialize(),
+		
+		success:function(result){
+			if(socket){
+    			let socketMsg = "reply,"+result.userNickname+","+'${vo.user.userNickname}'+","+'${vo.freeTitle}'+","+'${vo.freeCode}';
+    			console.log(socketMsg);
+    			socket.send(socketMsg);
+       		}
+		}
+	})	
 })
 
 </script>

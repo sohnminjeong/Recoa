@@ -250,9 +250,14 @@ public class BoardFreeController {
 	/*---------------------- 댓글 ----------------------------*/
 	// 댓글 작성
 	@PostMapping("/registerBoardFreeComment")
-	public String registerBoardFreeComment(BoardFreeComment vo) {
+	@ResponseBody
+	public HashMap<String, String> registerBoardFreeComment(BoardFreeComment vo) {
+		HashMap<String, String> msg = new HashMap<>();
 		commentService.registerBoardFreeComment(vo);
-		return "redirect:/viewOneBoardFree?freeCode="+vo.getFreeCode();
+		//return "redirect:/viewOneBoardFree?freeCode="+vo.getFreeCode();
+		User user = userService.findUserByCode(vo.getUserCode());
+		msg.put("userNickname", user.getUserNickname());
+		return msg;
 	}
 	
 	// 댓글 전체 보기 -> 게시물 보기에 작성 

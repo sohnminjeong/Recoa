@@ -47,15 +47,15 @@ public class AlarmHandler extends TextWebSocketHandler {
 			System.out.println("if문 들어옴?");
 			String[] strs = msg.split(",");
 			if(strs!=null) {
-				System.out.println("strs : "+strs);
-				String cmd = strs[0];
-				String replyWriter = strs[1];
-				String boardWriter = strs[2];
-				String bno = strs[3];
-				String title = strs[4];
-				String bgno = strs[5];
-				System.out.println("length 성공 ? :"+cmd);
+				String cmd = strs[0]; // 댓글, 스크랩 등의 기능 구분
+				String replyWriter = strs[1]; // 댓글작성자
+				String boardWriter = strs[2]; //글작성자
+				String title = strs[3]; //게시글 제목
+				String code = strs[4]; //게시글 번호
+				System.out.println("strs : "+cmd+replyWriter+boardWriter+title+code);
 				
+				
+				// 여기서부터 수정 필요
 				WebSocketSession replyWriterSession = userSessionsMap.get(replyWriter);
 				WebSocketSession boardWriterSession = userSessionsMap.get(boardWriter);
 				System.out.println("boardWriterSEssio : "+userSessionsMap.get(boardWriter));
@@ -64,8 +64,10 @@ public class AlarmHandler extends TextWebSocketHandler {
 				// 댓글
 				if("reply".equals(cmd)&&boardWriterSession!=null) {
 					System.out.println("?!?!");
-					TextMessage tmpMsg = new TextMessage(replyWriter+"님이 "+"<a href='/board/readView?bno="+bno+"&bgno="+bgno+title+" 에 댓글을 달았습니디ㅏ</a>");
-					boardWriterSession.sendMessage(tmpMsg);
+					TextMessage tmpMsg = new TextMessage(replyWriter+"님이 "+"<a href='/boardFree/viewOneBoardFree?freeCode="+code+title+" 에 댓글을 달았습니다</a>");
+					System.out.println("tmpMsg : "+tmpMsg);
+					
+					//boardWriterSession.sendMessage(tmpMsg);
 				}
 			}
 		}
