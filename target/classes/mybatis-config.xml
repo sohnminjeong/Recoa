@@ -26,6 +26,7 @@
 		<typeAlias type="com.recoa.model.vo.Chat" alias="Chat"/>
 		<typeAlias type="com.recoa.model.vo.ChatRoom" alias="ChatRoom"/>
 		<typeAlias type="com.recoa.model.vo.ChatFile" alias="ChatFile"/>
+		<typeAlias type="com.recoa.model.vo.Alarm" alias="Alarm"/>
 	</typeAliases>
 
 	<!-- 쿼리문 -->
@@ -44,5 +45,6 @@
 		<mapper resource="mappers/note-mapper.xml"/>
 		<mapper resource="mappers/noteFile-mapper.xml"/>
 		<mapper resource="mappers/chat-mapper.xml"/>
+		<mapper resource="mappers/alarm-mapper.xml"/>
 	</mappers>
 </configuration>

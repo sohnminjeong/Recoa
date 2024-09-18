@@ -166,7 +166,7 @@ public class ChatController {
 				
 			}
 		}
-		System.out.println("chatList : "+chatList);
+		
 		for(int i=0; i<chatList.size(); i++) {
 			ChatRoom room = service.chatRoomFindByRoomCode(chatList.get(i).getChatRoomCode());
 			if(room.getUserNumber1()==userCode) {	

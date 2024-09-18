@@ -4,7 +4,7 @@ var slideIndex = 0;
     function showSlides() {
         var i;
         var slides = document.getElementsByClassName("card");
-       	console.log(slides);
+       
         for (i = 0; i < slides.length; i++) {
             slides[i].style.display = "none";
         }

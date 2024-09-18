@@ -36,8 +36,8 @@
 	<context:component-scan base-package="com.recoa" />
 	
 	<!-- websocket 요청 시 해들러 클래스와 연결 -->
+	<!-- 채팅 웹소켓 -->
 	<beans:bean id="chattingHandler" class="com.recoa.util.ChattingHandler"/>
-	
 	<websocket:handlers>
 		<!-- 웹소켓 요청(주소)을 처리할 bean 지정 -->
 		<websocket:mapping handler="chattingHandler" path="/chatting"/>
@@ -51,5 +51,14 @@
 		<websocket:sockjs></websocket:sockjs>
 	</websocket:handlers>
 	
+	<!-- 알림 웹소켓 -->
+	<beans:bean id="alarmHandler" class="com.recoa.util.AlarmHandler"/>
+	<websocket:handlers>
+		<websocket:mapping handler="alarmHandler" path="/alarm"/>
+		<websocket:handshake-interceptors>
+			<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
+		</websocket:handshake-interceptors>
+		<websocket:sockjs></websocket:sockjs>
+	</websocket:handlers>
 	
 </beans:beans>

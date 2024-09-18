@@ -1,0 +1,23 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="alarmMapper">
+	<resultMap type="Alarm" id="alarmMap">
+		<id column="alarm_code" property="alarmCode"/>
+		<result column="user_code" property="userCode"/>
+		<result column="alarm_check" property="alarmCheck"/>
+		<result column="alarm_date" property="alarmDate"/>
+		<result column="alarm_table" property="alarmTable"/>
+		<result column="alarm_content" property="alarmContent"/>
+		<result column="alarm_url" property="alarmUrl"/>
+	</resultMap>
+	
+	<insert id="registerAlarm" useGeneratedKeys="true" keyColumn="user_code" keyProperty="userCode" parameterType="Alarm">
+	INSERT INTO alarm(user_code, alarm_tabel, alarm_content, alarm_url)
+	VALUES (#{userCode}, #{alarmTable}, #{alarmContent}, #{alarmUrl})
+	</insert>
+	
+	<select id="viewAllAlarm" parameterType="int" resultMap="alarmMap">
+	SELECT *
+	FROM alarm
+	WHERE user_code=#{userCode}
+	</select>
+</mapper>

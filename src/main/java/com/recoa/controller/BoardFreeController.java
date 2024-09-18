@@ -246,6 +246,7 @@ public class BoardFreeController {
 		return "redirect:/viewOneBoardFree?freeCode="+vo.getFreeCode();
 	}
 	
+	
 	/*---------------------- 댓글 ----------------------------*/
 	// 댓글 작성
 	@PostMapping("/registerBoardFreeComment")

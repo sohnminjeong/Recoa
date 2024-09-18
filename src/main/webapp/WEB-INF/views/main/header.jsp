@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -8,6 +9,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="../../../resources/css/main/header.css" />
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://kit.fontawesome.com/cbb1359000.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -72,6 +74,36 @@
 		</c:choose>
 	</li>
 </ul>
-
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script>
+var socket=null;
+$(document).ready(function(){
+	if(${user!=null}){
+		connectWs();
+	}
+})
+function connectWs(){
+	console.log("ttttttt");
+	var ws = new SockJS("/alarm");
+	socket = ws;
+	
+	ws.onopen=function(){
+		console.log('open');
+	}
+	ws.onmessage = function(event){
+		console.log("onmessage:"+event.data);
+		let $socketAlert = $('div#socketAlert');
+		$socketAlert.html(event.data);
+		$socketAlert.css('display','block');
+		setTimeout(function(){
+			$socketAlert.css('display','none');
+		}, 5000);
+	}
+	
+	ws.onclose=function(){
+		console.log('close');
+	}
+}
+</script>
 </body>
 </html>
