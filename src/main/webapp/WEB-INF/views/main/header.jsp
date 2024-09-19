@@ -74,36 +74,6 @@
 		</c:choose>
 	</li>
 </ul>
-<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
-<script>
-var socket=null;
-$(document).ready(function(){
-	if(${user!=null}){
-		connectWs();
-	}
-})
-function connectWs(){
-	console.log("ttttttt");
-	var ws = new SockJS("/alarm");
-	socket = ws;
-	
-	ws.onopen=function(){
-		console.log('open');
-	}
-	ws.onmessage = function(event){
-		console.log("onmessage:"+event.data);
-		let $socketAlert = $('div#socketAlert');
-		$socketAlert.html(event.data);
-		$socketAlert.css('display','block');
-		setTimeout(function(){
-			$socketAlert.css('display','none');
-		}, 5000);
-	}
-	
-	ws.onclose=function(){
-		console.log('close');
-	}
-}
-</script>
+
 </body>
 </html>

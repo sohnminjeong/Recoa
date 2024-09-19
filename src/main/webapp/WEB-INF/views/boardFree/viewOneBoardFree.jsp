@@ -607,9 +607,9 @@ $("#registerBoardFreeCommentBtn").click(()=>{
 		success:function(result){
 			if(socket){
     			let socketMsg = "reply,"+result.userNickname+","+'${vo.user.userNickname}'+","+'${vo.freeTitle}'+","+'${vo.freeCode}';
-    			console.log(socketMsg);
     			socket.send(socketMsg);
        		}
+			
 		}
 	})	
 })
