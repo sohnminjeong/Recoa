@@ -15,6 +15,7 @@ public class AlarmDAO {
 	private SqlSessionTemplate session;
 	
 	public int registerAlarm(Alarm alarm) {
+		System.out.println("alarmDao : "+alarm);
 		return session.insert("alarmMapper.registerAlarm", alarm);
 	}
 	

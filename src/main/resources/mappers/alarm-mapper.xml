@@ -11,7 +11,7 @@
 	</resultMap>
 	
 	<insert id="registerAlarm" useGeneratedKeys="true" keyColumn="user_code" keyProperty="userCode" parameterType="Alarm">
-	INSERT INTO alarm(user_code, alarm_tabel, alarm_content, alarm_url)
+	INSERT INTO alarm(user_code, alarm_table, alarm_content, alarm_url)
 	VALUES (#{userCode}, #{alarmTable}, #{alarmContent}, #{alarmUrl})
 	</insert>
 	

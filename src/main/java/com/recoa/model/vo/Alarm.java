@@ -13,7 +13,7 @@ public class Alarm {
 	private boolean alarmCheck;
 	private Date alarmDate;
 	private String alarmTable;
-	private int alarmContent;
-	private int alarmUrl;
+	private String alarmContent;
+	private String alarmUrl;
 		
 }

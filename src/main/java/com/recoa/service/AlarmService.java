@@ -15,6 +15,7 @@ public class AlarmService {
 	private AlarmDAO dao;
 	
 	public int registerAlarm(Alarm alarm) {
+		System.out.println("alarmServce of alarm : "+alarm);
 		return dao.registerAlarm(alarm);
 	}
 	public List<Alarm> viewAllAlarm(int userCode){
