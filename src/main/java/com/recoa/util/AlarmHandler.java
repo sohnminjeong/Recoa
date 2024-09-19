@@ -41,9 +41,7 @@ public class AlarmHandler extends TextWebSocketHandler {
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		String userId = session.getPrincipal().getName();
-		System.out.println("sessions"+userId);
 		String msg = message.getPayload();
-		System.out.println("msg = "+msg);
 		
 		if(StringUtils.isNotEmpty(msg)) {
 			System.out.println("if문 들어옴?");
@@ -60,11 +58,11 @@ public class AlarmHandler extends TextWebSocketHandler {
 				int boardWriterCode = userService.findUserCode(boardWriter);
 				User replyUser = userService.findUserByCode(replyWriterCode);
 				User boardUser = userService.findUserByCode(boardWriterCode);
-				// 여기서부터 수정 필요
+				
 				WebSocketSession replyWriterSession = userSessionsMap.get(replyUser.getUserId());
-				System.out.println("replyWriterSession : "+replyWriterSession);
+				//System.out.println("replyWriterSession : "+replyWriterSession);
 				WebSocketSession boardWriterSession = userSessionsMap.get(boardUser.getUserId());
-				System.out.println("boardWriterSession : "+boardWriterSession);
+				//System.out.println("boardWriterSession : "+boardWriterSession);
 				
 				// 댓글
 				if("reply".equals(cmd)) {
