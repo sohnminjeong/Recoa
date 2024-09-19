@@ -609,7 +609,7 @@ $("#registerBoardFreeCommentBtn").click(()=>{
     			let socketMsg = "reply,"+result.userNickname+","+'${vo.user.userNickname}'+","+'${vo.freeTitle}'+","+'${vo.freeCode}';
     			socket.send(socketMsg);
        		}
-			
+			$("#freeCommentContent").val("");
 		}
 	})	
 })
