@@ -2,6 +2,7 @@ package com.recoa.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -55,7 +56,8 @@ public class NoteController {
 	// 쪽지 보내기
 	@ResponseBody
 	@PostMapping("/registerNote")
-	public String registerNote(Note vo) throws IllegalStateException, IOException {
+	public HashMap<String, String> registerNote(Note vo) throws IllegalStateException, IOException {
+		HashMap<String, String> msg = new HashMap<>();
 		int senderCode = userService.findUserCode(vo.getSenderNick());
 		vo.setNoteSender(senderCode);
 		int receiverCode = userService.findUserCode(vo.getReceiverNick());
@@ -72,7 +74,11 @@ public class NoteController {
 		}
 		
 		//return "redirect:/viewAllNote?userCode="+vo.getNoteSender();
-		return "성공";
+		msg.put("senderNick", vo.getSenderNick());
+		msg.put("receiverNick", vo.getReceiverNick());
+		msg.put("noteTitle", vo.getNoteTitle());
+		msg.put("noteCode", Integer.toString(vo.getNoteCode()));
+		return msg;
 	}
 	
 	// 쪽지 전체보기

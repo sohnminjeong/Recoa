@@ -275,7 +275,12 @@ $('#registerNoteBtn').click(function(){
 		data:$("#registerNote").serialize(),
 		
 		success:function(result){
-			alert("성공!");
+			if(socket){
+    			let socketMsg = "note,"+result.senderNick+","+result.receiverNick+","+result.noteTitle+","+result.noteCode;
+    			socket.send(socketMsg);
+       		}
+			
+			location.replace('/viewAllNote?userCode=${user.userCode}');
 		}
 	})
 })

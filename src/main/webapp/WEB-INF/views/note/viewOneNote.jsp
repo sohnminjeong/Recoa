@@ -179,6 +179,7 @@
 					<div id="noteJsp" style="display : none">
 						<jsp:include page="../note/noteSideBar.jsp" flush="true">
 							<jsp:param value="${vo.senderNick}" name="param1"/>
+							<jsp:param value="${vo.noteSender}" name="param3"/>
 						</jsp:include>
 					</div>
 				</c:if>
