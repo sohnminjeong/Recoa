@@ -5,7 +5,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%String param1=request.getParameter("param1"); %>
 <%String param2=request.getParameter("param2"); %>
-<%int param3=Integer.parseInt(request.getParameter("param3")); %>
+<%Integer param3=Integer.parseInt(request.getParameter("param3")); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -194,7 +194,7 @@
 		<c:if test="${user!='anonymousUser' and user.userNickname ne receiverNick }">
 			<div id="noteWriteInner">
 				<h3>쪽지 보내기</h3>
-				<form action="/registerNote" method="post" enctype="multipart/form-data">
+				<form action="/registerNote" id="registerNote" method="post" enctype="multipart/form-data">
 					<div id="person">
 						<div>
 							<span>보내는 사람</span>
@@ -211,7 +211,7 @@
 						<input type="file" id="noteFile" name="noteFile" multiple="multiple" onchange="fileRegi(event)" >
 					</div>
 					<div id="innerBtn">
-						<button>쪽지 전송</button>
+						<button type="button" id="registerNoteBtn">쪽지 전송</button>
 						<button type="button" onclick="location.href=location.href">쪽지 취소</button>
 					</div>
 				</form>
@@ -268,7 +268,17 @@ $('#chatBtn').click(function(){
 	})
 	
 })
-
+$('#registerNoteBtn').click(function(){
+	$.ajax({
+		type:"post",
+		url:"/registerNote",
+		data:$("#registerNote").serialize(),
+		
+		success:function(result){
+			alert("성공!");
+		}
+	})
+})
 </script>
 </body>
 </html>

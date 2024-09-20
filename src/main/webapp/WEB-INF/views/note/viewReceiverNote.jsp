@@ -57,7 +57,7 @@
 #container>h3{
 	font-size : 1.7rem;
 	font-weight:bold;
-	margin : 20px;
+	margin : 15px;
 	font-family: 'GangwonEdu_OTFBoldA';
 }
 #container>#containerContent{

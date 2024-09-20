@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.recoa.model.vo.Note;
@@ -51,7 +52,8 @@ public class NoteController {
 		return "note/registerNote";
 	}
 	
-	// 쪽지 보내기 
+	// 쪽지 보내기
+	@ResponseBody
 	@PostMapping("/registerNote")
 	public String registerNote(Note vo) throws IllegalStateException, IOException {
 		int senderCode = userService.findUserCode(vo.getSenderNick());
@@ -69,7 +71,8 @@ public class NoteController {
 			}
 		}
 		
-		return "redirect:/viewAllNote?userCode="+vo.getNoteSender();
+		//return "redirect:/viewAllNote?userCode="+vo.getNoteSender();
+		return "성공";
 	}
 	
 	// 쪽지 전체보기
