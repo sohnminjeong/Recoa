@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.recoa.model.vo.Alarm;
+import com.recoa.model.vo.NotePaging;
 
 @Repository
 public class AlarmDAO {
@@ -18,7 +19,11 @@ public class AlarmDAO {
 		return session.insert("alarmMapper.registerAlarm", alarm);
 	}
 	
-	public List<Alarm> viewAllAlarm(int userCode){
-		return session.selectList("alarmMapper.viewAllAlarm", userCode);
+	public List<Alarm> viewAllAlarm(NotePaging notePaging){
+		return session.selectList("alarmMapper.viewAllAlarm", notePaging);
 	}
+	public int countAllAlarm(int userCode) {
+		return session.selectOne("alarmMapper.countAllAlarm", userCode);
+	}
+	
 }

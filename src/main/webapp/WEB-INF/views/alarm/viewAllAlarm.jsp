@@ -143,8 +143,12 @@ table{
 				<tbody>
 					<c:forEach items="${list}" var="item" varStatus="status">
 						<tr>
-							<td>${status.index}</td>
-							<td>[${item.alarmTable}] ${item.alarmContent}</td>
+							<td>${paging.total-(paging.page-1)*10-status.index}</td>
+							<td>
+								<a href="${item.alarmUrl}">
+									[${item.alarmTable}] ${item.alarmContent}
+								</a>
+							</td>
 							<td>
 								<fmt:formatDate value="${item.alarmDate}" pattern="yy-MM-dd HH:mm" />
 							</td>
@@ -152,6 +156,51 @@ table{
 					</c:forEach>
 				</tbody>
 			</table>
+			<nav id="paging">
+				<ul class="pagination">
+					<li class="page-item ${paging.prev ? '':'disabled'}">
+						<c:choose>
+							<c:when
+								test="${paging.startPage == 1}">
+								<a class="page-link"
+									href="/viewAllAlarm?page=${paging.startPage=1}&userCode=${user.userCode}">
+									<i class="fa-solid fa-chevron-left"></i>
+								</a>
+							</c:when>
+							<c:otherwise>
+								<a class="page-link" href="/viewAllAlarm?page=${paging.startPage-1}&userCode=${user.userCode}">
+									<i class="fa-solid fa-chevron-left"></i>
+								</a>
+							</c:otherwise>
+						</c:choose>
+					</li>
+					<c:forEach begin="${paging.startPage}" end="${paging.endPage}" var="page">
+						<li class="page-item">
+							<a class="page-link ${paging.page== page ? 'active' : ''}"
+								href="/viewAllAlarm?page=${page}&userCode=${user.userCode}" id="page_num">
+								${page}
+							</a>
+						</li>
+					</c:forEach>
+		
+					<li class="page-item ${paging.next ? '' : 'disabled'}">
+						<c:choose>
+							<c:when
+								test="${paging.endPage < 100}">
+								<a class="page-link"
+									href="/viewAllAlarm?page=${paging.endPage}&userCode=${user.userCode}">
+									<i class="fa-solid fa-chevron-right"></i>
+								</a>
+							</c:when>
+							<c:otherwise>
+								<a class="page-link" href="/viewAllAlarm?page=${paging.endPage + 1}&userCode=${user.userCode}">
+									<i class="fa-solid fa-chevron-right"></i>
+								</a>
+							</c:otherwise>
+						</c:choose>
+					</li>
+				</ul>
+			</nav>
 		</div>
 	</div>
 </div>

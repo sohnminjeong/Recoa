@@ -15,8 +15,15 @@
 	VALUES (#{userCode}, #{alarmTable}, #{alarmContent}, #{alarmUrl})
 	</insert>
 	
-	<select id="viewAllAlarm" parameterType="int" resultMap="alarmMap">
+	<select id="viewAllAlarm" parameterType="NotePaging" resultMap="alarmMap">
 	SELECT *
+	FROM alarm
+	WHERE user_code=#{userCode}
+	LIMIT #{offset}, #{limit}
+	</select>
+	
+	<select id="countAllAlarm" parameterType="int" resultType="int">
+	SELECT count(*)
 	FROM alarm
 	WHERE user_code=#{userCode}
 	</select>
