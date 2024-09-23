@@ -275,9 +275,9 @@ $('#registerNoteBtn').click(function(){
 		data:$("#registerNote").serialize(),
 		
 		success:function(result){
-			if(socket){
+			if(alarmSocket){
     			let socketMsg = "note,"+result.senderNick+","+result.receiverNick+","+result.noteTitle+","+result.noteCode;
-    			socket.send(socketMsg);
+    			alarmSocket.send(socketMsg);
        		}
 			
 			location.replace('/viewAllNote?userCode=${user.userCode}');

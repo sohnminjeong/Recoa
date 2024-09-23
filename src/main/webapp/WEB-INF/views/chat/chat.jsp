@@ -348,7 +348,8 @@ function onMessage(msg) {
 	url=arr[2];
 	chatTimeHour = arr[3]; // 작성 시간
 	chatTimeMinutes = arr[4]; // 작성 분
-
+	receiverNick = arr[5]; // 받는 사람 닉네임
+	
     //로그인 한 클라이언트와 타 클라이언트를 분류하기 위함
 	if(sessionId == cur_session){
 		// 보낸user와 먼저 방을 연 user가 같을 경우
@@ -397,6 +398,11 @@ function onMessage(msg) {
 		
 			$("#chatMessageArea").append(str);	
 		}
+	}
+    
+	if(alarmSocket){
+		let socketMsg = "chat,"+sessionId+","+receiverNick+","+message+","+0;
+		alarmSocket.send(socketMsg);
 	}
 }
 

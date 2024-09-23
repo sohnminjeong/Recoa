@@ -605,9 +605,9 @@ $("#registerBoardFreeCommentBtn").click(()=>{
 		data: $("#registerBoardFreeComment").serialize(),
 		
 		success:function(result){
-			if(socket){
+			if(alarmSocket){
     			let socketMsg = "reply,"+result.userNickname+","+'${vo.user.userNickname}'+","+'${vo.freeTitle}'+","+'${vo.freeCode}';
-    			socket.send(socketMsg);
+    			alarmSocket.send(socketMsg);
        		}
 			$("#freeCommentContent").val("");
 		}

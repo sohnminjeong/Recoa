@@ -70,18 +70,24 @@ public class AlarmHandler extends TextWebSocketHandler {
 					alarm.setAlarmTable("쪽지");
 					alarm.setAlarmContent(replyWriter+"님이 쪽지를 보냈습니다.");
 					alarm.setAlarmUrl("/viewOneNote?noteCode="+code);
+				} else if("chat".equals(cmd)) {
+					alarm.setAlarmTable("채팅");
+					alarm.setAlarmContent(replyWriter+"님이 채팅을 보냈습니다.");
+					alarm.setAlarmUrl("/viewListChat?userCode="+boardWriterCode);
 				}
 				alarmService.registerAlarm(alarm);				
 				
 				// 댓글
 				if("reply".equals(cmd)) {
-					System.out.println("cmd==reply");
 					TextMessage tmpMsg = new TextMessage("[자유게시판] "+replyWriter+"님이 "+"<a href='/viewOneBoardFree?freeCode="+code+"'>"+title+"</a>"+"에 댓글을 달았습니다.");
 					boardWriterSession.sendMessage(tmpMsg);
 				} 
 				if("note".equals(cmd)) {
-					System.out.println("cmd==note");
 					TextMessage tmpMsg = new TextMessage("[쪽지] "+ replyWriter+"님이 "+"<a href='/viewOneNote?noteCode="+code+"'>"+"쪽지"+"</a>"+"를 보냈습니다.");
+					boardWriterSession.sendMessage(tmpMsg);
+				}
+				if("chat".equals(cmd)) {
+					TextMessage tmpMsg = new TextMessage("[채팅] "+replyWriter+"님이 "+"<a href='/viewListChat?userCode="+boardWriterCode+"'>"+"채팅"+"</a>"+"을 보냈습니다.");
 					boardWriterSession.sendMessage(tmpMsg);
 				}
 			}

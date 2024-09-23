@@ -26,6 +26,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.recoa.model.vo.Chat;
 import com.recoa.model.vo.ChatFile;
+import com.recoa.model.vo.ChatRoom;
 import com.recoa.model.vo.User;
 import com.recoa.service.ChatService;
 import com.recoa.service.UserService;
@@ -74,9 +75,21 @@ public class ChattingHandler extends TextWebSocketHandler {
 			
 			for ( WebSocketSession s : sessions ) {
 				int nowChatRoomCode = (Integer) s.getAttributes().get("chatRoomCode");
-				if ( nowChatRoomCode == fileContainsChat.getChatRoomCode() ) {
-					s.sendMessage( new TextMessage( userNickname+":"+text+":"+url+":"+hour+":"+minutes));
+				ChatRoom chatRoom = chatService.chatRoomFindByRoomCode(nowChatRoomCode);
+				int userNumber1 = chatRoom.getUserNumber1();
+				int userNumber2 = chatRoom.getUserNumber2();
+				User user1 = userService.findUserByCode(userNumber1);
+				User user2 = userService.findUserByCode(userNumber2);
+				if(user1.getUserNickname().equals(userNickname)) {
+					if ( nowChatRoomCode == fileContainsChat.getChatRoomCode() ) {
+						s.sendMessage( new TextMessage( userNickname+":"+text+":"+url+":"+hour+":"+minutes+":"+user2.getUserNickname()));
+					}
+				} else {
+					if ( nowChatRoomCode == fileContainsChat.getChatRoomCode() ) {
+						s.sendMessage( new TextMessage( userNickname+":"+text+":"+url+":"+hour+":"+minutes+":"+user1.getUserNickname()));
+					}
 				}
+				
 			}
 			
 		}else {
@@ -105,7 +118,6 @@ public class ChattingHandler extends TextWebSocketHandler {
 						}
 						chatService.deleteChatFile(chatCode);
 					}
-					
 				}
 				chatService.deleteChatRoom(chatRoomCode);
 			}else {
@@ -125,15 +137,28 @@ public class ChattingHandler extends TextWebSocketHandler {
 						// WebSocketSession == HttpSession (로그인정보,채팅방정보) 을 가로챈것..
 						int nowChatRoomCode = (Integer) s.getAttributes().get("chatRoomCode");
 						// WebSocketSession에 담겨있는 채팅방 번호와 chat에 담겨있는 채팅방 번호가 같은 경우  === 같은방 클라이언트
-						if ( nowChatRoomCode == chat.getChatRoomCode() ) {
-							//같은방 클라이언트에게 JSON 형식의 메시지를 보냄 
-							s.sendMessage( new TextMessage( user.getUserNickname()+":"+chatMessage+":"+0+":"+hour+":"+minutes));
+						
+						ChatRoom chatRoom = chatService.chatRoomFindByRoomCode(nowChatRoomCode);
+						int userNumber1 = chatRoom.getUserNumber1();
+						int userNumber2 = chatRoom.getUserNumber2();
+						User user1 = userService.findUserByCode(userNumber1);
+						User user2 = userService.findUserByCode(userNumber2);
+						
+						if(user.getUserNickname().equals(user1.getUserNickname())) {
+							if ( nowChatRoomCode == chat.getChatRoomCode() ) {
+								//같은방 클라이언트에게 JSON 형식의 메시지를 보냄 
+								s.sendMessage( new TextMessage( user.getUserNickname()+":"+chatMessage+":"+0+":"+hour+":"+minutes+":"+user2.getUserNickname()));
+							}
+						}else {
+							if ( nowChatRoomCode == chat.getChatRoomCode() ) {
+								//같은방 클라이언트에게 JSON 형식의 메시지를 보냄 
+								s.sendMessage( new TextMessage( user.getUserNickname()+":"+chatMessage+":"+0+":"+hour+":"+minutes+":"+user1.getUserNickname()));
+							}
 						}
+						
 					}	
 				}						
 			}
-			
-			
 		}
 		
 	}

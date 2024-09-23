@@ -83,16 +83,15 @@
 	</div>
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 <script>
-var socket=null;
+var alarmSocket=null;
 $(document).ready(function(){
 	if(${user!=null}){
 		connectWs();
 	}
 })
 function connectWs(){
-	console.log("ttttttt");
 	var ws = new SockJS("/alarm");
-	socket = ws;
+	alarmSocket = ws;
 	
 	ws.onopen=function(){
 		console.log('open');
