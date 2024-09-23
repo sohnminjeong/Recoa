@@ -75,7 +75,7 @@
 			<ul class="submenus" id="submenu11">
 				<li><a href="/viewAllNote?userCode=${user.userCode}"><i class="fa-solid fa-envelope"></i></a></li>
 				<li><a href="/viewListChat?userCode=${user.userCode}"><i class="fa-solid fa-comments"></i></a></li>
-				<li><a href="/"><i class="fa-solid fa-bell"></i></a></li>
+				<li><a href="/viewAllAlarm?userCode=${user.userCode}"><i class="fa-solid fa-bell"></i></a></li>
 			</ul>
 			<i class="fa-solid fa-tree"></i>
 		</c:if>

@@ -31,7 +31,7 @@ public class AlarmHandler extends TextWebSocketHandler {
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		System.out.println("alarm연결!!");
+		
 		sessions.add(session);
 		String userId = session.getPrincipal().getName();
 		userSessionsMap.put(userId, session);
@@ -96,7 +96,7 @@ public class AlarmHandler extends TextWebSocketHandler {
 	
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		System.out.println("socket 끊음");
+		
 		sessions.remove(session);
 		String userId = session.getPrincipal().getName();
 		userSessionsMap.remove(userId, session);

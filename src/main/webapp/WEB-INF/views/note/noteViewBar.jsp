@@ -66,7 +66,7 @@
 		<li><i class="fa-solid fa-bell"></i>
 			<ul>
 				<li>-------------------</li>
-				<li><a href="">알림</a></li>
+				<li><a href="/viewAllAlarm?userCode=${user.userCode}">알림</a></li>
 			</ul>
 		</li>
 	</ul>
