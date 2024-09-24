@@ -19,11 +19,16 @@ public class AlarmDAO {
 		return session.insert("alarmMapper.registerAlarm", alarm);
 	}
 	
-	public List<Alarm> viewAllAlarm(NotePaging notePaging){
-		return session.selectList("alarmMapper.viewAllAlarm", notePaging);
+	public List<Alarm> viewAllAlarm(NotePaging paging){
+		return session.selectList("alarmMapper.viewAllAlarm", paging);
 	}
 	public int countAllAlarm(int userCode) {
 		return session.selectOne("alarmMapper.countAllAlarm", userCode);
 	}
+	
+	public int updateAlarmCheck(int alarmCode) {
+		return session.update("alarmMapper.updateAlarmCheck", alarmCode);
+	}
+
 	
 }

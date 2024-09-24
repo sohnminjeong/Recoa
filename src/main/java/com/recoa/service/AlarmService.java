@@ -18,10 +18,15 @@ public class AlarmService {
 	public int registerAlarm(Alarm alarm) {
 		return dao.registerAlarm(alarm);
 	}
-	public List<Alarm> viewAllAlarm(NotePaging notePaging){
-		return dao.viewAllAlarm(notePaging);
+	public List<Alarm> viewAllAlarm(NotePaging paging){
+		paging.setOffset(paging.getLimit()*(paging.getPage()-1));
+		return dao.viewAllAlarm(paging);
 	}
 	public int countAllAlarm(int userCode) {
 		return dao.countAllAlarm(userCode);
+	}
+	
+	public int updateAlarmCheck(int alarmCode) {
+		return dao.updateAlarmCheck(alarmCode);
 	}
 }

@@ -19,6 +19,7 @@
 	SELECT *
 	FROM alarm
 	WHERE user_code=#{userCode}
+	ORDER BY alarm_code DESC
 	LIMIT #{offset}, #{limit}
 	</select>
 	
@@ -27,4 +28,10 @@
 	FROM alarm
 	WHERE user_code=#{userCode}
 	</select>
+	
+	<update id="updateAlarmCheck" parameterType="int">
+	UPDATE alarm
+	SET alarm_check=true
+	WHERE alarm_code=#{alarmCode}
+	</update>
 </mapper>

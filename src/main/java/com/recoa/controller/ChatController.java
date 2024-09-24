@@ -32,6 +32,7 @@ import com.recoa.model.vo.Chat;
 import com.recoa.model.vo.ChatFile;
 import com.recoa.model.vo.ChatRoom;
 import com.recoa.model.vo.User;
+import com.recoa.service.AlarmService;
 import com.recoa.service.ChatService;
 import com.recoa.service.UserService;
 import com.recoa.util.ChattingHandler;
@@ -43,6 +44,8 @@ public class ChatController {
 	private ChatService service;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private AlarmService alarmService;
 	
 	// 파일 저장
 	private String path = "C:\\recoaImg\\chat\\";
@@ -152,7 +155,11 @@ public class ChatController {
 	
 	// 채팅 목록창 넘어가기 
 	@GetMapping("/viewListChat")
-	public String viewListChat(int userCode, Model model) {
+	public String viewListChat(int userCode, Model model, @RequestParam(value="alarmCode", required=false)Integer alarmCode) {
+		if(alarmCode!=null) {
+			alarmService.updateAlarmCheck(alarmCode);
+		}
+		
 		User user = new User();
 		List<Chat> chatRoomList = service.chatRoomList(userCode);
 		List<Integer> roomCodeList = new ArrayList<>();

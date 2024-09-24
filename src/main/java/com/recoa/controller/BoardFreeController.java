@@ -27,6 +27,7 @@ import com.recoa.model.vo.BoardFreeImg;
 import com.recoa.model.vo.BoardFreePaging;
 import com.recoa.model.vo.FreeLike;
 import com.recoa.model.vo.User;
+import com.recoa.service.AlarmService;
 import com.recoa.service.BoardFreeCommentService;
 import com.recoa.service.BoardFreeService;
 import com.recoa.service.UserService;
@@ -40,6 +41,8 @@ public class BoardFreeController {
 	 private BoardFreeCommentService commentService;
 	 @Autowired
 	 private UserService userService;
+	 @Autowired
+	 private AlarmService alarmService;
 	
 	 // 이미지 저장
 	 private String path = "C:\\recoaImg\\boardFree\\";
@@ -94,7 +97,11 @@ public class BoardFreeController {
 	
 	// 게시물 하나 보기 페이지 이동
 	@GetMapping("/viewOneBoardFree")
-	public String viewOneBoardFree(int freeCode, Model model, @RequestParam(value="page", defaultValue="1")int page) {
+	public String viewOneBoardFree(int freeCode, Model model, @RequestParam(value="page", defaultValue="1")int page, @RequestParam(value="alarmCode", required=false)Integer alarmCode) {
+		if(alarmCode!=null) {
+			alarmService.updateAlarmCheck(alarmCode);
+		}
+		
 		service.updateFreeView(freeCode);
 		BoardFree vo = service.oneBoardFree(freeCode);
 		List<BoardFreeImg> imgList = service.oneBoardFreeImg(freeCode);

@@ -79,15 +79,15 @@ public class AlarmHandler extends TextWebSocketHandler {
 				
 				// 댓글
 				if("reply".equals(cmd)) {
-					TextMessage tmpMsg = new TextMessage("[자유게시판] "+replyWriter+"님이 "+"<a href='/viewOneBoardFree?freeCode="+code+"'>"+title+"</a>"+"에 댓글을 달았습니다.");
+					TextMessage tmpMsg = new TextMessage("[자유게시판] "+replyWriter+"님이 "+"<a href='/viewOneBoardFree?freeCode="+code+"&alarmCode="+alarm.getAlarmCode()+"'>"+title+"</a>"+"에 댓글을 달았습니다.");
 					boardWriterSession.sendMessage(tmpMsg);
 				} 
 				if("note".equals(cmd)) {
-					TextMessage tmpMsg = new TextMessage("[쪽지] "+ replyWriter+"님이 "+"<a href='/viewOneNote?noteCode="+code+"'>"+"쪽지"+"</a>"+"를 보냈습니다.");
+					TextMessage tmpMsg = new TextMessage("[쪽지] "+ replyWriter+"님이 "+"<a href='/viewOneNote?noteCode="+code+"&alarmCode="+alarm.getAlarmCode()+"'>"+"쪽지"+"</a>"+"를 보냈습니다.");
 					boardWriterSession.sendMessage(tmpMsg);
 				}
 				if("chat".equals(cmd)) {
-					TextMessage tmpMsg = new TextMessage("[채팅] "+replyWriter+"님이 "+"<a href='/viewListChat?userCode="+boardWriterCode+"'>"+"채팅"+"</a>"+"을 보냈습니다.");
+					TextMessage tmpMsg = new TextMessage("[채팅] "+replyWriter+"님이 "+"<a href='/viewListChat?userCode="+boardWriterCode+"&alarmCode="+alarm.getAlarmCode()+"'>"+"채팅"+"</a>"+"을 보냈습니다.");
 					boardWriterSession.sendMessage(tmpMsg);
 				}
 			}

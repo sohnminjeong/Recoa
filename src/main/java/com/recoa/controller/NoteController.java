@@ -21,6 +21,7 @@ import com.recoa.model.vo.Note;
 import com.recoa.model.vo.NoteFile;
 import com.recoa.model.vo.NotePaging;
 import com.recoa.model.vo.User;
+import com.recoa.service.AlarmService;
 import com.recoa.service.NoteService;
 import com.recoa.service.UserService;
 
@@ -33,6 +34,9 @@ public class NoteController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private AlarmService alarmService;
 	
 	// 파일 저장
 	private String path = "C:\\recoaImg\\note\\";
@@ -153,7 +157,11 @@ public class NoteController {
 	
 	// 쪽지 한개 보기
 	@GetMapping("/viewOneNote")
-	public String viewOneNote(int noteCode, Model model) {
+	public String viewOneNote(int noteCode, Model model, @RequestParam(value="alarmCode")Integer alarmCode) {
+		if(alarmCode!=null) {
+			alarmService.updateAlarmCheck(alarmCode);
+		}
+		
 		Note vo = service.oneViewNote(noteCode);
 		vo.setSenderNick(userService.findUserByCode(vo.getNoteSender()).getUserNickname());
 		vo.setReceiverNick(userService.findUserByCode(vo.getNoteReceiver()).getUserNickname());

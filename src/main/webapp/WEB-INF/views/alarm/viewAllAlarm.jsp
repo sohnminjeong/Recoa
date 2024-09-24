@@ -118,6 +118,9 @@ table{
 		justify-content:space-evenly;
 	}
 }
+.beforeCheck{
+	color : blue;
+}
 </style>
 </head>
 <body>
@@ -145,9 +148,18 @@ table{
 						<tr>
 							<td>${paging.total-(paging.page-1)*10-status.index}</td>
 							<td>
-								<a href="${item.alarmUrl}">
-									[${item.alarmTable}] ${item.alarmContent}
-								</a>
+								<c:choose>
+									<c:when test="${item.alarmCheck==false}">
+										<a href="${item.alarmUrl}&alarmCode=${item.alarmCode}" class="beforeCheck">
+											[${item.alarmTable}] ${item.alarmContent}
+										</a>
+									</c:when>
+									<c:otherwise>
+										<a href="${item.alarmUrl}">
+											[${item.alarmTable}] ${item.alarmContent}
+										</a>
+									</c:otherwise>
+								</c:choose>
 							</td>
 							<td>
 								<fmt:formatDate value="${item.alarmDate}" pattern="yy-MM-dd HH:mm" />
@@ -207,5 +219,6 @@ table{
 <div id="userFloating">
 	<%@ include file="../main/floating.jsp" %>
 </div>
+
 </body>
 </html>
