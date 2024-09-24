@@ -30,5 +30,8 @@ public class AlarmDAO {
 		return session.update("alarmMapper.updateAlarmCheck", alarmCode);
 	}
 
+	public int deleteAlarm(int alarmCode) {
+		return session.delete("alarmMapper.deleteAlarm", alarmCode);
+	}
 	
 }

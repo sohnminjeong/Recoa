@@ -88,7 +88,7 @@ table{
 	}
 	tr{
 		display: grid;
-        grid-template-columns: 0.5fr 1fr 0.5fr;
+        grid-template-columns: 0.5fr 0.7fr 0.5fr 0.3fr;
         width: 100%;
         text-align: center;
         align-items: center;
@@ -121,6 +121,9 @@ table{
 .beforeCheck{
 	color : blue;
 }
+.fa-trash-can:hover{
+	color:gray;
+}
 </style>
 </head>
 <body>
@@ -141,6 +144,7 @@ table{
 						<td>번호</td>
 						<td>제목</td>
 						<td>알림일자</td>
+						<td>삭제</td>
 					</tr>
 				</thead>
 				<tbody>
@@ -163,6 +167,9 @@ table{
 							</td>
 							<td>
 								<fmt:formatDate value="${item.alarmDate}" pattern="yy-MM-dd HH:mm" />
+							</td>
+							<td>
+								<i class="fa-regular fa-trash-can" onclick="location.href='/deleteAlarm?alarmCode=${item.alarmCode}'"></i>
 							</td>
 						</tr>
 					</c:forEach>

@@ -34,4 +34,9 @@
 	SET alarm_check=true
 	WHERE alarm_code=#{alarmCode}
 	</update>
+	
+	<delete id="deleteAlarm" parameterType="int">
+	DELETE FROM alarm
+	WHERE alarm_code=#{alarmCode}
+	</delete>
 </mapper>

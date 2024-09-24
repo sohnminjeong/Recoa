@@ -29,4 +29,8 @@ public class AlarmService {
 	public int updateAlarmCheck(int alarmCode) {
 		return dao.updateAlarmCheck(alarmCode);
 	}
+	
+	public int deleteAlarm(int alarmCode) {
+		return dao.deleteAlarm(alarmCode);
+	}
 }
