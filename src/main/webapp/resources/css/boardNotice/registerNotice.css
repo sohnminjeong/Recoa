@@ -125,6 +125,23 @@
 		height: 50%;
 	}
 	
+	#checkbox{
+		display: flex;
+		flex-direction: row;
+		width: 70px;
+		
+		input{
+			width: 15px;
+            height: 15px;
+            margin-right: 5px;
+		}
+		
+		label{
+			margin-top: 10px;
+			margin-right: 10px;
+		}
+	}
+	
 	#buttons{
 		display: flex;
 	    flex-direction: row;

@@ -191,6 +191,9 @@ table{
 							<td>${paging.total - (paging.page - 1) * 10 - status.index}</td>
 							
 							<td>
+							<c:if test="${item.important}">
+								<span style="color:red">!</span>
+							</c:if>
 								<a href="/viewNotice?noticeCode=${item.noticeCode}">
 					                ${item.noticeTitle}
 					            </a>

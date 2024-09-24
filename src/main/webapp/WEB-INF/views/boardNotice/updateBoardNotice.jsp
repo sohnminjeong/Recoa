@@ -46,6 +46,9 @@
 			</div>
 			
 			<div id="buttons">
+				<div id="checkbox">
+					<input type="checkbox" id="important" name="important" <c:if test="${notice.important}">checked</c:if> > <label for="important">중요글</label>
+				</div>
 				<button type="submit" id="submit">수정하기</button>
 				<button type="button" onclick="location.href='/viewNotice?noticeCode=${notice.noticeCode}'">수정 취소</button>
 			</div>
@@ -131,7 +134,6 @@
 		}
 		
 	}
-	
 	
 	
 	// 제출 전 폼 유효 확인

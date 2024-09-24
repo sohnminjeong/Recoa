@@ -16,6 +16,7 @@ public class BoardNotice {
 	private String noticeContent;
 	private Timestamp noticeWritedate;
 	private int noticeView;
+	private boolean important;
 	
 	private int bookmarkCount;
 	private List<MultipartFile> files;
