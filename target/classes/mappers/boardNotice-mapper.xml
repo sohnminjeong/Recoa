@@ -54,6 +54,9 @@
 				<when test="select=='content'">
 					notice_content LIKE CONCAT('%', #{keyword}, '%')
 				</when>
+				<when test="select == 'nickname'">
+					user_nickname LIKE CONCAT('%', #{keyword}, '%')
+				</when>
 			</choose>
 		</where>
 		ORDER BY important DESC, notice_code DESC
@@ -63,6 +66,8 @@
 	<!-- 공지 리스트 total -->
 	<select id="noticeListTotal" parameterType="BoardNoticePaging" resultType="int">
 		SELECT count(*) FROM board_notice
+		JOIN user
+		USING (user_code)
 		<where>
 			<choose>
 				<when test="select == 'all'">
@@ -74,6 +79,9 @@
 				</when>
 				<when test="select == 'content'">
 					notice_content LIKE CONCAT('%',#{keyword},'%')
+				</when>
+				<when test="select == 'nickname'">
+					user_nickname LIKE CONCAT('%', #{keyword}, '%')
 				</when>
 			</choose>
 		</where>

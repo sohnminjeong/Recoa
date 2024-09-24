@@ -157,6 +157,7 @@ table{
 						<option value="all">전체</option>
 						<option value="title">제목</option>
 						<option value="content">내용</option>
+						<option value="nickname">닉네임</option>
 					</select>
 					<input type="text" name="keyword">
 					<button type="submit" id="searchOk"><i class="fa-solid fa-magnifying-glass"></i></button>
