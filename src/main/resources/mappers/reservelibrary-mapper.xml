@@ -13,28 +13,28 @@
 	</resultMap>
 	
 	<!-- 예약 가능 여부 조회 -->
-	<select id="checkSeat" parameterType="map" resultType="map">
-	<![CDATA[
-	        SELECT seat_code, library_code
+<select id="checkSeat" parameterType="map" resultType="map">
+    <![CDATA[
+        SELECT seat_code
         FROM reserve_library
         WHERE library_code = #{libraryCode}
-        AND seat_code IN (
-            SELECT seat_code 
-            FROM reserve_library
-            WHERE library_code = #{libraryCode}
-            AND (
-                (DATE(#{startTime}) < DATE(start_time) AND DATE(#{endTime}) > DATE(start_time)) OR
-                (DATE(#{startTime}) = DATE(start_time) AND DATE(end_time) > DATE(#{endTime})) OR
-                (DATE(#{startTime}) = DATE(start_time) AND DATE(#{endTime}) = DATE(end_time)) OR
-                (DATE(#{startTime}) > DATE(start_time) AND DATE(#{startTime}) < DATE(end_time) AND DATE(#{endTime}) = DATE(end_time)) OR
-                (DATE(#{startTime}) > DATE(start_time) AND DATE(#{startTime}) < DATE(end_time) AND DATE(#{endTime}) > DATE(end_time))
-            )
-        )
-	]]>
-	</select>
+    ]]>
+    <if test="startTime == endTime">
+        <![CDATA[
+        AND DATE(start_time) = DATE(#{startTime})
+        ]]>
+    </if>
+    <if test="startTime != endTime">
+        <![CDATA[
+			 AND DATE(start_time) BETWEEN DATE(#{startTime}) AND DATE(#{endTime})
+        ]]>
+    </if>
+   
+    AND status = 1
+</select>
 	
 	<!-- 독서실 예약 등록 -->
-	<insert id="registerLibraryReserve" parameterType="ReserveLibrary"  useGeneratedKeys="true" keyProperty="reserveLibraryCode" keyColumn="reserveLibraryCode">
+	<insert id="registerLibraryReserve" parameterType="ReserveLibrary"  useGeneratedKeys="true" keyProperty="reserveLibCode" keyColumn="reserveLibCode">
 		INSERT INTO reserve_library(user_code, library_code, seat_code, start_time, end_time)
 		VALUES(#{userCode}, #{libraryCode}, #{seatCode}, #{startTime}, #{endTime})
 	</insert>
@@ -92,5 +92,33 @@
 		        FROM user 
 		        WHERE user_id = #{userId}
     		) AND status=0
+	</select>
+	
+		<select id="libraryBill" parameterType="ReservePaging" resultType="map">
+		SELECT *
+		FROM reserve_library
+		WHERE user_code = (
+		        SELECT user_code 
+		        FROM user 
+		        WHERE user_id = #{id}
+    		)
+		AND YEAR(regi_date) = YEAR(CURDATE())
+    	AND MONTH(regi_date) = MONTH(CURDATE())
+		ANd status = 1
+		ORDER BY 1 DESC
+		LIMIT #{offset}, #{limit}
+	</select>
+	
+	<select id="libBillTotal" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+		FROM reserve_library
+		WHERE user_code = (
+		        SELECT user_code 
+		        FROM user 
+		        WHERE user_id = #{userId}
+    		)
+		AND YEAR(regi_date) = YEAR(CURDATE())
+    	AND MONTH(regi_date) = MONTH(CURDATE())
+		ANd status = 1
 	</select>
 </mapper>

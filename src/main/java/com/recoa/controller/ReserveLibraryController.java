@@ -44,6 +44,13 @@ public class ReserveLibraryController {
 		params.put("endTime", endTime);
 		params.put("libraryCode", libraryCode);
 		
+		System.out.println("startTime : " + startTime);
+		System.out.println("endTime : " + endTime);
+		System.out.println("libraryCode : " + libraryCode);
+		System.out.println("params : " + params);
+		
+		System.out.println("service. 어쩌구 : " + service.getAvailableSeats(params));
+		
 		return service.getAvailableSeats(params);
 	}
 	
@@ -90,14 +97,13 @@ public class ReserveLibraryController {
 	} 
 	
 	@PostMapping("/cancelLibrary")
-	public String cancelLibrary(Principal principal,  @RequestParam(value = "page", defaultValue = "1") int page, @RequestParam("reserveLibraryCode") Integer reserveLibraryCode, Model model) {
+	public String cancelLibrary(Principal principal,  @RequestParam(value = "page", defaultValue = "1") int page, @RequestParam("reserveLibCode") Integer reserveLibCode, Model model) {
 		int total = service.libraryTotal();
 		
 		ReservePaging paging = new ReservePaging(page, total);
 		List<ReserveLibrary> list = service.mylibraryCancel(paging);
 		
-		System.out.println("reserveGuestCode : " + reserveLibraryCode);
-		service.cancelLibrary(reserveLibraryCode);
+		service.cancelLibrary(reserveLibCode);
 		model.addAttribute("list", list);
 		model.addAttribute("paging", paging);
 		

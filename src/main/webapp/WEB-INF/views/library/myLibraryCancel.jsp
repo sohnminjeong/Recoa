@@ -10,7 +10,7 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" href="../../resources/css/reset.css" />
 <title>Insert title here</title>
-<link href="../../resources/css/Library/list.css" rel="stylesheet" type="text/css">
+<link href="../../resources/css/library/list.css" rel="stylesheet" type="text/css">
 <style>
 #header {
     position: absolute;

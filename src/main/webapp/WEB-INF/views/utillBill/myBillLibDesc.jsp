@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+        <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     	<%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 		<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -10,8 +10,21 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" href="../../resources/css/reset.css" />
 <title>Insert title here</title>
-<link href="../../resources/css/library/list.css" rel="stylesheet" type="text/css">
 <style>
+ @font-face {
+    font-family: 'GangwonEdu_OTFBoldA';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFBoldA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Ownglyph_jiwoosonang';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408@1.0/Ownglyph_jiwoosonang.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
 #header {
     position: absolute;
     z-index: 1;
@@ -29,7 +42,6 @@
 	align-items:center;
 	margin:0 50px;
 }
-	
 #content>#userSideBar{
 	height:80%;
 	width:15%;
@@ -45,61 +57,117 @@
     margin-right: 10%;
 }
 
+#container>h1{
+	font-size: 2rem;
+ 	 font-family: 'GangwonEdu_OTFBoldA';
+	font-weight: bolder;
+	padding: 30px;
+}
+
 #container>h3{
 	font-size : 1.7rem;
 	font-weight:bold;
 	margin : 20px;
 	font-family: 'GangwonEdu_OTFBoldA';
 }
+
 #userFloating{
 	position: fixed;
     z-index: 1;
     bottom: 6%;
     right: 4%;
 }
-</style>
+
+/* 테이블 스타일 */
+ #cost {
+            width: 100%;
+            font-family: 'GangwonEdu_OTFBoldA';
+            height: 420px;
+            font-size: 1.2rem;
+ }
+ 
+  thead{
+		      height: 8%;
+		         border-bottom: 1px solid black;
+		         color : gray;
+ 		  }
+   tr{
+      display: grid;
+        grid-template-columns: 0.5fr 2fr 1fr 1fr;
+        width: 100%;
+        text-align: center;
+   }
+   
+   tbody{
+      height: 100%;
+        display: grid;
+        grid-template-rows: repeat(10, 1fr);
+        margin-top: 15px;
+   }
+        
+  .info-label {
+       font-weight: bold;
+       text-align: left;
+   }
+ #paging{
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+}
+
+#paging ul{
+	width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.pagination{
+	align-items: center;
+	margin: 0 auto;
+	display: flex;
+	justify-content: space-evenly;
+	padding-top: 25px;
+    width: 100%;
+    position: relative;
+}
+ </style>
 </head>
 <body>
-	<sec:authentication property="principal" var="user" />
+<sec:authentication property="principal" var="user" />
 	<div id="header">
 	<%@ include file="../main/header.jsp" %>
 	</div>
 	<div id="content">
-		<div id="userSideBar">
-		<%@ include file="../user/userSideBar.jsp" %>
-		</div>
-	<div id="container">
-	<h3>독서실 예약 내역</h3>	
-
-	<table class="table">
-		<thead>
-			<tr>
-				<th>예약 번호</th>
-				<th>시작일</th>
-				<th>종료일</th>
-				<th>호점</th>
-				<th>좌석 번호</th>
-				<th>예약 취소</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach items="${list}" var="item" varStatus="status">
-				<tr>
-					<td>${paging.total - (paging.page - 1) * 10 - status.index}</td>
-					<td><fmt:formatDate value="${item.start_time}" pattern="yy-MM-dd" /></td>
-					<td><fmt:formatDate value="${item.end_time}" pattern="yy-MM-dd" /></td>
-					<td>${item.library_code}호점</td>
-					<td>${item.seat_code}번 좌석</td>
-					
-					<td><form action="cancelLibrary" method="post">
-		                <input type="hidden" name="reserveLibCode" value="${item.reserve_lib_code}" />
-		                <button type="submit" id="cancel">예약 취소</button>
-		            </form></td>
-				</tr>
-			</c:forEach>
-		</tbody>
-	</table>
-	<nav id="paging">
+			<div id="userSideBar">
+				<%@ include file="../user/userSideBar.jsp" %>
+			</div>
+			<div id="container">
+				<h3>독서실 이용 내역</h3>	
+			<table id="cost">
+	        <thead>
+        <tr>
+        <th>NO</th>
+            <th>사용일</th>
+            <th>신청일</th>
+            <th>가격</th>
+        </tr>
+    </thead>
+    <tbody>
+        <c:forEach var="bill" items="${bills}" varStatus="status">
+            <tr>
+            <td>${paging.total - (paging.page - 1) * 10 - status.index}</td>
+                <td>
+	               	<fmt:formatDate value="${bill.startTime}" pattern="yy-MM-dd" /> ~ <fmt:formatDate value="${bill.endTime}" pattern="yy-MM-dd" />     
+                </td>
+               <td>
+               		<fmt:formatDate value="${bill.regiDate}" pattern="yy-MM-dd" />
+				</td>
+                <td>${bill.price}원</td>
+            </tr>
+        </c:forEach>
+    </tbody>
+	    </table>
+	    <nav id="paging">
 							<ul class="pagination">
 								<li class="page-item ${paging.prev ? '' : 'disabled'}">
 
@@ -159,7 +227,7 @@
 								</li>
 							</ul>
 						</nav>
-	</div>
+			</div>
 	</div>
 <div id="userFloating">
 	<%@ include file="../main/floating.jsp" %>

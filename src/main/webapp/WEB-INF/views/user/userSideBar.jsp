@@ -75,7 +75,8 @@
 					<li><a href="/myGuest" class="subInfo">내 게스트룸 예약</a></li>
 					<li><a href="/myGuestCancel" class="subInfo">게스트룸 취소 내역</a></li>
 					<li><a href="/myLibrary" class="subInfo">내 독서실 예약</a></li>
-					<li><a href="/" class="subInfo">내 고지서 확인</a></li>
+					<li><a href="/myLibraryCancel" class="subInfo">독서실 취소 내역</a></li>
+					<li><a href="/myBill" class="subInfo">내 고지서 확인</a></li>
 				</ul>
 			</li>
 			<li><i class="fa-solid fa-pen-to-square"></i>

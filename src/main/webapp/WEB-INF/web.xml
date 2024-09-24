@@ -71,4 +71,8 @@
 	    <load-on-startup>1</load-on-startup>
 	    <async-supported>true</async-supported>
 	</servlet>
+	
+	<!-- 리디렉션 -->
+
+
 </web-app>

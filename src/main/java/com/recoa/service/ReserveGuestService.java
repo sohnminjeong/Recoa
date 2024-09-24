@@ -69,19 +69,5 @@ public class ReserveGuestService {
 	public int cancelGuest(Integer reserveGuestCode) {
 		return dao.cancelGuest(reserveGuestCode);
 	}
-	
-	// 고지서 조회
-	public List<Utillbill> checkBill(Utillbill vo) {
-		List<Utillbill> bill = dao.checkBill(vo);
-		return dao.checkBill(vo);
-	}
-	
-	public int registBill(Utillbill vo) {
-		return dao.regiBill(vo);
-	}
-	
-	public int updateBill(Utillbill vo) {
-		return dao.updateBill(vo);
-	}
 
 }
