@@ -243,7 +243,7 @@ $("#payment").on("click", function () {
     const totalPrice = document.getElementById("totalPrice").textContent.replace('원', '').trim();
 
     var IMP = window.IMP;
-    IMP.init('IMPxxxxxx');
+    IMP.init('imp07788852');
 
     IMP.request_pay({
         pg: 'html5_inicis',
