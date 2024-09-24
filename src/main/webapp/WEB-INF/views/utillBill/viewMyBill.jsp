@@ -10,6 +10,13 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" href="../../resources/css/reset.css" />
 <title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+
+<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+
+<!-- iamport 라이브러리 -->
+<script src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
  <style>
  @font-face {
     font-family: 'GangwonEdu_OTFBoldA';
@@ -98,9 +105,6 @@
         td {
             font-size: 1rem;
         }
-        
-
-        
         .info-label {
             font-weight: bold;
             text-align: left;
@@ -223,17 +227,81 @@
 			</tr>
 		</tbody>
 	</table>
-	    
-	
 	    <div class="summary">
-	        <p>총 예약 요금: ${totalPrice}원</p>
+	        총 예약 요금: <span id="totalPrice">${totalPrice}</span>원
+	        <button id="payment">결제하기</button>
 	    </div>
-	
 	</div>
 	
 	</div>
 <div id="userFloating">
 	<%@ include file="../main/floating.jsp" %>
 </div>
+<script>
+$("#payment").on("click", function () {
+    const userRealName = '${user.userRealName}';
+    const totalPrice = document.getElementById("totalPrice").textContent.replace('원', '').trim();
+
+    var IMP = window.IMP;
+    IMP.init('IMPxxxxxx');
+
+    IMP.request_pay({
+        pg: 'html5_inicis',
+        pay_method: 'card',
+        merchant_uid: "O" + new Date().getTime(),
+        name: "결제 금액",
+    //    amount: totalPrice,
+        amount: 100,
+        buyer_email: "",  
+        buyer_name: userRealName,
+    }, function (rsp) {
+    	console.log("rsp: ", rsp);
+        if (rsp.success) {
+            const today = new Date();
+            const month = today.getMonth() + 1;
+            const day = today.getDate();
+            
+            console.log("imp_uid:", rsp.imp_uid);
+            console.log("merchant_uid:", rsp.merchant_uid);
+            
+            $.ajax({
+                url: "/payments/verify",
+                method: "POST",
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify({
+                    imp_uid: rsp.imp_uid,
+                    merchant_uid: rsp.merchant_uid,
+                    month: month,
+                    day: day
+                }),
+                success: function(response) {
+                    console.log("서버 응답:" + response);
+
+                    if (response.success) {
+                        alert("결제 정보가 성공적으로 저장되었습니다.");
+                    } else {
+                    	System.out.println("여기서 오류떠용");
+                        alert("결제 정보 저장에 실패했습니다.");
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("AJAX 요청 오류:", status, error);
+                    console.log("서버로부터 받은 응답:", xhr.responseText);
+                    console.log(JSON.stringify({
+                    	 imp_uid: rsp.imp_uid,
+                         merchant_uid: rsp.merchant_uid,
+                        month: month,
+                        day: day
+                    }));
+                }
+            });
+        } else {
+            alert('결제에 실패하였습니다. 에러내용 : ' + rsp.error_msg);
+        }
+    });
+});
+
+</script>
 </body>
 </html>

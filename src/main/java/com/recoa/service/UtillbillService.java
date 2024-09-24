@@ -24,7 +24,6 @@ public class UtillbillService {
 
 	@Autowired
 	private UtillbillDAO dao;
-
 	
 	// 독서실 하루 요금
     private static final BigDecimal lib_price = new BigDecimal("3000");
@@ -61,8 +60,6 @@ public class UtillbillService {
 	    return null;  // null인 경우 처리
 	}
 	
-	
-	
 	public List<Utillbill> viewMyBills(ReservePaging paging) {
         List<Utillbill> bills = new ArrayList<>();
         
@@ -79,7 +76,6 @@ public class UtillbillService {
             Utillbill bill = new Utillbill();
             bill.setServiceName("library");
             bill.setRegiDate((Date) library.get("regi_date"));
-            
             bill.setStartTime((Date) library.get("start_time"));
             bill.setEndTime((Date) library.get("end_time"));
             
@@ -102,7 +98,6 @@ public class UtillbillService {
             Utillbill bill = new Utillbill();
             bill.setServiceName("guest");
             bill.setRegiDate((Date) guest.get("regi_date"));
-            
             LocalDateTime startTime = convertToLocalDateTime((Timestamp) guest.get("start_time"));
             LocalDateTime endTime = convertToLocalDateTime((Timestamp) guest.get("end_time"));
 
