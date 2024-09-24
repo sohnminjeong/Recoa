@@ -19,8 +19,8 @@ import com.recoa.model.vo.PaymentDesc;
 @Controller
 public class PaymentController {
 
-	private static final String apiKey = "";
-	private static final String apiSecret = "";
+	private static final String apiKey = "3642014760823884";
+	private static final String apiSecret = "spwLiMfVtK1wcLtTcT3RGSoy7sl9CCR2b7YUQYXJkoHfLFK1eV9SaeWKDzLSsVDgLx6P9hGnuWd3BXRq";
 	
 	@PostMapping("/payments/verify")
 	public ResponseEntity<String> verify(@RequestBody PaymentDesc payment){

@@ -92,7 +92,7 @@ function updateSeatOptions(seats) {
         // 예약된 좌석인 경우
         if (reservedSeats.includes(i)) {
             seat.classList.add('reserved');
-            seat.style.backgroundColor = 'black'; // 붉은 색으로 표시
+            seat.style.backgroundColor = 'red'; // 붉은 색으로 표시
         } else {
             // 예약되지 않은 좌석에 대한 클릭 이벤트
             seat.addEventListener('click', function() {
@@ -105,26 +105,22 @@ function updateSeatOptions(seats) {
     }
 }
 
-// 좌석 선택 시 처리 함수
-function selectSeat(seatNumber) {
-    alert(seatNumber + '번 좌석을 선택하셨습니다');
-    document.getElementById('selected-seatCode').textContent = seatNumber; // 선택한 좌석 표시
-}
-
-
-	    // 좌석 선택 시
+// 1. 좌석 선택 시 처리 함수
 	    function selectSeat(seatCodeText) {
 	        alert(seatCodeText + '번 좌석을 선택하셨습니다');
 	        $('#selected-seatCode').css("display", "");
 	        $('#selected-seatCode').text(seatCodeText + "번 좌석");
 	        
 	        $('#seatCode').val(seatCodeText);
+	        
+	        $('.seat').removeClass('selected');
+	        $('.seat').eq(seatCodeText -1).addClass('selected');
             // + 체크박스 리셋 함수
             resetCheckbox();
             // + 체크박스 상태 업데이트 함수
             updateCheckboxState();
-	    }
-   	 
+	    
+   	 }
         // 2. 티켓 타입 변경 =========================================================
         document.querySelectorAll('input[name="ticket"]').forEach((radio) => {
             radio.addEventListener('change', function () {

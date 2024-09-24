@@ -100,6 +100,10 @@ form select option{
     border-radius: 5px;
 }
 
+.seat.selected {
+    background-color: skyblue;
+}
+
 .seat.reserved {
     background-color: red;
     cursor: not-allowed;
