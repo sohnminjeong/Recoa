@@ -7,6 +7,7 @@
 		<result property="freeContent" column="free_content"/>
 		<result property="freeWritedate" column="free_writedate"/>
 		<result property="freeView" column="free_view"/>
+		<result property="freeLikeCount" column="free_like_count"/>
 		<collection property="user" resultMap="userMap"/>
 		
 	</resultMap>
@@ -87,6 +88,13 @@
 		WHERE free_code=#{freeCode}
 	</select>
 	
+	<!-- 좋아요 갯수 넣기 -->
+	<update id="updateFreeLikeCount" parameterType="BoardFree" >
+	UPDATE board_free
+	SET free_like_count=#{freeLikeCount}
+	WHERE free_code=#{freeCode}
+	</update>
+	
 	<!-- 조회수 -->
 	<update id="updateFreeView" parameterType="int">
 		UPDATE board_free
@@ -133,7 +141,13 @@
 	SELECT *
 	FROM board_free
 	WHERE user_code=#{userCode}
-	ORDER BY free_code DESC
+	ORDER BY 
+	<choose>
+		<when test="sort=='dateDesc'">free_code DESC</when>
+		<when test="sort=='viewDesc'">free_view DESC, free_code DESC</when>
+		<when test="sort=='likeDesc'">free_like_count DESC, free_code DESC</when>
+		<otherwise>free_code DESC</otherwise>
+	</choose>
 	LIMIT #{offset}, #{limit}
 	</select>
 	

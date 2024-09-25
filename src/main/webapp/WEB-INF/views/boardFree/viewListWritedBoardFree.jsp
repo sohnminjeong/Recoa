@@ -53,12 +53,6 @@
     margin-right: 10%;
 }
 
-#container>h3{
-	font-size : 1.7rem;
-	font-weight:bold;
-	margin : 20px;
-	font-family: 'GangwonEdu_OTFBoldA';
-}
 table{
    width:100%;
    height:420px;
@@ -71,7 +65,7 @@ table{
    }
    tr{
       display: grid;
-        grid-template-columns: 0.5fr 1fr 1.8fr 1fr 0.7fr;
+        grid-template-columns: 0.5fr 1fr 1.6fr 1fr 0.5fr 0.5fr;
         width: 100%;
         text-align: center;
         font-family: 'GangwonEdu_OTFBoldA';
@@ -122,6 +116,23 @@ table{
 tr td{
 	overflow:hidden
 }
+#container_under{
+	display:flex;
+	justify-content:space-between;
+	width:100%;
+	align-items:center;
+	
+	h3{
+		font-size : 1.7rem;
+		font-weight:bold;
+		margin : 15px;
+		font-family: 'GangwonEdu_OTFBoldA';
+	}
+	select{
+		 font-family: 'SDMiSaeng';
+		 font-size:1.2rem;
+	}
+}
 </style>
 </head>
 <body>
@@ -130,11 +141,26 @@ tr td{
 	<%@ include file="../main/header.jsp" %>
 </div>
 <div id="content">
+	
 	<div id="userSideBar">
 		<%@ include file="../user/userSideBar.jsp" %>
 	</div>
+	
 	<div id="container">
-		<h3>좋아요</h3>
+		<div id="container_under">
+			<h3>작성한 게시물</h3>
+			<div>
+				<form action="writedBoardFree" method="get">
+					<input type="hidden" value="${user.userCode}" name="userCode">
+					<select name="sort" onchange="this.form.submit()">
+						<option value="dateDesc" ${paging.sort=='dateDesc' ? 'selected' : '' }>최신순</option>
+						<option value="viewDesc" ${paging.sort=='viewDesc' ? 'selected' : '' }>조회수순</option>
+						<option value="likeDesc" ${paging.sort=='likeDesc' ? 'selected' : '' }>좋아요순</option>
+					</select>
+				</form>
+			</div>
+		</div>
+			
 		<table class="table">
 			<thead>
 				<tr>
@@ -143,6 +169,7 @@ tr td{
 					<th>내용</th>
 					<th>작성일</th>
 					<th>조회수</th>
+					<th>좋아요수</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -161,10 +188,12 @@ tr td{
 							<fmt:formatDate value="${item.freeWritedate}" pattern="yy-MM-dd HH:mm" />
 						</td>
 						<td>${item.freeView}</td>
+						<td>${item.freeLikeCount}</td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
+		
 		<nav id="paging">
 			<ul class="pagination">
 				<li class="page-item ${paging.prev ? '':'disabled'}">
@@ -210,6 +239,7 @@ tr td{
 				</li>
 			</ul>
 		</nav>
+	
 	</div>
 </div>
 <div id="userFloating">

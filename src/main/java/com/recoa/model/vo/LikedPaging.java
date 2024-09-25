@@ -19,11 +19,28 @@ public class LikedPaging {
 	private boolean next;
 	
 	private int userCode;
+	private String sort;
 	
 	public LikedPaging(int page, int total, int userCode) {
 		this.page = page;
 		this.total = total;
 		this.userCode = userCode;
+	
+		int totalPages = (int) Math.ceil((double) total / this.limit);
+
+		this.startPage = ((page - 1) / pageSize) * pageSize + 1;
+
+		this.endPage = Math.min(startPage + pageSize - 1, totalPages);
+	
+		this.prev = this.startPage > 1;
+		this.next = this.endPage < totalPages;
+		
+	}
+	public LikedPaging(int page, int total, int userCode, String sort) {
+		this.page = page;
+		this.total = total;
+		this.userCode = userCode;
+		this.sort = sort;
 	
 		int totalPages = (int) Math.ceil((double) total / this.limit);
 

@@ -58,6 +58,10 @@ public class BoardFreeService {
 	public int deleteFreeLike(FreeLike vo) {
 		return dao.deleteFreeLike(vo);
 	}
+	// 좋아요 총 갯수 넣기 
+	public int updateFreeLikeCount(BoardFree vo) {
+		return dao.updateFreeLikeCount(vo);
+	}
 	// 게시물 별 좋아요 갯수
 	public int countFreeLike(int freeCode) {
 		return dao.countFreeLike(freeCode);

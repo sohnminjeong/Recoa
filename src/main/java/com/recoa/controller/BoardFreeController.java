@@ -105,10 +105,13 @@ public class BoardFreeController {
 		
 		service.updateFreeView(freeCode);
 		BoardFree vo = service.oneBoardFree(freeCode);
+		
 		List<BoardFreeImg> imgList = service.oneBoardFreeImg(freeCode);
 		model.addAttribute("vo", vo);
 		model.addAttribute("imgList", imgList);
 		model.addAttribute("countLike", service.countFreeLike(freeCode));
+		vo.setFreeLikeCount(service.countFreeLike(freeCode));
+		service.updateFreeLikeCount(vo);
 		
 		// 이미 좋아요 누른 user일 경우
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -307,10 +310,14 @@ public class BoardFreeController {
 	
 	// 내가 작성한 게시물 list
 	@GetMapping("/writedBoardFree")
-	public String viewListWritedBoardFree(int userCode, @RequestParam(value="page", defaultValue="1")int page, Model model) {
+	public String viewListWritedBoardFree(int userCode, @RequestParam(value="page", defaultValue="1")int page, Model model, @RequestParam(value="sort", required = false)String sort) {
 		int total = service.countViewListWritedBoardFree(userCode);
-		LikedPaging paging = new LikedPaging(page, total, userCode);
+		LikedPaging paging = new LikedPaging(page, total, userCode, sort);
 		List<BoardFree> list = service.viewListWritedBoardFree(paging);
+		for(int i=0; i<list.size(); i++) {
+			int freeLikeCount = service.countFreeLike(list.get(i).getFreeCode());
+			list.get(i).setFreeLikeCount(freeLikeCount);
+		}
 		model.addAttribute("list", list);
 		model.addAttribute("paging", paging);
 		return "boardFree/viewListWritedBoardFree";

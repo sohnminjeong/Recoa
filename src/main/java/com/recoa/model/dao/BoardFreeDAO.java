@@ -49,6 +49,11 @@ public class BoardFreeDAO {
 	public int updateFreeView(int freeCode) {
 		return session.update("boardFreeMapper.updateFreeView", freeCode);
 	}
+	// 좋아요 총 갯수 넣기 
+	public int updateFreeLikeCount(BoardFree vo) {
+		return session.update("boardFreeMapper.updateFreeLikeCount", vo);
+	}
+
 	
 	// 좋아요 추가
 	public int insertFreeLike(FreeLike vo) {
