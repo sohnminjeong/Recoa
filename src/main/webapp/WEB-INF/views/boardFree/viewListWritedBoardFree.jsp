@@ -62,13 +62,16 @@ table{
       height: 8%;
          border-bottom: 1px solid black;
          color : gray;
+         tr{
+         	 font-family: 'GangwonEdu_OTFBoldA';
+         }
+         
    }
    tr{
       display: grid;
         grid-template-columns: 0.5fr 1fr 1.6fr 1fr 0.5fr 0.5fr;
         width: 100%;
         text-align: center;
-        font-family: 'GangwonEdu_OTFBoldA';
           a:hover{
              color : gray;
           }
@@ -76,11 +79,15 @@ table{
    }
    
    tbody{
-   font-family: 'GangwonEdu_OTFBoldA';
+    
       height: 100%;
         display: grid;
         grid-template-rows: repeat(10, 1fr);
         margin-top: 15px;
+        tr{
+        	font-family: 'SDMiSaeng';
+        	font-size:1.3rem;
+        }
    }
    button{
    		height: 15px;
