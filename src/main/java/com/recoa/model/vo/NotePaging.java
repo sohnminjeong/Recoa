@@ -15,6 +15,8 @@ public class NotePaging {
 	private int startPage;
 	private int total;
 	
+	private String sort;
+	
 	private boolean prev;
 	private boolean next;
 	
@@ -24,6 +26,21 @@ public class NotePaging {
 		this.userCode = userCode;
 		this.page = page;
 		this.total = total;
+	
+		int totalPages = (int) Math.ceil((double) total / this.limit);
+
+		this.startPage = ((page - 1) / pageSize) * pageSize + 1;
+
+		this.endPage = Math.min(startPage + pageSize - 1, totalPages);
+	
+		this.prev = this.startPage > 1;
+		this.next = this.endPage < totalPages;
+	}
+	public NotePaging(int page, int total, int userCode, String sort) {
+		this.userCode = userCode;
+		this.page = page;
+		this.total = total;
+		this.sort = sort;
 	
 		int totalPages = (int) Math.ceil((double) total / this.limit);
 

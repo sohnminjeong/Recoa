@@ -64,8 +64,17 @@
 		text-decoration : underline;
 		
 	}
+	i{
+		font-size:1rem;
+		width:30px;
+		height:20px;
+	}
+	i:hover{
+		cursor:pointer;
+		color : gray;
+	}
 }
-	
+
 </style>
 </head>
 <body>
@@ -79,7 +88,10 @@
 			</ul>
 			<i class="fa-solid fa-tree"></i>
 		</c:if>
-		<div id="socketAlert" style="display : none"></div>
+		<div id="socketAlert" style="display : none">
+			<div id="alarmContent"></div>
+			<i class="fa-solid fa-xmark"></i>
+		</div>
 	</div>
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 <script>
@@ -98,11 +110,11 @@ function connectWs(){
 	}
 	ws.onmessage = function(event){
 		let socketAlert = $('div#socketAlert');
-		socketAlert.html(event.data);
-		socketAlert.css('display','block');
+		$('#alarmContent').append(event.data+'<br/>');
+		socketAlert.css('display','flex');
 		setTimeout(function(){
 			socketAlert.css('display','none');
-		}, 10000);
+		}, 20000);
 	}
 	
 	ws.onclose=function(){
@@ -117,6 +129,9 @@ $('.fa-tree').mouseover(function(){
 
 $('.submenus').mouseleave(function(){
 	$(this).css({"display":"none"});
+})
+$('.fa-xmark').click(function(){
+	$('div#socketAlert').css('display','none');
 })
 </script>
 </body>

@@ -54,12 +54,7 @@
     flex-direction: column;
     margin-right: 10%;
 }
-#container>h3{
-	font-size : 1.7rem;
-	font-weight:bold;
-	margin : 15px;
-	font-family: 'GangwonEdu_OTFBoldA';
-}
+
 #container>#containerContent{
 	width:100%;
 	border : 2px solid black;
@@ -124,6 +119,23 @@ table{
 .fa-trash-can:hover{
 	color:gray;
 }
+#container_under{
+	display:flex;
+	justify-content:space-between;
+	width:100%;
+	align-items:center;
+	
+	h3{
+		font-size : 1.7rem;
+		font-weight:bold;
+		margin : 15px;
+		font-family: 'GangwonEdu_OTFBoldA';
+	}
+	select{
+		 font-family: 'SDMiSaeng';
+		 font-size:1.2rem;
+	}
+}
 </style>
 </head>
 <body>
@@ -136,7 +148,19 @@ table{
 		<%@ include file="../note/noteViewBar.jsp" %>
 	</div>
 	<div id="container">
-		<h3>알림 목록</h3>
+		<div id="container_under">
+			<h3>알림 목록</h3>
+			<div>
+				<form action="/viewAllAlarm" method="get">
+					<input type="hidden" value="${user.userCode}" name="userCode">
+					<select name="sort" onchange="this.form.submit()">
+						<option value="dateDesc" ${paging.sort=='dateDesc' ? 'selected' : '' }>최신순</option>
+						<option value="checkFalseDesc" ${paging.sort=='checkFalseDesc' ? 'selected' : '' }>미확인 알림순</option>
+					</select>
+				</form>
+			</div>
+		</div>
+			
 		<div id="containerContent">
 			<table>
 				<thead>

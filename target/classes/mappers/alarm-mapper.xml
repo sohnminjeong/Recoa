@@ -19,7 +19,12 @@
 	SELECT *
 	FROM alarm
 	WHERE user_code=#{userCode}
-	ORDER BY alarm_code DESC
+	ORDER BY
+	<choose>
+		<when test="sort=='checkFalseDesc'">alarm_check=true, alarm_date DESC</when>
+		<when test="sort=='dateDesc'">alarm_code DESC</when>
+		<otherwise> alarm_code DESC</otherwise>
+	</choose>
 	LIMIT #{offset}, #{limit}
 	</select>
 	

@@ -26,9 +26,9 @@ public class AlarmController {
 	private UserService userService;
 	
 	@GetMapping("/viewAllAlarm")
-	public String viewAllAlarm(int userCode, Model model, @RequestParam(value="page", defaultValue="1")int page) {
+	public String viewAllAlarm(int userCode, Model model, @RequestParam(value="page", defaultValue="1")int page, @RequestParam(value="sort", required = false)String sort) {
 		int total = service.countAllAlarm(userCode);
-		NotePaging paging = new NotePaging(page, total, userCode);
+		NotePaging paging = new NotePaging(page, total, userCode, sort);
 		List<Alarm> list = service.viewAllAlarm(paging);
 		model.addAttribute("list", list);
 		model.addAttribute("paging", paging);
