@@ -26,6 +26,7 @@ import com.recoa.model.vo.BoardFreeComment;
 import com.recoa.model.vo.BoardFreeImg;
 import com.recoa.model.vo.BoardFreePaging;
 import com.recoa.model.vo.FreeLike;
+import com.recoa.model.vo.LikedPaging;
 import com.recoa.model.vo.User;
 import com.recoa.service.AlarmService;
 import com.recoa.service.BoardFreeCommentService;
@@ -288,8 +289,19 @@ public class BoardFreeController {
 	// 대댓글 작성
 	@PostMapping("/registerReplyComment")
 	public String registerReplyComment(BoardFreeComment vo) {
-		System.out.println("vo  : "+vo);
 		commentService.registerReplyComment(vo);
 		return "redirect:/viewOneBoardFree?freeCode="+vo.getFreeCode();
+	}
+	
+	/*---------------------- 마이페이지 ----------------------------*/
+	// 내가 좋아요 누른 게시물 list
+	@GetMapping("/liked")
+	public String viewListLiked(int userCode, @RequestParam(value="page", defaultValue="1")int page, Model model) {
+		int total = service.countViewListLiked(userCode);
+		LikedPaging paging = new LikedPaging(page, total, userCode);
+		List<BoardFree> list = service.viewListLiked(paging);
+		model.addAttribute("list", list);
+		model.addAttribute("paging", paging);
+		return "boardFree/myLike";
 	}
 }

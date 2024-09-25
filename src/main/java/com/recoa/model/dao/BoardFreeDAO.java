@@ -10,6 +10,7 @@ import com.recoa.model.vo.BoardFree;
 import com.recoa.model.vo.BoardFreeImg;
 import com.recoa.model.vo.BoardFreePaging;
 import com.recoa.model.vo.FreeLike;
+import com.recoa.model.vo.LikedPaging;
 
 @Repository
 public class BoardFreeDAO {
@@ -82,5 +83,13 @@ public class BoardFreeDAO {
 	// 게시물 수정 > 이미지
 	public int updateBoardFreeImg(BoardFreeImg img) {
 		return session.update("boardFreeImgMapper.updateBoardFreeImg", img);
+	}
+	
+	// 좋아요 누른 게시물 보기 
+	public List<BoardFree> viewListLiked(LikedPaging paging){
+		return session.selectList("boardFreeMapper.viewListLiked", paging);
+	}
+	public int countViewListLiked(int userCode) {
+		return session.selectOne("boardFreeMapper.countViewListLiked", userCode);
 	}
 }

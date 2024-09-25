@@ -22,4 +22,5 @@ public class BoardFree {
 	private List<MultipartFile> file;
 	private boolean delImgBtn;
 	private User user;
+	private FreeLike freeLike;
 }

@@ -10,6 +10,7 @@ import com.recoa.model.vo.BoardFree;
 import com.recoa.model.vo.BoardFreeImg;
 import com.recoa.model.vo.BoardFreePaging;
 import com.recoa.model.vo.FreeLike;
+import com.recoa.model.vo.LikedPaging;
 
 @Service
 public class BoardFreeService {
@@ -83,5 +84,14 @@ public class BoardFreeService {
 	// 게시물 수정 > 이미지
 	public int updateBoardFreeImg(BoardFreeImg img) {
 		return dao.updateBoardFreeImg(img);
+	}
+	
+	// 좋아요 누른 게시물 보기 
+	public List<BoardFree> viewListLiked(LikedPaging paging){
+		paging.setOffset(paging.getLimit()*(paging.getPage()-1));
+		return dao.viewListLiked(paging);
+	}
+	public int countViewListLiked(int userCode) {
+		return dao.countViewListLiked(userCode);
 	}
 }

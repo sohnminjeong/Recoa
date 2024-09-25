@@ -8,6 +8,7 @@
 		<result property="freeWritedate" column="free_writedate"/>
 		<result property="freeView" column="free_view"/>
 		<collection property="user" resultMap="userMap"/>
+		
 	</resultMap>
 	
 	<resultMap type="User" id="userMap">
@@ -21,6 +22,12 @@
 		<result property="userAdrDetail" column="user_adr_detail"/>
 		<result property="userEmail" column="user_email"/>
 		<result property="userAdmin" column="user_admin"/>	
+	</resultMap>
+	
+	<resultMap type="FreeLike" id="freeLikeMap">
+		<id property="likeCode" column="like_code"/>
+		<result property="userCode" column="user_code"/>
+		<result property="freeCode" column="free_code"/>
 	</resultMap>
 	
 	<!-- 게시물 작성 -->
@@ -101,4 +108,23 @@
 	WHERE free_code=#{freeCode}
 	</update>
 
+	<!-- 좋아요 누른 게시물 보기 -->
+	<select id="viewListLiked" parameterType="LikedPaging" resultMap="boardFreeMap">
+	SELECT a.*
+	FROM board_free a
+	JOIN free_like b
+	USING (free_code)
+	WHERE b.user_code=#{userCode}
+	ORDER BY a.free_code DESC
+	LIMIT #{offset}, #{limit}
+	</select>
+	
+	<select id="countViewListLiked" parameterType="int" resultType="int">
+	SELECT count(*)
+	FROM board_free a
+	JOIN free_like b
+	USING (free_code)
+	WHERE b.user_code=#{userCode}
+	ORDER BY a.free_code DESC
+	</select>
 </mapper>

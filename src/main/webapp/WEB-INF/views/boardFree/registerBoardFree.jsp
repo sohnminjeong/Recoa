@@ -134,7 +134,7 @@ img{
 		<form action="/registerBoardFree" method="post" enctype="multipart/form-data" onsubmit="return validate()">
 		<input type="hidden" value="${user.userCode}" name="userCode">
 			<div id="data">
-				<input type="text" placeholder="제목" name="freeTitle" id="freeTitle">
+				<input type="text" placeholder="제목" name="freeTitle" id="freeTitle" maxlength="29">
 				<textarea placeholder="내용" name="freeContent" id="freeContent"></textarea>
 				<input type="file" name="file" multiple="multiple" id="file" style="display: none;" onchange="imgShow(event)">
 				<div id="addImg">

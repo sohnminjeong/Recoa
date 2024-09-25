@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -57,6 +61,7 @@
 </style>
 </head>
 <body>
+<sec:authentication property="principal" var="user" />
 	<div id="sideBar">
 		<ul>
 			<li><a href="/myPageUser" id="myInfo">내 정보</a></li>
@@ -83,7 +88,7 @@
 				<ul>
 					<li>-------------------</li>
 					<li><a href="/" class="subInfo">작성한 게시물</a></li>
-					<li><a href="/" class="subInfo">좋아요</a></li>
+					<li><a href="/liked?userCode=${user.userCode}" class="subInfo">좋아요</a></li>
 					<li><a href="/bookmarked" class="subInfo">북마크</a></li>
 				</ul>
 			</li>

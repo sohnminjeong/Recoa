@@ -15,6 +15,7 @@
 		<typeAlias type="com.recoa.model.vo.BoardFreePaging" alias="BoardFreePaging"/>
 		<typeAlias type="com.recoa.model.vo.BoardFreeComment" alias="BoardFreeComment"/>
 		<typeAlias type="com.recoa.model.vo.FreeLike" alias="FreeLike"/>
+		<typeAlias type="com.recoa.model.vo.LikedPaging" alias="LikedPaging"/>
 		<typeAlias type="com.recoa.model.vo.BoardNotice" alias="BoardNotice" />
 		<typeAlias type="com.recoa.model.vo.BoardNoticeImg" alias="BoardNoticeImg"/>
 		<typeAlias type="com.recoa.model.vo.BoardNoticePaging" alias="BoardNoticePaging"/>

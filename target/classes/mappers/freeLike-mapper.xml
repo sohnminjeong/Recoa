@@ -31,4 +31,5 @@
 	FROM free_like
 	WHERE free_code=#{freeCode} AND user_code=#{userCode}
 	</select>
+	
 </mapper>
