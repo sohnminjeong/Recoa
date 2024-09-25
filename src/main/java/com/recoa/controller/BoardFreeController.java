@@ -304,4 +304,15 @@ public class BoardFreeController {
 		model.addAttribute("paging", paging);
 		return "boardFree/myLike";
 	}
+	
+	// 내가 작성한 게시물 list
+	@GetMapping("/writedBoardFree")
+	public String viewListWritedBoardFree(int userCode, @RequestParam(value="page", defaultValue="1")int page, Model model) {
+		int total = service.countViewListWritedBoardFree(userCode);
+		LikedPaging paging = new LikedPaging(page, total, userCode);
+		List<BoardFree> list = service.viewListWritedBoardFree(paging);
+		model.addAttribute("list", list);
+		model.addAttribute("paging", paging);
+		return "boardFree/viewListWritedBoardFree";
+	}
 }

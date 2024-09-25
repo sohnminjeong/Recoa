@@ -127,4 +127,20 @@
 	WHERE b.user_code=#{userCode}
 	ORDER BY a.free_code DESC
 	</select>
+	
+	<!-- 내가 쓴 게시물 리스트+페이징 -->
+	<select id="viewListWritedBoardFree" parameterType="LikedPaging" resultMap="boardFreeMap">
+	SELECT *
+	FROM board_free
+	WHERE user_code=#{userCode}
+	ORDER BY free_code DESC
+	LIMIT #{offset}, #{limit}
+	</select>
+	
+	<select id="countViewListWritedBoardFree" parameterType="int" resultType="int">
+	SELECT count(*)
+	FROM board_free
+	WHERE user_code=#{userCode}
+	ORDER BY free_code DESC
+	</select>
 </mapper>

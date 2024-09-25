@@ -92,4 +92,12 @@ public class BoardFreeDAO {
 	public int countViewListLiked(int userCode) {
 		return session.selectOne("boardFreeMapper.countViewListLiked", userCode);
 	}
+	
+	// 내가 쓴 게시물 리스트+페이징 
+	public List<BoardFree> viewListWritedBoardFree(LikedPaging paging){
+		return session.selectList("boardFreeMapper.viewListWritedBoardFree", paging);
+	}
+	public int countViewListWritedBoardFree(int userCode) {
+		return session.selectOne("boardFreeMapper.countViewListWritedBoardFree", userCode);
+	}
 }

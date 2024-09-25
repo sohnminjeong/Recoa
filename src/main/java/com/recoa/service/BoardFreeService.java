@@ -94,4 +94,14 @@ public class BoardFreeService {
 	public int countViewListLiked(int userCode) {
 		return dao.countViewListLiked(userCode);
 	}
+	
+	// 내가 쓴 게시물 리스트+페이징 
+	public List<BoardFree> viewListWritedBoardFree(LikedPaging paging){
+		paging.setOffset(paging.getLimit()*(paging.getPage()-1));
+		return dao.viewListWritedBoardFree(paging);
+	}
+	public int countViewListWritedBoardFree(int userCode) {
+		return dao.countViewListWritedBoardFree(userCode);
+	}
+	
 }
