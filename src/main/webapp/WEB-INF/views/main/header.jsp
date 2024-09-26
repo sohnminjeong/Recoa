@@ -65,7 +65,12 @@
 			<c:otherwise>
 					<a href="/"><i class="fa-solid fa-clipboard-user"></i></a>
 					<ul class="submenu" id="submenu4">
-						<li><a href="/myPageUser">마이페이지</a></li>
+						<li>
+							<c:choose>
+								<c:when test="${user.userAdmin=='manager'||user.userAdmin=='admin'}"><a href="/adminPage">마이페이지</a></c:when>
+								<c:otherwise><a href="/myPageUser">마이페이지</a></c:otherwise>
+							</c:choose>
+						</li>
 						<li><a href="/logout">로그아웃</a></li>
 					</ul>
 					

@@ -112,7 +112,6 @@
 	<div id="adminSideBar">
 		<%@ include file="../admin/adminSideBar.jsp" %>
 	</div>
-	</div>
 	<div id="container">
 		<div id="container_under">
 			<h3>관리자 정보</h3>
