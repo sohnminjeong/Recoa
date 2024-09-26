@@ -138,7 +138,10 @@ tr td{
 </div>
 <div id="content">
 	<div id="userSideBar">
-		<%@ include file="../user/userSideBar.jsp" %>
+		<c:choose>
+			<c:when test="${user.userAdmin=='manager'||user.userAdmin=='admin'}"><%@ include file="../admin/adminSideBar.jsp" %></c:when>
+			<c:otherwise><%@ include file="../user/userSideBar.jsp" %></c:otherwise>
+		</c:choose>
 	</div>
 	<div id="container">
 		<h3>좋아요</h3>
