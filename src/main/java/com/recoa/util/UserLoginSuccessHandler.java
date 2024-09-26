@@ -26,7 +26,11 @@ public class UserLoginSuccessHandler implements AuthenticationSuccessHandler{
 		if(roleNames.contains("manager")) {
 			response.sendRedirect("/adminPage");
 			return;
-		} 
+		}
+		if(roleNames.contains("admin")) {
+			response.sendRedirect("/adminPage");
+			return;
+		}
 //		else if(roleNames.contains("user")) {
 //			response.sendRedirect("/myPageUser");
 //			return;

@@ -92,7 +92,6 @@
 					<li><a href="/bookmarked" class="subInfo">북마크</a></li>
 				</ul>
 			</li>
-			
 		</ul>
 	</div>
 </body>

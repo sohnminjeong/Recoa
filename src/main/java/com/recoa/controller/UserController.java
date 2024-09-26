@@ -58,11 +58,6 @@ public class UserController {
 	}
 	
 	/* ---------------------------------------- */	
-	// 관리자 페이지 이동
-	@GetMapping("/adminPage")
-	public String adminPage() {
-		return "user/adminPage";
-	}
 	
 	// 로그인 페이지 이동
 	@GetMapping("/loginUser")
@@ -294,4 +289,12 @@ public class UserController {
 		}
 		return msg;
 	}
+	
+	/*---------------------관리자--------------------------*/
+	// 관리자 페이지 이동
+	@GetMapping("/adminPage")
+	public String adminPage() {
+		return "admin/adminPage";
+	}
+	
 }

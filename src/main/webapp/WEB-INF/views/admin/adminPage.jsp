@@ -30,7 +30,7 @@
 		align-items:center;
 		margin:0 50px;
 	}
-	#content>#userSideBar{
+	#content>#adminSideBar{
 		height:80%;
 		width:15%;
 		margin-left : 10%;
@@ -44,12 +44,26 @@
 	    flex-direction: column;
 	    margin-right: 10%;
 	}
-	#container>h3{
-		font-size : 1.7rem;
-		font-weight:bold;
-		margin : 20px;
+	#container_under{
+		display:flex;
+		align-items:center;
 		font-family: 'GangwonEdu_OTFBoldA';
+		
+		h3{
+			font-size : 1.7rem;
+			font-weight:bold;
+			margin : 20px;
+		}
+		span{
+			width: 10%;
+	        height: 30%;
+	        text-align: center;
+	        border: 1px dashed black;
+	        border-radius: 5px;
+	        padding-top: 3px;
+		}
 	}
+
 	#container>#containerContent{
 		width:90%;
 		border : 2px solid black;
@@ -94,13 +108,17 @@
 <div id="header">
 	<%@ include file="../main/header.jsp" %>
 </div>
-
 <div id="content">
-	<div id="userSideBar">
-		<%@ include file="../user/userSideBar.jsp" %>
+	<div id="adminSideBar">
+		<%@ include file="../admin/adminSideBar.jsp" %>
+	</div>
 	</div>
 	<div id="container">
-		<h3>내 정보</h3>
+		<div id="container_under">
+			<h3>관리자 정보</h3>
+			<span>${user.userAdmin}</span>
+		</div>
+		
 		<div id="containerContent">
 			<div id="img">
 				<c:choose>
@@ -129,7 +147,7 @@
 			</div>
 		</div>
 	</div>
-</div>	
+</div>
 <div id="userFloating">
 	<%@ include file="../main/floating.jsp" %>
 </div>
