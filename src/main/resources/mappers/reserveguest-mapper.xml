@@ -98,7 +98,7 @@
 	</select>
 	
 	<select id="guestBill" parameterType="ReservePaging" resultType="map">
-		SELECT *
+		SELECT reserve_guest_code, user_code, room_type, room_code, start_time, end_time, regi_date, status, paid
 		FROM reserve_guest
 		WHERE user_code = (
 		        SELECT user_code 
@@ -125,4 +125,10 @@
 		ANd status = 1
 	</select>
 	
+	<!-- 결제 시 업데이트 -->
+	<update id="updateGuest" parameterType="int">
+		UPDATE reserve_guest
+		SET paid=1
+		WHERE reserve_guest_code = #{reserveGuestCode}
+	</update>
 </mapper>

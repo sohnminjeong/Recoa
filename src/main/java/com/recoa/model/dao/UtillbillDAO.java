@@ -34,4 +34,14 @@ public class UtillbillDAO {
 	public int libBillTotal(String userId) {
 		return session.selectOne("ReserveLibrary.libBillTotal", userId);
 	}
+	
+	// 결제 시 업데이트
+	public int updateGuest(int reserveGuestCode) {
+		System.out.println("int ::::::::;" + reserveGuestCode);
+		return session.update("ReserveGuest.updateGuest", reserveGuestCode);
+	}
+	
+	public int updateLibrary(int reserveLibraryCode) {
+		return session.update("ReserveLibrary.updateLibrary", reserveLibraryCode);
+	}
 }

@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 @Data @NoArgsConstructor
 public class Utillbill {
     private String serviceName; // "Library" 또는 "GuestHouse"
+    private int reserveGuestCode;
+    private int reserveLibraryCode;
     private Date startTime;
     private Date endTime;
     private Date regiDate;

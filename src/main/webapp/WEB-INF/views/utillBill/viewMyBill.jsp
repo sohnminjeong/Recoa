@@ -230,6 +230,7 @@
 	    <div class="summary">
 	        총 예약 요금: <span id="totalPrice">${totalPrice}</span>원
 	        <button id="payment">결제하기</button>
+	        <button id="message" style="display:none" disabled >결제완료</button>
 	    </div>
 	</div>
 	
@@ -240,6 +241,9 @@
 <script>
 $("#payment").on("click", function () {
     const userRealName = '${user.userRealName}';
+    const userPhone = '${user.userPhone}';
+    const userAdr = '${user.userAdr}';
+   const userAdrDetail = '${user.userAdrDetail}';
     const totalPrice = document.getElementById("totalPrice").textContent.replace('원', '').trim();
 
     var IMP = window.IMP;
@@ -254,6 +258,9 @@ $("#payment").on("click", function () {
         amount: 100,
         buyer_email: "",  
         buyer_name: userRealName,
+        buyer_tel: userPhone,
+        buyer_addr: userAdr,
+        buyer_postcode: userAdrDetail
     }, function (rsp) {
     	console.log("rsp: ", rsp);
         if (rsp.success) {
@@ -276,24 +283,38 @@ $("#payment").on("click", function () {
                     day: day
                 }),
                 success: function(response) {
-                    console.log("서버 응답:" + response);
-
-                    if (response.success) {
-                        alert("결제 정보가 성공적으로 저장되었습니다.");
+                    if (response.response.status == "paid") {
+                        
+                    	$.ajax({
+                    	    url: '/updatebills',
+                    	    method: 'POST',
+                    	    contentType: 'application/json',
+                    	    data: JSON.stringify({}),
+                    	    success: function(response) {
+                    	        alert("결제되었습니다");
+                    	    },
+                    	    error: function(error) {
+                    	        console.error("청구서 정보 저장 오류:", error);
+                    	        alert("청구서 정보 저장에 실패했습니다.");
+                    	        console.log(response);
+                    	    }
+                    	});
+                        
+                        
                     } else {
-                    	System.out.println("여기서 오류떠용");
+                        console.log("결제 정보 저장 실패 이유:", response); // 오류 메시지 로그 출력
+                        
+                        if (response.message != null) {
+                            console.error("오류 메시지:", response.message); // 구체적인 오류 메시지 로그 출력
+                        } else {
+                            console.error("알 수 없는 오류 발생");
+                        }
                         alert("결제 정보 저장에 실패했습니다.");
                     }
                 },
                 error: function(xhr, status, error) {
                     console.error("AJAX 요청 오류:", status, error);
                     console.log("서버로부터 받은 응답:", xhr.responseText);
-                    console.log(JSON.stringify({
-                    	 imp_uid: rsp.imp_uid,
-                         merchant_uid: rsp.merchant_uid,
-                        month: month,
-                        day: day
-                    }));
                 }
             });
         } else {

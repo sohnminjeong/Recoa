@@ -78,6 +78,7 @@ public class UtillbillService {
             bill.setRegiDate((Date) library.get("regi_date"));
             bill.setStartTime((Date) library.get("start_time"));
             bill.setEndTime((Date) library.get("end_time"));
+            bill.setReserveLibraryCode((int) library.get("reserve_lib_code"));
             
             // Date 타입의 startTime과 endTime을 LocalDate로 변환
             LocalDateTime startTime = convertToLocalDateTime((Timestamp) library.get("start_time"));
@@ -104,6 +105,8 @@ public class UtillbillService {
             bill.setStartTime((Date) guest.get("start_time"));
             bill.setEndTime((Date) guest.get("end_time"));
             
+            System.out.println("guest::::::::::::::::::;" + guest);
+            bill.setReserveGuestCode((int) guest.get("reserve_guest_code"));
             int roomType = (int) guest.get("room_type");
             if (roomType == 1) {
                 BigDecimal onePrice = calculateGuestOnePrice(startTime, endTime);
@@ -260,5 +263,14 @@ public class UtillbillService {
 		UserDetails userDetails = (UserDetails) principal;
 
 		return dao.guestBillTotal(userDetails.getUsername());
+    }
+    
+    // 결제 시 업데이트
+    public int updateGuest(int code) {
+    	return dao.updateGuest(code);
+    }
+    
+    public int updateLibrary(int code) {
+    	return dao.updateLibrary(code);
     }
 }

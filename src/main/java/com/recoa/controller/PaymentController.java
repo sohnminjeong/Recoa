@@ -49,6 +49,9 @@ public class PaymentController {
         
         ResponseEntity<String> response = restTemplate.exchange(verifyUrl, HttpMethod.GET, entity, String.class);
 
+
+     System.out.println("Response Status Code: " + response.getStatusCode());
+     System.out.println("Response Body: " + response.getBody());
         
         if (response.getStatusCode() == HttpStatus.OK) {
             return ResponseEntity.ok(response.getBody());

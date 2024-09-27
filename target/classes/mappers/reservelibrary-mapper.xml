@@ -95,7 +95,7 @@
 	</select>
 	
 		<select id="libraryBill" parameterType="ReservePaging" resultType="map">
-		SELECT *
+		SELECT reserve_lib_code, library_code, regi_date, start_time, user_code, reserve_lib_code, end_time, paid, seat_code, status
 		FROM reserve_library
 		WHERE user_code = (
 		        SELECT user_code 
@@ -121,4 +121,11 @@
     	AND MONTH(regi_date) = MONTH(CURDATE())
 		ANd status = 1
 	</select>
+	
+		<!-- 결제 시 업데이트 -->
+	<update id="updateLibrary" parameterType="int">
+		UPDATE reserve_library
+		SET paid=1
+		WHERE reserve_lib_code = #{reserveLibCode}
+	</update>
 </mapper>
