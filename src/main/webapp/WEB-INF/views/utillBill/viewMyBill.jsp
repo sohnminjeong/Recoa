@@ -230,7 +230,6 @@
 	    <div class="summary">
 	        총 예약 요금: <span id="totalPrice">${totalPrice}</span>원
 	        <button id="payment">결제하기</button>
-	        <button id="message" style="display:none" disabled >결제완료</button>
 	    </div>
 	</div>
 	
@@ -239,89 +238,110 @@
 	<%@ include file="../main/floating.jsp" %>
 </div>
 <script>
-$("#payment").on("click", function () {
-    const userRealName = '${user.userRealName}';
-    const userPhone = '${user.userPhone}';
-    const userAdr = '${user.userAdr}';
-   const userAdrDetail = '${user.userAdrDetail}';
-    const totalPrice = document.getElementById("totalPrice").textContent.replace('원', '').trim();
+$(document).ready(function(){
+	$.ajax({
+	    url: '/checkPayment',
+	    method: 'GET',
+	    success: function(response) {
+			if(response){
+				$('#payment').text('결제 완료');
+				$('#payment').attr('disabled', true);
+			} else{
+				$('#payment').text('결제하기');
+				$('#payment').attr('disabled', false);
+			}
+	    },
+	    error: function(error) {
+	        console.error("오류:", error);
+	    }
+	});
+	
+	$("#payment").on("click", function () {
+	    const userRealName = '${user.userRealName}';
+	    const userPhone = '${user.userPhone}';
+	    const userAdr = '${user.userAdr}';
+	   const userAdrDetail = '${user.userAdrDetail}';
+	    const totalPrice = document.getElementById("totalPrice").textContent.replace('원', '').trim();
 
-    var IMP = window.IMP;
-    IMP.init('imp07788852');
+	    var IMP = window.IMP;
+	    IMP.init('imp07788852');
 
-    IMP.request_pay({
-        pg: 'html5_inicis',
-        pay_method: 'card',
-        merchant_uid: "O" + new Date().getTime(),
-        name: "결제 금액",
-    //    amount: totalPrice,
-        amount: 100,
-        buyer_email: "",  
-        buyer_name: userRealName,
-        buyer_tel: userPhone,
-        buyer_addr: userAdr,
-        buyer_postcode: userAdrDetail
-    }, function (rsp) {
-    	console.log("rsp: ", rsp);
-        if (rsp.success) {
-            const today = new Date();
-            const month = today.getMonth() + 1;
-            const day = today.getDate();
-            
-            console.log("imp_uid:", rsp.imp_uid);
-            console.log("merchant_uid:", rsp.merchant_uid);
-            
-            $.ajax({
-                url: "/payments/verify",
-                method: "POST",
-                contentType: "application/json",
-                dataType: "json",
-                data: JSON.stringify({
-                    imp_uid: rsp.imp_uid,
-                    merchant_uid: rsp.merchant_uid,
-                    month: month,
-                    day: day
-                }),
-                success: function(response) {
-                    if (response.response.status == "paid") {
-                        
-                    	$.ajax({
-                    	    url: '/updatebills',
-                    	    method: 'POST',
-                    	    contentType: 'application/json',
-                    	    data: JSON.stringify({}),
-                    	    success: function(response) {
-                    	        alert("결제되었습니다");
-                    	    },
-                    	    error: function(error) {
-                    	        console.error("청구서 정보 저장 오류:", error);
-                    	        alert("청구서 정보 저장에 실패했습니다.");
-                    	        console.log(response);
-                    	    }
-                    	});
-                        
-                        
-                    } else {
-                        console.log("결제 정보 저장 실패 이유:", response); // 오류 메시지 로그 출력
-                        
-                        if (response.message != null) {
-                            console.error("오류 메시지:", response.message); // 구체적인 오류 메시지 로그 출력
-                        } else {
-                            console.error("알 수 없는 오류 발생");
-                        }
-                        alert("결제 정보 저장에 실패했습니다.");
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error("AJAX 요청 오류:", status, error);
-                    console.log("서버로부터 받은 응답:", xhr.responseText);
-                }
-            });
-        } else {
-            alert('결제에 실패하였습니다. 에러내용 : ' + rsp.error_msg);
-        }
-    });
-});
+	    IMP.request_pay({
+	        pg: 'html5_inicis',
+	        pay_method: 'card',
+	        merchant_uid: "O" + new Date().getTime(),
+	        name: "결제 금액",
+	    //    amount: totalPrice,
+	        amount: 100,
+	        buyer_email: "",  
+	        buyer_name: userRealName,
+	        buyer_tel: userPhone,
+	        buyer_addr: userAdr,
+	        buyer_postcode: userAdrDetail
+	    }, function (rsp) {
+	    	console.log("rsp: ", rsp);
+	        if (rsp.success) {
+	            const today = new Date();
+	            const month = today.getMonth() + 1;
+	            const day = today.getDate();
+	            
+	            console.log("imp_uid:", rsp.imp_uid);
+	            console.log("merchant_uid:", rsp.merchant_uid);
+	            
+	            $.ajax({
+	                url: "/payments/verify",
+	                method: "POST",
+	                contentType: "application/json",
+	                dataType: "json",
+	                data: JSON.stringify({
+	                    imp_uid: rsp.imp_uid,
+	                    merchant_uid: rsp.merchant_uid,
+	                    month: month,
+	                    day: day
+	                }),
+	                success: function(response) {
+	                    if (response.response.status == "paid") {
+	                        
+	                    	$.ajax({
+	                    	    url: '/updatebills',
+	                    	    method: 'POST',
+	                    	    contentType: 'application/json',
+	                    	    data: JSON.stringify({}),
+	                    	    success: function(response) {
+	                    	        alert("결제되었습니다");
+	                    	    },
+	                    	    error: function(error) {
+	                    	        console.error("청구서 정보 저장 오류:", error);
+	                    	        alert("청구서 정보 저장에 실패했습니다.");
+	                    	        console.log(response);
+	                    	    }
+	                    	});
+	                        
+	                        
+	                    } else {
+	                        console.log("결제 정보 저장 실패 이유:", response); // 오류 메시지 로그 출력
+	                        
+	                        if (response.message != null) {
+	                            console.error("오류 메시지:", response.message); // 구체적인 오류 메시지 로그 출력
+	                        } else {
+	                            console.error("알 수 없는 오류 발생");
+	                        }
+	                        alert("결제 정보 저장에 실패했습니다.");
+	                    }
+	                },
+	                error: function(xhr, status, error) {
+	                    console.error("AJAX 요청 오류:", status, error);
+	                    console.log("서버로부터 받은 응답:", xhr.responseText);
+	                }
+	            });
+	        } else {
+	            alert('결제에 실패하였습니다. 에러내용 : ' + rsp.error_msg);
+	        }
+	    });
+	});
+	
+})
+
 
 </script>
 </body>

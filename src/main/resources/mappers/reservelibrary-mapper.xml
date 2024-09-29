@@ -128,4 +128,15 @@
 		SET paid=1
 		WHERE reserve_lib_code = #{reserveLibCode}
 	</update>
+	
+	<select id="paymentStatus" parameterType="String" resultMap="ReserveLibraryMap">
+		SELECT paid
+		FROM reserve_library
+		WHERE user_code = (
+		        SELECT user_code 
+		        FROM user 
+		        WHERE user_id = #{userId}
+    		)
+		LIMIT 1
+	</select>
 </mapper>

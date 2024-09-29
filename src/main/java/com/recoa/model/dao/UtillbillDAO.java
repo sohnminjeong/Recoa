@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.recoa.model.vo.ReserveLibrary;
 import com.recoa.model.vo.ReservePaging;
 
 @Repository
@@ -43,5 +44,10 @@ public class UtillbillDAO {
 	
 	public int updateLibrary(int reserveLibraryCode) {
 		return session.update("ReserveLibrary.updateLibrary", reserveLibraryCode);
+	}
+	
+	// 결제 여부 확인
+	public ReserveLibrary paymentStatus(String userId) {
+		return session.selectOne("ReserveLibrary.paymentStatus", userId);
 	}
 }

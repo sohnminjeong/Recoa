@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.recoa.model.dao.UtillbillDAO;
+import com.recoa.model.vo.ReserveLibrary;
 import com.recoa.model.vo.ReservePaging;
 import com.recoa.model.vo.Utillbill;
 
@@ -272,5 +273,13 @@ public class UtillbillService {
     
     public int updateLibrary(int code) {
     	return dao.updateLibrary(code);
+    }
+    
+    // 결제 여부 확인
+    public ReserveLibrary paymentStatus() {
+    	Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		UserDetails userDetails = (UserDetails) principal;
+		
+    	return dao.paymentStatus(userDetails.getUsername());
     }
 }

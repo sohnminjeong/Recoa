@@ -10,7 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.recoa.model.vo.ReserveLibrary;
 import com.recoa.model.vo.ReservePaging;
 import com.recoa.model.vo.Utillbill;
 import com.recoa.service.ReserveGuestService;
@@ -76,6 +78,17 @@ public class UtillbillController {
 		model.addAttribute("paging", paging);
 		
 		return "utillBill/myBillGuestDesc";
+	}
+	
+	@ResponseBody
+	@GetMapping("/checkPayment")
+	public boolean paymentStatus() {
+		ReserveLibrary lib = service.paymentStatus();
+		if(lib.isPaid()) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	@PostMapping("/updatebills")
