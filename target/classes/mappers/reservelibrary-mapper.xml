@@ -137,6 +137,8 @@
 		        FROM user 
 		        WHERE user_id = #{userId}
     		)
+    	AND STATUS = true
+    	ORDER BY reserve_lib_code DESC
 		LIMIT 1
 	</select>
 </mapper>

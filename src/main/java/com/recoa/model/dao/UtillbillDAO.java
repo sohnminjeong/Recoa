@@ -48,6 +48,7 @@ public class UtillbillDAO {
 	
 	// 결제 여부 확인
 	public ReserveLibrary paymentStatus(String userId) {
+		System.out.println("하...............");
 		return session.selectOne("ReserveLibrary.paymentStatus", userId);
 	}
 }

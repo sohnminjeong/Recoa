@@ -100,7 +100,15 @@
 					
 					<td><form action="cancelGuest" method="post">
 		                <input type="hidden" name="reserveGuestCode" value="${item.reserve_guest_code}" />
-		                <button type="submit" id="cancel">예약 취소</button>
+		                 <c:choose>
+		                	<c:when test="${item.paid}">
+		                		<button id="cancel" disabled>취소 불가</button>
+		                		
+		                	</c:when>
+		                	<c:otherwise>
+		                		<button type="submit" id="cancel">예약 취소</button>
+		                	</c:otherwise>
+		                </c:choose>
 		            </form></td>
 				</tr>
 			</c:forEach>

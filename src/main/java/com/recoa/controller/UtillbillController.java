@@ -42,6 +42,13 @@ public class UtillbillController {
         BigDecimal guestOnePrice = service.calculateOneRoomGuestPrice(bills);
         BigDecimal guestTwoPrice = service.calculateTwoRoomGuestPrice(bills);
         
+        ReserveLibrary lib = service.paymentStatus();
+		if(lib.isPaid()) {
+			model.addAttribute("paid", true);
+		} else {
+			model.addAttribute("paid", false);
+		}
+        
 		model.addAttribute("bills", bills);
 		model.addAttribute("totalPrice", totalPrice);
 		model.addAttribute("libraryPrice", libraryPrice);
@@ -78,17 +85,6 @@ public class UtillbillController {
 		model.addAttribute("paging", paging);
 		
 		return "utillBill/myBillGuestDesc";
-	}
-	
-	@ResponseBody
-	@GetMapping("/checkPayment")
-	public boolean paymentStatus() {
-		ReserveLibrary lib = service.paymentStatus();
-		if(lib.isPaid()) {
-			return true;
-		} else {
-			return false;
-		}
 	}
 	
 	@PostMapping("/updatebills")
