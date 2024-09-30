@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.recoa.model.vo.ReserveGuest;
+import com.recoa.model.vo.ReserveLibrary;
 import com.recoa.model.vo.ReservePaging;
 import com.recoa.model.vo.Utillbill;
 import com.recoa.service.ReserveGuestService;
@@ -139,5 +140,16 @@ public class ReserveGuestController {
 		return "redirect:/myGuest";
 	}
 	
+	@GetMapping("/allGuest")
+	public String allGuest(@RequestParam(value = "page", defaultValue = "1") int page, Model model) {
+		
+		int total = service.allGuestTotal();
+		
+		ReservePaging paging = new ReservePaging(page, total);
+		List<ReserveGuest> list = service.allGuest(paging);
+		model.addAttribute("list", list);
+		model.addAttribute("paging", paging);
+		return "guest/allGuest";
+	}
 	
 }

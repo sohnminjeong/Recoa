@@ -12,15 +12,22 @@
 	<div class="section-content">
 	<div class="card fade">
 		<img src="../../resources/images/main/section1-1.png"/>
-		<span class="cardtext">section 1에 관한 설명 어쩌구 저쩌구</span>
+		<span class="cardtext">당신의 편안함을 위해 완성된 주거 공간,
+		<p class="boldtext">블루포레스트시티</p>
+		</span>
+		
 	</div>
 	<div class="card fade">
 		<img src="../../resources/images/main/section1-2.jpg"/>
-		<span class="cardtext">section 2에 관한 설명 어쩌구 저쩌구</span>
+		<span class="cardtext">당신의 편안함을 위해 완성된 주거 공간,
+		<p class="boldtext">블루포레스트시티</p>
+		</span>
 	</div>
 	<div class="card fade">
 		<img src="../../resources/images/main/section1-3.png"/>
-		<span class="cardtext">section 3에 관한 설명 어쩌구 저쩌구</span>
+		<span class="cardtext">당신의 편안함을 위해 완성된 주거 공간,
+		<p class="boldtext">블루포레스트시티</p>
+		</span>
 	</div>
 	<div class="section-blackbox"></div>
 	</div>

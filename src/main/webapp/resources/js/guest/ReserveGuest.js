@@ -3,6 +3,12 @@ $(document).ready(function() {
             let today = moment().startOf('day'); // 오늘 날짜의 시작
             let tomorrow = moment(today).add(1, 'days'); // 내일 날짜
             
+            $('#startTime').val(tomorrow.format('YYYY-MM-DD'));
+    		$('#endTime').val(moment(tomorrow).add(2, 'days').format('YYYY-MM-DD'));
+    		$('#roomType').prop('disabled', false);
+    		
+    		$('#selected-dates').text(tomorrow.format('YYYY/MM/DD') + ' - ' + moment(tomorrow).add(2, 'days').format('YYYY/MM/DD'));
+
             // daterangepicker 초기화
             $('#daterange').daterangepicker({
                 opens: 'left',
@@ -36,23 +42,36 @@ $(document).ready(function() {
                 // 체크박스 상태 업데이트
                 updateCheckboxState();
             });
+            
+           $('#daterange').on('apply.daterangepicker', function(ev, picker) {
+	         $('#startTime').val(picker.startDate.format('YYYY-MM-DD') + ' - ' + picker.endDate.format('YYYY-MM-DD'));
+	      });
 
             $('#roomType').click(function() {
-                let start = $('#daterange').data('daterangepicker').startDate;
-                let end = $('#daterange').data('daterangepicker').endDate;
+                //let start = $('#daterange').data('daterangepicker').startDate;
+                //let end = $('#daterange').data('daterangepicker').endDate;
              	
-                // 객실 타입 선택 시 화면에 표시
-                let roomTypeText = $(this).find("option:selected").text();
-                $('#selected-roomType').text(roomTypeText);
-                $('#selected-roomCode').text("");
-                
+             	// 날짜가 비어 있으면 기본 날짜 설정
+		        if (!$('#startTime').val() || !$('#endTime').val()) {
+		            $('#startTime').val(tomorrow.format('YYYY-MM-DD'));
+		            $('#endTime').val(moment(tomorrow).add(2, 'days').format('YYYY-MM-DD'));
+		
+		            $('#selected-dates').text(tomorrow.format('YYYY/MM/DD') + ' - ' + moment(tomorrow).add(2, 'days').format('YYYY/MM/DD'));
+		        }
+		
+		        // 객실 타입 선택 시 화면에 표시
+		        let roomTypeText = $(this).find("option:selected").text();
+		        $('#selected-roomType').text(roomTypeText);
+		        $('#selected-roomCode').text("");
+
                 if($('#roomType').val() === '1'){
                 	document.querySelector("#roomImg").src = "../../resources/images/guest/oneroom.jpg";
                 } else if($('#roomType').val() === '2') {
                 	document.querySelector("#roomImg").src = "../../resources/images/guest/tworoom.png";
                 }
                 
-                fetchAvailableRooms(start.format('YYYY-MM-DDTHH:mm:ss'), end.format('YYYY-MM-DDTHH:mm:ss'), $(this).val());
+                fetchAvailableRooms($('#startTime').val(), $('#endTime').val(), $(this).val());
+                $('#roomCode').prop('disabled', false);
                 resetCheckbox();
                 updateCheckboxState();
             });

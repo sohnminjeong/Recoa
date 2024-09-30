@@ -141,4 +141,21 @@
 		WHERE user_id = #{userId}
 	</select>
 	
+	<!-- 내가 작성한 공지글 보기 (관리자) -->
+	<select id="mynoticeList" parameterType="BoardNoticePaging" resultMap="BoardNoticeMap">
+		SELECT board_notice.*, user.*
+		FROM board_notice
+		JOIN user
+		USING (user_code)
+		WHERE user_code=#{userCode}
+		ORDER BY important DESC, notice_code DESC
+		LIMIT #{offset}, #{limit}
+	</select>
+	
+	<!-- 공지 리스트 total -->
+	<select id="mynoticeListTotal" parameterType="int" resultType="int">
+		SELECT count(*)
+		FROM board_notice
+		WHERE user_code=#{userCode}
+	</select>
 </mapper>

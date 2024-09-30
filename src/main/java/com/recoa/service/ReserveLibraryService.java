@@ -67,5 +67,13 @@ public class ReserveLibraryService {
 			UserDetails userDetails = (UserDetails) principal;
 			return dao.CancelLibrarytotal(userDetails.getUsername());
 		}
+		
+		public List<ReserveLibrary> allLibrary(ReservePaging paging){
+			return dao.allLibrary(paging);
+		}
+		
+		public int allLibraryTotal() {
+			return dao.allLibraryTotal();
+		}
 	
 }
