@@ -9,137 +9,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="../../../resources/css/reset.css" />
-<style>
-@font-face {
-    font-family: 'GangwonEdu_OTFBoldA';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFBoldA.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'SDMiSaeng';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/SDMiSaeng.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-#header {
-    position: absolute;
-    z-index: 1;
-    width: 100%;
-    border-bottom:1px solid black;
-}
-#content{
-	position:relative;
-	z-index:0;
-	height:100vh;
-	padding-top:10vh;
-	margin:0 50px;
-}
-
-#container{
-	display: flex;
-	flex-direction: column;
-	justify-content:center;
-	align-items:center;
-	width: 100%;
-	height: 100%;
-}
-
-#topBar{
-	display: flex;
-	justify-content: space-between;
-	width: 70%;
-	border-bottom: 1px dashed black;
-	padding-bottom: 15px;
-}
-#topBar > h3{
-	font-family: 'GangwonEdu_OTFBoldA';
-	font-size:1.7rem;
-}
-
-#searchBar{
-	select{
-		 font-family: 'SDMiSaeng';
-		 font-size:1rem;
-	} 
-	option{
-		font-size:1rem;
-	}
-	input{
-		font-family: 'SDMiSaeng';
-		 font-size:1rem;
-	}
-}
-#regist{
-	display: flex;
-	justify-content: right;
-	width: 70%;
-	margin: 15px;
-}
-#regist button{
-	border-radius: 5px;
-	border: none;
-	padding-top: 5px;
-	font-family: 'GangwonEdu_OTFBoldA';
-}
-#regist button:hover{
-	background-color: black;
-	color: white;
-	cursor: pointer;
-}
-
-table{
-	width:70%;
-	height:60%;
-	
-	thead{
-		height: 8%;
-   		border-bottom: 1px solid black;
-   		color : gray;
-	}
-	tr{
-		display: grid;
-        grid-template-columns: 0.5fr 2fr 1fr 0.5fr 0.5fr 0.5fr;
-        width: 100%;
-        text-align: center;
-        font-family: 'GangwonEdu_OTFBoldA';
-        font-size: 1.2rem;
-       	a:hover{
-       		color : gray;
-       	}
-        
-	}
-	tbody{
-		height: 100%;
-        display: grid;
-        grid-template-rows: repeat(10, 1fr);
-        margin-top: 15px;
-        font-family: 'GangwonEdu_OTFBoldA';
-        font-size: 1.2rem;
-	}
-}
-
-#paging{
-	width: 100%;
-	display: flex;
-	flex-direction: row;
-}
-
-.pagination{
-	align-items: center;
-	margin: 0 auto;
-	display: flex;
-	justify-content: space-evenly;
-	padding-top: 25px;
-    position: relative;
-}
-#userFloating{
-	position: fixed;
-    z-index: 1;
-    bottom: 6%;
-    right: 4%;
-}
-</style>
+<link href="../../resources/css/boardNotice/boardNoticeAll.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <sec:authentication property="principal" var="user" />
@@ -157,6 +27,7 @@ table{
 						<option value="all">전체</option>
 						<option value="title">제목</option>
 						<option value="content">내용</option>
+						<option value="nickname">닉네임</option>
 					</select>
 					<input type="text" name="keyword">
 					<button type="submit" id="searchOk"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -191,6 +62,9 @@ table{
 							<td>${paging.total - (paging.page - 1) * 10 - status.index}</td>
 							
 							<td>
+							<c:if test="${item.important}">
+								<span style="color:red">!</span>
+							</c:if>
 								<a href="/viewNotice?noticeCode=${item.noticeCode}">
 					                ${item.noticeTitle}
 					            </a>
@@ -273,8 +147,5 @@ table{
 <div id="userFloating">
 	<%@ include file="../main/floating.jsp" %>
 </div>
-<script>
-
-</script>
 </body>
 </html>

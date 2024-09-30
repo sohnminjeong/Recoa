@@ -7,6 +7,7 @@
 		<result property="noticeContent" column="notice_content"/>
 		<result property="noticeWritedate" column="notice_writedate"/>
 		<result property="noticeView" column="notice_view"/>
+		<result property="important" column="important"/>
 		<collection property="user" resultMap="userMap"/>
 	</resultMap>
 	
@@ -31,8 +32,8 @@
 	
 	<!-- 공지 작성 -->
 	<insert id="registerNotice" parameterType="boardNotice" useGeneratedKeys="true" keyProperty="noticeCode" keyColumn="noticeCode">
-		INSERT INTO board_notice(user_code, notice_title, notice_content)
-		VALUES(#{userCode}, #{noticeTitle}, #{noticeContent})
+		INSERT INTO board_notice(user_code, notice_title, notice_content, important)
+		VALUES(#{userCode}, #{noticeTitle}, #{noticeContent}, #{important})
 	</insert>
 	
 	<!-- 공지 리스트 -->
@@ -53,15 +54,20 @@
 				<when test="select=='content'">
 					notice_content LIKE CONCAT('%', #{keyword}, '%')
 				</when>
+				<when test="select == 'nickname'">
+					user_nickname LIKE CONCAT('%', #{keyword}, '%')
+				</when>
 			</choose>
 		</where>
-		ORDER BY notice_code DESC
+		ORDER BY important DESC, notice_code DESC
 		LIMIT #{offset}, #{limit}
 	</select>
 	
 	<!-- 공지 리스트 total -->
 	<select id="noticeListTotal" parameterType="BoardNoticePaging" resultType="int">
 		SELECT count(*) FROM board_notice
+		JOIN user
+		USING (user_code)
 		<where>
 			<choose>
 				<when test="select == 'all'">
@@ -73,6 +79,9 @@
 				</when>
 				<when test="select == 'content'">
 					notice_content LIKE CONCAT('%',#{keyword},'%')
+				</when>
+				<when test="select == 'nickname'">
+					user_nickname LIKE CONCAT('%', #{keyword}, '%')
 				</when>
 			</choose>
 		</where>
@@ -104,7 +113,8 @@
 	<update id="updateNotice" parameterType="BoardNotice">
 		UPDATE board_notice
 		SET notice_title=#{noticeTitle},
-			notice_content=#{noticeContent}
+			notice_content=#{noticeContent},
+			important=#{important}
 		WHERE notice_code=#{noticeCode}
 	</update>
 	

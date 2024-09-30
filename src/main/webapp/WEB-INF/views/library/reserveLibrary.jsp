@@ -8,172 +8,12 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="../../resources/css/reset.css" />
+<link href="../../resources/css/library/reserveLibrary.css" rel="stylesheet" type="text/css">
 <title>Insert title here</title>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-<style>
-@font-face {
-    font-family: 'GangwonEdu_OTFBoldA';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFBoldA.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Ownglyph_jiwoosonang';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408@1.0/Ownglyph_jiwoosonang.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-}
-
-#header {
-    position: absolute;
-    z-index: 1;
-    width: 100%;
-    top: 0;
-    left: 0;
-}
-
-#content{
-	margin-top: 10vh;
-	position: relative;
-	z-index: 0;
-}
-
-h1{
-	font-size: 2rem;
-	font-family: 'Ownglyph_jiwoosonang';
-	font-weight: bolder;
-	padding: 30px;
-}
-
-form{
-	font-family: 'GangwonEdu_OTFBoldA';
-	display: flex;
-	padding-top: 20px;
-	flex-direction: row;
-	height: 400px;
-}
-
-form input {
-	font-family: 'GangwonEdu_OTFBoldA';
-	padding-left: 10px;
-}
-
-form select {
-	font-family: 'Ownglyph_jiwoosonang';
-	margin: 10px;
-}
-
-form select option{
-	font-size: 15px;
-}
-
-#seat {
-    width: 500px;
-    padding-top: 20px;
-    margin-left: 200px;
-    margin-right: 100px;
-    h2{
-		margin-bottom: 15px;
-	}
-}
-
-#seat-grid {
-    border: 1px solid lightgray;
-    border-radius: 10px;
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-gap: 10px;
-    padding: 10px;
-}
-
-.seat {
-    width: 50px;
-    height: 50px;
-    background-color: lightgray;
-    text-align: center;
-    line-height: 50px;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-.seat.reserved {
-    background-color: red;
-    cursor: not-allowed;
-}
-
-#select {
-	display: flex;
-	flex-direction: column;
-	div{
-		margin-bottom: 10px;
-	}
-}
-
-#ticket{
-	display: flex;
-	flex-direction: row;
-	div{
-		margin-left: 10px;
-		margin-bottom: 5px;
-	}
-}
-
-#date{
-	display: flex;
-	flex-direction: row;
-	input{
-		margin-left: 10px;
-	}
-	p{
-		margin-left: 10px;
-	}
-}
-
-#branch{
-	display: flex;
-	flex-direction: row;
-	select{
-		margin-left: 10px;
-	}
-}
-
-#selection-summary{
-	margin: 10px;
-	margin-top: 30px;
-	padding-top: 15px;
-	align-items: center;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	background-color: rgba(0, 0, 0, 0.1);
-	border-radius: 10px;
-}
-
-#checkbox{
-	display: flex;
-	flex-direction: row;
-	margin-top: 20px;
-}
-
-#checkbox label {
-    display: block; 
-    margin-top: 10px; 
-}
-
-#submit{
-	padding: 10px;
-	padding-top: 15px;
-}
-
-.daterangepicker {
-   	z-index: 10;
-   	position: absolute;
-}
-</style>
 </head>
 <body>
 	<sec:authentication property="principal" var="user" />
@@ -250,8 +90,6 @@ form select option{
 		
 		    <input type="submit" value="독서실 예약" id="submit"/>
 		</div>
-
-    	
 	</form>
 
 	</div>

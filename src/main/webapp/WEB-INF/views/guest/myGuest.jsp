@@ -11,53 +11,6 @@
 <link rel="stylesheet" href="../../resources/css/reset.css" />
 <title>Insert title here</title>
 <link href="../../resources/css/guest/list.css" rel="stylesheet" type="text/css">
-<style>
-#header {
-    position: absolute;
-    z-index: 1;
-    width: 100%;
-    top: 0;
-    left: 0;
-}
-
-#content{
-	position:relative;
-	z-index:0;
-	height:100vh;
-	padding-top:10vh;
-	display:flex;
-	align-items:center;
-	margin:0 50px;
-}
-	
-#content>#userSideBar{
-	height:80%;
-	width:15%;
-	margin-left : 10%;
-	margin-right:5%;
-}
-
-#content>#container{
-	width: 75%;
-	height:80%;
-    display: flex;
-    flex-direction: column;
-    margin-right: 10%;
-}
-
-#container>h3{
-	font-size : 1.7rem;
-	font-weight:bold;
-	margin : 20px;
-	font-family: 'GangwonEdu_OTFBoldA';
-}
-#userFloating{
-	position: fixed;
-    z-index: 1;
-    bottom: 6%;
-    right: 4%;
-}
-</style>
 </head>
 <body>
 	<sec:authentication property="principal" var="user" />
@@ -100,7 +53,15 @@
 					
 					<td><form action="cancelGuest" method="post">
 		                <input type="hidden" name="reserveGuestCode" value="${item.reserve_guest_code}" />
-		                <button type="submit" id="cancel">예약 취소</button>
+		                 <c:choose>
+		                	<c:when test="${item.paid}">
+		                		<button id="cancel" disabled>취소 불가</button>
+		                		
+		                	</c:when>
+		                	<c:otherwise>
+		                		<button type="submit" id="cancel">예약 취소</button>
+		                	</c:otherwise>
+		                </c:choose>
 		            </form></td>
 				</tr>
 			</c:forEach>

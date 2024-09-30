@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.recoa.model.dao.UtillbillDAO;
+import com.recoa.model.vo.ReserveLibrary;
 import com.recoa.model.vo.ReservePaging;
 import com.recoa.model.vo.Utillbill;
 
@@ -78,6 +79,7 @@ public class UtillbillService {
             bill.setRegiDate((Date) library.get("regi_date"));
             bill.setStartTime((Date) library.get("start_time"));
             bill.setEndTime((Date) library.get("end_time"));
+            bill.setReserveLibraryCode((int) library.get("reserve_lib_code"));
             
             // Date 타입의 startTime과 endTime을 LocalDate로 변환
             LocalDateTime startTime = convertToLocalDateTime((Timestamp) library.get("start_time"));
@@ -104,6 +106,8 @@ public class UtillbillService {
             bill.setStartTime((Date) guest.get("start_time"));
             bill.setEndTime((Date) guest.get("end_time"));
             
+            System.out.println("guest::::::::::::::::::;" + guest);
+            bill.setReserveGuestCode((int) guest.get("reserve_guest_code"));
             int roomType = (int) guest.get("room_type");
             if (roomType == 1) {
                 BigDecimal onePrice = calculateGuestOnePrice(startTime, endTime);
@@ -260,5 +264,22 @@ public class UtillbillService {
 		UserDetails userDetails = (UserDetails) principal;
 
 		return dao.guestBillTotal(userDetails.getUsername());
+    }
+    
+    // 결제 시 업데이트
+    public int updateGuest(int code) {
+    	return dao.updateGuest(code);
+    }
+    
+    public int updateLibrary(int code) {
+    	return dao.updateLibrary(code);
+    }
+    
+    // 결제 여부 확인
+    public ReserveLibrary paymentStatus() {
+    	Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		UserDetails userDetails = (UserDetails) principal;
+		
+    	return dao.paymentStatus(userDetails.getUsername());
     }
 }

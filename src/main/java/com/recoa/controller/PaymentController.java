@@ -19,8 +19,8 @@ import com.recoa.model.vo.PaymentDesc;
 @Controller
 public class PaymentController {
 
-	private static final String apiKey = "";
-	private static final String apiSecret = "";
+	private static final String apiKey = "3642014760823884";
+	private static final String apiSecret = "spwLiMfVtK1wcLtTcT3RGSoy7sl9CCR2b7YUQYXJkoHfLFK1eV9SaeWKDzLSsVDgLx6P9hGnuWd3BXRq";
 	
 	@PostMapping("/payments/verify")
 	public ResponseEntity<String> verify(@RequestBody PaymentDesc payment){
@@ -49,6 +49,9 @@ public class PaymentController {
         
         ResponseEntity<String> response = restTemplate.exchange(verifyUrl, HttpMethod.GET, entity, String.class);
 
+
+     System.out.println("Response Status Code: " + response.getStatusCode());
+     System.out.println("Response Body: " + response.getBody());
         
         if (response.getStatusCode() == HttpStatus.OK) {
             return ResponseEntity.ok(response.getBody());

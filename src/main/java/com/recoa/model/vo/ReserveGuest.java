@@ -16,4 +16,5 @@ public class ReserveGuest {
 	private Date endTime;
 	private LocalDateTime regiDate;
 	private boolean status;
+	private boolean paid;
 }
