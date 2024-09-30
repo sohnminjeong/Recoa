@@ -59,7 +59,7 @@
 										</a>
 									</c:when>
 									<c:otherwise>
-										<a href="${item.alarmUrl}">
+										<a href="${item.alarmUrl}" >
 											[${item.alarmTable}] ${item.alarmContent}
 										</a>
 									</c:otherwise>
