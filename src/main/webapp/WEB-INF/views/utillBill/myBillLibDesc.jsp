@@ -37,7 +37,14 @@
             <tr>
             <td>${paging.total - (paging.page - 1) * 10 - status.index}</td>
                 <td>
-	               	<fmt:formatDate value="${bill.startTime}" pattern="yy-MM-dd" /> ~ <fmt:formatDate value="${bill.endTime}" pattern="yy-MM-dd" />     
+                <c:choose>
+                	<c:when test="${bill.startTime == bill.endTime}">
+                		<fmt:formatDate value="${bill.startTime}" pattern="yy-MM-dd" />
+                	</c:when>
+                	<c:otherwise>
+                		<fmt:formatDate value="${bill.startTime}" pattern="yy-MM-dd" /> ~ <fmt:formatDate value="${bill.endTime}" pattern="yy-MM-dd" />
+                	</c:otherwise>
+                </c:choose>
                 </td>
                <td>
                		<fmt:formatDate value="${bill.regiDate}" pattern="yy-MM-dd" />
