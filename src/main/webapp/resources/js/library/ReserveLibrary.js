@@ -4,6 +4,7 @@
     
     	let today = moment().startOf('day'); 
     	
+    	$('#selected-dates').text(today.format('YYYY-MM-DD'));
     	 $('#selected-seatCode').css("display", "none");
     	 $('#submit').prop('disabled', true);
     	
@@ -34,7 +35,7 @@
             }
             
             // 확인 내역에 텍스트 출력
-            $('#selected-dates').text(start.format('YYYY-MM-DD') + '-' + end.format('YYYY/MM/DD'));
+            $('#selected-dates').text(start.format('YYYY/MM/DD') + '-' + end.format('YYYY/MM/DD'));
             
             // 시작일 선택 시 호점 선택 가능하도록 
             $('#libraryCode').prop('disabled', false);
@@ -50,6 +51,10 @@
             // + 체크박스 상태 업데이트 함수
             updateCheckboxState();
         });
+
+	       $('#daterange').on('apply.daterangepicker', function(ev, picker) {
+	         $('#startTime').val(picker.startDate.format('YYYY-MM-DD') + ' - ' + picker.endDate.format('YYYY-MM-DD'));
+	      });
 
         // 9. 예약 가능 좌석 확인하기====================================================
         function fetchAvailableSeats(startTime, endTime, libraryCode) {

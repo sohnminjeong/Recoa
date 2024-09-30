@@ -124,7 +124,7 @@
 		FROM notice_bookmark
 		JOIN board_notice
 		USING (notice_code)
-		WHERE board_notice.user_code=#{userCode}
+		WHERE notice_bookmark.user_code=#{userCode}
 	</select>
 	
 	<!-- 북마크 글 리스트 total -->

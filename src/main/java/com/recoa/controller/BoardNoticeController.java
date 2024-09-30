@@ -299,10 +299,10 @@ public class BoardNoticeController {
 			
 	    NoticeBookmark vo = new NoticeBookmark();
 	    vo.setUserCode(userCode);
-	    System.out.println(userCode);
+	    System.out.println("userCode : "+ userCode);
 	       
 		int total = service.bookmarkedTotal(userCode);
-		System.out.println(total);
+		System.out.println("total : " + total);
 			
 		BoardNoticePaging paging = new BoardNoticePaging(page, total);
 		paging.setUserCode(userCode);
@@ -315,6 +315,7 @@ public class BoardNoticeController {
 		List<BoardNotice> list = service.bookmarked(paging);
 		model.addAttribute("list", list);
 		model.addAttribute("paging", paging);
+		System.out.println("list : "+list);
 		
 		Map<Integer, Integer> bookmarkCount = new HashMap<>();
 	    

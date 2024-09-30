@@ -26,19 +26,3 @@ $('#chatBtn').click(function(){
 	})
 	
 })
-$('#registerNoteBtn').click(function(){
-	$.ajax({
-		type:"post",
-		url:"/registerNote",
-		data:$("#registerNote").serialize(),
-		
-		success:function(result){
-			if(alarmSocket){
-    			let socketMsg = "note,"+result.senderNick+","+result.receiverNick+","+result.noteTitle+","+result.noteCode;
-    			alarmSocket.send(socketMsg);
-       		}
-			
-			location.replace('/viewAllNote?userCode=${user.userCode}');
-		}
-	})
-})

@@ -31,12 +31,13 @@ create table user(
 );
 
 create table board_notice(
-   notice_code INT PRIMARY KEY AUTO_INCREMENT,
+	notice_code INT PRIMARY KEY AUTO_INCREMENT,
     user_code INT,
     notice_title VARCHAR(100),
     notice_content TEXT,
     notice_writedate TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    notice_view INT DEFAULT 0
+    notice_view INT DEFAULT 0,
+    important boolean DEFAULT false
 );
 
 create table board_notice_img(
@@ -46,12 +47,13 @@ create table board_notice_img(
 );
 
 create table board_free(
-   free_code INT PRIMARY KEY AUTO_INCREMENT,
+    free_code INT PRIMARY KEY AUTO_INCREMENT,
     user_code INT,
     free_title VARCHAR(30),
     free_content TEXT,
-    free_writedate timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    free_view INT default 0
+    free_writedate TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    free_view INT default 0,
+    free_like_count INT default 0
 );
 
 create table board_free_img(
@@ -81,6 +83,7 @@ create table notice_bookmark(
     notice_code INT
 );
 
+
 create table reserve_library(
 	reserve_lib_code INT PRIMARY KEY AUTO_INCREMENT,
     user_code INT,
@@ -89,7 +92,8 @@ create table reserve_library(
     start_time DATETIME,
     end_time DATETIME,
     regi_date DATETIME DEFAULT CURRENT_TIMESTAMP,
-    status boolean DEFAULT TRUE
+    status boolean DEFAULT true,
+    paid boolean DEFAULT false
 );
 
 create table reserve_guest(
@@ -100,7 +104,8 @@ create table reserve_guest(
     start_time DATETIME,
     end_time DATETIME,
     regi_date DATETIME DEFAULT CURRENT_TIMESTAMP,
-    status boolean DEFAULT TRUE
+    status boolean default TRUE,
+    paid boolean DEFAULT false
 );
 
 create table utill_bill(

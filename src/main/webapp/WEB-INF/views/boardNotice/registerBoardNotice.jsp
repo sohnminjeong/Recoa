@@ -47,6 +47,6 @@
 		<%@ include file="../main/floating.jsp" %>
 	</div>
 	
-<script src="../../../resources/js/boardNotice/registerBoardNotice.js"></script>
+<script src="../../../resources/js/BoardNotice/registerBoardNotice.js"></script>
 </body>
 </html>
