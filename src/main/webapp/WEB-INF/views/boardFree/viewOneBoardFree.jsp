@@ -226,5 +226,23 @@
 	<%@ include file="../main/floating.jsp" %>
 </div>
 <script src="../../../resources/js/boardFree/viewOneBoardFree.js"></script>
+<script>
+$("#registerBoardFreeCommentBtn").click(()=>{
+	$.ajax({
+		type:"post",
+		url:"/registerBoardFreeComment",
+		data: $("#registerBoardFreeComment").serialize(),
+		
+		success:function(result){
+			if(alarmSocket){
+    			let socketMsg = "reply,"+result.userNickname+","+'${vo.user.userNickname}'+","+'${vo.freeTitle}'+","+'${vo.freeCode}';
+    			alarmSocket.send(socketMsg);
+       		}
+			
+			location.replace('/viewOneBoardFree?freeCode='+${vo.freeCode}); 
+		}
+	})	
+})
+</script>
 </body>
 </html>

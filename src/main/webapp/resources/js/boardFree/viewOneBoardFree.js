@@ -64,18 +64,3 @@ $('.fa-caret-right').click(function(){
 		$('#noteJsp').addClass("noView");
 	}
 })
-$("#registerBoardFreeCommentBtn").click(()=>{
-	$.ajax({
-		type:"post",
-		url:"/registerBoardFreeComment",
-		data: $("#registerBoardFreeComment").serialize(),
-		
-		success:function(result){
-			if(alarmSocket){
-    			let socketMsg = "reply,"+result.userNickname+","+'${vo.user.userNickname}'+","+'${vo.freeTitle}'+","+'${vo.freeCode}';
-    			alarmSocket.send(socketMsg);
-       		}
-			$("#freeCommentContent").val("");
-		}
-	})	
-})
