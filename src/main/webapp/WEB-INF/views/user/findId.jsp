@@ -9,38 +9,9 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="/resources/css/reset.css" />
 <link rel="stylesheet" href="../../../resources/css/user/loginUser.css" />
+<link rel="stylesheet" href="../../../resources/css/user/findId.css" />
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<style>
-	#header{
-		position:absolute;
-		z-index:1;
-		width:100%;
-	}
-	#container{
-		position:relative;
-		z-index:0;
-	}
-	p a{
-		margin : 0 10px;
-		font-size: 0.8rem;
-	}
-	p span, b{
-	font-size: 0.8rem;
-	}
-	p a:hover{
-		color : gray;
-	}
-	p b:hover{
-		color : gray;
-	}
-	.form-wrapper span{
-		font-size: 1.2rem;
-		 font-family: 'GangwonEdu_OTFBoldA';
-	}
-	#resultBox{
-		margin: 20px 0;
-	}
-</style>
+
 </head>
 <body>
 <div id="header">

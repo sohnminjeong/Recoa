@@ -9,47 +9,9 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="/resources/css/reset.css" />
 <link rel="stylesheet" href="../../../resources/css/user/loginUser.css" />
+<link rel="stylesheet" href="../../../resources/css/user/findPwd.css" />
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<style>
-	#header{
-		position:absolute;
-		z-index:1;
-		width:100%;
-	}
-	#container{
-		position:relative;
-		z-index:0;
-	}
-	p a{
-		margin : 0 10px;
-		font-size: 0.8rem;
-	}
-	p span, b{
-	font-size: 0.8rem;
-	}
-	p a:hover{
-		color : gray;
-	}
-	p b:hover{
-		color : gray;
-	}
-	.form-wrapper span{
-		font-size: 1.2rem;
-		 font-family: 'GangwonEdu_OTFBoldA';
-	}
-	#resultBox{
-		margin: 20px 0;
-		display:flex;
-		flex-direction:column;
-	}
-	#resultBox div{
-		margin-top : 20px;
-	}
-	#px{
-		font-size:0.8rem;
-		color:red;
-	}
-</style>
+
 </head>
 <body>
 <div id="header">
@@ -77,35 +39,31 @@
 					</form>
 					<!-- 아이디 찾기 결과 박스 -->
 			        <div id="resultBox" style="display:none">
-			        <span>[임시 비밀번호]</span>
-			        <div>
-			        	<span id="resultPwd"></span><br>
-			        	<span id="px">*계정 보안을 위해 로그인하여 비밀번호를 변경해주세요.</span>
-			        </div>
-			        
-			        
+				        <span>[임시 비밀번호]</span>
+				        <div>
+				        	<span id="resultPwd"></span><br>
+				        	<span id="px">*계정 보안을 위해 로그인하여 비밀번호를 변경해주세요.</span>
+				        </div>
 					</div>
 					 <p>
 					     <a href="/loginUser">로그인</a>
 					     <a href="/findId">아이디 찾기</a>
 				  	</p>
-				</div>   
-  
+				</div> 
 	       </div> 
 	     </div> 
-	
     </div>
 	 <div class="row content-row">
-	      <!-- 로그인 시 글자 -->
-	      <div class="col align-items-center flex-col">
-	        <div class="text sign-in">
-	          <h2>
-	            Welcome
-	          </h2>
-	        </div>
-	        <div class="img sign-in"></div>    
-	      </div>   
-	    </div>
+      <!-- 로그인 시 글자 -->
+      <div class="col align-items-center flex-col">
+        <div class="text sign-in">
+          <h2>
+            Welcome
+          </h2>
+        </div>
+        <div class="img sign-in"></div>    
+      </div>   
+    </div>
 </div>
 <script src="../../../resources/js/user/loginUser.js"></script>
 <script>
