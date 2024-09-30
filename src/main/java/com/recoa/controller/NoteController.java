@@ -157,7 +157,7 @@ public class NoteController {
 	
 	// 쪽지 한개 보기
 	@GetMapping("/viewOneNote")
-	public String viewOneNote(int noteCode, Model model, @RequestParam(value="alarmCode")Integer alarmCode) {
+	public String viewOneNote(int noteCode, Model model, @RequestParam(value="alarmCode", required = false)Integer alarmCode) {
 		if(alarmCode!=null) {
 			alarmService.updateAlarmCheck(alarmCode);
 		}

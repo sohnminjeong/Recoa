@@ -12,70 +12,7 @@
 <link rel="stylesheet" href="../../../resources/css/reset.css" />
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://kit.fontawesome.com/cbb1359000.js" crossorigin="anonymous"></script>
-<style>
-@font-face {
-    font-family: 'SDMiSaeng';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/SDMiSaeng.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}	
-	#floating{
-		border-radius:50%;
-		.fa-tree{
-			width:50px;
-			height:50px;
-			 border-radius:50%;
-	        border : 1px solid black;
-		}
-		i{
-			width:50px;
-			height:50px;
-	        text-align: center;
-	        align-content: center;
-	        font-size:1.3rem;
-		}
-	
-	}
-	.fa-tree:hover{
-		color:#0F5132;
-		border : 1.5px dashed black;
-	}
-	
-	.submenus{
-		display:none;
-		height:150px;
-		width:50px;
-		 border : 1.5px dashed black;
-		 border-radius : 15px;
-		 margin-bottom:15px;
-		 
-		i:hover{
-			color:#B1D0EC;
-		}
-	}
-#socketAlert{
-	border:2px dashed gray;
-	border-radius:5px;
-	padding:10px;
-	margin-top : 5px;
-	font-family: 'SDMiSaeng';
-	font-size:1.3rem;
-	a{
-		text-decoration : underline;
-		
-	}
-	i{
-		font-size:1rem;
-		width:30px;
-		height:20px;
-	}
-	i:hover{
-		cursor:pointer;
-		color : gray;
-	}
-}
-
-</style>
+<link rel="stylesheet" href="../../../resources/css/main/floating.css" />
 </head>
 <body>
 <sec:authentication property="principal" var="user" />
@@ -122,17 +59,6 @@ function connectWs(){
 	}
 }
 </script>
-<script>
-$('.fa-tree').mouseover(function(){
-	$('.submenus').css({"display":"block"});
-})
-
-$('.submenus').mouseleave(function(){
-	$(this).css({"display":"none"});
-})
-$('.fa-xmark').click(function(){
-	$('div#socketAlert').css('display','none');
-})
-</script>
+<script src="../../../resources/js/main/floating.js"></script>
 </body>
 </html>

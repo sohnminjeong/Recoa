@@ -127,11 +127,6 @@
 <div id="userFloating">
 	<%@ include file="../main/floating.jsp" %>
 </div>
-<script>
-/*
-$('#nickName').click(function(){
-	$('#noteJsp').css({"display":"block"});
-})*/
-</script>
+
 </body>
 </html>

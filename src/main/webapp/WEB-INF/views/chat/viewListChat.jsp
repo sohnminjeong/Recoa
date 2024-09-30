@@ -12,133 +12,7 @@
 <link rel="stylesheet" href="../../../resources/css/reset.css" />
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://kit.fontawesome.com/cbb1359000.js" crossorigin="anonymous"></script>
-<style>
-@font-face {
-    font-family: 'GangwonEdu_OTFBoldA';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFBoldA.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'SDMiSaeng';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/SDMiSaeng.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-#header{
-	position:absolute;
-	z-index:1;
-	width:100%;
-	border-bottom:1px solid black;
-}
-#content{
-	position:relative;
-	z-index:0;
-	height:100vh;
-	padding-top:10vh;
-	display:flex;
-	align-items:center;
-	margin:0 50px;
-}
-#content>#noteViewBar{
-	height:80%;
-	width:15%;
-	margin-left : 10%;
-	margin-right:5%;
-	
-}
-#content>#container{
-	width: 75%;
-	height:80%;
-    display: flex;
-    flex-direction: column;
-    margin-right: 10%;
-}
-#container>h3{
-	font-size : 1.7rem;
-	font-weight:bold;
-	margin: 0px 20px 10px 20px;
-	font-family: 'GangwonEdu_OTFBoldA';
-}
-#container>#containerContent{
-	width: 100%;
-    border: 2px solid black;
-    border-radius: 30px;
-    height: 100%;
-    padding: 0 10px;
-    display: flex;
-	
-	
-	#chatList{
-		width: 40%;
-        display: grid;
-        grid-template-rows: repeat(10, 10%);
-        overflow-y: scroll;
-        padding: 7px;
-	    
-	    .chat{
-	    	display: flex;
-            flex-direction: column;
-            border-bottom: 0.5px dashed black;
-            border-top: 0.5px dashed black;
-            padding: 3px 0;
-            font-family: 'GangwonEdu_OTFBoldA';
-            justify-content: center;
-	    	
-	    	#chat_interlocutor{
-		    	display: flex;
-                align-items: center;
-                height: 50%;
-		    	
-		    	img{
-		    		border-radius: 50%;
-                    width: 16px;
-                    height: 15px;
-                    margin-right: 7px;
-                    margin-left: 5px;
-                    border: 0.5px solid black;
-		    	}
-		    	
-		    }
-		    .chat_content{
-		    	height: 50%;
-                display: flex;
-                justify-content: space-between;
-                font-family: 'SDMiSaeng';
-                font-size: 1.2rem;
-                margin: 0px 5px 0 5px;
-		    	  
-		    	  #content_chatMessage{
-		    	  	overflow:hidden;
-		    	  	width:60%;
-		    	  }
-		    	  
-		    	  #chatTime{
-		    	  	font-size:1rem;
-		    	  }
-		    }
-		    .chat_content:hover{
-		    	cursor:pointer;
-		    }
-	    	
-	    }
-	   
-	}
-	#chatBox{
-		width:60%;
-		font-family: 'GangwonEdu_OTFBoldA';
-		height:100%;
-	}
-	
-}
-#userFloating{
-	position: fixed;
-    z-index: 1;
-    bottom: 6%;
-    right: 4%;
-}
-
-</style>
+<link rel="stylesheet" href="../../../resources/css/chat/viewListChat.css" />
 </head>
 <body>
 <sec:authentication property="principal" var="user" />
@@ -195,13 +69,6 @@
 	<%@ include file="../main/floating.jsp" %>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
-<script>
-
-$('.chat_content').on("click",function(event){
-	var chatRoomCode = this.id.split("chatContent")[1];
-	$('#chatBox').load("/chat?chatRoomCode="+chatRoomCode);
-	
-})
-</script>
+<script src="../../../resources/js/chat/viewListChat.js"></script>
 </body>
 </html>

@@ -67,7 +67,7 @@
 					<ul class="submenu" id="submenu4">
 						<li>
 							<c:choose>
-								<c:when test="${user.userAdmin=='manager'||user.userAdmin=='admin'}"><a href="/adminPage">마이페이지</a></c:when>
+								<c:when test="${user.userAdmin=='admin'}"><a href="/adminPage">마이페이지</a></c:when>
 								<c:otherwise><a href="/myPageUser">마이페이지</a></c:otherwise>
 							</c:choose>
 						</li>

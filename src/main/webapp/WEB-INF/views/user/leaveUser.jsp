@@ -19,7 +19,7 @@
 <div id="content">
 	<div id="userSideBar">
 		<c:choose>
-			<c:when test="${user.userAdmin=='manager'||user.userAdmin=='admin'}"><%@ include file="../admin/adminSideBar.jsp" %></c:when>
+			<c:when test="${user.userAdmin=='admin'}"><%@ include file="../admin/adminSideBar.jsp" %></c:when>
 			<c:otherwise><%@ include file="../user/userSideBar.jsp" %></c:otherwise>
 		</c:choose>
 	</div>
