@@ -11,7 +11,6 @@
 <link rel="stylesheet" href="../../../resources/css/user/loginUser.css" />
 <link rel="stylesheet" href="../../../resources/css/user/findId.css" />
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
 </head>
 <body>
 <div id="header">
@@ -61,35 +60,6 @@
 	    </div>
 </div>
 <script src="../../../resources/js/user/loginUser.js"></script>
-<script>
-const userRealName = document.getElementById('userRealName');
-const userEmail = document.getElementById('userEmail');
-const resultBox = document.getElementById('resultBox');
-const findIdCheck = document.getElementById('findIdCheck');
-
-
-$("#findIdBtn").click(() => {
-	
-	$.ajax({
-		type: "post",
-		url: "/findId",
-		data: $("#findIdCheck").serialize(),
-
-		success: function (result) {
-			findIdCheck.style.display="none";
-			resultBox.style.display="block";
-			if(result.message==""){
-				$("#resultId").text("조회결과가 없습니다.").css("color", "black");
-			} else{
-				$("#resultId").text(result.message);
-			}
-				
-		},
-		error: function(){
-		}
-	})
-})
-
-</script>
+<script src="../../../resources/js/user/findId.js"></script>
 </body>
 </html>
