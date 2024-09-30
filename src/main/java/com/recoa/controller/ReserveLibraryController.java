@@ -122,4 +122,16 @@ public class ReserveLibraryController {
 		
 		return "library/myLibraryCancel";
 	}
+	
+	@GetMapping("/allLibrary")
+	public String allLibrary(@RequestParam(value = "page", defaultValue = "1") int page, Model model) {
+		
+		int total = service.allLibraryTotal();
+		
+		ReservePaging paging = new ReservePaging(page, total);
+		List<ReserveLibrary> list = service.allLibrary(paging);
+		model.addAttribute("list", list);
+		model.addAttribute("paging", paging);
+		return "library/allLibrary";
+	}
 }

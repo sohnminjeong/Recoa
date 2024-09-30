@@ -113,4 +113,12 @@ public class BoardNoticeDAO {
 	public int bookmarkedTotal(int userCode) {
 		return session.selectOne("BoardNotice.bookmarkedTotal", userCode);
 	}
+	
+	public List<BoardNotice> mynoticeList(BoardNoticePaging paging){
+		return session.selectList("BoardNotice.mynoticeList", paging);
+	}
+	
+	public int mynoticeListTotal(int userCode) {
+		return session.selectOne("BoardNotice.mynoticeListTotal", userCode);
+	}
 }

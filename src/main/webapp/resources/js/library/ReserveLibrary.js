@@ -5,6 +5,9 @@
     	let today = moment().startOf('day'); 
     	
     	$('#selected-dates').text(today.format('YYYY-MM-DD'));
+    	$('#startTime').val(today.format('YYYY-MM-DD'));
+    	$('#endTime').val(today.format('YYYY-MM-DD'));
+    	
     	 $('#selected-seatCode').css("display", "none");
     	 $('#submit').prop('disabled', true);
     	

@@ -328,5 +328,36 @@ public class BoardNoticeController {
 		
 		return "boardNotice/myBookmark";
 	}
+	
+	// 내가 작성한 공지글 보기 (관리자)
+	@GetMapping("mynoticeList")
+	public String mynoticeList(@RequestParam(value = "page", defaultValue = "1") int page,
+			Model model, Principal principal) {
+		
+		String userId = principal.getName(); 
+        int userCode = service.findUserCode(userId);
+		int total = service.mynoticeListTotal(userCode);
+		BoardNoticePaging paging = new BoardNoticePaging(page, total);
+		
+        paging.setUserCode(userCode);
+        
+		int offset = (page - 1) * paging.getLimit();
+		paging.setOffset(offset); 
+		
+		List<BoardNotice> list = service.mynoticeList(paging);
+		model.addAttribute("list", list);
+		model.addAttribute("paging", paging);
+		
+		Map<Integer, Integer> bookmarkCount = new HashMap<>();
+	    
+	    for (BoardNotice notice : list) {
+	        int count = service.countBookmark(notice.getNoticeCode());
+	        bookmarkCount.put(notice.getNoticeCode(), count);
+	    }
+	    
+	    model.addAttribute("bookmarkCount", bookmarkCount);
+	    
+		return "boardNotice/mynoticeList";
+	}
 
 }

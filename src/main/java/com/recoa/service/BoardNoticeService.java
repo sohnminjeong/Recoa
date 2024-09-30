@@ -113,4 +113,14 @@ public class BoardNoticeService {
 	public int bookmarkedTotal(int userCode) {
 		return dao.bookmarkedTotal(userCode);
 	}
+	
+	// 내가 작성한 공지글 조회
+	public List<BoardNotice> mynoticeList(BoardNoticePaging paging){
+		return dao.mynoticeList(paging);
+	}
+	
+	public int mynoticeListTotal(int userCode) {
+		System.out.println(dao.mynoticeListTotal(userCode));
+		return dao.mynoticeListTotal(userCode);
+	}
 }

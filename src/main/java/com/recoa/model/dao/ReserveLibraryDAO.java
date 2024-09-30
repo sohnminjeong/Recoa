@@ -49,4 +49,12 @@ public class ReserveLibraryDAO {
 		return session.selectOne("ReserveLibrary.CancelLibrarytotal", userId);
 	}
 
+	// 독서실 예약 내역
+	public List<ReserveLibrary> allLibrary(ReservePaging paging){
+		return session.selectList("ReserveLibrary.AllLibrary", paging);
+	}
+	
+	public int allLibraryTotal() {
+		return session.selectOne("ReserveLibrary.allLibraryTotal");
+	}
 }

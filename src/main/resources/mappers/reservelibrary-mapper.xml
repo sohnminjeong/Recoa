@@ -141,4 +141,17 @@
     	ORDER BY reserve_lib_code DESC
 		LIMIT 1
 	</select>
+	
+		<!-- 독서실 예약 내역 조회 -->
+	<select id="AllLibrary" parameterType="ReservePaging" resultType="map" >
+		 SELECT * 
+		    FROM reserve_library
+			LIMIT #{offset}, #{limit}
+	</select>
+	
+		<!-- 예약 내역 total -->
+	<select id="allLibraryTotal" resultType="int">
+		SELECT COUNT(*)
+		FROM reserve_library
+	</select>
 </mapper>

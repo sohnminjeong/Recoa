@@ -131,4 +131,17 @@
 		SET paid=1
 		WHERE reserve_guest_code = #{reserveGuestCode}
 	</update>
+	
+	<!-- 독서실 예약 내역 조회 -->
+	<select id="AllGuest" parameterType="ReservePaging" resultType="map" >
+		 SELECT * 
+		    FROM reserve_guest
+			LIMIT #{offset}, #{limit}
+	</select>
+	
+		<!-- 예약 내역 total -->
+	<select id="allGuestTotal" resultType="int">
+		SELECT COUNT(*)
+		FROM reserve_guest
+	</select>
 </mapper>

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.recoa.model.vo.ReserveGuest;
+import com.recoa.model.vo.ReserveLibrary;
 import com.recoa.model.vo.ReservePaging;
 import com.recoa.model.vo.Utillbill;
 
@@ -50,4 +51,12 @@ public class ReserveGuestDAO {
 		return session.update("ReserveGuest.cancelGuest", reserveGuestCode);
 	}
 	
+	// 독서실 예약 내역
+	public List<ReserveGuest> allGuest(ReservePaging paging){
+		return session.selectList("ReserveGuest.AllGuest", paging);
+	}
+	
+	public int allGuestTotal() {
+		return session.selectOne("ReserveGuest.allGuestTotal");
+	}
 }

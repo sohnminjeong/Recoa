@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.recoa.model.dao.ReserveGuestDAO;
 import com.recoa.model.vo.ReserveGuest;
+import com.recoa.model.vo.ReserveLibrary;
 import com.recoa.model.vo.ReservePaging;
 import com.recoa.model.vo.Utillbill;
 
@@ -68,6 +69,15 @@ public class ReserveGuestService {
 	// 게스트룸 예약 취소
 	public int cancelGuest(Integer reserveGuestCode) {
 		return dao.cancelGuest(reserveGuestCode);
+	}
+	
+	// 독서실 예약 내역
+	public List<ReserveGuest> allGuest(ReservePaging paging){
+		return dao.allGuest(paging);
+	}
+	
+	public int allGuestTotal() {
+		return dao.allGuestTotal();
 	}
 
 }

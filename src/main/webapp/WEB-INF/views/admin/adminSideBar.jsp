@@ -30,15 +30,15 @@
 		<li><i class="fa-solid fa-clipboard-check"></i>
 			<ul>
 				<li>-------------------</li>
-				<li><a href="/" class="subInfo">게스트룸 예약 리스트</a></li>
-				<li><a href="/" class="subInfo">독서실 예약 리스트</a></li>
-				<li><a href="/" class="subInfo">고지서 리스트</a></li>
+				<li><a href="/allGuest" class="subInfo">게스트룸 예약 리스트</a></li>
+				<li><a href="/allLibrary" class="subInfo">독서실 예약 리스트</a></li>
+				<li><a href="/" class="subInfo">고지서 조회</a></li>
 			</ul>
 		</li>
 		<li><i class="fa-solid fa-pen-to-square"></i>
 			<ul>
 				<li>-------------------</li>
-				<li><a href="/" class="subInfo">작성한 공지사항</a></li>
+				<li><a href="/mynoticeList" class="subInfo">작성한 공지사항</a></li>
 				<li><a href="/liked?userCode=${user.userCode}" class="subInfo">좋아요</a></li>
 				<li><a href="/bookmarked" class="subInfo">북마크</a></li>
 			</ul>

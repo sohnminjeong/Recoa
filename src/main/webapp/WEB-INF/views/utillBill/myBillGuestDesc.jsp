@@ -67,14 +67,14 @@
 										<c:when
 											test="${(paging.startPage == 1)&&(paging.select != null) && (paging.keyword != null)}">
 											<a class="page-link"
-												href="/myLibrary?select=${paging.select}&keyword=${paging.keyword}&page=${paging.startPage=1}">Previous</a>
+												href="/myBillGuestDesc?select=${paging.select}&keyword=${paging.keyword}&page=${paging.startPage=1}">Previous</a>
 										</c:when>
 										<c:when
 											test="${(paging.startPage == 1)&&(paging.select == null) && (paging.keyword == null)}">
-											<a class="page-link" href="/myLibrary?page=${paging.startPage=1}"><</a>
+											<a class="page-link" href="/myBillGuestDesc?page=${paging.startPage=1}"><</a>
 										</c:when>
 										<c:otherwise>
-											<a class="page-link" href="/myLibrary?page=${paging.startPage-1}"><</a>
+											<a class="page-link" href="/myBillGuestDesc?page=${paging.startPage-1}"><</a>
 										</c:otherwise>
 									</c:choose>
 
@@ -85,14 +85,14 @@
 										<c:choose>
 											<c:when test="${(paging.select != null) && (paging.keyword != null)}">
 												<a class="page-link ${paging.page== page ? 'active' : ''}"
-													href="/myLibrary?select=${paging.select}&keyword=${paging.keyword}&page=${page}"
+													href="/myBillGuestDesc?select=${paging.select}&keyword=${paging.keyword}&page=${page}"
 													id="page_num">
 													${page}
 												</a>
 											</c:when>
 											<c:otherwise>
 												<a class="page-link ${paging.page== page ? 'active' : ''}"
-													href="/myLibrary?page=${page}" id="page_num">
+													href="/myBillGuestDesc?page=${page}" id="page_num">
 													${page}
 												</a>
 											</c:otherwise>
@@ -105,15 +105,15 @@
 										<c:when
 											test="${(paging.endPage < 10)&&(paging.select != null) && (paging.keyword != null)}">
 											<a class="page-link"
-												href="/myLibrary?select=${paging.select}&keyword=${paging.keyword}&page=${paging.endPage=paging.endPage}">Next</a>
+												href="/myBillGuestDesc?select=${paging.select}&keyword=${paging.keyword}&page=${paging.endPage=paging.endPage}">Next</a>
 										</c:when>
 										<c:when
 											test="${(paging.endPage < 10)&&(paging.select == null) && (paging.keyword == null)}">
 											<a class="page-link"
-												href="/myLibrary?page=${paging.endPage=paging.endPage}">></a>
+												href="/myBillGuestDesc?page=${paging.endPage=paging.endPage}">></a>
 										</c:when>
 										<c:otherwise>
-											<a class="page-link" href="/myLibrary?page=${paging.endPage + 1}">></a>
+											<a class="page-link" href="/myBillGuestDesc?page=${paging.endPage + 1}">></a>
 										</c:otherwise>
 									</c:choose>
 								</li>

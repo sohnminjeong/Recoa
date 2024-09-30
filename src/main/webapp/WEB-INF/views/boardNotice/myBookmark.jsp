@@ -18,7 +18,10 @@
 </div>
 <div id="content">
 	<div id="userSideBar">
-		<%@ include file="../user/userSideBar.jsp" %>
+		<c:choose>
+			<c:when test="${user.userAdmin=='manager'||user.userAdmin=='admin'}"><%@ include file="../admin/adminSideBar.jsp" %></c:when>
+			<c:otherwise><%@ include file="../user/userSideBar.jsp" %></c:otherwise>
+		</c:choose>
 	</div>
 	<div id="container">
 		<h3>북마크</h3>
@@ -58,14 +61,14 @@
 										<c:when
 											test="${(paging.startPage == 1)&&(paging.select != null) && (paging.keyword != null)}">
 											<a class="page-link"
-												href="/boardNoticeList?select=${paging.select}&keyword=${paging.keyword}&page=${paging.startPage=1}">Previous</a>
+												href="/bookmarked?select=${paging.select}&keyword=${paging.keyword}&page=${paging.startPage=1}">Previous</a>
 										</c:when>
 										<c:when
 											test="${(paging.startPage == 1)&&(paging.select == null) && (paging.keyword == null)}">
-											<a class="page-link" href="/boardNoticeList?page=${paging.startPage=1}"><</a>
+											<a class="page-link" href="/bookmarked?page=${paging.startPage=1}"><</a>
 										</c:when>
 										<c:otherwise>
-											<a class="page-link" href="/boardNoticeList?page=${paging.startPage-1}"><</a>
+											<a class="page-link" href="/bookmarked?page=${paging.startPage-1}"><</a>
 										</c:otherwise>
 									</c:choose>
 
@@ -75,14 +78,14 @@
 										<c:choose>
 											<c:when test="${(paging.select != null) && (paging.keyword != null)}">
 												<a class="page-link ${paging.page== page ? 'active' : ''}"
-													href="/boardNoticeList?select=${paging.select}&keyword=${paging.keyword}&page=${page}"
+													href="/bookmarked?select=${paging.select}&keyword=${paging.keyword}&page=${page}"
 													id="page_num">
 													${page}
 												</a>
 											</c:when>
 											<c:otherwise>
 												<a class="page-link ${paging.page== page ? 'active' : ''}"
-													href="/boardNoticeList?page=${page}" id="page_num">
+													href="/bookmarked?page=${page}" id="page_num">
 													${page}
 												</a>
 											</c:otherwise>
@@ -95,15 +98,15 @@
 										<c:when
 											test="${(paging.endPage < 10)&&(paging.select != null) && (paging.keyword != null)}">
 											<a class="page-link"
-												href="/boardNoticeList?select=${paging.select}&keyword=${paging.keyword}&page=${paging.endPage=paging.endPage}">Next</a>
+												href="/bookmarked?select=${paging.select}&keyword=${paging.keyword}&page=${paging.endPage=paging.endPage}">Next</a>
 										</c:when>
 										<c:when
 											test="${(paging.endPage < 10)&&(paging.select == null) && (paging.keyword == null)}">
 											<a class="page-link"
-												href="/boardNoticeList?page=${paging.endPage=paging.endPage}">></a>
+												href="/bookmarked?page=${paging.endPage=paging.endPage}">></a>
 										</c:when>
 										<c:otherwise>
-											<a class="page-link" href="/boardNoticeList?page=${paging.endPage + 1}">></a>
+											<a class="page-link" href="/bookmarked?page=${paging.endPage + 1}">></a>
 										</c:otherwise>
 									</c:choose>
 								</li>
