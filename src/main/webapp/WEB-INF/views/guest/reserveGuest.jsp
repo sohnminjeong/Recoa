@@ -14,25 +14,6 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link href="../../resources/css/guest/reserve.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-<style>
-#header {
-    position: absolute;
-    z-index: 1;
-    width: 100%;
-    top: 0;
-    left: 0;
-}
-
-#page{
-	position: relative;
-	z-index: 0;
-}
-
-form select option p{
-	color: green;
-}
-
-</style>
 </head>
 <body>
 	<sec:authentication property="principal" var="user" />
@@ -87,17 +68,11 @@ form select option p{
 		   	<input type="checkbox" id="agreement" name="agreement" disabled>
             <label for="agreement">예약 내용을 확인하였습니다.</label>
 		  </div>
-           
         </div>
-		
-		
 		<input type="submit" value="게스트하우스 예약" id="submit" disabled>
 	</form>
 </div>
-	
-	
 	<script src="../../../resources/js/guest/ReserveGuest.js"></script>
-
 </body>
 
 
