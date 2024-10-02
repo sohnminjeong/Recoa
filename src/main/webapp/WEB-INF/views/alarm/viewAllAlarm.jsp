@@ -54,9 +54,7 @@
 							<td>
 								<c:choose>
 									<c:when test="${item.alarmCheck==false}">
-										<a href="${item.alarmUrl}&alarmCode=${item.alarmCode}" class="beforeCheck">
-											[${item.alarmTable}] ${item.alarmContent}
-										</a>
+										<div id="${item.alarmUrl}&alarmCode=${item.alarmCode}" class="beforeCheck">[${item.alarmTable}] ${item.alarmContent}</div>
 									</c:when>
 									<c:otherwise>
 										<a href="${item.alarmUrl}" >
@@ -126,6 +124,46 @@
 <div id="userFloating">
 	<%@ include file="../main/floating.jsp" %>
 </div>
+<script>
+$(".beforeCheck").on("click", function(event){
+	var url = this.id;
+	var name = url.split("?")[1].split("=")[0];
+	var code = url.split("=")[1].split("&")[0];
+	var alarmCode = url.split("=")[2];
+	
+	if(name=='freeCode'){
+		$.ajax({
+			type:"post",
+			url:"/alarmCheck",
+			data : {"code":code, "alarmCode":alarmCode},
+			
+			success:function(result){
+				if(result){
+					location.href=url;
+				} else{
+					location.href='/errorBoardFree';
+				}
+			}
+		})
+	}
+	if(name=='noteCode'){
+		$.ajax({
+			type:"post",
+			url:"/alarmNoteCheck",
+			data : {"code":code, "alarmCode":alarmCode},
+			
+			success:function(result){
+				if(result){
+					location.href=url;
+				} else{
+					location.href='/errorNote';
+				}
+			}
+		})
+	}
 
+
+})
+</script>
 </body>
 </html>

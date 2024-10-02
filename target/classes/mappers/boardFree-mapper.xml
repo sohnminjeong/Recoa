@@ -157,4 +157,11 @@
 	WHERE user_code=#{userCode}
 	ORDER BY free_code DESC
 	</select>
+	
+	<!-- 알림 확인용 : 게시물 존재 여부 확인 / alarmDAO에 생성-->
+	<select id="alarmCheck" parameterType="int" resultMap="boardFreeMap">
+	SELECT *
+	FROM board_free
+	WHERE free_code=#{freeCode}
+	</select>
 </mapper>

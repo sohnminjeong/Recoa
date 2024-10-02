@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.recoa.model.dao.AlarmDAO;
 import com.recoa.model.vo.Alarm;
+import com.recoa.model.vo.BoardFree;
 import com.recoa.model.vo.NotePaging;
 
 @Service
@@ -32,5 +33,10 @@ public class AlarmService {
 	
 	public int deleteAlarm(int alarmCode) {
 		return dao.deleteAlarm(alarmCode);
+	}
+	
+	// 알림 확인용 : 게시물 존재 여부 확인 
+	public BoardFree alarmCheck(int freeCode) {
+		return dao.alarmCheck(freeCode);
 	}
 }

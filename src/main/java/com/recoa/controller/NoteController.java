@@ -163,6 +163,9 @@ public class NoteController {
 		}
 		
 		Note vo = service.oneViewNote(noteCode);
+		if(vo==null) {
+			return "note/errorNote";
+		}
 		vo.setSenderNick(userService.findUserByCode(vo.getNoteSender()).getUserNickname());
 		vo.setReceiverNick(userService.findUserByCode(vo.getNoteReceiver()).getUserNickname());
 		List<NoteFile> files = service.viewAllNoteFile(noteCode);
@@ -204,5 +207,10 @@ public class NoteController {
 			service.deleteNoteFile(noteCode);
 		}
 		return "redirect:/viewAllNote?userCode="+user.getUserCode();
+	}
+	
+	@GetMapping("/errorNote")
+	public String errorNote() {
+		return "note/errorNote";
 	}
 }

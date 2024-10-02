@@ -101,6 +101,10 @@ table{
 .beforeCheck{
 	color : blue;
 }
+.beforeCheck:hover{
+	cursor:pointer;
+	color:gray;
+}
 .fa-trash-can:hover{
 	color:gray;
 }

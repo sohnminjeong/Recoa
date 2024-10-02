@@ -103,8 +103,12 @@ public class BoardFreeController {
 			alarmService.updateAlarmCheck(alarmCode);
 		}
 		
-		service.updateFreeView(freeCode);
 		BoardFree vo = service.oneBoardFree(freeCode);
+		if(vo==null) {
+			return "boardFree/errorBoardFree";
+		}
+		
+		service.updateFreeView(freeCode);
 		
 		List<BoardFreeImg> imgList = service.oneBoardFreeImg(freeCode);
 		model.addAttribute("vo", vo);
@@ -321,5 +325,10 @@ public class BoardFreeController {
 		model.addAttribute("list", list);
 		model.addAttribute("paging", paging);
 		return "boardFree/viewListWritedBoardFree";
+	}
+	
+	@GetMapping("/errorBoardFree")
+	public String errorBoardFree() {
+		return "boardFree/errorBoardFree";
 	}
 }

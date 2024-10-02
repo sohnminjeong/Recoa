@@ -43,6 +43,11 @@
 
 .menu > li > #recoa {
   font-weight: bold;
+  color : gray;
+}
+.menu > li > #recoa:hover {
+  font-weight: bold;
+  color : white;
 }
 .submenu > li {
   line-height: 60px;

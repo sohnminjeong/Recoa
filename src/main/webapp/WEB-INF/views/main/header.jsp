@@ -15,7 +15,7 @@
 <sec:authentication property="principal" var="user" />
 <ul class="menu">
 	<li>
-		<a href="/" id="recoa">Recoa</a>
+		<a href="/" id="recoa">Blue Forest City</a>
 	</li>
 	<li>
 		<a href="/">아파트 소개</a>

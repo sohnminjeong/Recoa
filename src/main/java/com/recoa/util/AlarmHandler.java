@@ -64,7 +64,7 @@ public class AlarmHandler extends TextWebSocketHandler {
 				alarm.setUserCode(boardWriterCode); // 알람 받을 유저 코드
 				if("reply".equals(cmd)) {
 					alarm.setAlarmTable("자유게시판");
-					alarm.setAlarmContent(replyWriter+"님이 "+title+"에 댓글을 달았습니다.");
+					alarm.setAlarmContent(replyWriter+"님이 '"+title+"'에 댓글을 달았습니다.");
 					alarm.setAlarmUrl("/viewOneBoardFree?freeCode="+code);
 				} else if("note".equals(cmd)) {
 					alarm.setAlarmTable("쪽지");
@@ -79,7 +79,7 @@ public class AlarmHandler extends TextWebSocketHandler {
 				
 				// 댓글
 				if("reply".equals(cmd)) {
-					TextMessage tmpMsg = new TextMessage("[자유게시판] "+replyWriter+"님이 "+"<a href='/viewOneBoardFree?freeCode="+code+"&alarmCode="+alarm.getAlarmCode()+"'>"+title+"</a>"+"에 댓글을 달았습니다.");
+					TextMessage tmpMsg = new TextMessage("[자유게시판] "+replyWriter+"님이 "+"<a href='/viewOneBoardFree?freeCode="+code+"&alarmCode="+alarm.getAlarmCode()+"'>"+"'"+title+"'"+"</a>"+"에 댓글을 달았습니다.");
 					boardWriterSession.sendMessage(tmpMsg);
 				} 
 				if("note".equals(cmd)) {

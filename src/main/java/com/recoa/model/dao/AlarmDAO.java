@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.recoa.model.vo.Alarm;
+import com.recoa.model.vo.BoardFree;
 import com.recoa.model.vo.NotePaging;
 
 @Repository
@@ -34,4 +35,9 @@ public class AlarmDAO {
 		return session.delete("alarmMapper.deleteAlarm", alarmCode);
 	}
 	
+	// 알림 확인용 : 게시물 존재 여부 확인 
+	public BoardFree alarmCheck(int freeCode) {
+		return session.selectOne("boardFreeMapper.alarmCheck", freeCode);
+	}
+
 }
