@@ -90,7 +90,6 @@ public class BoardNoticeController {
 	public String registerNotice(BoardNotice vo) throws IllegalStateException, IOException {
 
 		// 이미지가 없을 때
-		System.out.println(vo);
 		service.registerNotice(vo);
 		
 		if(vo.getFiles() != null && vo.getFiles().get(0).getOriginalFilename() != "") {
@@ -181,8 +180,6 @@ public class BoardNoticeController {
 	
 	@PostMapping("/updateBoardNotice")
 	public String updateBoardNotice(BoardNotice vo, @RequestParam("delImages") String delImages) throws IllegalStateException, IOException {
-		System.out.println("delImages : " + delImages);
-		
 		// 1. 이미지 제외 먼저 수정
 		service.updateNotice(vo);
 		
@@ -192,14 +189,9 @@ public class BoardNoticeController {
 		// 추가되는 이미지
 		List<MultipartFile> images = vo.getFiles();
 		
-		
-		System.out.println(" 이전 prev : " + prev);
-		System.out.println(" 추가 images : " + images);
-		
 		// 기존 이미지가 없을 때
 		if(prev.size() == 0) {
 			if(images != null && images.size() != 0 && images.get(0).getSize() > 0) {
-				System.out.println("2. 기존 이미지가 없고, 추가하는 이미지가 있어");
 				for(MultipartFile image : images) {
 					BoardNoticeImg img = new BoardNoticeImg();
 					
@@ -210,8 +202,6 @@ public class BoardNoticeController {
 					service.registerBoardNoticeImg(img);
 				}
 			} else {
-				System.out.println("1. 기존 이미지가 없고, 추가하는 이미지도 없어");
-				
 			}
 			// 기존 이미지가 있을 때
 		} else {
@@ -224,11 +214,9 @@ public class BoardNoticeController {
 				}
 				// 기존 이미지 DB 삭제
 				service.deleteImg(vo.getNoticeCode());
-				System.out.println("3. 기존 이미지 있는데 삭제만 해");
 				
 				if(images != null && images.size() != 0 && images.get(0).getSize() > 0) {
 					// 기존 이미지를 삭제하고, 새로 이미지를 추가할 때 (변경)
-					System.out.println("6. 삭제하고 추가해");
 					for(MultipartFile image : images) {
 						BoardNoticeImg img = new BoardNoticeImg();
 						
@@ -243,7 +231,6 @@ public class BoardNoticeController {
 			} else {
 				// 삭제x, 생성o
 				if(images != null && images.size() != 0 && images.get(0).getSize() > 0) {
-					System.out.println("5. 삭제하지 않고 추가해");
 					for(MultipartFile image : images) {
 						BoardNoticeImg img = new BoardNoticeImg();
 						
@@ -254,7 +241,6 @@ public class BoardNoticeController {
 						service.registerBoardNoticeImg(img);
 					}
 				} else {
-					System.out.println("4. 삭제하지 않고, 그대로 둬. 추가 없이");
 				}
 			}
 		}
@@ -299,10 +285,8 @@ public class BoardNoticeController {
 			
 	    NoticeBookmark vo = new NoticeBookmark();
 	    vo.setUserCode(userCode);
-	    System.out.println("userCode : "+ userCode);
 	       
 		int total = service.bookmarkedTotal(userCode);
-		System.out.println("total : " + total);
 			
 		BoardNoticePaging paging = new BoardNoticePaging(page, total);
 		paging.setUserCode(userCode);
@@ -315,7 +299,6 @@ public class BoardNoticeController {
 		List<BoardNotice> list = service.bookmarked(paging);
 		model.addAttribute("list", list);
 		model.addAttribute("paging", paging);
-		System.out.println("list : "+list);
 		
 		Map<Integer, Integer> bookmarkCount = new HashMap<>();
 	    

@@ -24,7 +24,6 @@ public class PaymentController {
 	
 	@PostMapping("/payments/verify")
 	public ResponseEntity<String> verify(@RequestBody PaymentDesc payment){
-		System.out.println("payment : " + payment);
 		String impUid = payment.getImp_uid();
 		String accessToken = getAccessToken();
 		
@@ -38,21 +37,15 @@ public class PaymentController {
 
         // 결제 검증 API 호출
         String verifyUrl = "https://api.iamport.kr/payments/" + impUid;
-        System.out.println("verifyUrl : " + verifyUrl);
         
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + accessToken);
 
         HttpEntity<String> entity = new HttpEntity<>(headers);
-        System.out.println("entity : " + entity);
         
         ResponseEntity<String> response = restTemplate.exchange(verifyUrl, HttpMethod.GET, entity, String.class);
 
-
-     System.out.println("Response Status Code: " + response.getStatusCode());
-     System.out.println("Response Body: " + response.getBody());
-        
         if (response.getStatusCode() == HttpStatus.OK) {
             return ResponseEntity.ok(response.getBody());
         } else {
@@ -76,7 +69,6 @@ public class PaymentController {
         if (response.getStatusCode() == HttpStatus.OK) {
             String responseBody = response.getBody();
             
-            System.out.println("responseBody : " + responseBody);
             String accessToken = extractAccessTokenFromResponse(responseBody);
             
             return accessToken;
@@ -92,9 +84,7 @@ public class PaymentController {
     	JsonObject jsonObj = (JsonObject) obj;
     	JsonElement response = jsonObj.get("response");
     	String accessToken = response.getAsJsonObject().get("access_token").getAsString();
-    	
-    	System.out.println("accessToken : " + accessToken);
-        
-        return accessToken; 
+
+    	return accessToken; 
     }
 }

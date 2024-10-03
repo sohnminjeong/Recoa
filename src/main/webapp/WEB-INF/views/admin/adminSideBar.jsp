@@ -32,7 +32,7 @@
 				<li>-------------------</li>
 				<li><a href="/allGuest" class="subInfo">게스트룸 예약 리스트</a></li>
 				<li><a href="/allLibrary" class="subInfo">독서실 예약 리스트</a></li>
-				<li><a href="/" class="subInfo">고지서 조회</a></li>
+				<li><a href="/viewUserBill" class="subInfo">고지서 조회</a></li>
 			</ul>
 		</li>
 		<li><i class="fa-solid fa-pen-to-square"></i>

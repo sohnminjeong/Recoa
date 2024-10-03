@@ -47,9 +47,6 @@ public class ReserveGuestController {
         params.put("endTime", endTime);
         params.put("roomType", roomType);
 
-        System.out.println("Available rooms: " + service.getAvailableRooms(params)); // 로그 추가
-        System.out.println("controller : " + service.getAvailableRooms(params));
-        System.out.println("roomType : " + roomType);
         return service.getAvailableRooms(params); // JSP 페이지 이름
     }
 	
@@ -105,9 +102,6 @@ public class ReserveGuestController {
 		List<ReserveGuest> list = service.myGuest(paging);
 		model.addAttribute("list", list);
 		model.addAttribute("paging", paging);
-		
-//		paging.setKeyword(keyword);
-//		paging.setSelect(select);
 					
 		return "guest/myGuest";
 	} 
@@ -132,7 +126,6 @@ public class ReserveGuestController {
 		ReservePaging paging = new ReservePaging(page, total);
 		List<ReserveGuest> list = service.myGuestCancel(paging);
 		
-		System.out.println("reserveGuestCode : " + reserveGuestCode);
 		service.cancelGuest(reserveGuestCode);
 		model.addAttribute("list", list);
 		model.addAttribute("paging", paging);
