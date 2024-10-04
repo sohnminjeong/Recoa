@@ -57,10 +57,7 @@ public class AlarmController {
 	@PostMapping("alarmCheck")
 	@ResponseBody
 	public Boolean alarmCheck(int code, int alarmCode) {
-		System.out.println("code : "+code);
-		System.out.println("alarmCode : "+alarmCode);
 		BoardFree vo = service.alarmCheck(code);
-		System.out.println("vo : "+vo);
 		if(vo==null) {
 		// 이미 삭제된 게시물일 경우
 			service.updateAlarmCheck(alarmCode);
