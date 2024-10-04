@@ -120,7 +120,6 @@ public class BoardNoticeService {
 	}
 	
 	public int mynoticeListTotal(int userCode) {
-		System.out.println(dao.mynoticeListTotal(userCode));
 		return dao.mynoticeListTotal(userCode);
 	}
 }

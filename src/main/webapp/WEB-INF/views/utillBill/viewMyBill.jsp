@@ -37,6 +37,7 @@
 	        <tr>
 	            <td class="info-label">주소</td>
 	            <td>${user.userAdr}동 ${user.userAdrDetail}호</td>
+	            <td>하이하잏아히아힝</td>
 	            <td class="info-label">결제일</td>
 	            <td>2024-09-25</td>
 	        </tr>
@@ -125,7 +126,6 @@ $(document).ready(function() {
             buyer_addr: userAdr,
             buyer_postcode: userAdrDetail
         }, function (rsp) {
-            console.log("rsp: ", rsp);
             if (rsp.success) {
                 const today = new Date();
                 const month = today.getMonth() + 1;

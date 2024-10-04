@@ -2,7 +2,9 @@ package com.recoa.controller;
 
 import java.math.BigDecimal;
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,9 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.recoa.model.vo.ReserveLibrary;
 import com.recoa.model.vo.ReservePaging;
+import com.recoa.model.vo.User;
 import com.recoa.model.vo.Utillbill;
-import com.recoa.service.ReserveGuestService;
-import com.recoa.service.ReserveLibraryService;
 import com.recoa.service.UtillbillService;
 
 @Controller
@@ -90,8 +91,6 @@ public class UtillbillController {
 	@PostMapping("/updatebills")
 	public String updateBills(Principal principal, @RequestParam(value="page", defaultValue="1") int page) {
 		
-		System.out.println("업데이트할건뎅");
-		
 		int total = service.libBillTotal() + service.guestBillTotal();
 		ReservePaging paging = new ReservePaging(page, total);
 		paging.setId(principal.getName());
@@ -103,5 +102,44 @@ public class UtillbillController {
 			service.updateLibrary(list.get(i).getReserveLibraryCode());
 		}
 		return "utillBill/viewMyBill";
+	}
+	
+	// 관리자가 유저 ID로 사용 내역 (고지서) 조회
+	@GetMapping("/viewUserBill")
+	public String viewBill() {
+		return "utillBill/viewBill";
+	}
+	
+	@PostMapping("/viewUserBill")
+	@ResponseBody
+	public Map<String, Object> viewUserBill(@RequestParam(value = "id", defaultValue = "") String id) {
+	    ReservePaging paging = new ReservePaging();
+	    paging.setId(id);
+	    List<Utillbill> bills = service.viewUserBills(id);
+
+	    User user = service.viewUserDesc(id);
+
+	    	BigDecimal totalPrice = service.calculateTotalPrice(bills);
+		    BigDecimal libraryPrice = service.calculateLibPrice(bills);
+		    BigDecimal guestPrice = service.calculateGuestPrice(bills);
+		    BigDecimal guestOnePrice = service.calculateOneRoomGuestPrice(bills);
+		    BigDecimal guestTwoPrice = service.calculateTwoRoomGuestPrice(bills);
+		    
+		    Map<String, Object> result = new HashMap<>();
+		    
+		    // 검색 결과가 없을 경우
+		    if (bills == null || bills.isEmpty()) {
+		        result.put("message", "검색 결과가 없습니다."); 
+		        return result;  
+		    } else {
+		    	result.put("bills", bills);
+			    result.put("totalPrice", totalPrice);
+			    result.put("libraryPrice", libraryPrice);
+			    result.put("guestOnePrice", guestOnePrice);
+			    result.put("guestTwoPrice", guestTwoPrice);
+			    result.put("guestPrice", guestPrice);
+			    result.put("user", user);
+			    return result;
+		    }
 	}
 }

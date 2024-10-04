@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.recoa.model.vo.ReserveLibrary;
 import com.recoa.model.vo.ReservePaging;
+import com.recoa.model.vo.User;
 
 @Repository
 public class UtillbillDAO {
@@ -20,6 +21,8 @@ public class UtillbillDAO {
 	public List<Map<String, Object>> guestBill(ReservePaging paging){
 		return session.selectList("ReserveGuest.guestBill", paging);
 	}
+	
+
 	
 	// 1-2. 게스트룸 total
 	public int guestBillTotal(String userId) {
@@ -38,7 +41,6 @@ public class UtillbillDAO {
 	
 	// 결제 시 업데이트
 	public int updateGuest(int reserveGuestCode) {
-		System.out.println("int ::::::::;" + reserveGuestCode);
 		return session.update("ReserveGuest.updateGuest", reserveGuestCode);
 	}
 	
@@ -48,7 +50,22 @@ public class UtillbillDAO {
 	
 	// 결제 여부 확인
 	public ReserveLibrary paymentStatus(String userId) {
-		System.out.println("하...............");
 		return session.selectOne("ReserveLibrary.paymentStatus", userId);
+	}
+	
+	// 관리자 - 독서실 예약
+	public List<Map<String, Object>> viewUserlibraryBill(String id){
+		return session.selectList("ReserveLibrary.viewUserLibrary", id);
+	}
+	
+	// 관리자 - 게하 예약
+	public List<Map<String, Object>> viewUserGuestBill(String userId){
+		return session.selectList("ReserveGuest.viewUserGuest", userId);
+	}
+	
+	// 관리자 - 고지서 조회 시 유저 정보 담아오기
+	public User viewUserDesc(String userId) {
+		// 유저 코드 조회
+		return session.selectOne("BoardNotice.findUserId", userId);
 	}
 }

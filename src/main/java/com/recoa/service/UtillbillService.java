@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import com.recoa.model.dao.UtillbillDAO;
 import com.recoa.model.vo.ReserveLibrary;
 import com.recoa.model.vo.ReservePaging;
+import com.recoa.model.vo.User;
 import com.recoa.model.vo.Utillbill;
 
 @Service
@@ -106,7 +107,6 @@ public class UtillbillService {
             bill.setStartTime((Date) guest.get("start_time"));
             bill.setEndTime((Date) guest.get("end_time"));
             
-            System.out.println("guest::::::::::::::::::;" + guest);
             bill.setReserveGuestCode((int) guest.get("reserve_guest_code"));
             int roomType = (int) guest.get("room_type");
             if (roomType == 1) {
@@ -281,5 +281,65 @@ public class UtillbillService {
 		UserDetails userDetails = (UserDetails) principal;
 		
     	return dao.paymentStatus(userDetails.getUsername());
+    }
+    
+    public List<Utillbill> viewUserBills(String id) {
+    	// 넘길 데이터
+    	 List<Utillbill> bills = new ArrayList<>();
+ 		
+         // 당월 독서실 예약 조회
+            List<Map<String, Object>> libList = dao.viewUserlibraryBill(id);
+            for (Map<String, Object> library : libList) {
+                Utillbill bill = new Utillbill();
+                bill.setServiceName("library");
+                bill.setRegiDate((Date) library.get("regi_date"));
+                bill.setStartTime((Date) library.get("start_time"));
+                bill.setEndTime((Date) library.get("end_time"));
+                bill.setReserveLibraryCode((int) library.get("reserve_lib_code"));
+                
+                // Date 타입의 startTime과 endTime을 LocalDate로 변환
+                LocalDateTime startTime = convertToLocalDateTime((Timestamp) library.get("start_time"));
+                LocalDateTime endTime = convertToLocalDateTime((Timestamp) library.get("end_time"));
+
+                // 예약 기간에 따른 총 요금 계산
+                BigDecimal totalPrice = calculateLibraryPrice(startTime, endTime);
+
+                // 요금을 bill 객체에 설정
+                bill.setPrice(totalPrice);
+                bills.add(bill);
+            }
+
+            // 당월 게스트하우스 예약 조회
+            List<Map<String, Object>> guestList = dao.viewUserGuestBill(id);
+            
+            for (Map<String, Object> guest : guestList) {
+                Utillbill bill = new Utillbill();
+                bill.setServiceName("guest");
+                bill.setRegiDate((Date) guest.get("regi_date"));
+                LocalDateTime startTime = convertToLocalDateTime((Timestamp) guest.get("start_time"));
+                LocalDateTime endTime = convertToLocalDateTime((Timestamp) guest.get("end_time"));
+
+                bill.setStartTime((Date) guest.get("start_time"));
+                bill.setEndTime((Date) guest.get("end_time"));
+                
+                bill.setReserveGuestCode((int) guest.get("reserve_guest_code"));
+                int roomType = (int) guest.get("room_type");
+                if (roomType == 1) {
+                    BigDecimal onePrice = calculateGuestOnePrice(startTime, endTime);
+                    bill.setRoomType("one");
+                    bill.setPrice(onePrice);
+                } else {
+                    BigDecimal twoPrice = calculateGuestTwoPrice(startTime, endTime);
+                    bill.setRoomType("two");
+                    bill.setPrice(twoPrice);
+                }
+                bills.add(bill);
+            }
+            return bills; // 합쳐진 데이터를 반환
+    	
+    }
+    
+    public User viewUserDesc(String userId) {
+    	return dao.viewUserDesc(userId);
     }
 }

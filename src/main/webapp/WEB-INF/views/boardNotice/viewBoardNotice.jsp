@@ -13,10 +13,6 @@
 <link href="../../resources/css/boardNotice/viewBoardNotice.css" rel="stylesheet" type="text/css">
 <script src="https://kit.fontawesome.com/cbb1359000.js" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<style>
-
-</style>
-
 </head>
 <body>
 <sec:authentication property="principal" var="user" />

@@ -44,13 +44,6 @@ public class ReserveLibraryController {
 		params.put("endTime", endTime);
 		params.put("libraryCode", libraryCode);
 		
-		System.out.println("startTime : " + startTime);
-		System.out.println("endTime : " + endTime);
-		System.out.println("libraryCode : " + libraryCode);
-		System.out.println("params : " + params);
-		
-		System.out.println("service. 어쩌구 : " + service.getAvailableSeats(params));
-		
 		return service.getAvailableSeats(params);
 	}
 	
@@ -69,13 +62,10 @@ public class ReserveLibraryController {
 		vo.setUserCode(userCode);
 		vo.setLibraryCode(libraryCode);
 		
-		System.out.println("seatCode" + seatCode);
-		
 		vo.setSeatCode(Integer.parseInt(seatCode));
 		
 		model.addAttribute("vo", vo);
 		
-		System.out.println("독서실 예약 : " + vo);
 		service.registerLibrary(vo);
 		
 		return "redirect:/myLibrary";

@@ -154,4 +154,17 @@
 		SELECT COUNT(*)
 		FROM reserve_library
 	</select>
+	
+	<select id="viewUserLibrary" parameterType="String" resultType="map">
+		SELECT reserve_lib_code, library_code, regi_date, start_time, user_code, reserve_lib_code, end_time, paid, seat_code, status
+		FROM reserve_library
+		WHERE user_code = (
+		        SELECT user_code 
+		        FROM user 
+		        WHERE user_id = #{id}
+    		)
+		AND YEAR(regi_date) = YEAR(CURDATE())
+    	AND MONTH(regi_date) = MONTH(CURDATE())
+		ANd status = 1
+	</select>
 </mapper>

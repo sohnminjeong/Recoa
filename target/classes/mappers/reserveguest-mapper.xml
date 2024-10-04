@@ -144,4 +144,17 @@
 		SELECT COUNT(*)
 		FROM reserve_guest
 	</select>
+	
+		<select id="viewUserGuest" parameterType="String" resultType="map">
+		SELECT reserve_guest_code, user_code, room_type, room_code, start_time, end_time, regi_date, status, paid
+		FROM reserve_guest
+		WHERE user_code = (
+		        SELECT user_code 
+		        FROM user 
+		        WHERE user_id = #{id}
+    		)
+		AND YEAR(regi_date) = YEAR(CURDATE())
+    	AND MONTH(regi_date) = MONTH(CURDATE())
+		ANd status = 1
+	</select>
 </mapper>

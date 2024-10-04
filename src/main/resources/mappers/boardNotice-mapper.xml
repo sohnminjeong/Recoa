@@ -141,6 +141,17 @@
 		WHERE user_id = #{userId}
 	</select>
 	
+	<!-- id로 user 조회 -->
+		<select id="findUserId" parameterType="String" resultMap="userMap">
+		SELECT *
+		FROM user
+		WHERE user_code = (
+		        SELECT user_code 
+		        FROM user 
+		        WHERE user_id = #{id}
+    		)
+	</select>
+	
 	<!-- 내가 작성한 공지글 보기 (관리자) -->
 	<select id="mynoticeList" parameterType="BoardNoticePaging" resultMap="BoardNoticeMap">
 		SELECT board_notice.*, user.*
