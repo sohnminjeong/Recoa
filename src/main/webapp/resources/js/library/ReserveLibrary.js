@@ -71,7 +71,6 @@
 	    		},
 	    		success: function(data){
 	    			updateSeatOptions(data);
-	    			console.log(data);
 	    		},
                 error: function(jqXHR, textStatus, errorThrown) {
                     console.error("AJAX Error: " + textStatus + ": " + errorThrown);
@@ -86,7 +85,6 @@ function updateSeatOptions(seats) {
 
     const totalSeats = 20; // 좌석 총 개수
 	const reservedSeats = seats.map(seat => seat.seat_code);
-    console.log('Reserved seats:', reservedSeats);
 	
     for (let i = 1; i <= totalSeats; i++) {
         const seat = document.createElement('div');
@@ -179,7 +177,6 @@ function updateSeatOptions(seats) {
 	            if (seatCodeText) {
 	                $('#agreement').prop('disabled', false); 
 	            } else {
-	            console.log("뭡니까?");
 	                $('#agreement').prop('disabled', true);
 	            }
 	        }

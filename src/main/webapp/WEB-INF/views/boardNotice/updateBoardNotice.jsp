@@ -57,6 +57,6 @@
 <div id="userFloating">
 	<%@ include file="../main/floating.jsp" %>
 </div>
-<script src="../../../resources/js/boardNotice/updateBoardNotice.js"></script>
+<script src="../../../resources/js/BoardNotice/updateBoardNotice.js"></script>
 </body>
 </html>

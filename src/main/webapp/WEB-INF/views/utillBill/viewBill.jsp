@@ -95,6 +95,13 @@ $(document).ready(function() {
             url: "/viewUserBill",
             data: { "id": userId },
             success: function(data) {
+            	
+                if (data.message) { 
+                    alert("조회 결과가 없습니다.");
+                    location.reload();
+                    return; 
+                }
+                
             		var userAdr = data.user.userAdr + '동 ' + data.user.userAdrDetail + '호';
                 	var libraryPrice = data.libraryPrice + '원';
                 	var libraryPriceTotal = data.libraryPrice + '원';
@@ -117,26 +124,6 @@ $(document).ready(function() {
                     $('#guestPriceTotal').text(guestPriceTotal);
                     
                     $('#totalPrice').text(totalPrice);
-            	
-                    if (data.message) { 
-                        $('#userId').text('');
-                        $('#userRealName').text('');
-                        $('#userAdr').text('');
-                        
-                        $('#libraryPrice').text('');
-                        $('#libraryPriceTotal').text('');
-                        
-                        $('#guestOnePrice').text('');
-                        $('#guestTwoPrice').text('');
-                        $('#guestPriceTotal').text('');
-                        
-                        $('#totalPrice').text('');
-                        
-                        $('#id').text('');
-                        alert("조회 결과가 없습니다.");
-                        location.reload();
-                        return; 
-                    }
             },
             error: function(xhr, status, error) {
                 console.log("Error: " + error);

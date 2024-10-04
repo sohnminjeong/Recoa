@@ -131,16 +131,15 @@ public class UtillbillController {
 		    if (bills == null || bills.isEmpty()) {
 		        result.put("message", "검색 결과가 없습니다."); 
 		        return result;  
+		    } else {
+		    	result.put("bills", bills);
+			    result.put("totalPrice", totalPrice);
+			    result.put("libraryPrice", libraryPrice);
+			    result.put("guestOnePrice", guestOnePrice);
+			    result.put("guestTwoPrice", guestTwoPrice);
+			    result.put("guestPrice", guestPrice);
+			    result.put("user", user);
+			    return result;
 		    }
-		    
-		    result.put("bills", bills);
-		    result.put("totalPrice", totalPrice);
-		    result.put("libraryPrice", libraryPrice);
-		    result.put("guestOnePrice", guestOnePrice);
-		    result.put("guestTwoPrice", guestTwoPrice);
-		    result.put("guestPrice", guestPrice);
-		    result.put("user", user);
-		    
-		    return result;
 	}
 }
