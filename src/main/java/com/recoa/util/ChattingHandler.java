@@ -1,25 +1,16 @@
 package com.recoa.util;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
+
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
-import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -52,11 +43,7 @@ public class ChattingHandler extends TextWebSocketHandler {
 	// 채팅 위해 해당 페이지에 들어오면 클라이언트가 연결된 후 해당 클라이언트의 세션을 sessionList에 add
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		
 		sessions.add(session);
-		//System.out.println("{}연결됨 :"+session.getAttributes().get("userCode"));
-		//System.out.println("방코드 ?:"+session.getAttributes().get("chatRoomCode"));
-		
 	}
 
 	// 서버로 메세지 전송 시, 해당 메서드 호출
@@ -167,7 +154,6 @@ public class ChattingHandler extends TextWebSocketHandler {
 	// 클라이언트와 연결 끊어진 후 (채팅방 나간 경우) remove로 해당 세션 제거
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		//System.out.println("퇴장 sessions : "+session);
 		sessions.remove(session);
 		
 	}
