@@ -59,8 +59,12 @@
 
 ### 시작 가이드
 
-<h4>(1) Requirements</h4>
-<h4>(2) Installation</h4>
+#### (1) Requirements
+#### (2) Installation
+```
+git clone https://github.com/sohnminjeong/Recoa.git
+```
+
 <hr>
 
 ### 화면 구성
