@@ -60,6 +60,10 @@
 ### 시작 가이드
 
 #### (1) Requirements
+```
+- Java 11
+- Apache Tomcat 9.0
+```
 #### (2) Installation
 ```
 git clone https://github.com/sohnminjeong/Recoa.git
