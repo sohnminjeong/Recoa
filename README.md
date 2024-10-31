@@ -2,7 +2,6 @@
 
 ## 📋 목차
 - [프로젝트 소개](#프로젝트-소개)
-- [시작 가이드](#시작-가이드)
 - [화면 구성](#화면-구성)
 - [주요 기능](#주요-기능)
 - [상세 기능](#상세-기능)
@@ -54,20 +53,6 @@
 |Tool|JSP, STS(Spring Tool Suite)|
 |WAS|Apache-Tomcat|
 |Collaboration|Notion, Github, GoogleSheet|
-
-<hr>
-
-### 시작 가이드
-
-#### (1) Requirements
-- [Java 11](https://www.oracle.com/kr/java/technologies/downloads/#java11)
-- [sts-3.9.18](https://spring.io/tools)
-- [Apache Tomcat 9.0](https://tomcat.apache.org/)
-  
-#### (2) Installation
-```
-git clone https://github.com/sohnminjeong/Recoa.git
-```
 
 <hr>
 
