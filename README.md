@@ -57,6 +57,33 @@
 <hr>
 
 ### 화면 구성
+|메인페이지|
+|:---:|
+|<img src="src/main/webapp/resources/images/main/mainPage.png"/>|
+
+|로그인|회원가입|
+|:---:|:---:|
+|![로그인 화면](https://github.com/user-attachments/assets/73db5872-beed-4753-9800-68ce5504bfec)|![회원가입 화면](https://github.com/user-attachments/assets/520b0c13-3a17-48ca-964b-84e89598b146)|
+
+|회원 마이페이지|관리자 마이페이지|
+|:---:|:---:|
+|![회원 마이페이지](https://github.com/user-attachments/assets/a0fce0cc-27bb-4a52-8969-c558a03bb2eb)|![관리자 마이페이지](https://github.com/user-attachments/assets/37830e70-37d8-4b82-adfc-6a6e12048b1b)|
+
+|공지 게시판|자유 게시판|
+|:---:|:---:|
+|![공지게시판](https://github.com/user-attachments/assets/905f2a1d-a72c-4b75-a931-d30e00f5dd17)|![자유게시판](https://github.com/user-attachments/assets/0112f37d-c4d5-45a6-b681-984ffe80baf7)|
+
+|독서실 예약|게스트하우스 예약|
+|:---:|:---:|
+|![독서실 예약](https://github.com/user-attachments/assets/dc9ba069-1b89-4af2-96ea-47a3d4f540af)|![게스트하우스 예약](https://github.com/user-attachments/assets/7295538a-2a15-4091-9984-abb8e52cf5b8)|
+
+|쪽지|채팅|
+|:---:|:---:|
+|![쪽지](https://github.com/user-attachments/assets/af06ed34-8a97-4db0-bc21-45dab55a16ec)|![채팅](https://github.com/user-attachments/assets/3989b4aa-2d30-4ea9-b7f0-6b52be769ed7)|
+
+|알림목록|알림창|
+|:---:|:---:|
+|![알림목록](https://github.com/user-attachments/assets/10cd207d-2072-4eb1-b7de-1b3eb23ffc67)|![알림](https://github.com/user-attachments/assets/fa58eb6a-f59c-45f1-bdb7-4d1b032ca345)|
 
 <hr>
 
